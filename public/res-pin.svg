@@ -1,0 +1,23 @@
+<svg width="28" height="37" viewBox="0 0 28 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_1024_19070)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M14.6286 28.3417C14.5779 28.4135 14.5152 28.4762 14.4434 28.5269C14.0962 28.7718 13.6162 28.6889 13.3714 28.3417V28.3417C11.4528 25.6219 10.0957 23.6344 9.29996 22.3794C5.76665 16.8069 4 12.6805 4 10C4 4.47715 8.47715 0 14 0C19.5228 0 24 4.47715 24 10C24 12.6758 22.2395 16.7925 18.7186 22.3501C17.9201 23.6105 16.5568 25.6077 14.6286 28.3417ZM14 15.3846C17.3987 15.3846 20.1538 12.6294 20.1538 9.23077C20.1538 5.83209 17.3987 3.07692 14 3.07692C10.6013 3.07692 7.84615 5.83209 7.84615 9.23077C7.84615 12.6294 10.6013 15.3846 14 15.3846Z" fill="#00A082"/>
+<circle cx="14" cy="10" r="9" fill="white"/>
+<path d="M9.83642 8.80507C8.79606 7.76367 8.79606 6.12147 9.83642 5.08008L14.2779 9.52603L15.7585 11.008L18.0392 13.2911C18.4394 13.6916 18.4394 14.2924 18.0392 14.6929C17.6391 15.0935 16.9189 15.0935 16.5587 14.6128L14.9182 12.5701C14.518 12.0494 13.7978 11.8892 13.1576 12.1295L9.83642 8.80507Z" stroke="#00A082" stroke-width="0.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.7588 8.24493L17.9195 6.08203" stroke="#00A082" stroke-width="0.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.8789 10.1271C15.039 10.087 15.159 10.087 15.3191 10.0469C15.8392 10.0069 16.4394 9.72652 17.0396 9.12571L19.0003 7.16309" stroke="#00A082" stroke-width="0.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12.1577 11.1279L9.35673 13.411C8.91658 13.7314 8.87656 14.3723 9.2767 14.7328C9.67684 15.1333 10.277 15.0532 10.5972 14.6526L12.8779 11.8088" stroke="#00A082" stroke-width="0.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.8389 5L14.8382 6.96263C14.238 7.56343 13.9179 8.16424 13.9179 8.68493C13.9179 8.84515 13.8779 8.96531 13.8379 9.12552" stroke="#00A082" stroke-width="0.75" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<filter id="filter0_d_1024_19070" x="0" y="0" width="28" height="36.668" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1024_19070"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1024_19070" result="shape"/>
+</filter>
+</defs>
+</svg>
