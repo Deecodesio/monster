@@ -1,21 +1,21 @@
 /node_modules
-/public/hot
-/public/storage
-/public/js
-/public/css
-/public/fonts
-/public/images
-/public/product_image
-/public/restaurant_banner
-/public/restaurant_logo
-/public/restaurant_uploads
-/public/uploads
-/public/vehicles
-/public/category_image
-/public/page_files
-/public/pages
+# /public/hot
+# /public/storage
+# /public/js
+# /public/css
+# /public/fonts
+# /public/images
+# /public/product_image
+# /public/restaurant_banner
+# /public/restaurant_logo
+# /public/restaurant_uploads
+# /public/uploads
+# /public/vehicles
+# /public/category_image
+# /public/page_files
+# /public/pages
 
-/public/tag_image
+# /public/tag_image
 
 
 /storage/*.key
@@ -60,8 +60,8 @@ yarn-error.log*
 /vuexy-scripts
 
 # Docs
-/docs
-/resources/css/
-/resources/scss/
+# /docs
+# /resources/css/
+# /resources/scss/
 # /resources/js/
-/resources/lang/
+# /resources/lang/
