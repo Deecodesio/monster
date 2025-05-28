@@ -1,0 +1,116 @@
+/*!
+ * Cropper.js v1.6.1
+ * https://fengyuanchen.github.io/cropperjs
+ *
+ * Copyright 2015-present Chen Fengyuan
+ * Released under the MIT license
+ *
+ * Date: 2023-09-17T03:44:19.860Z
+ */
+
+/*! !../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/postcss-loader/src??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./ColourPicker.vue?vue&type=style&index=0&lang=css& */
+
+/*! -!../../node_modules/babel-loader/lib??ref--4-0!../../node_modules/vue-loader/lib??vue-loader-options!./ColourPicker.vue?vue&type=script&lang=js& */
+
+/*! -!../../node_modules/style-loader!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/postcss-loader/src??ref--5-2!../../node_modules/vue-loader/lib??vue-loader-options!./ColourPicker.vue?vue&type=style&index=0&lang=css& */
+
+/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib??vue-loader-options!./ColourPicker.vue?vue&type=template&id=31c070aa& */
+
+/*! ../../node_modules/css-loader/lib/css-base.js */
+
+/*! ../../node_modules/style-loader/lib/addStyles.js */
+
+/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */
+
+/*! ./ColourPicker.vue?vue&type=script&lang=js& */
+
+/*! ./ColourPicker.vue?vue&type=style&index=0&lang=css& */
+
+/*! ./ColourPicker.vue?vue&type=template&id=31c070aa& */
+
+/*! ./components/ColourPicker */
+
+/*! ./urls */
+
+/*! /home/osemeke-tedbree/Packages/vue-colour-picker/src/index.js */
+
+/*! exports provided: default */
+
+/*! exports provided: render, staticRenderFns */
+
+/*! no static exports found */
+
+/*! vue-color */
+
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+
+/*!****************************!*\
+  !*** multi ./src/index.js ***!
+  \****************************/
+
+/*!*****************************************!*\
+  !*** ./src/components/ColourPicker.vue ***!
+  \*****************************************/
+
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
+
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+
+/*!******************************************************!*\
+  !*** ./node_modules/vue-color/dist/vue-color.min.js ***!
+  \******************************************************/
+
+/*!******************************************************************!*\
+  !*** ./src/components/ColourPicker.vue?vue&type=script&lang=js& ***!
+  \******************************************************************/
+
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./src/components/ColourPicker.vue?vue&type=template&id=31c070aa& ***!
+  \************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./src/components/ColourPicker.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************/
+
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ColourPicker.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************/
+
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ColourPicker.vue?vue&type=template&id=31c070aa& ***!
+  \******************************************************************************************************************************************************************************************************/
+
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ColourPicker.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ColourPicker.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+
+/**
+  * vee-validate v3.4.15
+  * (c) 2023 Abdelrahman Awad
+  * @license MIT
+  */
+
+/**!
+ * Sortable 1.10.2
+ * @author	RubaXa   <trash@rubaxa.org>
+ * @author	owenm    <owen23355@gmail.com>
+ * @license MIT
+ */
