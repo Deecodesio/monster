@@ -1,67 +1,77 @@
-/node_modules
-# /public/hot
-# /public/storage
-# /public/js
-# /public/css
-# /public/fonts
-# /public/images
-# /public/product_image
-# /public/restaurant_banner
-# /public/restaurant_logo
-# /public/restaurant_uploads
-# /public/uploads
-# /public/vehicles
-# /public/category_image
-# /public/page_files
-# /public/pages
-
-# /public/tag_image
-
-
+# --------------------------------
+# Laravel Ignored Files & Folders
+# --------------------------------
+/vendor/
 /storage/*.key
-# /vendor
+/storage/logs/*
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/bootstrap/cache/*.php
+
 .env
-.env.backup
+.env.*
 .phpunit.result.cache
-docker-compose.override.yml
 Homestead.json
 Homestead.yaml
-npm-debug.log
-yarn-error.log
 supervisord.log
 supervisord.pid
+
 /public/.htaccess
 
-.DS_Store
-node_modules
-/dist
+# Uncomment if not versioning built assets
+/public/js/
+# /public/css/
+# /public/fonts/
+# /public/images/
+# /public/product_image/
+# /public/restaurant_banner/
+# /public/restaurant_logo/
+# /public/restaurant_uploads/
+# /public/uploads/
+# /public/vehicles/
+# /public/category_image/
+/public/page_files/
+/public/pages/
+/public/tag_image/
+/public/storage/
+/public/build/
+/public/mix-manifest.json
 
-# local env files
-.env.local
-.env.*.local
+# --------------------------------
+# Vue.js & Frontend Tools
+# --------------------------------
+/node_modules/
+/dist/
+/.vuexy-scripts
+
+# Vite / Webpack
+.vite/
 
 # Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Editor directories and files
-.idea
-.vscode/*
+# Local env files
+.env.local
+.env.*.local
+
+# --------------------------------
+# IDEs / Editors
+# --------------------------------
+.idea/
+/.vscode/*
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
+# Keep useful vscode snippets
 !.vscode/*.code-snippets
 
-# script
-/vuexy-scripts
-
-# Docs
-# /docs
-# /resources/css/
-# /resources/scss/
-# /resources/js/
-# /resources/lang/
+# OS files
+.DS_Store
+Thumbs.db
