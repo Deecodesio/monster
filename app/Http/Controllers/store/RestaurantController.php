@@ -996,6 +996,11 @@ class RestaurantController extends BaseController
                 ->get();
         }
         foreach ($data as $d) {
+            if (file_exists(public_path('/')  . $d->image)) {
+                $d->image = BASE_URL .  $d->image;
+            } else {
+                $d->image = BASE_URL .  "def_logo.jpg";
+            }
             $d->name = $this->secondLanguage_store($d->name, $d->secondary_name);
             $d->description = $this->secondLanguage_store($d->description, $d->secondary_description);
         }
@@ -5074,11 +5079,32 @@ class RestaurantController extends BaseController
         $layout = DB::table('business_type')->where('id', $rest->business_type)->first();
         if ($layout->layout_id == 2) {
             $array_keys_template = [
-                "Name", "Secondary Name", "Description", "Secondary Description", "Category", "Sub Category", "Price", "Package Charge", "Status", "Addons", "Tax"
+                "Name",
+                "Secondary Name",
+                "Description",
+                "Secondary Description",
+                "Category",
+                "Sub Category",
+                "Price",
+                "Package Charge",
+                "Status",
+                "Addons",
+                "Tax"
             ];
         } else {
             $array_keys_template = [
-                "Name", "Secondary Name", "Description", "Secondary Description", "Category", "Menu", "Price", "Package Charge", "Is Veg", "Status", "Addons", "Tax"
+                "Name",
+                "Secondary Name",
+                "Description",
+                "Secondary Description",
+                "Category",
+                "Menu",
+                "Price",
+                "Package Charge",
+                "Is Veg",
+                "Status",
+                "Addons",
+                "Tax"
             ];
         }
 

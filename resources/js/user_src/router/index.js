@@ -18,22 +18,19 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: { name: 'home' } },
     ...user,
+
+    // Add this route definition
     {
-      path: '/blogs',
-      name: 'blogs',
-      component: () => import('@@@/views/blog/BlogList.vue'),
+      path: '/error-404',
+      name: 'error-404',
+      component: () => import('@@@/views/error/Error404.vue'),
       meta: {
-        publicRoute: true,
-        contentRenderer: 'sidebar-left',
-        permission: 'public'
-      }
+        layout: 'full',
+        resource: 'Auth',
+        action: 'read',
+      },
     },
-    {
-      path: '/blogs/:slug',
-      name: 'blog-detail',
-      component: () => import('@@@/views/blog/BlogDetail.vue'),
-      props: true,
-    },
+    
     {
       path: '*',
       redirect: 'error-404',

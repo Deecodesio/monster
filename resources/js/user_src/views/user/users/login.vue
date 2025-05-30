@@ -249,7 +249,7 @@
       </b-form>
     </validation-observer>
     </b-modal>
-    <b-modal
+    <!-- <b-modal
 
       id="modal-signupmodal"
       title="Sign Up"
@@ -260,7 +260,7 @@
       size="lg"
       centered
       ref="signupmodal"
-      >
+      > -->
       <b-row>
       <b-col
             xxl="6"

@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
+import BootstrapVue from 'bootstrap-vue'
+import { BootstrapVueIcons } from 'bootstrap-vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import i18n from '@/libs/i18n'
 import router from './router'
@@ -28,6 +33,8 @@ import '@/@fake-db/db'
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons) 
 
 // Composition API
 Vue.use(VueCompositionAPI)
@@ -43,6 +50,13 @@ require('@resources/scss/core.scss')
 require('@resources/assets/scss/style.scss')
 
 Vue.config.productionTip = false
+
+Vue.config.errorHandler = (err, vm, info) => {
+  console.error('Vue error:', err);
+  console.error('Component:', vm);
+  console.error('Info:', info);
+};
+
 
 new Vue({
   router,

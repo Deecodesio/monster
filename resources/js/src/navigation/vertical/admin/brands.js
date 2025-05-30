@@ -1,8 +1,4 @@
 export default [
-    // {
-    //   header: 'Order management',
-    // },
-
     {
       title: 'Brands',
       icon: 'BarChart2Icon',

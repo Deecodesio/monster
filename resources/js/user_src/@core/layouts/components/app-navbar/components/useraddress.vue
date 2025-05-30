@@ -1,10 +1,14 @@
 <template>
     <b-row @click="showModal" class="location ">
         <b-col cols="12">
-            <h5><b>{{ $t("DeliveringTo") }}</b></h5>
-            <p id="demo" class="wrap" style="font-size: 10px; float:left;     width: 150px;"><feather-icon
-                    icon="MapPinIcon" size="16" class="ico-color2" /> {{ address }}</p> <b-img src="/dropdown.svg" fluid
-                alt="Scan" style="width:10px; opacity: .5; float:left;" width="10" height="16" />
+            <h5 class="size"><b>{{ $t("DeliveringTo") }}</b></h5>
+            <p id="demo" class="wrap" style="font-size: 14px; float:left;   font-weight: 400;  width:145px;">
+                <feather-icon
+                    icon="MapPinIcon" size="16" class="ico-color2" style="color: #FFCE00 !important;"/> 
+                    {{ address }}</p>
+                     <b-img class="dropdown-icon" src="/DR.svg" fluid
+
+                alt="Scan" style=" width:16px; height:20px; float:left; color: #FFCE00 !important; fill: #FFCE00 !important;"    />
         </b-col>
         <b-modal id="modal-address" title="Login" ok-only ok-title="Login" cancel-title="Close" hide-footer hide-header
             size="lg" centered ref="my-modal" aria-label="Get address from user">
@@ -326,4 +330,13 @@ p {
 .location {
     cursor: pointer;
 }
+.size {
+    font-size: 17px;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+
+}
+
+
+
 </style>

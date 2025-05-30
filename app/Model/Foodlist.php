@@ -61,4 +61,9 @@ class Foodlist extends Model
         return $this->belongsTo('App\Model\Requestdetail','food_id','id');
     }
 
+     public function pricings()
+    {
+        return $this->hasMany(FoodListPricing::class, 'product_id');
+    }
+
 }

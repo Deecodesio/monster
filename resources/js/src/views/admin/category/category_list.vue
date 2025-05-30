@@ -226,6 +226,7 @@ export default {
 
     this.$http.get('/admin/category_list')
       .then(res => {
+
         this.rows = res.data;
         this.Loading = false;
 

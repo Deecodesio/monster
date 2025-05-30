@@ -2627,4 +2627,85 @@ export default [
             action: "read",
         },
     },
+
+
+     {
+        path: "/admin/franchise",
+        name: "franchise",
+        component: () => import("@/views/admin/franchise/franchise.vue"),
+        meta: {
+            pageTitle: "Franchise",
+            breadcrumb: [
+                {
+                    text: "Franchise",
+                },
+                {
+                    text: "Update",
+                    active: true,
+                },
+            ],
+            resource: "franchise",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/add_franchise",
+        name: "add_franchise",
+        component: () => import("@/views/admin/franchise/add_franchise.vue"),
+        meta: {
+            pageTitle: "Add Franchise",
+            breadcrumb: [
+                {
+                    text: "Franchise",
+                },
+                {
+                    text: "Add Franchise",
+                    active: true,
+                },
+            ],
+            resource: "franchise",
+            action: "read",
+        },
+    },
+
+     {
+        path: "/admin/job_vacancy",
+        name: "job_vacancy",
+        component: () => import("@/views/admin/job_vacancy/job_vacancy.vue"),
+        meta: {
+            pageTitle: "Job Vacancy",
+            breadcrumb: [
+                {
+                    text: "Job Vacancy",
+                },
+                {
+                    text: "Update",
+                    active: true,
+                },
+            ],
+            resource: "job-vacancy",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/add_job_vacancy",
+        name: "add_job_vacancy",
+        component: () => import("@/views/admin/job_vacancy/add_job_vacancy.vue"),
+        meta: {
+            pageTitle: "Add Job Vacancy",
+            breadcrumb: [
+                {
+                    text: "Job Vacancy",
+                },
+                {
+                    text: "Add Job Vacancy",
+                    active: true,
+                },
+            ],
+            resource: "job-vacancy",
+            action: "read",
+        },
+    },
 ];

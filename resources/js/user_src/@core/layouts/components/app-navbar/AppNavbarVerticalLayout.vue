@@ -1,7 +1,7 @@
 <template>
     <b-row>
 
-        <div class="container header_div">
+        <div class="d-flex justify-content-center align-items-center container-xs ">
             <b-col md="2" class="pt-1">
                 <b-link class="navbar-brand " to="/">
                     <span class="brand-logo">
@@ -18,17 +18,17 @@
             <b-col md="4">
                 <search-bar />
             </b-col>
-            <b-col md="4" class="pt-3 text-r" style="display: flex; flex-direction: row-reverse;">
+            <b-col md="4" class="pt-3 text-r" style="display: flex; flex-direction: row-reverse;margin-top: 10px !important; ">
 
 
-
+                <user-dropdown style="margin: 0px 20px 0px 20px;" />            
                 <cart-dropdown />
-                <user-dropdown style="margin: 0px 20px 0px 20px;" />
+          
                 <div>
                     <!-- <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" @click="$router.push({ name: 'track_user_order' })"
-          variant="outline-primary">
-          <feather-icon icon="TruckIcon" class="mr-50 ico-color2" />
-          {{ $t("Track Order") }}
+                     variant="outline-primary">
+                     <feather-icon icon="TruckIcon" class="mr-50 ico-color2" />
+                   {{ $t("Track Order") }}
         </b-button> -->
 
                 </div>
@@ -122,7 +122,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .logo_image {
-    max-width: 180px !important;
+    // max-width: 180px !important;
+    max-width: 200px !important;
 }
 
 .text-r {

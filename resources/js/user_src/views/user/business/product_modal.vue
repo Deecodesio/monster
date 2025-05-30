@@ -33,8 +33,9 @@
                                             </b-form-checkbox>
                                         </td>
                                         <td ALIGN="left" width="55%">
-                                            <label :for="'addon_' + data.id + '_' + data4.id" style="font-size:16px;"> {{
-                                                data4.name }}
+                                            <label :for="'addon_' + data.id + '_' + data4.id" style="font-size:16px;">
+                                                {{
+                                                    data4.name }}
                                             </label>
                                         </td>
                                         <td ALIGN="left" width="20%">
@@ -50,7 +51,8 @@
                         <div v-if="data.groups.length">
                             <div v-for="ga1 in data.groups" :key="ga1.id">
                                 <!-- Checkbox -->
-                                <div v-if="ga1.group_addons.length && ga1.allow_multiple !== 1" style="text-align: left;">
+                                <div v-if="ga1.group_addons.length && ga1.allow_multiple !== 1"
+                                    style="text-align: left;">
                                     <h4>{{ ga1.name }}<sup v-if="ga1.mandatory === 1" style="color:red"> *</sup></h4>
                                     <h5 v-if="ga1.mandatory === 1"><small>Minimum {{ ga1.min }} should be
                                             selected</small></h5>
@@ -109,7 +111,8 @@
                                         <tr v-for="ga2 in ga1.group_addons" :key="ga2.id">
                                             <td ALIGN="left" width="25%">
                                                 <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                                                    variant="outline-primary" class="btn-icon rounded-circle add_to_cart"
+                                                    variant="outline-primary"
+                                                    class="btn-icon rounded-circle add_to_cart"
                                                     :id="'size_addon_' + ga1.id + '_' + ga2.id"
                                                     style="border: 2px solid #00A082 !important;"
                                                     @click="add_sizeaddon(ga1, ga2)" :data-name="ga2.name"
@@ -117,15 +120,17 @@
                                                     <feather-icon icon="PlusIcon" class="ico-color" size="15" />
                                                 </b-button>
                                                 <input type="hidden" :id="'hidden_' + ga1.id" value="0" />
-                                                <div class="num-block skin-2" :id="'size_control_' + ga1.id + '_' + ga2.id"
-                                                    style="display:none">
+                                                <div class="num-block skin-2"
+                                                    :id="'size_control_' + ga1.id + '_' + ga2.id" style="display:none">
                                                     <div class="num-in">
-                                                        <span class="minus dis" :id="'size_minus' + ga1.id + '_' + ga2.id"
+                                                        <span class="minus dis"
+                                                            :id="'size_minus' + ga1.id + '_' + ga2.id"
                                                             @click="decrease_size(ga1, ga2)"></span>
                                                         <input type="text" class="in-num" value="0" readonly=""
                                                             style="font-weight:800;"
-                                                            :id="'size_qty_' + ga1.id + '_' + ga2.id" :data-name="ga2.name"
-                                                            :data-price="ga2.price" :data-value="ga2.id">
+                                                            :id="'size_qty_' + ga1.id + '_' + ga2.id"
+                                                            :data-name="ga2.name" :data-price="ga2.price"
+                                                            :data-value="ga2.id">
                                                         <span class="plus" :id="'size_plus' + ga1.id + '_' + ga2.id"
                                                             @click="increase_size(ga1, ga2)"></span>
                                                     </div>
@@ -214,7 +219,8 @@
                                                         <b-form-checkbox :name="'faddon' + data7.id"
                                                             :id="'size_' + data7.id + '_' + data8.id"
                                                             :data-name="data8.name" :data-price="data8.price"
-                                                            @change="validate_sizeaddons(data7, data8)" :value="data8.id">
+                                                            @change="validate_sizeaddons(data7, data8)"
+                                                            :value="data8.id">
                                                         </b-form-checkbox>
                                                     </td>
                                                     <td ALIGN="left" width="55%">
@@ -405,7 +411,8 @@
                                         <tr v-for="ga2 in ga1.group_addons" :key="ga2.id">
                                             <td ALIGN="left" width="25%">
                                                 <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                                                    variant="outline-primary" class="btn-icon rounded-circle add_to_cart"
+                                                    variant="outline-primary"
+                                                    class="btn-icon rounded-circle add_to_cart"
                                                     :id="'size_addon_' + ga1.id + '_' + ga2.id"
                                                     style="border: 2px solid #00A082 !important;"
                                                     @click="add_sizeaddon(ga1, ga2)" :data-name="ga2.name"
@@ -413,15 +420,17 @@
                                                     <feather-icon icon="PlusIcon" class="ico-color" size="15" />
                                                 </b-button>
                                                 <input type="hidden" :id="'hidden_' + ga1.id" value="0" />
-                                                <div class="num-block skin-2" :id="'size_control_' + ga1.id + '_' + ga2.id"
-                                                    style="display:none">
+                                                <div class="num-block skin-2"
+                                                    :id="'size_control_' + ga1.id + '_' + ga2.id" style="display:none">
                                                     <div class="num-in">
-                                                        <span class="minus dis" :id="'size_minus' + ga1.id + '_' + ga2.id"
+                                                        <span class="minus dis"
+                                                            :id="'size_minus' + ga1.id + '_' + ga2.id"
                                                             @click="decrease_size(ga1, ga2)"></span>
                                                         <input type="text" class="in-num" value="0" readonly=""
                                                             style="font-weight:800;"
-                                                            :id="'size_qty_' + ga1.id + '_' + ga2.id" :data-name="ga2.name"
-                                                            :data-price="ga2.price" :data-value="ga2.id">
+                                                            :id="'size_qty_' + ga1.id + '_' + ga2.id"
+                                                            :data-name="ga2.name" :data-price="ga2.price"
+                                                            :data-value="ga2.id">
                                                         <span class="plus" :id="'size_plus' + ga1.id + '_' + ga2.id"
                                                             @click="increase_size(ga1, ga2)"></span>
                                                     </div>
@@ -445,26 +454,25 @@
                         </div>
                         <!-- Simple Addons -->
                         <div v-if="data.add_ons.length">
-                            <div v-if=data."add_ons.length" style="text-align: left;margin-top:30px;">
+                            <div v-if="data.add_ons.length" style="text-align: left;margin-top:30px;">
                                 <h4>{{ $t("Addons") }}</h4>
                             </div>
-                            <table v-if=" data.add_ons.length " width="100%">
-                                <tr v-for="(                                          data4, index4                                          ) in                                           data.add_ons                                          "
-                                    :key=" index4 ">
+                            <table v-if="data.add_ons.length" width="100%">
+                                <tr v-for="(data4, index4) in data.add_ons" :key="index4">
                                     <td ALIGN="left" width="25%">
-                                        <b-form-checkbox :name=" 'addonsOfItem_' + data.id "
-                                            :id=" 'addon_' + data.id + '_' + data4.id " :data-name=" data4.name "
-                                            :data-price=" data4.price " :value=" data4.id ">
+                                        <b-form-checkbox :name="'addonsOfItem_' + data.id"
+                                            :id="'addon_' + data.id + '_' + data4.id" :data-name="data4.name"
+                                            :data-price="data4.price" :value="data4.id">
                                         </b-form-checkbox>
                                     </td>
                                     <td ALIGN="left" width="55%">
-                                        <label :for=" 'addon_' + data.id + '_' + data4.id " style="font-size:16px;"> {{
+                                        <label :for="'addon_' + data.id + '_' + data4.id" style="font-size:16px;"> {{
                                             data4.name }}
                                         </label>
                                     </td>
                                     <td ALIGN="left" width="20%">
-                                        <label :for=" 'addon_' + data.id + '_' + data4.id " style="font-size:16px;"
-                                            v-if=" data4.price > 0 ">
+                                        <label :for="'addon_' + data.id + '_' + data4.id" style="font-size:16px;"
+                                            v-if="data4.price > 0">
                                             {{ $store.state['defaults'].currency }}{{ data4.price | priceformat }}
                                         </label>
                                     </td>
@@ -476,11 +484,11 @@
             </div>
         </b-card-text>
         <div slot="modal-footer" class="w-100 modal_footer">
-            <b-alert v-model=" showDismissibleAlert " v-height-fade.appear variant="danger" dismissible class="mb-0">
+            <!-- <b-alert v-model=" showDismissibleAlert " v-height-fade.appear variant="danger" dismissible class="mb-0">
                 <div class="alert-body">
                     {{ alert_text }}
                 </div>
-            </b-alert>
+            </b-alert> -->
             <b-button class="" variant="primary" id="addCustomizedProduct" @click="check_cart(data)"
                 style="width:100%;font-size:16px;font-weight:800">
                 {{ $t("Add to order") }}
@@ -488,7 +496,7 @@
         </div>
     </b-modal>
 </template>
-  
+
 <script>
 import {
     BButton, BModal, VBModal, BForm, BFormInput, BFormGroup, BFormCheckbox, BFormRadio, BAlert, BImgLazy, BCardText, BRow
@@ -522,23 +530,41 @@ export default {
             s_fq: '',
             showDismissibleAlert: false,
             alert_text: '',
-            cart: JSON.parse(localStorage.getItem("cart"))
+            cart: JSON.parse(localStorage.getItem("cart")) || [],
         }
     },
+    // props: {
+    //     value: {
+    //         default: () => { },
+    //     },
+    //     data: {
+    //         default: () => { },
+    //     },
+
+    // },
     props: {
         value: {
-            default: () => { },
+            type: Boolean,
+            default: false,
         },
         data: {
-            default: () => { },
-        },
-
+            type: Object,
+            default: () => ({}),
+        }
     },
+    // watch: {
+    //     value: function () {
+    //         this.$refs['image-modal'].hide()
+    //     },
+    // },
     watch: {
-        value: function () {
-            this.$refs['image-modal'].hide()
+        value: function (newVal) {
+            if (!newVal) {
+                this.$refs['image-modal'].hide()
+            }
         },
     },
+
     methods: {
         ...goback,
         ...addCustomizedProduct,
@@ -549,20 +575,30 @@ export default {
         close_img() {
             this.$refs['image-modal'].hide()
         },
+        // check_size(data, adds, group, size) {
+
+        //     for (var i = 0; i < size.length; i++) {
+
+        //         var element = document.getElementById("circle" + size[i].id);
+        //         element.classList.remove("sel_cir");
+        //     }
+        //     var element = document.getElementById("circle" + data.id);
+        //     element.classList.add("sel_cir");
+        // },
         check_size(data, adds, group, size) {
 
-            for (var i = 0; i < size.length; i++) {
+            size.forEach(s => {
+                const el = document.getElementById("circle" + s.id)
+                if (el) el.classList.remove("sel_cir")
+            })
 
-                var element = document.getElementById("circle" + size[i].id);
-                element.classList.remove("sel_cir");
-            }
-            var element = document.getElementById("circle" + data.id);
-            element.classList.add("sel_cir");
-        },
+            const active = document.getElementById("circle" + data.id)
+            if (active) active.classList.add("sel_cir")
+        }
     }
 }
 </script>
-   
+
 <style lang="scss">
 @import '~@resources/scss/base/bootstrap-extended/_variables.scss';
 

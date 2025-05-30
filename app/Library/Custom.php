@@ -651,7 +651,8 @@ class Custom
         return $imageName;
     }
 
-    public static function common_upload_images_product($request, $param, $id)
+    // public static function common_upload_images_product($request, $param, $id)
+    public static function common_upload_images_product($request, $param)
     {
 
         $path = public_path('product_image/');

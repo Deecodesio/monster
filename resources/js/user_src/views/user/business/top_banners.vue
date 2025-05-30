@@ -1,21 +1,18 @@
 <template>
-    <div class="mt-5 mb-5" v-if="!isempty">
+    <div class="mt-2 mb-1" v-if="!isempty">
         <swiper
             class="swiper-multiple"
             :options="swiperOptions"
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-        >
-            <swiper-slide
-                v-for="(data, index) in rows"
-                :key="index"
-                class="custom-slide"
-            >7
-                <b-img
-                    class="top_ban_img"
-                    :src="data.img"
-                    fluid
-                    @click="goto(data)"
-                />
+            ><swiper-slide v-for="(data, index) in rows" :key="index">
+                <div class="img-wrapper">
+                    <img
+                        class="top_ban_img"
+                        :src="data.img"
+                        @click="goto(data)"
+                        alt="banner"
+                    />
+                </div>
             </swiper-slide>
 
             <div slot="pagination" class="swiper-pagination mt-5"></div>
@@ -135,22 +132,20 @@ html {
 }
 .swiper-pagination {
     width: 100% !important;
-    padding-top: 10px !important;
     text-align: center !important;
     display: block !important;
     position: relative !important;
 }
-.top_ban_img {
-    width: 100%;
-    height: auto;
-    min-width: 869px;
-    min-height: 208px;
-    object-fit: cover;
+.img-wrapper {
+    height: 280px;
     border-radius: 22px;
 }
-.swiper-slide,
+
 .top_ban_img {
-    -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 22px;
+    display: block;
 }
 </style>

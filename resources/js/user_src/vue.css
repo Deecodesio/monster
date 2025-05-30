@@ -686,13 +686,11 @@ footer h2 {
     }
 
 
-    .pt-m1,
-    {
+    .pt-m1 {
     padding-top: 1rem !important;
 }
 
-.pt-m0,
-{
+.pt-m0 {
 padding-top: .0px !important;
 }
 

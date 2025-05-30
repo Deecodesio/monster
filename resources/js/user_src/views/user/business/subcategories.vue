@@ -1,17 +1,22 @@
 <template>
+
     <div class="pt-1" v-if="!isempty">
-        <div class="subcat_main_div">
+       <div class="subcat_main_div">
             <div class="subcat_slider">
-                <div class="mt-5 mb-3 text-center">
-                    <h2>{{ $t("Product Categories") }}</h2>
-                    <hr class="mx-auto">
-                </div>
-                <!-- <div class="mt-5 mb-3 text-center">
-                    <h2>{{ title3 }}</h2>
-                    <hr class="mx-auto">
+              <div class="mt-5 mb-3 text-center">
+ <!-- <div v-if="title == 'Top Selling Products'">
+                    <h2 style="text-align: center">{{ title }}</h2>
+                    <div class="hrLine"></div>
                 </div> -->
 
-                <div class="swiper-container-wrapper">
+
+
+                <div class="mt-5 mb-3 text-center">
+                    <h2>{{ $t(" Product Categories")}}</h2>
+                    <hr class="mx-auto">
+                </div>
+
+                <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">
                     <!-- Navigation Buttons (Now Outside Swiper) -->
                     <div id="swiper-button-prev" class="swiper-button-prev"></div>
                     <swiper class="swiper-multiple rounded swiper-shadow text-center" :options="swiperOptions"
@@ -28,6 +33,7 @@
                         </swiper-slide>
                     </swiper>
                     <div id="swiper-button-next" class="swiper-button-next"></div>
+                </div>
                 </div>
 
                 <!-- Swiper Wrapper -->
@@ -126,11 +132,10 @@ export default {
 
             swiperOptions: {
                 breakpoints: {
-                    320: { slidesPerView: 1, spaceBetween: 20 },
-                    420: { slidesPerView: 1, spaceBetween: 10 },
-                    768: { slidesPerView: 2, spaceBetween: 30 },
-                    1200: { slidesPerView: 3, spaceBetween: 250 },
-                    1440: { slidesPerView: 4, spaceBetween: 170 },
+                    320: { slidesPerView: 2, spaceBetween: 10 },
+    768: { slidesPerView: 3, spaceBetween: 20 },
+    1024: { slidesPerView: 4, spaceBetween: 30 },
+    1440: { slidesPerView: 2, spaceBetween: 70 },
                 },
                 navigation: {
                     nextEl: '#swiper-button-next', // Use ID
@@ -238,7 +243,7 @@ export default {
                         console.log("Welocme");
                         console.log(res);
                         this.cat_products = res.data.cat_products
-                        this.title = res.data.title                         
+                        this.title = res.data.title
                         this.loadcart()
 
                          store.commit('deliware_cart/UPDATE_FOOTER', true)
@@ -276,111 +281,126 @@ export default {
 }
 </script>
 <style scoped>
-.cat-card {
-    background: #ffffff90;
-    border-style: solid;
-    border-color: #E01764;
-    color: #000000;
-    border-radius: 20px;
-
-    cursor: pointer;
-
+.subcat_slider{
+    width:100%;
+}
+.hrLine {
+    max-width: 75px;
+    margin: 10px auto;
+    border: 2px solid #ffce00;
+    border-radius: 5px;
+    background-color: #ffce00;
 }
 
-.cat-card[data-v-7701e4fa] {
-    color: #000000;
-    width: 100px !important;
-    height: 103px !important;
-}
 
-.h7 {
-    font-size: 14px;
-    font-weight: bold;
+
+
+.pt-5{
+  padding-top: 0rem !important;
+}
+.cat-card-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 10px;
+  margin-left: 40px;
+
 }
 
 .fl {
-    max-width: 90%;
+ width: 250px; height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-left: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
-.card-title {
-    color: #E01764;
+.fl:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.card-body {
-    padding: 10px !important;
+
+
+.main_Cat_name {
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  color: black;
+  text-align: center;
+}
+.swiper-slide {
+  width: 200px !important;
+  display: flex;
+  justify-content: center;
+}
+.swiper-button-next,
+.swiper-button-prev {
+
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+
+  z-index: 10;
+}
+.swiper-button-next{
+    margin-right: 25px;
+}
+.swiper-button-prev{
+    margin-left: 25px;
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 18px;
+  font-weight: bold;
+}
+.swiper-category-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+
 }
 
-/* Wrapper to ensure buttons are positioned relative to swiper */
-.swiper-container-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+
+.swiper-category-wrapper .swiper-button-prev,
+.swiper-category-wrapper .swiper-button-next {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.swiper-category-wrapper .swiper-button-prev::after,
+.swiper-category-wrapper .swiper-button-next::after {
+  font-size: 18px;
+
+  /* color: #e91e63; */
+}
+
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 
 .swiper-button-prev,
-.swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    z-index: 10;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0px solid #E01764;
-}
+.swiper-container-rtl .swiper-button-next{
+    border: none !important;}
 
-/* Positioning the Buttons */
-.swiper-button-prev {
-    left: -60px;
-    /* Adjust to move outside */
-}
 
-.swiper-button-next {
-    right: -60px;
-    /* Adjust to move outside */
-}
 
-/* Make sure parent divs do not clip buttons */
-.subcat_main_div,
-.subcat_slider {
-    overflow: visible !important;
-}
-
-.swiper_subcat {
-    display: flex;
-    justify-content: space-between;
-}
-
-.subcat_main_div {
-    background: #FF81B61A;
-    height: 50vh;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-}
-
-.subcat_slider {
-    width: 50%;
-}
-
-.subcat_card {
-    padding: 10px;
-}
-
-.subcat_card_active {
-    background-color: #fff;
-}
-
-.subcat_img {
-    border-radius: 10px;
-    width: 150px;
-}
 </style>
 <style lang="scss">
 @import '~@resources/scss/vue/libs/swiper.scss';

@@ -84,7 +84,7 @@ Route::group(
 
         Route::get('/city_list_by_state/{id}', 'RestaurantController@stateWiseCityList');
         Route::get('/product_list_by_category/{id}', 'RestaurantController@categoryWiseProductList');
-        
+
 
         Route::GET('/country_list', 'NationController@Getcountrylist');
 
@@ -258,6 +258,9 @@ Route::group(
         Route::post('/faq', 'NoteboardController@faq');
         Route::get('/get_neworder_alerts', 'OrderController@get_neworder_alert');
 
+        Route::post('/product_list', 'RestaurantController@product_list');
+
+
         Route::get('/fetchwallet/{id}', 'UserController@fetch_wallet');
         Route::get('/get_geofence', 'SettingController@get_geofence');
         Route::get('/user_details/{id}', 'UserController@user_details');
@@ -383,5 +386,8 @@ Route::group(
         Route::get('get_products', 'RestaurantController@get_products');
         Route::get('/fetch_header_menu/{id}', 'RestaurantController@fetch_header_menu');
         Route::post('save_page_category', 'RestaurantController@save_page_category');
+
+        Route::post('/add_to_product', 'RestaurantController@add_to_product');
+        Route::get('edit_product_list/{product_id}', 'RestaurantController@edit_product_list');
     }
 );

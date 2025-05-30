@@ -26,6 +26,9 @@ import reports from "./admin/reports";
 // import business from './admin/business'
 // import packagetype from './admin/packagetype'
 import carrier from "./admin/carrier";
+import franchise from "./admin/franchise";
+import jobvacancy from "./admin/jobvacancy";
+import others from "./admin/others";
 // import header from './admin/header'
 
 // import plans from './admin/plans'
@@ -35,32 +38,38 @@ export default [
     ...restaurantbanner,
     ...productManagement,
     ...city,
-//     ...category,
-//     ...product,
-    ...appsAndPages,
+    ...restaurants,
+    ...usermanagement,
+    ...vehicle,
+    ...roles,
+    ...others,
+    //     ...category,
+    //     ...product,
+    // ...appsAndPages,
     // ...enquirys,
     // ...business,
-    ...restaurants,
-    ...bulkOrders,
-    ...vehicle,
+    
+    // ...bulkOrders,
+    
     //  ...packagetype,
-    ...carrier,
-    ...brands,
-    ...driver,
-    ...document,
-    ...cancellation,
-    ...promocodes,
-
-    ...usermanagement,
+    // ...carrier,
+    // ...brands,
+    // ...driver,
+    // ...document,
+    // ...cancellation,
+    // ...promocodes,
+    // ...franchise,
+    // ...jobvacancy,
+    
 
     //  ...cuisines,
-    ...addonslist,
-    ...payout,
-    ...foodquantity,
+    // ...addonslist,
+    // ...payout,
+    // ...foodquantity,
     // ...header,
-    ...contents,
-    ...roles,
-    ...reports,
-    ...settings,
+    // ...contents,
+    
+    // ...reports,
+    // ...settings,
     // ...plans
 ];

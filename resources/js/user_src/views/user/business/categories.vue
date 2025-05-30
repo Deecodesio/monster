@@ -1,43 +1,17 @@
 <template>
-    <div class="pt-5" v-if="!isempty">
-  
-
+    <div  v-if="!isempty">
         <b-row>
-            <b-col md="9">
-      
-                    <h2
-                        style="
-                             
-                            text-align: center;
-                            color: #ff006b;
-                          
-
-                            padding-left: 355px;
-                            /* padding-bottom: 20px; */
-                            font-weight: bold;
-                            font-size: 32px;
-                            ;
-                            /* margin-bottom: 0; */
-                        "
-                    >
-                      {{ $t("Product Categories") }}
-                
-        <hr style="
-  width: 64px;
-  height: 0;
-  border: none;
-  border-top: 4px solid #FFCE00;
-  margin: 16px auto 0 auto;
-    margin: 8px auto 0 auto;
-">
-    </h2>
-</hr>
-             
-
-           
+            <b-col md="12">
+                <h2 style="text-align: center">
+                    {{ $t("Product Categories") }}
+                </h2>
+                <div class="hrLine"></div>
             </b-col>
         </b-row>
+
         <!-- Swiper Wrapper -->
+          <!-- Swiper Wrapper -->
+         <div>
       <div class="swiper-category-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl" >
   <div id="swiper-button-prev" class="swiper-button-prev"></div>
 
@@ -62,6 +36,8 @@
 </div>
 
     </div>
+    </div>
+
 </template>
 
 <script>
@@ -105,11 +81,11 @@ export default {
     320: { slidesPerView: 2, spaceBetween: 10 },
     768: { slidesPerView: 3, spaceBetween: 20 },
     1024: { slidesPerView: 4, spaceBetween: 30 },
-    1440: { slidesPerView: 2, spaceBetween: 60 },
+    1440: { slidesPerView: 2, spaceBetween: 70 },
   },
   slidesPerView: 'auto',
 //   spacearound: 20,
-  spaceBetween: 10,
+  spaceBetween: 20,
   centeredSlides: false,
   freeMode: true,
   navigation: {
@@ -162,6 +138,17 @@ export default {
 };
 </script>
 <style scoped>
+
+.swiper-container-rtl .swiper-button-prev:after
+{
+  margin-left: 26px;
+}
+.swiper-container-rtl .swiper-button-next:after{
+  margin-right: 26px;
+}
+.pt-5{
+  padding-top: 0rem !important;
+}
 .cat-card-main {
   display: flex;
   flex-direction: column;
@@ -169,7 +156,7 @@ export default {
   margin: 0 auto;
   padding: 10px;
   margin-left: 40px;
- 
+
 }
 
 .fl {
@@ -179,7 +166,7 @@ export default {
   margin-left: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
+
 }
 
 .fl:hover {
@@ -203,19 +190,19 @@ export default {
 }
 .swiper-button-next,
 .swiper-button-prev {
-  
+
   width: 30px;
   height: 30px;
-  
+
   border-radius: 50%;
-  
+
   z-index: 10;
 }
 .swiper-button-next{
-    margin-right: 2px;
+    margin-right: 25px;
 }
 .swiper-button-prev{
-    margin-left: 2px;
+    margin-left: 25px;
 }
 .swiper-button-next::after,
 .swiper-button-prev::after {
@@ -231,6 +218,7 @@ export default {
 
 }
 
+
 .swiper-category-wrapper .swiper-button-prev,
 .swiper-category-wrapper .swiper-button-next {
   width: 40px;
@@ -241,11 +229,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .swiper-category-wrapper .swiper-button-prev::after,
 .swiper-category-wrapper .swiper-button-next::after {
   font-size: 18px;
+
   /* color: #e91e63; */
 }
 
@@ -258,7 +248,8 @@ export default {
 
 .swiper-button-prev,
 .swiper-container-rtl .swiper-button-next{
-    border: none !important;    
+    border: none !important;
+
 }
 
 
@@ -281,9 +272,12 @@ export default {
  border: 2px solid #f4fffd;
     top: 45%;
 } */
-</style>
-<style lang="scss">
-@import "~@resources/scss/vue/libs/swiper.scss";
 
-
+.hrLine {
+    max-width: 75px;
+    margin: 10px auto;
+    border: 3px solid #ffce00;
+    border-radius: 5px;
+    background-color: #ffce00;
+}
 </style>

@@ -1,75 +1,100 @@
 <template>
-  <div>
-    <div class="shope-container mb-5 text-center">
-      <h3 class="shope-title">Our Shops</h3>
-
-      <div class="container">
-        <div v-for="(chunk, rowIndex) in chunkedShops" :key="rowIndex" class="row justify-content-center mb-2">
-          <div
-            v-for="(shop, colIndex) in chunk"
-            :key="colIndex"
-            class="col-md-2 d-flex justify-content-center mb-2"
-          >
-            <div class="shop-box">{{ shop }}</div>
-          </div>
+    <div style="padding-right: 0% !important; padding-left: 0% !important">
+        <div class="shope-container mb-5 text-center">
+            <h3 class="shope-title">Our Shops</h3>
+            <div class="shop-grid">
+                <div class="shop-box" v-for="shop in shopList" :key="shop.id">
+                    {{ shop.city }}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
-
-
 
 <script>
 export default {
-  data() {
-    return {
-      shops: ['Namakkal', 'Salem', 'Erode', 'Chennai', 'Trichy', 'Coimbatore', 'Madurai','dindigul','kallakurichi','paandicheery','perambular'], 
-    };
-  },
-  computed: {
-    chunkedShops() {
-      const chunks = [];
-      for (let i = 0; i < this.shops.length; i += 5) {
-        chunks.push(this.shops.slice(i, i + 5));
-      }
-      return chunks;
-    }
-  }
+    data() {
+        return {
+            shopList: [],
+        };
+    },
+
+    created() {
+        this.$http
+            .get("/restaurant_cities")
+            .then((response) => {
+                console.log("Shop Data", response.data);
+                this.shopList = response.data;
+                console.log("List", this.shopList);
+            })
+            .catch((error) => {
+                console.error("Error fetching restaurant cities:", error);
+            });
+    },
 };
 </script>
 
-
-
-
 <style scoped>
 .shope-container {
-  background-color: #FF81B633;
-  padding: 40px 20px;
+    background-color: #ff81b633;
+    padding: 40px 20px;
 }
 
 .shope-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 30px;
-  color:#000000;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #000000;
+}
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 20px 100px;
+    justify-content: center;
+    padding: 20px;
 }
 
 .shop-box {
-  background-color: white;
-font-size: 22px;
-line-height: 100%;
-  border-radius: 30px;
-  height: 51px;
-  width: 202px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-  color: #263238;
+    background-color: white;
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+    border-radius: 20px;
+    padding: 0 30px;
+    text-align: center;
+    font-weight: 500;
+    color: #263238;
+    white-space: nowrap;
+    display: inline-block;
+}
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (min-width: 1024px) {
+    .shop-grid {
+        grid-template-columns: repeat(5, auto) !important;
+        gap: 30px 80px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 960px) {
+    .shop-grid {
+        grid-template-columns: repeat(4, auto) !important;
+        gap: 16px 32px !important;
+    }
 }
 
 
+@media (max-width: 480px) {
+    .shop-grid {
+        grid-template-columns: repeat(2, auto) !important;
+        gap: 18px 8px !important;
 
+    }
+}
 </style>

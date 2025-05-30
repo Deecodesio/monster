@@ -1,6 +1,5 @@
 <template>
     <b class="foot pt-2">
-
         <b-nav vertical>
             <h2 class="white_text">{{ $t("Quick Links") }}</h2>
 
@@ -9,20 +8,21 @@
             </b-nav-item>
 
             <b-nav-item :to="{ name: 'faq' }" class="white_text">
-                <span class="white_text">{{ $t("FAQs") }}
-                </span>
+                <span class="white_text">{{ $t("FAQs") }} </span>
             </b-nav-item>
             <b-nav-item :to="{ name: 'contact' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Contact") }}
                 </span>
             </b-nav-item>
-            <b-nav-item  @click="redirect(1)" class="white_text">
+            <!-- <b-nav-item  @click="redirect(1)" class="white_text"> -->
+            <b-nav-item :to="{ name: 'blogs' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Blog") }}
                 </span>
             </b-nav-item>
-            <b-nav-item @click="redirect(2)" class="white_text">
+            <!-- <b-nav-item @click="redirect(2)" class="white_text"> -->
+            <b-nav-item :to="{ name: 'careers' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Career") }}
                 </span>
@@ -32,42 +32,32 @@
                     {{ $t("Franchisee") }}
                 </span>
             </b-nav-item>
-
-
         </b-nav>
     </b>
 </template>
 
 <script>
-import { BNav, BNavItem, BCard } from 'bootstrap-vue'
+import { BNav, BNavItem, BCard } from "bootstrap-vue";
 
 export default {
     components: {
         BNav,
         BNavItem,
         BCard,
-
     },
     methods: {
         redirect(link) {
-            if(link == 1)
-        {
-            var link1 = "https://monsterfoods.in/blog/";
-        }else if(link == 2)
-        {
-            var link1 = "https://monsterfoods.in/career/";
-
-        }else
-        {
-            var link1 = "https://monsterfoods.in/franchisee/";
-        }
-            window.open(
-                link1,
-                '_blank'
-            );
-        }
-    }
-}
+            if (link == 1) {
+                var link1 = "https://monsterfoods.in/blogs/";
+            } else if (link == 2) {
+                var link1 = "https://monsterfoods.in/careers/";
+            } else {
+                var link1 = "https://monsterfoods.in/franchisee/";
+            }
+            window.open(link1, "_blank");
+        },
+    },
+};
 </script>
 <style scoped>
 a {
@@ -76,6 +66,6 @@ a {
 }
 
 .foot {
-    background: #FF006B;
+    background: #ff006b;
 }
 </style>

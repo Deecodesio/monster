@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="background-color:white;height: 500px;">
         <div class="mt-1 text-center"
             style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh;"
             v-if="!cart.length">
@@ -66,7 +66,9 @@
                     </div>
                 </div>
             </div> -->
-            <div class="toggle-container">
+
+            <!-- <div class="wrap-toggle" style="display: block !important; width: 100% !important;">
+                   <div class="toggle-container">
                 <div :class="['toggle-option', { 'toggle-active': delivery_type === 1 }]"
                     @click="select_delivery_type(1)">
                     Delivery
@@ -76,9 +78,10 @@
                     Takeaway
                 </div>
             </div>
+            </div>
 
 
-
+            
             <div id="takeaway_address" style="padding-top: 20px;" class="cart-bord" v-if="delivery_type == 2">
                 <h4>{{ $t("Take Away") }} {{ $t("From") }}</h4>
                 <p id="demo"><feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{
@@ -86,56 +89,107 @@
             </div>
             <div id="delivery_address" style="display:block;  padding-top: 20px;" class="cart-bord"
                 v-if="delivery_type == 1">
-                <h4>{{ $t("DeliveringTo") }}</h4>
+                <h4>{{ $t("Delivering To") }}</h4>
                 <p id="demo"><feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{ rows }}</p>
                 <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary" style="padding:0px;"
                     @click="checklogin()">
                     <i class="fa-solid fa-circle-plus"></i> <span class="f-size-0">{{ $t("Add") }} {{ $t("New") }}
                         {{ $t("Address") }}</span>
                 </b-button>
-                <b-sidebar id="sidebar-address" bg-variant="white" right backdrop shadow width="130%" ref="a_sidebar">
+                <b-sidebar id="sidebar-address" bg-variant="black" right backdrop shadow width="130%" ref="a_sidebar">
                     <address_sidebar :prop="send_address" @clicked-show-detail="check" />
                 </b-sidebar>
-            </div>
-            <div v-for="(data, index) in $store.state['deliware_cart'].cart_items" :key="index">
-                <b-row>
-                    <b-col cols="12" style="padding: 1.25rem;">
-                        <b-media vertical-align="top">
-                            <template #aside v-if="data.food_image">
-                                <b-img class="bor" :src="data.food_image" blank-color="#ccc" width="70" />
-                            </template>
-                            <h4 class="media-heading">
-                                <div v-if="data.isveg">
-                                    <b-img src="/veg.svg" fluid alt="Scan" style="width: 12px;"
-                                        v-if="data.pharmacy_id == 0" />
-                                    {{ data.name }}
-                                </div>
-                                <div v-else>
-                                    <b-img src="/non_veg.svg" fluid alt="Scan" style="width: 12px;"
-                                        v-if="data.pharmacy_id == 0" />
-                                    {{ data.name }}
-                                </div>
-                            </h4>
-                            <b-card-text class="mb-0 textp" v-if="data.addonsName">
-                                {{ $t("Addons") }} : {{ data.to_display }}
-                            </b-card-text>
-                            <b-card-text class="mb-0 textp" v-if="data.sizeName">
-                                <!-- <b-row>
+            </div> -->
+            <div class="main">
+                <div class="box">
+                    <div class="wrap-toggle">
+                        <div class="toggle-container">
+                            <div :class="['toggle-option', { 'toggle-active': delivery_type === 1 }]"
+                                @click="select_delivery_type(1)">
+                                Delivery
+                            </div>
+                            <div :class="['toggle-option', { 'toggle-active': delivery_type === 2 }]"
+                                @click="select_delivery_type(2)">
+                                Takeaway
+                            </div>
+                        </div>
 
-                  <div class="circleBase type1" :style="{ background: data.sizeName }">
-                  </div>
-                </b-row> -->
-                                {{ data.sizeName }}
-                            </b-card-text>
-                            <b-row class="pt-3">
-                                <b-col cols="4">
-                                    <h4 class="media-heading text-primary">
-                                        {{ $store.state['defaults'].currency }} {{ data.price + data.addonsPrice |
-                                            priceformat }}
+                        <!-- Will appear BELOW the toggle-container -->
+                        <div id="takeaway_address"
+                            style="padding-top: 20px;font-family: Quicksand;font-weight:400;font-size: 14px;"
+                            class="cart-bord" v-if="delivery_type == 2">
+                            <h4>{{ $t("Take Away") }} {{ $t("From") }}</h4>
+                            <p id="demo">
+                                <feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{
+                                    cart[0].restaurant_address }}
+                            </p>
+                        </div>
+
+                        <div id="delivery_address" style="padding-top: 20px; font-family: Quicksand;" class="cart-bord"
+                            v-if="delivery_type == 1">
+                            <h4>{{ $t("Delivering To") }}</h4>
+                            <p id="demo"
+                                style="font-family: Quicksand;font-weight:400;font-size: 14px;margin-bottom: 8px;">
+                                <feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{ rows }}
+                            </p>
+                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary"
+                                style="padding:0px;font-family: Quicksand;font-weight:400;font-size: 14px;"
+                                @click="checklogin()">
+                                <i class="fa-solid fa-circle-plus"></i> <span class="f-size-0">{{ $t("Add") }} {{
+                                    $t("New") }}
+                                    {{
+                                        $t("Address") }}</span>
+                            </b-button>
+
+                            <b-sidebar id="sidebar-address" bg-variant="white" right backdrop shadow width="130%"
+                                ref="a_sidebar">
+                                <address_sidebar :prop="send_address" @clicked-show-detail="check" />
+                            </b-sidebar>
+                        </div>
+                    </div>
+
+                    <div style=" margin-left: 28px ;min-width: 840px; max-width:auto; float: left;"
+                        v-for="(data, index) in $store.state['deliware_cart'].cart_items" :key="index">
+                        <b-row>
+                            <b-col cols="12"
+                                style="margin-bottom: 15px; padding: 1.25rem; background-color: #FAFAFA;border: 1px solid #E5E7EB; border-radius:15px;">
+                                <b-media vertical-align="top">
+                                    <template #aside v-if="data.food_image">
+                                        <b-img class="bor" :src="data.food_image" blank-color="#ccc" width="70" />
+                                    </template>
+                                    <h4 class="media-heading">
+                                        <div v-if="data.isveg">
+                                            <b-img src="/veg.svg" fluid alt="Scan" style="width: 12px;"
+                                                v-if="data.pharmacy_id == 0" />
+                                            {{ data.name }}
+                                        </div>
+                                        <div v-else>
+                                            <b-img src="/non_veg.svg" fluid alt="Scan" style="width: 12px;"
+                                                v-if="data.pharmacy_id == 0" />
+                                            {{ data.name }}
+                                        </div>
                                     </h4>
-                                </b-col>
-                                <b-col cols="8">
-                                    <!-- <div style="max-width:105px; float: right;">
+                                    <b-card-text class="mb-0 textp" v-if="data.addonsName">
+                                        {{ $t("Addons") }} : {{ data.to_display }}
+                                    </b-card-text>
+                                    <b-card-text class="mb-0 textp" v-if="data.sizeName">
+                                        <!-- <b-row>
+
+                                   <div class="circleBase type1" :style="{ background: data.sizeName }">
+                                 </div>
+                                   </b-row> -->
+                                        {{ data.sizeName }}
+                                    </b-card-text>
+                                    <b-row class="pt-3" style="padding-top: 2px !important;">
+                                        <b-col cols="4">
+                                            <h4 class="media-heading text-primary">
+                                                {{ $store.state['defaults'].currency }} {{ data.price + data.addonsPrice
+                                                    |
+                                                    priceformat }}
+                                            </h4>
+                                        </b-col>
+                                        <b-col cols="8">
+                                            <!-- <div style="max-width:105px; float: right;">
                                         <div class="num-block skin-2" :id="'food_control_' + data.id + 'c'">
                                             <div class="num-in">
                                                 <span class="minus dis" :id="'food_minus_' + data.id"
@@ -147,35 +201,144 @@
                                             </div>
                                         </div>
                                     </div> -->
-                                    <div style="max-width: 120px; float: right;">
-                                        <div class="num-block styled-qty" :id="'food_control_' + data.id + 'c'">
-                                            <div class="num-in">
+                                            <div style="max-width: 120px; float: right;">
+                                                <div class="num-block styled-qty" :id="'food_control_' + data.id + 'c'">
+                                                    <div class="num-in">
 
 
-                                                <span class="icon-btn" :id="'food_minus_' + data.id"
-                                                    @click="removefromcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </span>
+                                                        <span class="icon-btn" :id="'food_minus_' + data.id"
+                                                            @click="removefromcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </span>
 
 
-                                                <span class="quantity-text" :id="'food_qty_' + data.id + 'c'">
-                                                    {{ data.quantity }}
-                                                </span>
+                                                        <span class="quantity-text" :id="'food_qty_' + data.id + 'c'">
+                                                            {{ data.quantity }}
+                                                        </span>
 
 
-                                                <span class="icon-btn" :id="'food_plus_' + data.id"
-                                                    @click="addcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
-                                                    <i class="fas fa-plus"></i>
-                                                </span>
+                                                        <span class="icon-btn" :id="'food_plus_' + data.id"
+                                                            @click="addcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
+                                                            <i class="fas fa-plus"></i>
+                                                        </span>
 
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </b-col>
-                            </b-row>
-                        </b-media>
-                    </b-col>
-                </b-row>
+                                        </b-col>
+                                    </b-row>
+                                </b-media>
+                            </b-col>
+                        </b-row>
+                    </div>
+                </div>
+                <div class="box" style="margin-top: 20px; margin: 25px; min-width: 600px;font-family: Quicksand;">
+                    <div id="bill" class="pt-4" style="margin-bottom:50px " >
+                        <h4 style="font-weight:400; font-size: 18px;">{{ $t("Order Summary") }}</h4>
+                        <table width="100%">
+                            <tr>
+                                <td class="font-size">{{ $t("Item Total") }}</td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.item_total |
+                                    priceformat }}</td>
+                            </tr>
+                            <tr v-if="$store.state['deliware_cart'].cart_total.packaging_charge > 0">
+                                <td class="font-size">{{ $t("Packaging Charge") }}</td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.packaging_charge |
+                                    priceformat }}</td>
+                            </tr>
+                            <!-- <tr v-if="$store.state['deliware_cart'].cart_total.discount > 0">
+                                <td class="font-size">{{ $t("Discount") }}</td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.discount
+                                    |
+                                    priceformat
+                                    }}
+                                </td>
+                            </tr> -->
+
+                            <tr id="dcharge_bill" v-if="$store.state['deliware_cart'].cart_total.delivery_charge > 0">
+                                <td class="font-size">{{ $t("Delivery Charge") }}</td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.delivery_charge |
+                                    priceformat }}</td>
+                            </tr>
+                            <!-- <tr id="tips_bill" v-if="tips_enable">
+                                <td>{{ $t("Tips") }}</td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.tips |
+                                    priceformat
+                                    }}
+                                </td>
+                            </tr> -->
+                            <tr id="tips_bill" v-if="$store.state['deliware_cart'].cart_total.tax > 0">
+                                <td>{{ $t("Tax") }} <span>{{ tax($store.state['defaults'].tax) }}</span></td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.tax |
+                                    priceformat }}
+                                </td>
+                            </tr>
+                            <tr id="wallet_bill" v-if="$store.state['deliware_cart'].cart_total.wallet > 0">
+                                <td>{{ $t("Wallet") }}(-)</td>
+                                <td>{{ $store.state['defaults'].currency }} {{
+                                    $store.state['deliware_cart'].cart_total.wallet |
+                                    priceformat
+                                }}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div class="horizontal-line"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <b>{{ $t("Total") }} </b>
+                                </td>
+                                <td>
+                                    <b> {{ $store.state['defaults'].currency }}
+                                        {{ $store.state['deliware_cart'].cart_total.bill | priceformat }}</b>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="delivery-card">
+                            <div class="dot"></div>
+                            <div class="text-content">
+                                <div class="label">Estimated Delivery</div>
+                                <div class="time">25–35 minutes</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="demo-inline-spacing " style="position: fixed; 
+                        left: 10px;
+                        bottom: 0;
+                        width: 100%;
+                        background-color:#fff;
+                        padding: 10px;">
+                        <!-- <div class="subtotal-box">
+                            <span class="subtotal-label">Subtotal</span>
+                            <b class="subtotal-amount">
+                                {{ $store.state['defaults'].currency }}
+                                {{ $store.state['deliware_cart'].cart_total.bill | priceformat }}
+                            </b>
+                        </div> -->
+                        <b-button style="height:50px; background-color: #FF006B;" class="f-size-2"
+                            v-ripple.400="'#FF006B'" block variant="primary" @click="checkout()"
+                            v-if="isdefault && is_deliverable">
+                            {{ $t("Proceed to Checkout") }}
+                        </b-button>
+                        <b-button style="height:50px;" class="f-size-2" v-ripple.400="'rgba(255, 255, 255, 0.15)'" block
+                            variant="primary" v-if="!isdefault && is_deliverable" @click="checklogin()">
+                            Select Address
+                        </b-button>
+                    </div>
+                    
+                </div>
+                
             </div>
             <!-- <div id="prescription" class="cart-bord" style="padding:20px 0px;"
                 v-if="$store.state['deliware_cart'].pharmacy == 1">
@@ -205,12 +368,12 @@
                 </b-input-group>
                 <input type="hidden" id="applied_coupon_Amount">
             </div> -->
-            <div id="coupon" class="cart-bord">
+            <div id="coupon" class="cart-bord" style="margin-left: 16px !important;">
                 <b-input-group class="coupons">
                     <b-form-input placeholder="Enter Coupon Code" id="checkout_coupon_value" class="coupon-input" />
                     <b-input-group-append is-text>
-                        <b-button variant="primary" id="applied_coupon_identify" @click="applycoupon()"
-                            class="apply-btn" v-if="!clear">
+                        <b-button style="margin-right: 25px !important;" variant="primary" id="applied_coupon_identify"
+                            @click="applycoupon()" class="apply-btn" v-if="!clear">
                             {{ clear ? "Clear" : "Apply" }}
                         </b-button>
                         <!-- <b-button variant="primary" id="applied_coupon_identify" click="clearcoupon()" class="apply-btn"
@@ -259,91 +422,9 @@
                     <input type="hidden" id="selected_tips" />
                 </b-row>
             </div> -->
-            <!-- <div id="bill" class="pt-4" style="margin-bottom:50px">
-                <h4>{{ $t("Bill Details") }}</h4>
-                <table width="100%">
-                    <tr>
-                        <td>{{ $t("Item Total") }}</td>
-                        <td>{{ $store.state['defaults'].currency }} {{
-                            $store.state['deliware_cart'].cart_total.item_total |
-                            priceformat }}</td>
-                    </tr>
-                    <tr v-if="$store.state['deliware_cart'].cart_total.packaging_charge > 0">
-                        <td>{{ $t("Packaging Charge") }}</td>
-                        <td>{{ $store.state['defaults'].currency }} {{
-                            $store.state['deliware_cart'].cart_total.packaging_charge |
-                            priceformat }}</td>
-                    </tr>
-                    <tr v-if="$store.state['deliware_cart'].cart_total.discount > 0">
-                        <td>{{ $t("Discount") }}</td>
-                        <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.discount
-                            |
-                            priceformat
-                        }}
-                        </td>
-                    </tr>
-
-                    <tr id="dcharge_bill" v-if="$store.state['deliware_cart'].cart_total.delivery_charge > 0">
-                        <td>{{ $t("Delivery Charge") }}</td>
-                        <td>{{ $store.state['defaults'].currency }} {{
-                            $store.state['deliware_cart'].cart_total.delivery_charge |
-                            priceformat }}</td>
-                    </tr>
-                    <tr id="tips_bill" v-if="tips_enable">
-                        <td>{{ $t("Tips") }}</td>
-                        <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.tips |
-                            priceformat
-                            }}
-                        </td>
-                    </tr>
-                    <tr id="tips_bill" v-if="$store.state['deliware_cart'].cart_total.tax > 0">
-                        <td>{{ $t("Tax") }} <span>{{ tax($store.state['defaults'].tax) }}</span></td>
-                        <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.tax |
-                            priceformat }}
-                        </td>
-                    </tr>
-                    <tr id="wallet_bill" v-if="$store.state['deliware_cart'].cart_total.wallet > 0">
-                        <td>{{ $t("Wallet") }}(-)</td>
-                        <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.wallet |
-                            priceformat
-                            }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>{{ $t("Bill Total") }} </b>
-                        </td>
-                        <td>
-                            <b>{{ $store.state['defaults'].currency }}</b>
-                        </td>
-                    </tr>
-                </table>
-            </div> -->
             <div id="proceed" class="pb-3">
                 <b-col md="12">
-                    <div class="demo-inline-spacing " style="position: fixed; 
-                        left: 10px;
-                        bottom: 0;
-                        width: 100%;
-                        background-color:#fff;
-                        padding: 10px;">
-                        <div class="subtotal-box">
-                            <span class="subtotal-label">Subtotal</span>
-                            <b class="subtotal-amount">
-                                {{ $store.state['defaults'].currency }}
-                                {{ $store.state['deliware_cart'].cart_total.bill | priceformat }}
-                            </b>
-                        </div>
-                        <b-button style="height:50px; background-color: #FF006B;" class="f-size-2"
-                            v-ripple.400="'#FF006B'" block variant="primary" @click="checkout()"
-                            v-if="isdefault && is_deliverable">
-                            {{ $t("Proceed to Checkout") }}
-                        </b-button>
-                        <b-button style="height:50px;" class="f-size-2" v-ripple.400="'rgba(255, 255, 255, 0.15)'" block
-                            variant="primary" v-if="!isdefault && is_deliverable" @click="checklogin()">
-                            Select Address
-                        </b-button>
-                    </div>
+                    
                 </b-col>
             </div>
             <loginmodal v-model="modalOpen"></loginmodal>
@@ -1209,10 +1290,14 @@ export default {
 
 .toggle-container {
     display: flex;
-    background-color: #FF81B633;
+    background-color: transparent;
+    gap: 12px;
     border-radius: 9999px;
+    justify-content: flex-start;
     width: fit-content;
     margin: 20px auto;
+    margin-left: 25px;
+    margin-bottom: 5px;
 }
 
 .toggle-option {
@@ -1221,7 +1306,7 @@ export default {
     font-weight: bold;
     font-size: 16px;
     color: #FF006B;
-    background-color: transparent;
+    background-color: #FF81B626;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -1230,6 +1315,7 @@ export default {
     background-color: #FF006B;
     color: white;
 }
+
 
 .text-l {
     text-align: left;
@@ -1271,7 +1357,7 @@ export default {
 }
 
 .b-sidebar>.b-sidebar-header .close {
-    font-size: 2rem; 
+    font-size: 2rem;
 }
 
 .circleBase {
@@ -1317,12 +1403,13 @@ export default {
     overflow: hidden;
     display: flex;
     border: none;
+    margin-left: 0px;
 
 }
 
 .coupon-input {
     border-right: none !important;
-    border: 1px solid #E0E0E0;
+    border: 1px solid #E0E0E0 !important;
     border-radius: 8px 0 0 8px;
     padding-left: 20px;
     font-size: 16px;
@@ -1405,16 +1492,139 @@ export default {
 }
 
 .text-l {
-    height: 1000px;
+    height: auto;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    border: 2px solid #E5E7EB;
+    height: 500px;
 
 }
 
 .text-l::-webkit-scrollbar {
     display: none;
 }
- 
 
+.wrap-toggle {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+.cart-bord {
+    margin-top: 0% !important;
+    margin-left: 28px;
+}
+
+/* Make media and qty section wrap cleanly */
+.b-media {
+    flex-wrap: wrap !important;
+}
+
+.media-heading {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* Ensure quantity control does not overflow */
+.num-block.styled-qty {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #fff0f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff006b;
+    cursor: pointer;
+    border: 1px solid #ff006b;
+    font-size: 14px;
+}
+
+.quantity-text {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.box {
+    padding: 10px;
+    background-color: transparent;
+    
+}
+
+/* On smaller screens, stack vertically */
+@media (max-width: 600px) {
+    .main {
+        flex-direction: column;
+    }
+}
+
+
+
+.horizontal-line {
+    height: 1px;
+    background-color: #7f7f7f;
+    width: 63%;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.delivery-card {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 1%;
+    background-color: #F0F9FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 10px;
+    padding: 12px 16px;
+    height: 72px;
+   
+    max-width:  360px;
+    font-family: sans-serif;
+}
+
+.dot {
+    width: 20px;
+    height: 20px;
+    background-color: #3B82F6;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.text-content .label {
+    font-size: 12px;
+    font-family: Quicksand;
+    font-weight: 700;
+    color: #1E40AF;
+    font-weight: 500;
+}
+
+.text-content .time {
+    font-family: Quicksand;
+    font-weight: 700;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1E40AF;
+    margin-top: 2px;
+}
 </style>

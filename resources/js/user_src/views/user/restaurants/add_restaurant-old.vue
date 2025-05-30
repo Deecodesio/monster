@@ -55,8 +55,10 @@
      fluid
    
    >
-    <img :src="url? url : require('@@@/assets/images/banner/banner-1.jpg')"  v-model="restaurants.banner" hidden/> 
-   <img :src="url1? url1:require('@@@/assets/images/banner/banner-34.jpg')"  v-model="restaurants.image" hidden/> 
+    <!-- <img :src="url? url : require('@@@/assets/images/banner/banner-1.jpg')"  v-model="restaurants.banner" hidden/> 
+   <img :src="url1? url1:require('@@@/assets/images/banner/banner-34.jpg')"  v-model="restaurants.image" hidden/>  -->
+     <img :src="url? url : require('@@@/assets/images/banner/banner-1.jpg')" hidden/> 
+   <img :src="url1? url1:require('@@@/assets/images/banner/banner-34.jpg')" hidden/> 
     <!-- profile picture -->
     <div class="position-relative">
       <div class="profile-img-container d-flex align-items-center">
@@ -85,7 +87,7 @@
          
         </div>
        
-      </div>
+      </div>  
     </div>
     <!--/ profile picture -->
 
@@ -629,13 +631,13 @@
       :id="'timepicker-placeholder1'+item"
       placeholder="Choose a time"
       local="en"
-       v-model="restaurants_time.opening_time_+item"
+       v-model="restaurants_time['opening_time_' + item]"
     />
     <b-form-timepicker
       :id="'timepicker-placeholder2'+item"
       placeholder="Choose a time"
       local="en"
-      v-model="restaurants_time.closing_time_+item"
+      v-model="restaurants_time['closing_time_' + item]"
     />
             </b-col>
               <b-col md="4">
@@ -643,13 +645,13 @@
       :id="'timepicker-placeholder3'+item"
       placeholder="Choose a time"
       local="en"
-       v-model="restaurants_time.opening_second_time_+item"
+       v-model="restaurants_time['opening_second_time_' + item]"
     />
     <b-form-timepicker
       :id="'timepicker-placeholder4'+item"
       placeholder="Choose a time"
       local="en"
-      v-model="restaurants_time.closing_second_time_+item"
+      v-model="restaurants_time['closing_second_time_' + item]"
     />
             </b-col>
            

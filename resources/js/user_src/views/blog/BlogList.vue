@@ -11,42 +11,93 @@
     </div>
 
     <!-- Blog content -->
-    <b-row v-else>
-      <b-col
-        v-for="blog in blogs"
-        :key="blog.id"
-        cols="12"
-        md="6"
-        lg="4"
-      >
-        <b-card
-          no-body
+    <div v-else>
+      <!-- Featured Blog (Latest) -->
+      <div v-if="featuredBlog" class="featured-blog mb-5">
+        <b-row>
+          <b-col cols="12">
+            <b-card no-body class="overflow-hidden">
+              <b-row no-gutters>
+                <b-col md="6">
+                  <b-img
+                    :src="featuredBlog.featured_image"
+                    fluid
+                    class="featured-img"
+                    alt="Featured blog image"
+                  />
+                </b-col>
+                <b-col md="6">
+                  <b-card-body>
+                    <small class="text-muted">{{ formatDate(featuredBlog.published_at) }}</small>
+                    <h2 class="mt-2 mb-3">{{ featuredBlog.title }}</h2>
+                    <p class="blog-excerpt">{{ featuredBlog.excerpt }}</p>
+                    <b-button
+                      variant="primary"
+                      :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug }}"
+                    >
+                      Read more
+                    </b-button>
+                  </b-card-body>
+                </b-col>
+              </b-row>
+            </b-card>
+          </b-col>
+        </b-row>
+      </div>
+
+      <!-- Blog Grid -->
+      <h3 class="mb-4">Latest Articles</h3>
+      <b-row>
+        <b-col
+          v-for="blog in regularBlogs"
+          :key="blog.id"
+          cols="12"
+          md="6"
           class="mb-4"
         >
-          <b-img
-            :src="blog.featured_image"
-            fluid
-            class="card-img-top"
-          />
-          <b-card-body>
-            <small class="text-muted">{{ formatDate(blog.published_at) }}</small>
-            <h4 class="mt-2">{{ blog.title }}</h4>
-            <p>{{ blog.excerpt }}</p>
-            <b-button
-              variant="primary"
-              :to="{ name: 'blog-detail', params: { slug: blog.slug }}"
-            >
-              Read more
-            </b-button>
-          </b-card-body>
-        </b-card>
-      </b-col>
-    </b-row>
+          <b-card
+            no-body
+            class="h-100 blog-card"
+          >
+            <div class="blog-img-container">
+              <b-img
+                :src="blog.featured_image"
+                fluid
+                class="card-img-top blog-img"
+                alt="Blog image"
+              />
+            </div>
+            <b-card-body>
+              <small class="text-muted">{{ formatDate(blog.published_at) }}</small>
+              <h4 class="mt-2 mb-2">{{ blog.title }}</h4>
+              <p class="blog-excerpt">{{ blog.excerpt }}</p>
+              <b-button
+                variant="primary"
+                :to="{ name: 'blog-detail', params: { slug: blog.slug }}"
+                class="mt-auto"
+              >
+                Read more
+              </b-button>
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-center mt-5">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          @change="handlePageChange"
+        ></b-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from '@vue/composition-api'
+import { ref, computed, onMounted } from '@vue/composition-api'
 import {
   BRow,
   BCol,
@@ -55,6 +106,7 @@ import {
   BImg,
   BButton,
   BSpinner,
+  BPagination,
 } from 'bootstrap-vue'
 import axios from 'axios'
 
@@ -68,17 +120,38 @@ export default {
     BImg,
     BButton,
     BSpinner,
+    BPagination,
   },
   setup() {
     const blogs = ref([])
     const loading = ref(true)
     const error = ref(null)
+    const currentPage = ref(1)
+    const perPage = ref(10)
+    const totalRows = ref(0)
 
-    const fetchBlogs = async () => {
+    // Computed property for featured blog (latest one)
+    const featuredBlog = computed(() => blogs.value.length > 0 ? blogs.value[0] : null)
+    
+    // Computed property for regular blogs (all except the featured one)
+    const regularBlogs = computed(() => blogs.value.length > 1 ? blogs.value.slice(1) : [])
+
+    const fetchBlogs = async (page = 1) => {
       try {
         loading.value = true
-        const response = await axios.get('/api/blogs')
-        blogs.value = response.data.data || response.data
+        const response = await axios.get(`/api/blogs?page=${page}`)
+        console.log('API Response:', response) // Add this line
+    
+        // Handle pagination data
+        if (response.data.data) {
+          blogs.value = response.data.data
+          totalRows.value = response.data.total
+          currentPage.value = response.data.current_page
+          perPage.value = response.data.per_page
+        } else {
+          blogs.value = response.data
+        }
+        
         loading.value = false
       } catch (err) {
         error.value = 'Error loading blogs: ' + err.message
@@ -87,7 +160,14 @@ export default {
       }
     }
 
-    const formatDate = date => new Date(date).toLocaleDateString()
+    const handlePageChange = (page) => {
+      fetchBlogs(page)
+    }
+
+    const formatDate = date => {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString(undefined, options)
+    }
 
     onMounted(() => {
       fetchBlogs()
@@ -98,6 +178,12 @@ export default {
       loading,
       error,
       formatDate,
+      featuredBlog,
+      regularBlogs,
+      currentPage,
+      totalRows,
+      perPage,
+      handlePageChange
     }
   },
 }
@@ -106,5 +192,54 @@ export default {
 <style lang="scss" scoped>
 .blog-list {
   padding: 2rem;
+}
+
+.featured-blog {
+  .featured-img {
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 2rem;
+  }
+}
+
+.blog-card {
+  transition: transform 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .blog-img-container {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .blog-img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .blog-excerpt {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 }
 </style>

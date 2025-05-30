@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\admin;
 
-
 use App\Http\Controllers\api\BaseController;
 use App\Model\City_geofencing;
 use App\Model\Deliverypartners;
@@ -15,9 +14,11 @@ use Hash;
 use Illuminate\Http\Request;
 use Validator;
 use App\Model\DriverDocument;
+use App\Model\FoodListPricing;
 use App\helpers;
 use File;
 use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
@@ -3296,5 +3297,878 @@ class RestaurantController extends BaseController
 
 
         return response()->json($productList);
+    }
+
+
+    public function product_list(Request $request)
+    {
+        // $restaurant_id = $request->id;
+
+        // $res_details = DB::table('restaurants')->where('id', $restaurant_id)
+        //     ->first();
+        // $business = DB::table('business_type')->where('id', $res_details->business_type)
+        //     ->first();
+
+        // if ($business->layout_id == 2) {
+        //     $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->leftJoin('category', 'category.id', '=', 'food_list.category_id')
+        //         ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+        //         ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*', 'category.*',  'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
+        //         ->get();
+        // } else {
+        //     $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+        //         ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+        //         ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*',  'menu.*', 'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
+        //         ->get();
+        // }
+        //  $download_path = BASE_URL . UPLOADS_PATH . $request->id . "_products.csv";
+        // $response_Array = json_encode(['data' => $data, 'download_path' => $download_path, 'business' => $business->layout_id]);
+        // return $response_Array;
+
+        $data = DB::table('food_list')
+            ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+            ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+            ->select(
+                'food_list.id as food_id',
+                'business_category.category_name as business_name',
+                'food_list.*',
+                'menu.*',
+                'food_list.status as f_status',
+                'food_list.out_of_stock as stock_status'
+            )
+            ->get();
+
+        foreach ($data as $d) {
+            $imagePath = 'product_image/' . $d->image;
+            if (file_exists(public_path($imagePath))) {
+                $d->image = BASE_URL .  $imagePath;
+            } else {
+                $d->image = BASE_URL .  "def_logo.jpg";
+            }
+            $d->name = $this->secondLanguage_store($d->name, $d->secondary_name);
+            $d->description = $this->secondLanguage_store($d->description, $d->secondary_description);
+        }
+        $download_path = BASE_URL . UPLOADS_PATH . "_products.csv";
+        $response_Array = json_encode(['data' => $data, 'download_path' => $download_path, 'business' => '']);
+        return $response_Array;
+    }
+
+    public function add_to_product(Request $request)
+    {
+
+        $validator_primary = Validator::make($request->all(), [
+            'name' => 'required',
+            'business_category_id' => 'required',
+            'status' => 'required',
+            'packaging_charge' => 'required',
+            'product' => 'required',
+        ]);
+
+        $toggle_status = (int) $request->toggle_status ?? 0;
+
+        if ($toggle_status == 0) {
+            if ($validator_primary->fails()) {
+
+                $error_messages = implode(',', $validator_primary->messages()->all());
+                $message = $error_messages;
+                $status = false;
+                $response_Array = json_encode(['message' => $message, 'status' => $status]);
+                return $response_Array;
+            }
+        } else {
+            $validator_secondary = Validator::make($request->all(), [
+                'namesecondary' => 'required|max:30',
+                //'description' => 'required|max:100',
+            ]);
+
+            if ($validator_secondary->fails()) {
+
+                $error_messages = implode(',', $validator_secondary->messages()->all());
+                $message = $error_messages;
+                $status = false;
+                $response_Array = json_encode(['message' => $message, 'status' => $status]);
+                return $response_Array;
+            }
+        }
+
+        // if (!empty($request->food_quantity_price)) {
+        //     $food_quantity_price = array_filter($request->food_quantity_price, function ($value) {
+        //         return $value !== '';
+        //     });
+        // }
+        // if (!empty($request->food_quantity_desc)) {
+        //     $food_quantity_desc = array_filter($request->food_quantity_desc, function ($value) {
+        //         return $value !== '';
+        //     });
+        // }
+
+        $name =  $this->secound_lang_name($request->name);
+        $namesecondary =  $this->secound_lang_name($request->namesecondary);
+        $description = $this->secound_lang_name($request->description);
+        if ($description == "undefined") {
+            $description = '';
+        }
+        $descriptionsecondary = $this->secound_lang_name($request->descriptionsecondary);
+        if ($descriptionsecondary == "undefined") {
+            $descriptionsecondary = '';
+        }
+        // $category = $request->category ?? 0;
+        $business_category_id = $request->business_category_id ? $request->business_category_id : '';
+        $menu = $request->menu ?? 0;
+
+        $status = $request->status;
+        $stockstatus = $request->stockstatus;
+        // $initial_price = $request->initial_price;
+        // $split_payment = $request->split_payment;
+        // $price = $request->price;
+        // $bprice = $request->bprice;
+        // $tax = $request->tax;
+        $packaging_charge = $request->packaging_charge;
+        $food_type = (int) $request->food_type;
+        $toggle_status = (int) $request->toggle_status;
+
+        if ($request->id) {
+            $foodlist = $this->foodlist->find($request->id);
+            // $foodlist->restaurant_id = $restaurant_id;
+            $foodlist->name = $name;
+            $foodlist->secondary_name = $namesecondary;
+            $foodlist->description = $description;
+            $foodlist->secondary_description = $descriptionsecondary;
+            // $foodlist->category_id = $category;
+            $foodlist->business_category_id = $business_category_id;
+            $foodlist->menu_id = $menu;
+            $foodlist->status = $status;
+            $foodlist->out_of_stock = $stockstatus;
+            // $foodlist->price = $price;
+            // $foodlist->bprice = $bprice;
+            // $foodlist->initial_price = $initial_price;
+            // $foodlist->split_payment = $split_payment;
+            // $foodlist->tax = $tax;
+            $foodlist->packaging_charge = $packaging_charge;
+            $foodlist->is_veg = $food_type;
+            $foodlist->status = $status;
+            $foodlist->is_secondary = $toggle_status;
+
+            $request->existing = json_decode($request->existing, true);
+            if (count(json_decode($request->image)) > 0) {
+                if ($request->existing[$request->featured_image] == "undefined") {
+                    $product_image_upload  = basename($request->image);
+                    $foodlist->image = $product_image_upload;
+                } else {
+                    if ($request->existing[$request->featured_image] == 1) {
+                        $dec_image = json_decode($request->image);
+                        $img = $dec_image[$request->featured_image];
+                        $product_image_upload = basename($img);
+                        $foodlist->image = $product_image_upload ?  $product_image_upload : $foodlist->image;
+                        $foodlist->cloudflare_imageid = null;
+                    } else {
+                        // $product_image_upload = $this->custom->common_upload_images_product($request, 'image', $restaurant_id);
+                        $product_image_upload = $this->custom->common_upload_images_product($request, 'image');
+                        $json = json_decode($product_image_upload, true);
+                        $foodlist->image = $json['imagename'] ?  $json['imagename'] : $foodlist->image;
+                        $foodlist->cloudflare_imageid = $json['id'];
+                    }
+                }
+            }
+
+            $foodlist->save();
+
+            $foodId = $foodlist->id;
+
+            // Delete existing pricing data for this product
+            FoodListPricing::where('product_id', $foodId)->delete();
+
+            $product_list = json_decode($request->product, true);
+
+            foreach ($product_list as $group) {
+                $districtIds = $group['district'];
+                $price = $group['price'];
+                $state = $group['state'];
+                $tax = $group['tax'] ?? 0;
+                $label = $group['label']; // from request
+
+                // Generate simple random group_id (no state logic)
+                $groupId = strtoupper(Str::random(10)); // e.g., 'A3D9F1X0TY'
+                $food_pri = new FoodListPricing();
+                $food_pri->product_id = $foodId;
+                $food_pri->state_id = $state;
+                $food_pri->price = $price;
+                $food_pri->tax = $tax;
+                $food_pri->label = $label;
+                $food_pri->group_id = $groupId;
+                $food_pri->save();
+
+
+                // Attach districts via pivot table
+                $food_pri->districts()->sync($districtIds);
+            }
+
+            $delete_old_size = DB::table('product_images')->where('product_id', $request->id)->delete();
+            $req_images = json_decode($request->image);
+            if (count($req_images) > 1) {
+                $cou = 0;
+                foreach ($req_images as $rm) {
+
+                    if ($cou != $request->featured_image) {
+
+                        if ($request->existing[$cou] == "undefined") {
+                            $product_image_upload  = basename($rm);
+                        } else {
+                            if ($request->existing[$cou] == 1) {
+                                $product_image_upload = basename($rm);
+                                $image_t = $product_image_upload ?  $product_image_upload : $foodlist->image;
+                                $cloudflare_imageid_t = null;
+                            } else {
+                                $product_image_upload = $this->custom->upload_all_images($request, 'image', $cou, $rm);
+                                $json = json_decode($product_image_upload, true);
+                                $image_t = $json['imagename'] ?  $json['imagename'] : $foodlist->image;
+                                $cloudflare_imageid_t = $json['id'];
+                            }
+                            DB::table('product_images')->insert([
+                                'product_id' => $request->id,
+                                'image' => $image_t,
+                                'cloudflare_image_id' => $cloudflare_imageid_t,
+                            ]);
+                        }
+                    }
+                    $cou = $cou + 1;
+                }
+            }
+            // $delete_old_size = DB::table('foodlist_foodquantity')->where('foodlist_id', $request->id)->delete();
+            // if ($request->food_quantity_id) {
+            //     $food_quantity = $this->food_quantity->find($request->food_quantity_id);
+            //     $food_quantity_count = $food_quantity ? count($food_quantity) : 0;
+            //     $sync_data = array();
+            //     $default = 0;
+            //     for ($i = 0; $i < $food_quantity_count; $i++) {
+            //         if ($i == 0) {
+            //             $default = 1;
+            //         } else {
+            //             $default = 0;
+            //         }
+            //         if ($food_quantity_price[$i]) {
+            //             if ($food_quantity_desc[$i] == "undefined") {
+            //                 $food_quantity_desc[$i] = '';
+            //             }
+            //             $sync_data[$food_quantity[$i]->id] = ['price' => $food_quantity_price[$i], 'size_description' => $food_quantity_desc[$i], 'is_default' => $default];
+            //             DB::table('foodlist_foodquantity')->insert([
+            //                 'foodlist_id' => $request->id,
+            //                 'foodquantity_id' => $food_quantity[$i]->id,
+            //                 'price' => $food_quantity_price[$i],
+            //                 'size_description' => $food_quantity_desc[$i],
+            //                 'is_default' => $default
+            //             ]);
+            //         }
+            //     }
+            //     if ($request->addon_type == 0) {
+
+            //         for ($i = 0; $i < $food_quantity_count; $i++) {
+            //             if ($request->size_addons != null && $request->size_addons[$i] != null) {
+            //                 $j = [];
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     $j[] = strval($ad->id);
+            //                 }
+            //                 $array_addon = explode(',', $request->size_addons[$i]);
+            //                 $update = DB::table('foodlist_foodquantity')->where('foodlist_id', $request->id)->where('foodquantity_id', $food_quantity[$i]->id)->update([
+            //                     'addons_id' => json_encode($j)
+            //                 ]);
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     $delete_old = DB::table('foodlist_foodquantity_addons')->where('food_list', $request->id)->where('food_quantity', $food_quantity[$i]->id)->where('addon', $ad->id)->delete();
+            //                     if (!(isset($ad->stock))) {
+            //                         $ad->stock = 0;
+            //                     }
+            //                     $update_add = DB::table('foodlist_foodquantity_addons')->insert([
+            //                         'food_list' => $request->id,
+            //                         'food_quantity' => $food_quantity[$i]->id,
+            //                         'addon' => $ad->id,
+            //                         'price' => $ad->price,
+            //                         'stock' => $ad->stock
+            //                     ]);
+            //                 }
+            //             }
+            //         }
+            //     } else {
+            //         for ($i = 0; $i < $food_quantity_count; $i++) {
+            //             if ($request->size_addons != null && $request->size_addons[$i] != null) {
+            //                 $array_addon = explode(',', $request->size_addons[$i]);
+            //                 $j = [];
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     $j[] = strval($ad->id);
+            //                 }
+            //                 $array_addon = explode(',', $request->size_addons[$i]);
+            //                 $update = DB::table('foodlist_foodquantity')->where('foodlist_id', $request->id)->where('foodquantity_id', $food_quantity[$i]->id)->update([
+            //                     'addon_group' => json_encode($j)
+            //                 ]);
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     $delete_old = DB::table('foodlist_foodquantity_addons')->where('food_list', $request->id)->where('food_quantity', $food_quantity[$i]->id)->where('group_id', $ad->id)->delete();
+            //                     for ($t = 0; $t < count($ad->group_addons); $t++) {
+            //                         if (!(isset($ad->group_addons[$t]->stock))) {
+            //                             $ad->group_addons[$t]->stock = 0;
+            //                         }
+            //                         $update_add = DB::table('foodlist_foodquantity_addons')->insert([
+            //                             'food_list' => $request->id,
+            //                             'food_quantity' => $food_quantity[$i]->id,
+            //                             'group_id' => $ad->id,
+            //                             'addon' => $ad->group_addons[$t]->id,
+            //                             'price' => $ad->group_addons[$t]->price,
+            //                             'stock' => $ad->group_addons[$t]->stock
+            //                         ]);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            // $delete_old_adds = DB::table('foodlist_addons')->where('foodlist_id', $request->id)->delete();
+            // if ($request->addon_type == 1 && $request->groups != null) {
+            //     $group_ar = explode(',', $request->groups);
+            //     for ($i = 0; $i < count($group_ar); $i++) {
+            //         $add = DB::table('foodlist_addons')->insert([
+            //             'foodlist_id' => $request->id,
+            //             'addon_group' => $group_ar[$i]
+            //         ]);
+            //     }
+            // }
+            // if ($request->addon_type == 0 && $request->add_ons != null) {
+            //     $add_ar = explode(',', $request->add_ons);
+            //     $add_ons = $this->add_ons->find($add_ar);
+            //     foreach ($add_ons as $ad) {
+            //         $add = DB::table('foodlist_addons')->insert([
+            //             'foodlist_id' => $request->id,
+            //             'addons_id' => $ad->id
+            //         ]);
+            //     }
+            // }
+
+            DB::table('product_specification')->where('product_id', $request->id)->delete();
+            DB::table('table_type')->where('product_id', $request->id)->delete();
+
+            $specification = json_decode($request->specification);
+            if (count($specification)) {
+
+                foreach ($specification as $specs) {
+                    $ins_type = DB::table('table_type')->insertGetId([
+                        'name' => $specs->name,
+                        'product_id' => $request->id
+                    ]);
+                    foreach ($specs->items as $its) {
+                        DB::table('product_specification')->insert([
+                            'table_type' => $ins_type,
+                            'product_id' => $request->id,
+                            'label' => $its->label,
+                            'value' => $its->value
+
+                        ]);
+                    }
+                }
+            }
+
+
+            DB::table('product_faq')->where('product_id', $request->id)->delete();
+            $faq = json_decode($request->faq);
+            if (count($faq)) {
+
+                foreach ($faq as $faqs) {
+                    DB::table('product_faq')
+                        ->insert([
+                            'product_id' => $request->id,
+                            'question' => $faqs->question,
+                            'answer' => $faqs->answer
+                        ]);
+                }
+            }
+            $trans_msg = "Product Updated Successfully";
+        } else {
+            $this->foodlist->is_secondary = $toggle_status;
+            if ($toggle_status == 0) {
+                $this->foodlist->name = $name;
+                $this->foodlist->description = $description;
+                $this->foodlist->secondary_name = $namesecondary ?? '';
+                $this->foodlist->secondary_description = $descriptionsecondary ?? '';
+            } else {
+                $this->foodlist->secondary_name = $namesecondary ?? '';
+                $this->foodlist->secondary_description = $descriptionsecondary ?? '';
+            }
+            // $this->foodlist->restaurant_id = $restaurant_id;
+            // $this->foodlist->category_id = $category;
+            $this->foodlist->business_category_id = $business_category_id;
+            $this->foodlist->menu_id = $menu;
+            $this->foodlist->status = $status;
+            $this->foodlist->out_of_stock = $stockstatus;
+            // $this->foodlist->bprice = $bprice;
+            // $this->foodlist->initial_price = $initial_price;
+            // $this->foodlist->split_payment = $split_payment;
+            // $this->foodlist->tax = $tax;
+            $this->foodlist->packaging_charge = $packaging_charge;
+            $this->foodlist->is_veg = $food_type;
+            $this->foodlist->status = $status;
+            $request->existing = json_decode($request->existing);
+            if (count(json_decode($request->image)) > 0) {
+
+                if ($request->existing[$request->featured_image] == "undefined") {
+                    $product_image_upload  = basename($request->image);
+                } else {
+                    if ($request->existing[$request->featured_image] == 1) {
+                        $dec_image = json_decode($request->image);
+                        $img = $dec_image[$request->featured_image];
+                        $product_image_upload = basename($img);
+                        $this->foodlist->image = $product_image_upload ?  $product_image_upload : '';
+                        $this->foodlist->cloudflare_imageid = null;
+                    } else {
+                        // $product_image_upload = $this->custom->common_upload_images_product($request, 'image', $restaurant_id);
+                        $product_image_upload = $this->custom->common_upload_images_product($request, 'image');
+                        $json = json_decode($product_image_upload, true);
+                        $this->foodlist->image = $json['imagename'] ?  $json['imagename'] : $foodlist->image;
+                        $this->foodlist->cloudflare_imageid = $json['id'];
+                    }
+                }
+            }
+            $this->foodlist->save();
+
+            $foodId = $this->foodlist->id;
+            $product_list = json_decode($request->product, true);
+            foreach ($product_list as $group) {
+                $districtIds = $group['district'];
+                $price = $group['price'];
+                $state = $group['state'];
+                $tax = $group['tax'] ?? 0;
+                $label = $group['label']; // from request
+
+                // Generate simple random group_id (no state logic)
+                $groupId = strtoupper(Str::random(10)); // e.g., 'A3D9F1X0TY'
+                $food_pri = new FoodListPricing();
+                $food_pri->product_id = $foodId;
+                $food_pri->state_id = $state;
+                $food_pri->price = $price;
+                $food_pri->tax = $tax;
+                $food_pri->label = $label;
+                $food_pri->group_id = $groupId;
+                $food_pri->save();
+
+
+                // Attach districts via pivot table
+                $food_pri->districts()->sync($districtIds);
+            }
+
+            $req_images = json_decode($request->image, true);
+            if (count($req_images) > 1) {
+                $cou = 0;
+                foreach ($req_images as $rm) {
+                    if ($cou != $request->featured_image) {
+
+                        if ($request->existing[$cou] == "undefined") {
+                            $product_image_upload  = basename($rm);
+                        } else {
+                            if ($request->existing[$cou] == 1) {
+                                $product_image_upload = basename($rm);
+                                $image_t = $product_image_upload ?  $product_image_upload : $foodlist->image;
+                                $cloudflare_imageid_t = null;
+                            } else {
+
+                                $product_image_upload = $this->custom->upload_all_images($request, 'image', $cou, $rm);
+
+                                $json = json_decode($product_image_upload, true);
+                                $image_t = $json['imagename'] ?  $json['imagename'] : $foodlist->image;
+                                $cloudflare_imageid_t = $json['id'];
+                            }
+
+                            DB::table('product_images')->insert([
+                                'product_id' => $this->foodlist->id,
+                                'image' => $image_t,
+                                'cloudflare_image_id' => $cloudflare_imageid_t,
+                            ]);
+                        }
+                    }
+                    $cou = $cou + 1;
+                }
+            }
+
+
+            // if ($request->food_quantity_id) {
+            //     $food_quantity = $this->food_quantity->find($request->food_quantity_id);
+            //     $food_quantity_count = $food_quantity ? count($food_quantity) : 0;
+            //     $sync_data = array();
+            //     $default = 0;
+            //     for ($i = 0; $i < $food_quantity_count; $i++) {
+            //         if ($i == 0) {
+            //             $default = 1;
+            //         } else {
+            //             $default = 0;
+            //         }
+            //         if ($food_quantity_price[$i]) {
+            //             $sync_data[$food_quantity[$i]->id] = ['price' => $food_quantity_price[$i], 'size_description' => $food_quantity_desc[$i], 'is_default' => $default];
+            //         }
+            //     }
+            //     $this->foodlist->FoodQuantity()->attach($sync_data);
+            //     if ($request->addon_type == 0) {
+            //         for ($i = 0; $i < $food_quantity_count; $i++) {
+            //             if ($request->size_addons[$i] != null) {
+            //                 $j = [];
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     $j[] = strval($ad->id);
+            //                 }
+            //                 $array_addon = explode(',', $request->size_addons[$i]);
+            //                 $update = DB::table('foodlist_foodquantity')->where('foodlist_id', $this->foodlist->id)->where('foodquantity_id', $food_quantity[$i]->id)->update([
+            //                     'addons_id' => json_encode($j)
+            //                 ]);
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     if (!(isset($ad->stock))) {
+            //                         $ad->stock = 0;
+            //                     }
+            //                     $update_add = DB::table('foodlist_foodquantity_addons')->insert([
+            //                         'food_list' => $this->foodlist->id,
+            //                         'food_quantity' => $food_quantity[$i]->id,
+            //                         'addon' => $ad->id,
+            //                         'price' => $ad->price,
+            //                         'stock' => $ad->stock
+            //                     ]);
+            //                 }
+            //             }
+            //         }
+            //     } else {
+            //         for ($i = 0; $i < $food_quantity_count; $i++) {
+            //             if ($request->size_addons[$i] != null) {
+            //                 $j = [];
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     $j[] = strval($ad->id);
+            //                 }
+            //                 $array_addon = explode(',', $request->size_addons[$i]);
+            //                 $update = DB::table('foodlist_foodquantity')->where('foodlist_id', $this->foodlist->id)->where('foodquantity_id', $food_quantity[$i]->id)->update([
+            //                     'addon_group' => json_encode($j)
+            //                 ]);
+            //                 for ($k = 0; $k < count(json_decode($request->size_addons[$i])); $k++) {
+            //                     $dump = json_decode($request->size_addons[$i]);
+            //                     $ad = json_decode($dump[$k]);
+            //                     for ($t = 0; $t < count($ad->group_addons); $t++) {
+            //                         if (!(isset($ad->group_addons[$t]->stock))) {
+            //                             $ad->group_addons[$t]->stock = 0;
+            //                         }
+            //                         $update_add = DB::table('foodlist_foodquantity_addons')->insert([
+            //                             'food_list' => $this->foodlist->id,
+            //                             'food_quantity' => $food_quantity[$i]->id,
+            //                             'group_id' => $ad->id,
+            //                             'addon' => $ad->group_addons[$t]->id,
+            //                             'price' => $ad->group_addons[$t]->price,
+            //                             'stock' => $ad->group_addons[$t]->stock
+            //                         ]);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            $specification = json_decode($request->specification);
+            if (count($specification)) {
+
+                foreach ($specification as $specs) {
+                    $ins_type = DB::table('table_type')->insertGetId([
+                        'name' => $specs->name,
+                        'product_id' => $this->foodlist->id
+                    ]);
+                    foreach ($specs->items as $its) {
+                        DB::table('product_specification')->insert([
+                            'table_type' => $ins_type,
+                            'product_id' => $this->foodlist->id,
+                            'label' => $its->label,
+                            'value' => $its->value
+
+                        ]);
+                    }
+                }
+            }
+            $faq = json_decode($request->faq);
+            if (count($faq)) {
+                foreach ($faq as $faqs) {
+                    DB::table('product_faq')
+                        ->insert([
+                            'product_id' => $this->foodlist->id,
+                            'question' => $faqs->question,
+                            'answer' => $faqs->answer
+                        ]);
+                }
+            }
+            // if ($request->addon_type == 1 && $request->groups != null) {
+            //     $group_ar = explode(',', $request->groups);
+            //     for ($i = 0; $i < count($group_ar); $i++) {
+            //         $add = DB::table('foodlist_addons')->insert([
+            //             'foodlist_id' => $this->foodlist->id,
+            //             'addon_group' => $group_ar[$i]
+            //         ]);
+            //     }
+            // }
+            // if ($request->addon_type == 0 && $request->add_ons != null) {
+            //     $add_ar = explode(',', $request->add_ons);
+            //     $add_ons = $this->add_ons->find($add_ar);
+            //     $this->foodlist->Add_ons()->attach($add_ons);
+            // }
+            $trans_msg = "Product Added Successfully";
+        }
+        $message = $trans_msg;
+        $status = true;
+        $response_Array = json_encode(['message' => $message, 'status' => $status]);
+        return $response_Array;
+    }
+
+
+
+
+
+    /**
+     * edit product page with neccessity data
+     *
+     * @param array $request, int $id
+     *
+     * @return view page with array
+     */
+    public function edit_product_list(Request $request)
+    {
+        $product_list = DB::table('food_list')->where('id', $request->product_id)->first();
+
+        if ($product_list->name) {
+            $product_list->name = $this->secound_name($product_list->name);
+        }
+        if ($product_list->description) {
+            $product_list->description = $this->secound_name($product_list->description);
+        }
+        if ($product_list->secondary_name) {
+            $product_list->secondary_name = $this->secound_name($product_list->secondary_name);
+        }
+        if ($product_list->secondary_description) {
+            $product_list->secondary_description = $this->secound_name($product_list->secondary_description);
+        }
+
+        $featured[]  = File::exists(public_path('product_image/') . $product_list->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $product_list->image : (File::exists(public_path('restaurant_uploads/') . $product_list->restaurant_id . '/' . 'Product/' . $product_list->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $product_list->restaurant_id . '/' . 'Product/' . $product_list->image : (File::exists(public_path('common_images/') . $product_list->image) ? BASE_URL  .  UPLOADS_PATH_COMMON . $product_list->image : ''));
+
+        $other_images = DB::table('product_images')->where('product_id', $request->product_id)->get();
+        if (count($other_images) > 0) {
+            foreach ($other_images as $oi) {
+                $featured[]  = File::exists(public_path('product_image/') . $oi->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $oi->image : (File::exists(public_path('restaurant_uploads/') . $product_list->restaurant_id . '/' . 'Product/' . $oi->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $product_list->restaurant_id . '/' . 'Product/' . $oi->image : (File::exists(public_path('common_images/') . $oi->image) ? BASE_URL  .  UPLOADS_PATH_COMMON . $oi->image : ''));
+            }
+        }
+        $product_list->image = $featured;
+
+        $food = $this->foodlist::with(['pricings.districts'])->findOrFail($request->product_id);
+
+        $product_list->product = $food->pricings->map(function ($pricing) {
+            return [
+                'district' => $pricing->districts->pluck('id'), // List of district IDs
+                'price' => $pricing->price,
+                'state' => $pricing->state_id,
+                'tax' => $pricing->tax,
+                'label' => $pricing->label,
+                'group_id' => $pricing->group_id,
+            ];
+        });
+
+        // $product_list->image[] = File::exists(public_path('product_image/') . $product_list->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $product_list->image : (File::exists(public_path('restaurant_uploads/') . $product_list->restaurant_id . '/' . 'Product/' . $product_list->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $product_list->restaurant_id . '/' . 'Product/' . $product_list->image : (File::exists(public_path('common_images/') . $product_list->image) ? BASE_URL  .  UPLOADS_PATH_COMMON . $product_list->image : ''));
+        // $cat_details = $this->category->where('id', $product_list->category_id)->first();
+        // $product_list->cat_details = $cat_details;
+        // $this_addon = DB::table('foodlist_addons')
+        //     ->join('add_ons', 'add_ons.id', '=', 'foodlist_addons.addons_id')
+        //     ->where('foodlist_id', $request->product_id)
+        //     ->select('foodlist_addons.addons_id as id', 'add_ons.name',  'add_ons.secondary_name', 'add_ons.price', 'foodlist_addons.created_at', 'foodlist_addons.updated_at')
+        //     ->get()->toArray();
+        // if (!$this_addon) {
+        //     $product_list->add_ons = [];
+        // } else {
+        //     foreach ($this_addon as $addon_key => $each_addon) {
+        //         $this_addon[$addon_key]->restaurant_id = $product_list->restaurant_id;
+        //         $this_addon[$addon_key]->pivot = ['foodlist_id' => $request->product_id, 'addons_id' => $each_addon->id];
+        //     }
+        // }
+        // $product_list->add_ons = $this_addon;
+        // $this_gaddon = DB::table('foodlist_addons')
+        //     ->where('foodlist_id', $request->product_id)
+        //     ->where('addons_id', null)
+        //     ->get();
+        // $add_group = [];
+        // foreach ($this_gaddon as $addon_key => $each_addon) {
+        //     if ($each_addon->addon_group != null) {
+        //         $group = DB::table('addon_group')->where('id', $each_addon->addon_group)->first();
+        //         $array_group = json_decode($group->add_ons);
+        //         foreach ($array_group as $ag) {
+        //             $addon_detail = DB::table('add_ons')->where('id', $ag)->first();
+        //             $gadd_ons[] = [
+        //                 'id' => $ag,
+        //                 'name' => $addon_detail->name,
+        //                 'secondary_name' => $addon_detail->secondary_name,
+        //                 'price' => $addon_detail->price
+        //             ];
+        //         }
+        //         $add_group[] = [
+        //             'id' => $each_addon->addon_group,
+        //             'name' => $group->name,
+        //             'min' => $group->min,
+        //             'max' => $group->max,
+        //             'allow_multiple' => $group->allow_multiple,
+        //             'mandatory' => $group->mandatory,
+        //             'group_addons' => $gadd_ons
+        //         ];
+        //     }
+        // }
+        // $product_list->groups = $add_group;
+        // $this_size = DB::table('foodlist_foodquantity')
+        //     ->join('food_quantity', 'food_quantity.id', '=', 'foodlist_foodquantity.foodquantity_id')
+        //     ->where('foodlist_id', $request->product_id)
+        //     ->select(
+        //         'foodlist_foodquantity.foodquantity_id as id',
+        //         'food_quantity.name',
+        //         'food_quantity.secondary_name',
+        //         'foodlist_foodquantity.price',
+        //         'foodlist_foodquantity.is_default',
+        //         'foodlist_foodquantity.created_at',
+        //         'foodlist_foodquantity.updated_at',
+        //         'foodlist_foodquantity.addons_id',
+        //         'foodlist_foodquantity.addon_group',
+        //         'foodlist_foodquantity.size_description',
+        //     )
+        //     ->get()->toArray();
+        // if (!$this_size) {
+        //     $product_list->food_quantity = [];
+        // } else {
+        //     foreach ($this_size as $size_key => $each_size) {
+        //         if ($each_size->addon_group != null) {
+        //             $sg = $each_size->addon_group;
+        //             $sg_group = json_decode($sg);
+        //             $sgadd_ons = [];
+        //             $sadd_group = [];
+        //             foreach ($sg_group as $sgg) {
+        //                 $sgg_group = DB::table('addon_group')->where('id', $sgg)->first();
+        //                 $sarray_group = json_decode($sgg_group->add_ons);
+        //                 foreach ($sarray_group as $sag) {
+        //                     $saddon_detail = DB::table('add_ons')->where('id', $sag)->first();
+        //                     $variant = DB::table('foodlist_foodquantity_addons')->where('food_list', $request->product_id)->where('food_quantity', $each_size->id)->where('group_id', $sgg)->where('addon', $sag)->first();
+        //                     if ($variant) {
+        //                         $price = $variant->price;
+        //                         $stock = $variant->stock;
+        //                     } else {
+        //                         $price = $saddon_detail->price;
+        //                         $stock = 0;
+        //                     }
+        //                     $sgadd_ons[] = [
+        //                         'id' => $sag,
+        //                         'name' => $saddon_detail->name,
+        //                         'secondary_name' => $saddon_detail->secondary_name,
+        //                         'price' => $price,
+        //                         'stock' => $stock
+        //                     ];
+        //                 }
+        //                 $sadd_group[] = [
+        //                     'id' => $sgg,
+        //                     'name' => $sgg_group->name,
+        //                     'min' => $sgg_group->min,
+        //                     'max' => $sgg_group->max,
+        //                     'allow_multiple' => $sgg_group->allow_multiple,
+        //                     'mandatory' => $sgg_group->mandatory,
+        //                     'group_addons' => $sgadd_ons
+        //                 ];
+        //             }
+        //             $this_size[$size_key]->groups = $sadd_group;
+        //         }
+        //         if ($each_size->addons_id != null) {
+        //             $sa = $each_size->addons_id;
+        //             $sa_group = json_decode($sa);
+        //             $saa_addons = [];
+        //             foreach ($sa_group as $saa) {
+        //                 $sa_detail = DB::table('add_ons')->where('id', $saa)->first();
+        //                 $variant = DB::table('foodlist_foodquantity_addons')->where('food_list', $request->product_id)->where('food_quantity', $each_size->id)->where('addon', (int)$saa)->first();
+        //                 if ($variant) {
+        //                     $price = $variant->price;
+        //                     $stock = $variant->stock;
+        //                 } else {
+        //                     $price = $sa_detail->price;
+        //                     $stock = 0;
+        //                 }
+        //                 $saa_addons[] = [
+        //                     'id' => $saa,
+        //                     'name' => $sa_detail->name,
+        //                     'secondary_name' => $sa_detail->secondary_name,
+        //                     'price' => $price,
+        //                     'stock' => $stock
+        //                 ];
+        //             }
+        //             $this_size[$size_key]->add_ons = $saa_addons;
+        //         }
+        //         $this_size[$size_key]->pivot = [
+        //             'foodlist_id' => $request->product_id,
+        //             'foodquantity_id' => $each_size->id,
+        //             'price' => $each_size->price,
+        //             'is_default' => $each_size->is_default
+        //         ];
+        //     }
+        // }
+
+        $specs = DB::table('product_specification')->where('product_id', $request->product_id)->get();
+        $faq = DB::table('product_faq')->where('product_id', $request->product_id)->get();
+
+        $tables = DB::table('table_type')->where('product_id', $request->product_id)->get();
+        $table = [];
+        foreach ($tables as $td) {
+            $rows = DB::table('product_specification')->where('table_type', $td->id)->get();
+            $items = [];
+            foreach ($rows as $rw) {
+                $items[] = [
+                    'label' => $rw->label,
+                    'value' => $rw->value
+                ];
+            }
+            $table[] = [
+                'name' => $td->name,
+                'items' => $items
+            ];
+        }
+
+        // $product_list->food_quantity = $this_size;
+        // $category = $this->category->get();
+        // $restaurant = array();
+        // $menu = $this->menu->where('restaurant_id', $request->res_id)->get();
+        // $add_ons = $this->add_ons->where('restaurant_id', $request->res_id)->get();
+        // $food_quantity = $this->food_quantity->get();
+        // $addon_ids = $foodquantity_ids = array();
+        // $restaurant_detail = DB::table('restaurants')->where('id', $request->res_id)->first();
+        $status = true;
+        // $response_Array = json_encode(['product_list' => $product_list, 'category' => $category, 'menu' => $menu, 'add_ons' => $add_ons, 'addon_ids' => $addon_ids, 'restaurant' => $restaurant, 'food_quantity' => $food_quantity, 'foodquantity_ids' => $foodquantity_ids, 'status' => $status, 'specs' => $specs, 'faq' => $faq, 'table' => $table]);
+        $response_Array = json_encode(['product_list' => $product_list, 'status' => $status, 'specs' => $specs, 'faq' => $faq, 'table' => $table]);
+        return $response_Array;
+    }
+    public function update_product_list(Request $request)
+    {
+        $update = $this->foodlist->find($request->id);
+        // $update->name = $request->name;
+        //$update->description = $request->description;
+        $update->category_id = $request->category;
+        $update->menu_id = $request->menu;
+        $update->status = $request->status;
+        $update->price = $request->price;
+        $update->tax = $request->tax;
+        $update->packaging_charge = $request->packaging_charge;
+        $update->is_secondary = (int) $request->toggle_status;
+
+        if ($request->toggle_status == 0) {
+            $update->name = $request->name;
+            $update->description = $request->description;
+        } else {
+            $update->secondary_name = $request->namesecondary;
+            $update->secondary_description = $request->descriptionsecondary;
+        }
+
+        $update->save();
+
+        return redirect('/store/edit_product_list')->with('success', trans('constants.product_updated_successfully'));
     }
 }

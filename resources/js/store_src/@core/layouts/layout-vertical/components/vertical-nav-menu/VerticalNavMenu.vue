@@ -35,7 +35,7 @@
               <b-img
                   :src="rows[0].logo_img"
                   alt="logo"
-                  style="width: 175px;"
+                  style="width: 175px; height: 45px !important;"
                 />
               </span>
             </b-link>
@@ -183,7 +183,7 @@ export default {
 @import "~@resources/scss/base/core/menu/menu-types/vertical-menu.scss";
 .brand-text{
     position: fixed !important;
-    margin-top: 28px !important;
+    margin-top: 25px !important; // 28px Existing margin-top
     margin-bottom: 8px !important;
     padding-left: 0px !important;
   }

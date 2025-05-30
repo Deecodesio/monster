@@ -49,6 +49,7 @@ Route::group(
         Route::get('/todays_special_restaurant/{lat}/{lng}', 'UserController@todays_special_restaurant');
         Route::get('/todays_special_store/{lat}/{lng}', 'UserController@todays_special_store');
 
+
         Route::get('/get_near_brands/{lat}/{lng}', 'UserController@get_near_brands');
         Route::get('/get_more_restaurant/{lat}/{lng}', 'UserController@get_more_restaurant');
         Route::get('/search_restaurants1/{lat}/{lng}/{key_word}', 'UserController@search_restaurants1');
@@ -59,6 +60,7 @@ Route::group(
         Route::get('/get_more_restaurant_business_new/{lat}/{lng}/{id}', 'UserController@get_more_restaurant_business_new');
 
         Route::get('/top_selling/{restaurant_id}', 'RestaurantController@top_selling');
+        Route::get('/restaurant_cities', 'RestaurantController@allCityList');
 
 
         Route::get('/get_food_list_by_menu/{restaurant_id}', 'RestaurantController@get_food_list_by_menu');

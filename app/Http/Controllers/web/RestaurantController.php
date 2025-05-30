@@ -4864,4 +4864,12 @@ class RestaurantController extends BaseController
             'restaurants' => $return_rest
         ])->header('Content-Type', 'text/xml');
     }
+
+     
+    public function allCityList()
+    {
+        $city_list = DB::table('add_city')->where('status', 1)->get();
+
+        return response()->json($city_list);
+    }
 }

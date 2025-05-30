@@ -15,7 +15,7 @@
           <h2 class="content-header-title float-left pr-1 mb-0">
             {{ t($route.meta.pageTitle) }}
           </h2>
-          <div class="breadcrumb-wrapper">
+          <!-- <div class="breadcrumb-wrapper">
             <b-breadcrumb>
               <b-breadcrumb-item to="/">
                 <feather-icon
@@ -33,7 +33,7 @@
                 {{ t(item.text) }}
               </b-breadcrumb-item>
             </b-breadcrumb>
-          </div>
+          </div> -->
         </b-col>
       </b-row>
     </b-col>

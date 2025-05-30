@@ -1,9 +1,24 @@
-<template>
+<!-- <template>
     <div class=" align-content-center justify-content-between  pt-1">
         <vue-autosuggest v-model="query" :suggestions="suggestions" :input-props="inputProps"
             :section-configs="sectionConfigs" :render-suggestion="renderSuggestion" :limit="10" @input="fetchResults" />
     </div>
+</template> -->
+<template>
+  <div class="align-content-center justify-content-between pt-1">
+    <vue-autosuggest
+      v-model="query"
+      :suggestions="suggestions"
+      :input-props="inputProps"
+      :section-configs="sectionConfigs"
+      :render-suggestion="renderSuggestion"
+      :limit="10"
+      @input="fetchResults"
+      class="custom-autosuggest"
+    />
+  </div>
 </template>
+
 
 <script>
 import {
@@ -142,8 +157,31 @@ export default {
     padding: 0.438rem 1rem;
     background-color: #fff;
     background-clip: padding-box;
-    border: 3px solid #d0d0d0 !important;
-    border-radius: 0.357rem;
+    border: 3px solid #26323870 !important;
+    border-radius: 8px;
     -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+ 
+ 
+.custom-autosuggest input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  color: #2f2f2f;
+  outline: none;
+}
+
+ 
+.custom-autosuggest input::placeholder {
+  color: #7e8489;
+  font-weight: 400;
+}
+
+ 
+.custom-autosuggest input:focus {
+  box-shadow: none;
+}
+ 
+
 </style>

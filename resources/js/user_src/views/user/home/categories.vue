@@ -2,7 +2,7 @@
   <div class="pt-1" v-if="!isempty">
     <b-row>
       <b-col md="9">
-        <h2> 123{{ $t("Categories") }}</h2>
+        <h2> 123{{ $t("Product Categories") }}</h2>
         <hr>
       </b-col>
       <!-- <b-col md="3">

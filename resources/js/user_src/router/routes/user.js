@@ -279,4 +279,39 @@ export default [
     component: () => import("@@@/views/user/static_pages/page2.vue"),
 
   },
+
+  {
+    path: '/blogs',
+    name: 'blogs',
+    component: () => import('@@@/views/blog/BlogList.vue'),
+    meta: {
+      publicRoute: true,
+      contentRenderer: 'sidebar-left',
+      permission: 'public'
+    }
+  },
+  {
+    path: '/blogs/:slug',
+    name: 'blog-detail',
+    component: () => import('@@@/views/blog/BlogDetail.vue'),
+    props: true,
+  },
+  // Add new career routes
+  {
+    path: '/careers',
+    name: 'careers',
+    component: () => import('@@@/views/career/CareerList.vue'),
+    meta: {
+      publicRoute: true,
+      contentRenderer: 'sidebar-left',
+      permission: 'public'
+    }
+  },
+  {
+    path: '/careers/:id',
+    name: 'career-detail',
+    component: () => import('@@@/views/career/CareerDetail.vue'),
+    props: true,
+  }
+
 ]

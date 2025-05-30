@@ -283,27 +283,3 @@ Route::group(['namespace' => 'App\Http\Controllers\api'], function () {
         Route::post('/out_of_stock', 'RestaurantController@out_of_stock');
     });
 });
-
-
-// Blog Category Routes
-// Route::get('/blog-categories', [App\Http\Controllers\api\BlogCategoryController::class, 'index']);
-// Route::get('/blog-categories/{id}', [App\Http\Controllers\api\BlogCategoryController::class, 'show']);
-// Route::get('/blog-categories/{id}/blogs', [App\Http\Controllers\api\BlogCategoryController::class, 'blogs']);
-
-// Protected Blog Category Routes
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::post('/blog-categories', [App\Http\Controllers\api\BlogCategoryController::class, 'store']);
-//     Route::put('/blog-categories/{id}', [App\Http\Controllers\api\BlogCategoryController::class, 'update']);
-//     Route::delete('/blog-categories/{id}', [App\Http\Controllers\api\BlogCategoryController::class, 'destroy']);
-// });
-
-// Update existing blog routes to use the controller namespace
-// Route::get('/blogs', [App\Http\Controllers\api\BlogController::class, 'index']);
-// Route::get('/blogs/{slug}', [App\Http\Controllers\api\BlogController::class, 'show']);
-// Route::get('/blogs/category/{categoryId}', [App\Http\Controllers\api\BlogController::class, 'byCategory']);
-
-// Route::middleware('auth:sanctum')->group(function () {
-//     Route::post('/blogs', [App\Http\Controllers\api\BlogController::class, 'store']);
-//     Route::put('/blogs/{id}', [App\Http\Controllers\api\BlogController::class, 'update']);
-//     Route::delete('/blogs/{id}', [App\Http\Controllers\api\BlogController::class, 'destroy']);
-// });

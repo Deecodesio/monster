@@ -38,7 +38,7 @@
                         </app-collapse-item>
                     </app-collapse>
                 </b-col>
-                <b-col cols="12" md="5">
+                <b-col cols="12" md="5" >
                     <h2>{{ product.name }}</h2>
                     <div class="ecommerce-details-price d-flex flex-wrap mt-1">
                         <div class="strike" v-if="product.price < product.bprice">
@@ -47,8 +47,9 @@
                         </div>
                         <div class="price_text">
                             {{ $store.state['defaults'].currency }} {{ product.price | priceformat }}
+                             <strong style="color: black;"> - 1kg</strong>
                         </div>
-                        <div class="badge" v-if="product.price < product.bprice">
+                        <div class="badge"  v-if="product.price < product.bprice">
                             {{ product.disc_value }} % Off
                         </div>
                     </div>
@@ -136,7 +137,7 @@
                                                 </td>
                                                 <td ALIGN="left" width="55%">
                                                     <label :for="'size_' + ga1.id + '_' + ga2.id"
-                                                    
+
                                                         style="font-size:16px;">
                                                         {{ ga2.name }}
                                                     </label>
@@ -152,7 +153,7 @@
                                         </table>
                                     </div>
                                     <div v-else style="text-align: left;">
-                                        <h4>{{ ga1.name }}<sup v-if="ga1.mandatory === 1" style="color:red"> *</sup>
+                                        <h4>{{ ga1.name }}<sup v-if="ga1.mandatory === 1" style="color:black"> *</sup>
                                         </h4>
                                         <h5 v-if="ga1.mandatory === 1"><small>Minimum {{ ga1.min }} should be
                                                 selected</small></h5>
@@ -205,9 +206,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-if="product.food_quantity.length" style="text-align: left;">
+                        <!-- <div v-if="product.food_quantity.length" style="text-align: left;">
                             <h4>{{ $t("Sizes") }}</h4>
-                        </div>
+                        </div> -->
                         <!-- <b-row>
                             <div v-for="(data5, index5) in    product.food_quantity   " :key="index5">
                                 <input type="radio" :name="'sizesOfItem_' + product.food_id"
@@ -250,14 +251,10 @@
                                 </label>
                             </td>
                         </tr> -->
-                        <table v-if="product.food_quantity.length" width="50%">
+                        <!-- <table v-if="product.food_quantity.length" width="50%">
                             <tr v-for="(data5, index5) in product.food_quantity" :key="index5">
                                 <td v-if="data5.is_default" ALIGN="left" width="25%">
-                                    <b-form-radio :name="'sizesOfItem_' + product.food_id"
-                                        :id="'size_' + product.food_id + '_' + data5.id" :data-name="data5.name"
-                                        :data-price="data5.price" v-model="s_fq" :value="data5.id"
-                                        @change="check_size(data5, product.add_ons, product.groups)">
-                                    </b-form-radio>
+
                                 </td>
                                 <td ALIGN="left" v-else width="25%">
                                     <b-form-radio :name="'sizesOfItem_' + product.food_id"
@@ -278,7 +275,7 @@
                                             $store.state['defaults'].currency }}{{ data5.price | priceformat }} </label>
                                 </td>
                             </tr>
-                        </table>
+                        </table> -->
                         <div v-if="product.food_quantity.length">
                             <div v-for="(data6, index6) in product.food_quantity" :key="index6">
                                 <div v-if="data6.groups && data6.groups.length">
@@ -406,7 +403,7 @@
                                 </div>
                                 <div v-if="data6.add_ons && data6.add_ons.length">
                                     <div v-if="data6.id == s_fq" style="text-align: left;">
-                                        <h4>{{ $t("Addons") }}</h4>
+                                        <h4>{{ $t("Ad   dons") }}</h4>
                                     </div>
                                     <table v-if="data6.id == s_fq" width="50%">
                                         <tr v-for="(d6, i6) in data6.add_ons" :key="i6">
@@ -593,13 +590,60 @@
                         </b-alert>
 
                     </div>
+                    <!-- <div class="d-flex align-items-center mt-2 flex-wrap" v-if="product.menu_available == 1 && isopen == 1">
+
+  <div
+    class="d-flex align-items-center border rounded "
+    :id="'food_control_' + product.food_id + 'r'"
+    v-if="cart_status == 1"
+    style="height: 43px; overflow: hidden; margin-right: 20px;  font-weight: bold;  border: 4px solid #ccc;"
+  >
+
+    <span
+      :id="'food_minus_' + product.food_id"
+      @click="quantity > 1 ? quantity-- : null"
+
+      class="d-flex justify-content-center align-items-center"
+      style="width: 53px; height: 100%; border-right: 1px solid #ccc; font-size: 24px; font-weight: bold; cursor: pointer;"
+    >−</span>
+
+    <input
+      type="text"
+      class="text-center border-0"
+      style="width: 50px; height: 100%; font-size: 18px;  font-weight: bold;"
+      :value="quantity"
+      readonly
+      :id="'food_qty_' + product.food_id + 'r'"
+    />
+
+
+    <span
+      :id="'food_plus_' + product.food_id"
+       @click="quantity++"
+      class="d-flex justify-content-center align-items-center"
+      style="width: 53px; height: 100%; border-left: 1px solid #ccc; font-size: 24px;  font-weight: bold; cursor: pointer;"
+    >+</span>
+  </div>
+
+
+<b-button
+  class="d-flex align-items-center px-3 py-2 custom-add-btn"
+  :id="'food_add_' + product.food_id + 'r'"
+  :data-price="product.price"
+  @click="check_cart(selected)"
+>
+  <b-img src="/monster/plate-white.svg" class="me-2" style="height: 20px;" />
+  <span>Add to Cart</span>
+</b-button>
+                    </div> -->
+
                     <div class="d-flex flex-column flex-sm-row pt-1" v-if="product.menu_available == 1 && isopen == 1">
                         <b-button v-if="product.menu_available === 1 && cart_status == 1"
                             v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary"
                             class="btn-cart mr-0 mr-sm-1 mb-1 mb-sm-0" :id="'food_add_' + product.food_id + 'r'"
                             :data-price=product.price @click="check_cart(selected)">
                             <b-img src="/monster/plate-white.svg" class="mr-50 add_cart_btn_img"></b-img>
-                            <!-- <feather-icon icon="ShoppingCartIcon" class="mr-50" /> -->
+
                             <span>{{ 'Add to Cart' }}</span>
                         </b-button>
                         <div class="num-block skin-2" :id="'food_control_' + product.food_id + 'r'" style="display:none"
@@ -614,7 +658,17 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="table.length">
+
+
+         <strong class="mt-2" style=" font-size: large;">
+  Total Price: {{ totalPrice }} {{ $store.state['defaults'].currency }}
+         </strong>
+
+
+                    <div class="d-flex justify-content-middle mt-2 pr-5 ">
+  <img class= "rounded-lg" src="/uploads/7sct.png" alt="Flat 20% Off" width="610" height="132">
+</div>
+                    <!-- <div v-if="table.length">
                         <div v-for="(td, index_td) in table" :key="index_td">
                             <h4 class="mt-1">{{ td.name }}</h4>
                             <table width="50%" cellspacing="10" cellpadding="10">
@@ -629,7 +683,7 @@
                                 </tr>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </b-col>
@@ -712,11 +766,18 @@ export default {
                 backgroundColor: '#E61212'
             },
             table: [],
-            cart_status: 0
+            cart_status: 0,
+            quantity: 1
 
 
         }
     },
+    computed: {
+  totalPrice() {
+    return (this.product.price * this.quantity).toFixed(2);
+  }
+},
+
     watch: {
         $route(to, from) {
             if (this.$route.name == "product") {
@@ -826,7 +887,7 @@ export default {
 
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@resources/scss/base/pages/app-ecommerce-details.scss";
 @import '~@resources/scss/base/bootstrap-extended/_variables.scss';
 
@@ -852,4 +913,26 @@ input[type="radio"] {
     height: 0;
     width: 0;
 }
+.img-fluid{
+    width:540px !important;
+    height:358px !important;
+    margin-right: 22rem !important;
+}
+.custom-add-btn {
+  background-color: #FF007A !important;
+  border-color: #FF007A !important;
+  color: #fff !important;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.custom-add-btn:hover,
+.custom-add-btn:focus,
+.custom-add-btn:active {
+  background-color: #e6006b !important; /* Slightly darker pink */
+  border-color: #e6006b !important;
+  box-shadow: none !important;
+}
+
+
 </style>
