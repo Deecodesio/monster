@@ -1,21 +1,26 @@
 <template>
-    <b v-if="!isempty">
+    <div class="mt-5 mb-5" v-if="!isempty">
         <swiper
-            class="swiper-multiple pt-6"
+            class="swiper-multiple"
             :options="swiperOptions"
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
         >
-            <swiper-slide v-for="(data, index) in rows" :key="index">
+            <swiper-slide
+                v-for="(data, index) in rows"
+                :key="index"
+                class="custom-slide"
+            >7
                 <b-img
-                    class="rounded3 top_ban_img"
+                    class="top_ban_img"
                     :src="data.img"
                     fluid
                     @click="goto(data)"
                 />
             </swiper-slide>
+
+            <div slot="pagination" class="swiper-pagination mt-5"></div>
         </swiper>
-        <div slot="pagination" class="swiper-pagination"></div>
-    </b>
+    </div>
 </template>
 
 <script>
@@ -58,9 +63,6 @@ export default {
                 },
                 pagination: {
                     el: ".swiper-pagination",
-                    type: "bullets",
-                    bulletClass: "swiper-pagination-bullet",
-
                     clickable: true,
                 },
             },
@@ -75,7 +77,7 @@ export default {
             for (let index = 0; index < this.rows.length; index++) {
                 var str = this.rows[index].name;
                 str.replace(/\-/g, "");
-                this.rows[index].str = str9
+                this.rows[index].str = str
                     .replace(/[^A-Z0-9]+/gi, "-")
                     .toLowerCase();
             }
@@ -115,16 +117,21 @@ export default {
 </script>
 
 <style scoped>
+.body,
+html {
+    margin: 0;
+    padding: 0;
+}
 .rounded {
     border-radius: 2px !important;
 }
 
-.rounded3 {
+/* .rounded3 {
     cursor: pointer;
-}
+} */
 
 .pt-6 {
-    padding-top: 5px !important;
+    padding-top: 0px !important;
 }
 .swiper-pagination {
     width: 100% !important;
@@ -134,10 +141,16 @@ export default {
     position: relative !important;
 }
 .top_ban_img {
-    width: 100%; /* full width of swiper slide */
-    height: auto;  
-    min-width: 869px; 
-    min-height: 208px;  
+    width: 100%;
+    height: auto;
+    min-width: 869px;
+    min-height: 208px;
     object-fit: cover;
+    border-radius: 22px;
+}
+.swiper-slide,
+.top_ban_img {
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
 }
 </style>
