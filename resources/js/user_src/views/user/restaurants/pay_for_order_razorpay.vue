@@ -1,68 +1,98 @@
 <template>
-    <div class="container" style="margin-top:155px;">
+    <div class="container" style="margin-top: 155px">
         <b-row>
             <b-col cols="12" lg="4"></b-col>
             <b-col cols="12" lg="4">
                 <b-card>
                     <p class="f-size-2 text-center pb-1">Payment Gateway</p>
-                    <table width="100%" style="margin-bottom:40px;">
+                    <table width="100%" style="margin-bottom: 40px">
                         <tr>
                             <td>{{ $t("Item Total") }}</td>
-                            <td>{{ $store.state['defaults'].currency }} {{ rows.item_total }}</td>
+                            <td>
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.item_total }}
+                            </td>
                         </tr>
                         <tr>
                             <td>{{ $t("Packaging Charge") }}</td>
-                            <td>{{ $store.state['defaults'].currency }} {{ rows.restaurant_packaging_charge }}</td>
+                            <td>
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.restaurant_packaging_charge }}
+                            </td>
                         </tr>
                         <tr>
                             <td>{{ $t("Discount") }}</td>
-                            <td>{{ $store.state['defaults'].currency }} {{ rows.offer_discount }}</td>
+                            <td>
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.offer_discount }}
+                            </td>
                         </tr>
                         <tr id="dcharge_bill">
                             <td>{{ $t("Delivery Charge") }}</td>
-                            <td>{{ $store.state['defaults'].currency }} {{ rows.delivery_charge }}</td>
+                            <td>
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.delivery_charge }}
+                            </td>
                         </tr>
                         <tr id="tips_bill">
                             <td>{{ $t("Tips") }}</td>
-                            <td>{{ $store.state['defaults'].currency }} {{ rows.tips }}</td>
+                            <td>
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.tips }}
+                            </td>
                         </tr>
                         <tr id="tips_bill">
-                            <td>{{ $t("Tax") }} </td>
-                            <td>{{ $store.state['defaults'].currency }} {{ rows.tax }}</td>
+                            <td>{{ $t("Tax") }}</td>
+                            <td>
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.tax }}
+                            </td>
                         </tr>
                         <tr>
                             <td>
-                                <p>{{ $t("Bill Total") }} </p>
+                                <p>{{ $t("Bill Total") }}</p>
                             </td>
                             <td>
-                                {{ $store.state['defaults'].currency }} {{ rows.bill_amount }}
+                                {{ $store.state["defaults"].currency }}
+                                {{ rows.bill_amount }}
                             </td>
                         </tr>
-
-
                     </table>
 
                     <b-col cols="12" class="pad0">
                         <div>
-                            <button @click="makePayment" class="btn btn-success">Pay</button>
+                            <button
+                                @click="makePayment"
+                                class="btn btn-success"
+                            >
+                                Pay
+                            </button>
                         </div>
                     </b-col>
                 </b-card>
-
             </b-col>
             <b-col cols="4" lg="4"></b-col>
         </b-row>
-
     </div>
 </template>
 
 <script>
-import { BModal, BButton, VBModal, BAlert, BCard, BFormRadioGroup, BFormGroup, BRow, BCol } from 'bootstrap-vue'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import { BTabs, BTab } from 'bootstrap-vue'
-import { StripeCheckout } from '@vue-stripe/vue-stripe';
-import { StripeElementPayment } from '@vue-stripe/vue-stripe';
-import Ripple from 'vue-ripple-directive'
+import {
+    BModal,
+    BButton,
+    VBModal,
+    BAlert,
+    BCard,
+    BFormRadioGroup,
+    BFormGroup,
+    BRow,
+    BCol,
+} from "bootstrap-vue";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+import { BTabs, BTab } from "bootstrap-vue";
+import { StripeCheckout } from "@vue-stripe/vue-stripe";
+import { StripeElementPayment } from "@vue-stripe/vue-stripe";
+import Ripple from "vue-ripple-directive";
 
 export default {
     components: {
@@ -70,60 +100,58 @@ export default {
         BModal,
         BAlert,
         BCard,
-        BFormRadioGroup, BFormGroup, BTabs, BTab, BRow, BCol, StripeCheckout, StripeElementPayment,
+        BFormRadioGroup,
+        BFormGroup,
+        BTabs,
+        BTab,
+        BRow,
+        BCol,
+        StripeCheckout,
+        StripeElementPayment,
     },
     mounted() {
         this.generatePaymentIntent();
     },
     data() {
-
         return {
             option: {},
 
             rows: {},
             loading: false,
 
-
-            script: 'https://checkout.razorpay.com/v1/checkout.js'
-
-        }
+            script: "https://checkout.razorpay.com/v1/checkout.js",
+        };
     },
     methods: {
-
         async loadRazorPay() {
-            return new Promise(resolve => {
-                const script = document.createElement('script')
-                script.src = this.script
+            return new Promise((resolve) => {
+                const script = document.createElement("script");
+                script.src = this.script;
                 script.onload = () => {
-                    resolve(true)
-                }
+                    resolve(true);
+                };
                 script.onerror = () => {
-                    resolve(false)
-                }
-                document.body.appendChild(script)
-            })
+                    resolve(false);
+                };
+                document.body.appendChild(script);
+            });
         },
 
-
         generatePaymentIntent() {
-
-            this.$http.post('/pay_for_order/' + this.$route.params.id)
-                .then(res => {
-
-
-                    this.rows = res.data.data
-
-
-                })
+            this.$http
+                .post("/pay_for_order/" + this.$route.params.id)
+                .then((res) => {
+                    this.rows = res.data.data;
+                });
         },
         pay() {
             this.$refs.paymentRef.submit();
         },
         makePayment: function (ev) {
             ev.preventDefault();
-            this.$http.get('/pay_for_razor/' + this.$route.params.id)
-                .then(res => {
-
+            this.$http
+                .get("/pay_for_razor/" + this.$route.params.id)
+                .then((res) => {
                     this.order_id = res.data.order.id;
                     //  alert(res.data.razor);
                     //Initiation of Razorpay PG
@@ -148,7 +176,6 @@ export default {
                             // alert(this.r_razorpay_order_id);
                             // alert(this.r_razorpay_signature);
                             newThis.razorpay(response);
-
                         },
                         prefill: {
                             name: res.data.user.name,
@@ -156,52 +183,45 @@ export default {
                             phone: res.data.user.phone,
                         },
                         notes: {
-                            address: ""
+                            address: "",
                         },
                         theme: {
-                            color: "#00ffff"
+                            color: "#00ffff",
                         },
 
-
                         //  callback_method: "POST",
-
                     });
                     rzp1.open();
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.log("ERR", err);
                 });
-
         },
 
         razorpay(response) {
-
             let data = new FormData();
-            data.append('razorpay_payment_id', response.razorpay_payment_id);
-            data.append('razorpay_order_id', response.razorpay_order_id);
-            data.append('razorpay_signature', response.razorpay_signature);
-            data.append('order_id', this.$route.params.id);
-
-
+            data.append("razorpay_payment_id", response.razorpay_payment_id);
+            data.append("razorpay_order_id", response.razorpay_order_id);
+            data.append("razorpay_signature", response.razorpay_signature);
+            data.append("order_id", this.$route.params.id);
 
             console.log(data);
-            this.$http.post('/razorpaypayment', data)
-                .then(res => {
-                    this.rows = res.data
-                    this.$router.push({ name: 'trackorder', params: { id: res.data.order_id } });
+            this.$http.post("/razorpaypayment", data).then((res) => {
+                this.rows = res.data;
 
-                })
+                this.show_success();
+                this.clear_cart();
+                setTimeout(() => {
+                    this.$router.push({
+                        name: "trackorder",
+                        params: { id: res.data.order_id },
+                    });
+                }, 2000);
+            });
         },
     },
-    created() {
-
-
-
-
-    },
-
-
-}
+    created() {},
+};
 </script>
 
 <style scoped>
@@ -230,7 +250,8 @@ form {
     min-width: 500px;
     align-self: center;
     box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
-        0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
+        0px 2px 5px 0px rgba(50, 50, 93, 0.1),
+        0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
     border-radius: 7px;
     padding: 40px;
 }

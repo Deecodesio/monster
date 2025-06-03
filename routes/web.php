@@ -237,7 +237,8 @@ Route::group(
         Route::get('/sub_category_products/{lat}/{lng}/{id}/{business_id}', 'RestaurantController@sub_category_products');
 
 
-        Route::get('/get_product_details/{id}', 'RestaurantController@get_product_details');
+        // Route::get('/get_product_details/{id}', 'RestaurantController@get_product_details');
+        Route::get('/get_product_details/{lat}/{lng}/{id}/{business_id}', 'RestaurantController@get_product_details');
 
         Route::get('calc_delivery_charge/{restaurant_id}/{lat}/{lng}/{itemtotal}', 'UserController@calc_delivery_charge');
 

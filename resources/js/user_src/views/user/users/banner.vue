@@ -5,14 +5,14 @@
       </div>
     </div>
 </template>
-      
+
       <script>
       import {
         BFormFile, BButton, BForm, BFormGroup, BFormInput, BRow, BCol, BAlert, BCard, BCardText, BMedia, BMediaAside, BMediaBody, BLink, BImg,
       } from 'bootstrap-vue'
       import Ripple from 'vue-ripple-directive'
- 
-      
+
+
       export default {
         components: {
           BButton,
@@ -34,9 +34,9 @@
         directives: {
           Ripple,
         },
-        
-       
-        
+
+
+
       }
       </script>
       <style>
@@ -44,4 +44,3 @@
         padding-top: 10rem !important;
       }
       </style>
-      

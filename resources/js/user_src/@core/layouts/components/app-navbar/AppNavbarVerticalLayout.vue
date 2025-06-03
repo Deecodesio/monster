@@ -1,7 +1,6 @@
 <template>
     <b-row>
-
-        <div class="d-flex justify-content-center align-items-center container-xs ">
+        <div class="d-flex justify-content-center align-items-center container-xs px-4" style="padding-left: 12.5rem !important;">
             <b-col md="2" class="pt-1">
                 <b-link class="navbar-brand " to="/">
                     <span class="brand-logo">
@@ -21,9 +20,9 @@
             <b-col md="4" class="pt-3 text-r" style="display: flex; flex-direction: row-reverse;margin-top: 10px !important; ">
 
 
-                <user-dropdown style="margin: 0px 20px 0px 20px;" />            
+                <user-dropdown style="margin: 0px 20px 0px 20px;" />
                 <cart-dropdown />
-          
+
                 <div>
                     <!-- <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" @click="$router.push({ name: 'track_user_order' })"
                      variant="outline-primary">

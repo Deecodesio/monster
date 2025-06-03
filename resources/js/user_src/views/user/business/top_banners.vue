@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-2 mb-1" v-if="!isempty">
+    <div class="mt-2 mb-1.5" v-if="!isempty">
         <swiper
             class="swiper-multiple"
             :options="swiperOptions"

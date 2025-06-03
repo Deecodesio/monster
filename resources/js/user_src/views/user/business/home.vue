@@ -1,5 +1,6 @@
 <template>
-    <!-- Main Content --> <b-row style="margin-top: 110px">
+    <!-- Main Content --> 
+     <b-row style="margin-top: 110px">
         <b-col cols="12">
             <!-- Loading Spinner -->
             <div v-if="is_loading" class="mt-1 text-center d-flex flex-column align-items-center">
@@ -13,7 +14,13 @@
                     :prop2="component.id"></component>
             </div>
             <sectionB/>
-            <Ourshops />
+            <!-- Shop Location Div -->
+            <div
+                class="container-fluid"
+                style="margin-top: 50px; padding-right: 0; padding-left: 0"
+            >
+                <Ourshops />
+            </div>
         </b-col>
     </b-row>
 </template>

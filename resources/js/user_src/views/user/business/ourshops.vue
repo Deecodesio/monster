@@ -1,7 +1,7 @@
 <template>
     <div style="padding-right: 0% !important; padding-left: 0% !important">
-        <div class="shope-container mb-5 text-center">
-            <h3 class="shope-title">Our Shops</h3>
+        <div class="shope-container mb-5 text-center" v-if="shopList.length">
+            <h3 class="shope-title mx-3">Our Shops</h3>
             <div class="shop-grid">
                 <div class="shop-box" v-for="shop in shopList" :key="shop.id">
                     {{ shop.city }}
@@ -75,7 +75,7 @@ export default {
     padding: 0 16px;
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 1024px) {
     .shop-grid {
         grid-template-columns: repeat(5, auto) !important;
         gap: 30px 80px !important;
@@ -85,16 +85,14 @@ export default {
 @media (min-width: 768px) and (max-width: 960px) {
     .shop-grid {
         grid-template-columns: repeat(4, auto) !important;
-        gap: 16px 32px !important;
+        gap: 16px 20px !important;
     }
 }
-
 
 @media (max-width: 480px) {
     .shop-grid {
         grid-template-columns: repeat(2, auto) !important;
         gap: 18px 8px !important;
-
     }
 }
 </style>

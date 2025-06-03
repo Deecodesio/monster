@@ -191,8 +191,14 @@ class Restaurant extends Controller
     public function isItemsExist(array $foodIDs): ReturnData
     {
 
-        $foundItems = DB::table(self::$table_food)->select('id')
-            ->where('restaurant_id', $this->RestaurantID)->whereIn('id', $foodIDs)->pluck('id')->toArray();
+        // $foundItems = DB::table(self::$table_food)->select('id')
+        //     ->where('restaurant_id', $this->RestaurantID)->whereIn('id', $foodIDs)->pluck('id')->toArray();
+
+        $foundItems = DB::table(self::$table_food)
+            ->select('id')
+            ->whereIn('id', $foodIDs)
+            ->pluck('id')
+            ->toArray();
 
         $notFoundItems = array_diff($foodIDs, $foundItems);
 
@@ -227,10 +233,46 @@ class Restaurant extends Controller
         return $row->$field ?? null;
     }
 
-    private function getFoodField(int $id, $field)
+    // private function getFoodField(int $id, $field)
+    // {
+    //     $row = DB::table(self::$table_food)->select($field)->where('id', $id)->first();
+    //     return $row->$field ?? null;
+    // }
+
+     private function getFoodField(int $id, $field)
     {
-        $row = DB::table(self::$table_food)->select($field)->where('id', $id)->first();
-        return $row->$field ?? null;
+        // If the requested field is NOT 'price', proceed as usual
+        if ($field !== 'price') {
+            $row = DB::table(self::$table_food)->select($field)->where('id', $id)->first();
+            return $row->$field ?? null;
+        }
+
+        // Handle special logic for 'price' field
+
+        // Step 1: Get the restaurant's city (district_id) using RestaurantID
+        $restaurant = DB::table(self::$table)->select('city')->where('id', $this->RestaurantID)->first();
+        if (!$restaurant) return null;
+
+        $districtId = $restaurant->city;
+
+        // Step 2: Get all matching product_pricing_id from food_list_pricing_district where district_id matches
+        $pricingDistricts = DB::table('food_list_pricing_district')
+            ->select('product_pricing_id')
+            ->where('district_id', $districtId)
+            ->get();
+
+        if ($pricingDistricts->isEmpty()) return null;
+
+        $pricingIds = $pricingDistricts->pluck('product_pricing_id')->toArray();
+
+        // Step 3: Get price from food_list_pricing where id IN product_pricing_id AND product_id = $id
+        $priceRow = DB::table('food_list_pricing')
+            ->select('price')
+            ->whereIn('id', $pricingIds)
+            ->where('product_id', $id)
+            ->first();
+
+        return $priceRow->price ?? null;
     }
 
     private function getSizeFields($foodID, $sizeID, $fields)

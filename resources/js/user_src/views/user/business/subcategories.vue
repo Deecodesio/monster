@@ -151,10 +151,8 @@ export default {
         }
     },
     watch: {
-        $route(to, from) {
+        $route(to, from) {          
             this.get_created()
-
-
         }
     },
     methods: {
@@ -163,12 +161,12 @@ export default {
         gotor(id, name) {
             this.selected_subcat = id
             this.is_clicked = true
+            this.cat_products=[];
             this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + id + '/' + this.business_id)
-                .then(res => {
+                .then(res => {                    
                     this.cat_products = res.data.cat_products
                     this.title = name
                     this.loadcart()
-
                 })
         },
         toTitleCase(str) {
@@ -205,9 +203,9 @@ export default {
             if (this.$route.name == "sub_cat_list") {
                 const productSlug = this.$route.params.slug
                 const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
-                console.log(productId);
+                this.cat_products=[];
                 this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id)
-                    .then(res => {
+                    .then(res => {                        
                         this.cat_products = res.data.cat_products
                         this.title = res.data.title
                         this.loadcart()
@@ -234,14 +232,11 @@ export default {
 
                 //     })
             } else {
-                console.log("Exceuted");
-                console.log(this.$route.params);
                 const productSlug = this.$route.params.slug
                 const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
+                this.cat_products=[];
                 this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id)
-                    .then(res => {
-                        console.log("Welocme");
-                        console.log(res);
+                    .then(res => {                     
                         this.cat_products = res.data.cat_products
                         this.title = res.data.title
                         this.loadcart()

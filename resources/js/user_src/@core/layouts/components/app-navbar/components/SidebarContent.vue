@@ -3,7 +3,7 @@
         <div class="mt-1 text-center"
             style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh;"
             v-if="!cart.length">
-            <lottie-player src="/animations/basket.json" background="#FFFDFD" speed="1.2"
+            <lottie-player src="/animations/basket.json" background="#FFFDFD" speed="1.6"
                 style="width: 300px; height: 300px;" loop autoplay></lottie-player>
             <h4>{{ $t("Your cart is empty") }}</h4>
             <p>{{ $t("The products that you will order will appear here") }}</p>
@@ -81,7 +81,7 @@
             </div>
 
 
-            
+
             <div id="takeaway_address" style="padding-top: 20px;" class="cart-bord" v-if="delivery_type == 2">
                 <h4>{{ $t("Take Away") }} {{ $t("From") }}</h4>
                 <p id="demo"><feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{
@@ -118,7 +118,7 @@
                         <div id="takeaway_address"
                             style="padding-top: 20px;font-family: Quicksand;font-weight:400;font-size: 14px;"
                             class="cart-bord" v-if="delivery_type == 2">
-                            <h4>{{ $t("Take Away") }} {{ $t("From") }}</h4>
+                            <p style="font-family: Quicksand;font-weight:700;font-size: 16px;color: black;">{{ $t("Take Away") }} {{ $t("From") }}</p>
                             <p id="demo">
                                 <feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{
                                     cart[0].restaurant_address }}
@@ -127,15 +127,16 @@
 
                         <div id="delivery_address" style="padding-top: 20px; font-family: Quicksand;" class="cart-bord"
                             v-if="delivery_type == 1">
-                            <h4>{{ $t("Delivering To") }}</h4>
+                            <p style="font-weight:700; font-size: 16px;color:black"> {{ $t("Delivering To") }} </p>
                             <p id="demo"
-                                style="font-family: Quicksand;font-weight:400;font-size: 14px;margin-bottom: 8px;">
+                                style="font-family: Quicksand;font-weight:400;font-size: 16px;margin-bottom: 8px;">
                                 <feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{ rows }}
                             </p>
                             <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary"
                                 style="padding:0px;font-family: Quicksand;font-weight:400;font-size: 14px;"
                                 @click="checklogin()">
-                                <i class="fa-solid fa-circle-plus"></i> <span class="f-size-0">{{ $t("Add") }} {{
+                                <i class="fa-solid fa-circle-plus"></i>
+                                <span class="f-size-0"  style="padding:0px;font-family: Quicksand;font-weight:400;font-size: 14px;" >{{ $t("Add") }} {{
                                     $t("New") }}
                                     {{
                                         $t("Address") }}</span>
@@ -147,49 +148,51 @@
                             </b-sidebar>
                         </div>
                     </div>
+                    <div class="container-1">
+                        <div style=" margin-left: 28px ;min-width: 840px; max-width:auto; float: left;"
+                            v-for="(data, index) in $store.state['deliware_cart'].cart_items" :key="index">
 
-                    <div style=" margin-left: 28px ;min-width: 840px; max-width:auto; float: left;"
-                        v-for="(data, index) in $store.state['deliware_cart'].cart_items" :key="index">
-                        <b-row>
-                            <b-col cols="12"
-                                style="margin-bottom: 15px; padding: 1.25rem; background-color: #FAFAFA;border: 1px solid #E5E7EB; border-radius:15px;">
-                                <b-media vertical-align="top">
-                                    <template #aside v-if="data.food_image">
-                                        <b-img class="bor" :src="data.food_image" blank-color="#ccc" width="70" />
-                                    </template>
-                                    <h4 class="media-heading">
-                                        <div v-if="data.isveg">
-                                            <b-img src="/veg.svg" fluid alt="Scan" style="width: 12px;"
-                                                v-if="data.pharmacy_id == 0" />
-                                            {{ data.name }}
-                                        </div>
-                                        <div v-else>
-                                            <b-img src="/non_veg.svg" fluid alt="Scan" style="width: 12px;"
-                                                v-if="data.pharmacy_id == 0" />
-                                            {{ data.name }}
-                                        </div>
-                                    </h4>
-                                    <b-card-text class="mb-0 textp" v-if="data.addonsName">
-                                        {{ $t("Addons") }} : {{ data.to_display }}
-                                    </b-card-text>
-                                    <b-card-text class="mb-0 textp" v-if="data.sizeName">
-                                        <!-- <b-row>
+                            <b-row>
+                                <b-col cols="12"
+                                    style="margin-bottom: 15px; padding: 1.25rem; background-color: #FAFAFA;border: 1px solid #E5E7EB; border-radius:15px;">
+                                    <b-media vertical-align="top">
+                                        <template #aside v-if="data.food_image">
+                                            <b-img class="bor" :src="data.food_image" blank-color="#ccc" width="70" />
+                                        </template>
+                                        <h4 class="media-heading">
+                                            <div v-if="data.isveg">
+                                                <b-img src="/veg.svg" fluid alt="Scan" style="width: 12px;"
+                                                    v-if="data.pharmacy_id == 0" />
+                                                {{ data.name }}
+                                            </div>
+                                            <div v-else>
+                                                <b-img src="/non_veg.svg" fluid alt="Scan" style="width: 12px;"
+                                                    v-if="data.pharmacy_id == 0" />
+                                                {{ data.name }}
+                                            </div>
+                                        </h4>
+                                        <b-card-text class="mb-0 textp" v-if="data.addonsName">
+                                            {{ $t("Addons") }} : {{ data.to_display }}
+                                        </b-card-text>
+                                        <b-card-text class="mb-0 textp" v-if="data.sizeName">
+                                            <!-- <b-row>
 
                                    <div class="circleBase type1" :style="{ background: data.sizeName }">
                                  </div>
                                    </b-row> -->
-                                        {{ data.sizeName }}
-                                    </b-card-text>
-                                    <b-row class="pt-3" style="padding-top: 2px !important;">
-                                        <b-col cols="4">
-                                            <h4 class="media-heading text-primary">
-                                                {{ $store.state['defaults'].currency }} {{ data.price + data.addonsPrice
-                                                    |
-                                                    priceformat }}
-                                            </h4>
-                                        </b-col>
-                                        <b-col cols="8">
-                                            <!-- <div style="max-width:105px; float: right;">
+                                            {{ data.sizeName }}
+                                        </b-card-text>
+                                        <b-row class="pt-3" style="padding-top: 2px !important;">
+                                            <b-col cols="4">
+                                                <h4 class="media-heading text-primary">
+                                                    {{ $store.state['defaults'].currency }} {{ data.price +
+                                                        data.addonsPrice
+                                                        |
+                                                        priceformat }}
+                                                </h4>
+                                            </b-col>
+                                            <b-col cols="8">
+                                                <!-- <div style="max-width:105px; float: right;">
                                         <div class="num-block skin-2" :id="'food_control_' + data.id + 'c'">
                                             <div class="num-in">
                                                 <span class="minus dis" :id="'food_minus_' + data.id"
@@ -201,68 +204,90 @@
                                             </div>
                                         </div>
                                     </div> -->
-                                            <div style="max-width: 120px; float: right;">
-                                                <div class="num-block styled-qty" :id="'food_control_' + data.id + 'c'">
-                                                    <div class="num-in">
+                                                <div style="max-width: 120px; float: right;">
+                                                    <div class="num-block styled-qty"
+                                                        :id="'food_control_' + data.id + 'c'">
+                                                        <div class="num-in">
 
 
-                                                        <span class="icon-btn" :id="'food_minus_' + data.id"
-                                                            @click="removefromcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </span>
+                                                            <span class="icon-btn" :id="'food_minus_' + data.id"
+                                                                @click="removefromcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </span>
 
 
-                                                        <span class="quantity-text" :id="'food_qty_' + data.id + 'c'">
-                                                            {{ data.quantity }}
-                                                        </span>
+                                                            <span class="quantity-text"
+                                                                :id="'food_qty_' + data.id + 'c'">
+                                                                {{ data.quantity }}
+                                                            </span>
 
 
-                                                        <span class="icon-btn" :id="'food_plus_' + data.id"
-                                                            @click="addcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
-                                                            <i class="fas fa-plus"></i>
-                                                        </span>
+                                                            <span class="icon-btn" :id="'food_plus_' + data.id"
+                                                                @click="addcart(data.price, data.taxperc, data.name, data.id, data.isveg, data.addons, data.sizes, data.food_image, index)">
+                                                                <i class="fas fa-plus"></i>
+                                                            </span>
 
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </b-col>
-                                    </b-row>
-                                </b-media>
-                            </b-col>
-                        </b-row>
+                                            </b-col>
+                                        </b-row>
+                                    </b-media>
+                                </b-col>
+                            </b-row>
+                        </div>
                     </div>
                 </div>
                 <div class="box" style="margin-top: 20px; margin: 25px; min-width: 600px;font-family: Quicksand;">
-                    <div id="bill" class="pt-4" style="margin-bottom:50px " >
-                        <h4 style="font-weight:400; font-size: 18px;">{{ $t("Order Summary") }}</h4>
-                        <table width="100%">
+                    <div id="bill" class="pt-4" style="margin-bottom:50px ">
+                        <h4 style="font-weight:700; font-size: 20px;color: black;">{{ $t("Order Summary") }}</h4>
+                        <table width="100%" style="margin-top: 16px;">
                             <tr>
-                                <td class="font-size">{{ $t("Item Total") }}</td>
-                                <td>{{ $store.state['defaults'].currency }} {{
-                                    $store.state['deliware_cart'].cart_total.item_total |
-                                    priceformat }}</td>
+                                <td class="font-size" style="font-weight:400; font-size: 15px;color:#666666;">{{
+                                    $t("Item Total") }}
+                                </td>
+                                <td style="font-weight:400; font-size: 15px;color:#666666;"> {{
+                                    $store.state['defaults'].currency }}
+                                    {{
+                                        $store.state['deliware_cart'].cart_total.item_total |
+                                        price_format_final }}</td>
                             </tr>
+                            <!-- <tr>
+                                <td class="font-size" style="font-weight:400; font-size: 15px;color:#666666;">{{
+                                    $t("Delivery Fee")
+                                    }}</td>
+                                <td>{{ $store.state['defaults'].currency }} 25</td>
+                            </tr> -->
+                            <tr>
+                                <td class="font-size" style="font-weight:400; font-size: 15px;color:#666666;">{{
+                                    $t("Taxes & Fees")
+                                    }}</td>
+                                <td>{{ $store.state['defaults'].currency }} 15</td>
+                            </tr>
+
                             <tr v-if="$store.state['deliware_cart'].cart_total.packaging_charge > 0">
                                 <td class="font-size">{{ $t("Packaging Charge") }}</td>
-                                <td>{{ $store.state['defaults'].currency }} {{
-                                    $store.state['deliware_cart'].cart_total.packaging_charge |
-                                    priceformat }}</td>
+                                <td>
+
+                                    {{ $store.state['defaults'].currency }} {{
+                                        $store.state['deliware_cart'].cart_total.packaging_charge |
+                                        price_format_final }}</td>
                             </tr>
-                            <!-- <tr v-if="$store.state['deliware_cart'].cart_total.discount > 0">
+                            <tr v-if="$store.state['deliware_cart'].cart_total.discount > 0">
                                 <td class="font-size">{{ $t("Discount") }}</td>
                                 <td>{{ $store.state['defaults'].currency }} {{
                                     $store.state['deliware_cart'].cart_total.discount
                                     |
-                                    priceformat
+                                    price_format_final
                                     }}
                                 </td>
-                            </tr> -->
+                            </tr>
 
                             <tr id="dcharge_bill" v-if="$store.state['deliware_cart'].cart_total.delivery_charge > 0">
                                 <td class="font-size">{{ $t("Delivery Charge") }}</td>
                                 <td>{{ $store.state['defaults'].currency }} {{
                                     $store.state['deliware_cart'].cart_total.delivery_charge |
-                                    priceformat }}</td>
+                                    price_format_final }}</td>
                             </tr>
                             <!-- <tr id="tips_bill" v-if="tips_enable">
                                 <td>{{ $t("Tips") }}</td>
@@ -276,15 +301,15 @@
                                 <td>{{ $t("Tax") }} <span>{{ tax($store.state['defaults'].tax) }}</span></td>
                                 <td>{{ $store.state['defaults'].currency }} {{
                                     $store.state['deliware_cart'].cart_total.tax |
-                                    priceformat }}
+                                    price_format_final }}
                                 </td>
                             </tr>
                             <tr id="wallet_bill" v-if="$store.state['deliware_cart'].cart_total.wallet > 0">
                                 <td>{{ $t("Wallet") }}(-)</td>
                                 <td>{{ $store.state['defaults'].currency }} {{
                                     $store.state['deliware_cart'].cart_total.wallet |
-                                    priceformat
-                                }}
+                                    price_format_final
+                                    }}
                                 </td>
                             </tr>
 
@@ -296,49 +321,32 @@
 
                             <tr>
                                 <td>
-                                    <b>{{ $t("Total") }} </b>
+                                    <b style="font-weight:700; font-size: 18px;color:black">{{ $t("Total") }}</b>
                                 </td>
                                 <td>
-                                    <b> {{ $store.state['defaults'].currency }}
-                                        {{ $store.state['deliware_cart'].cart_total.bill | priceformat }}</b>
+                                    <b style="font-weight:700; font-size: 18px;color:black">
+                                        {{ $store.state['defaults'].currency }}
+                                        {{
+                                            ($store.state['deliware_cart'].cart_total.bill | price_format_final)                                             
+                                        }}
+                                    </b>
                                 </td>
                             </tr>
+
                         </table>
-                        <div class="delivery-card">
+                        <!-- <div class="delivery-card">
                             <div class="dot"></div>
                             <div class="text-content">
                                 <div class="label">Estimated Delivery</div>
                                 <div class="time">25–35 minutes</div>
                             </div>
-                        </div>
-                        
-                    </div>
-                    <div class="demo-inline-spacing " style="position: fixed; 
-                        left: 10px;
-                        bottom: 0;
-                        width: 100%;
-                        background-color:#fff;
-                        padding: 10px;">
-                        <!-- <div class="subtotal-box">
-                            <span class="subtotal-label">Subtotal</span>
-                            <b class="subtotal-amount">
-                                {{ $store.state['defaults'].currency }}
-                                {{ $store.state['deliware_cart'].cart_total.bill | priceformat }}
-                            </b>
                         </div> -->
-                        <b-button style="height:50px; background-color: #FF006B;" class="f-size-2"
-                            v-ripple.400="'#FF006B'" block variant="primary" @click="checkout()"
-                            v-if="isdefault && is_deliverable">
-                            {{ $t("Proceed to Checkout") }}
-                        </b-button>
-                        <b-button style="height:50px;" class="f-size-2" v-ripple.400="'rgba(255, 255, 255, 0.15)'" block
-                            variant="primary" v-if="!isdefault && is_deliverable" @click="checklogin()">
-                            Select Address
-                        </b-button>
+
                     </div>
-                    
+
+
                 </div>
-                
+
             </div>
             <!-- <div id="prescription" class="cart-bord" style="padding:20px 0px;"
                 v-if="$store.state['deliware_cart'].pharmacy == 1">
@@ -347,9 +355,9 @@
                     drop-placeholder="Drop file here..." @change="onFileChange1" style="z-index: 0;" />
             </div> -->
             <!-- <div id="coupon" class="cart-bord" style="padding:20px 0px;border-bottom: none;border-top: none;">
-                <b-input-group 
+                <b-input-group
                 class="input-group-merge coupons">
-                    <b-form-input placeholder="Enter Coupon Code" 
+                    <b-form-input placeholder="Enter Coupon Code"
                     id="checkout_coupon_value"
                         style="height:50px;
                         text-transform:uppercase" />
@@ -368,7 +376,7 @@
                 </b-input-group>
                 <input type="hidden" id="applied_coupon_Amount">
             </div> -->
-            <div id="coupon" class="cart-bord" style="margin-left: 16px !important;">
+            <div id="coupon" class="cart-bord">
                 <b-input-group class="coupons">
                     <b-form-input placeholder="Enter Coupon Code" id="checkout_coupon_value" class="coupon-input" />
                     <b-input-group-append is-text>
@@ -384,16 +392,43 @@
                 </b-input-group>
                 <input type="hidden" id="applied_coupon_Amount" />
             </div>
-            <div class="section-top">
+            <div class="demo-inline-spacing " style="
+            /* position: fixed; */
+                        left: 10px;
+                        bottom: 0;
+                        width: 100%;
+                        /* background-color:#fff; */
+                        padding: 10px;
+                        padding-bottom: 5rem;
+                        padding-left: 14px;">
+                <!-- <div class="subtotal-box">
+                            <span class="subtotal-label">Subtotal</span>
+                            <b class="subtotal-amount">
+                                {{ $store.state['defaults'].currency }}
+                                {{ $store.state['deliware_cart'].cart_total.bill | priceformat }}
+                            </b>
+                        </div> -->
+                <b-button style="height:50px; background-color: #FF006B; font-size: 20px; font-weight: 700;"
+                    class="f-size-2" v-ripple.400="'#FF006B'" block variant="primary" @click="checkout()"
+                    v-if="isdefault && is_deliverable">
+                    {{ $t("Proceed to Checkout") }}
+                </b-button>
+                <b-button style="height:50px; font-size: 20px; font-weight: 700;" class="f-size-2"
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'" block variant="primary"
+                    v-if="!isdefault && is_deliverable" @click="checklogin()">
+                    Select Address
+                </b-button>
+            </div>
+            <!-- <div class="section-top">
 
             </div>
 
-            <div class="section-bottom">
+            <div class="section-bottom"> -->
 
-            </div>
+        </div>
 
-            <!-- <div id="tips" class="pt-0" style="
-                    
+        <!-- <div id="tips" class="pt-0" style="
+
                     margin-top: 20px;
                 " v-if="tips_enable && delivery_type == 1">
                 <b-row>
@@ -422,13 +457,13 @@
                     <input type="hidden" id="selected_tips" />
                 </b-row>
             </div> -->
-            <div id="proceed" class="pb-3">
+        <!-- <div id="proceed" class="pb-3">
                 <b-col md="12">
-                    
+
                 </b-col>
             </div>
             <loginmodal v-model="modalOpen"></loginmodal>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -1149,12 +1184,15 @@ export default {
             let tot_amt = 0;
             let item_amount_total = 0;
             let restaurant_packaging_charge = 0;
-            if (packaging_charge == 0) {
-                packaging_charge = JSON.parse(localStorage.getItem('RES_PACK_CHARGE'));
-            }
+
+            // Commanded for temporary
+            // if (packaging_charge == 0) {
+            //     packaging_charge = JSON.parse(localStorage.getItem('RES_PACK_CHARGE'));
+            // }
             if (cart.length === 0) {
             } else {
                 cart.forEach(function (item, i) {
+                    console.log("taxperc",item.taxperc)
                     if (document.querySelectorAll('[id="food_control_' + item.id + 'r"]')) {
                         var elms = document.querySelectorAll('[id="food_control_' + item.id + 'r"]');
                         for (var i = 0; i < elms.length; i++) {
@@ -1184,14 +1222,15 @@ export default {
                     let thisAmount = parseFloat(((item.price + item.addonsPrice) * item.quantity).toFixed(2));
                     tot_tax += parseFloat((thisAmount / 100) * item.taxperc);
                     localStorage.setItem('tot_tax', tot_tax);
-                    if (is_tax == 0) {
+                    // if (is_tax == 0) { // Need to work based on settings 
+                    if (tot_tax > 0) {
                         tot_amt = total_price + tot_tax;
                     } else {
                         tot_amt = total_price;
                     }
                     item_amount_total += thisAmount;
                 })
-                restaurant_packaging_charge = parseFloat((item_amount_total / 100) * packaging_charge);
+                restaurant_packaging_charge = parseFloat((item_amount_total / 100) * packaging_charge); // Refer above - Commanded for temporary
 
                 var dc = this.delivery_type
                 if (dc == 1) {
@@ -1358,6 +1397,7 @@ export default {
 
 .b-sidebar>.b-sidebar-header .close {
     font-size: 2rem;
+    
 }
 
 .circleBase {
@@ -1396,22 +1436,27 @@ export default {
     padding: 20px 0;
     border-top: none;
     border-bottom: none;
+
 }
 
 .coupons {
-    border: 1px solid #e0e0e0;
+    border: 2px solid #E5E7EB !important;
     overflow: hidden;
     display: flex;
     border: none;
-    margin-left: 0px;
+    height: 70px;
+    border-radius: 5px;
 
 }
 
+.checkout_coupon_value {
+    padding-top: 24px !important;
+}
+
 .coupon-input {
-    border-right: none !important;
-    border: 1px solid #E0E0E0 !important;
-    border-radius: 8px 0 0 8px;
-    padding-left: 20px;
+    border: none !important;
+    padding-left: 25px;
+    padding-top: 24px;
     font-size: 16px;
     height: 50px;
     background-color: #fff;
@@ -1425,17 +1470,19 @@ export default {
     font-size: 18px;
     font-weight: 400;
     color: #818181;
+    margin-top: 24px !important;
+
 }
 
 .apply-btn {
     background-color: #FF006B;
     border-radius: 0 8px 8px 0;
-
+    width: 120px !important;
     border-left: none;
     color: #fff;
     padding: 0 25px;
     font-weight: 500;
-    height: 50px;
+    height: 50px !important;
     font-size: 16px;
     display: flex;
     align-items: center;
@@ -1444,7 +1491,7 @@ export default {
 }
 
 .apply-btn:hover {
-    background-color: #FF006B;
+    background-color: #ff006a90;
 }
 
 /* REMOVE Bootstrap default border/shadow */
@@ -1492,20 +1539,23 @@ export default {
 }
 
 .text-l {
-    height: auto;
-    overflow-y: auto;
-    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+    max-height: 680px;
+    overflow-x: hidden;
+    overflow-y: hidden;
     -ms-overflow-style: none;
     background-color: #FFFFFF;
     border-radius: 20px;
     border: 2px solid #E5E7EB;
-    height: 500px;
+
+
 
 }
 
-.text-l::-webkit-scrollbar {
+/* .text-l::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .wrap-toggle {
     display: flex !important;
@@ -1515,7 +1565,9 @@ export default {
 
 .cart-bord {
     margin-top: 0% !important;
-    margin-left: 28px;
+    margin-right: 25px !important;
+    margin-left: 25px !important;
+
 }
 
 /* Make media and qty section wrap cleanly */
@@ -1567,7 +1619,7 @@ export default {
 .box {
     padding: 10px;
     background-color: transparent;
-    
+
 }
 
 /* On smaller screens, stack vertically */
@@ -1582,7 +1634,7 @@ export default {
 .horizontal-line {
     height: 1px;
     background-color: #7f7f7f;
-    width: 63%;
+    width: 73%;
     margin: 0;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -1598,8 +1650,8 @@ export default {
     border-radius: 10px;
     padding: 12px 16px;
     height: 72px;
-   
-    max-width:  360px;
+
+    max-width: 360px;
     font-family: sans-serif;
 }
 
@@ -1626,5 +1678,38 @@ export default {
     font-weight: 700;
     color: #1E40AF;
     margin-top: 2px;
+}
+
+.container-1 {
+    display: flex;
+    flex-direction: column;
+    max-height: 230px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 15px;
+
+
+}
+
+.apply-btn {
+    background-color: #FF006B !important;
+    /* Pink background */
+    color: white !important;
+    /* White text */
+    border: none !important;
+    border-radius: 50px !important;
+    /* Pill shape */
+    padding: 8px 24px !important;
+    font-weight: 700;
+    width: 120px !important;
+    height: 35px !important;
+    font-size: 16px;
+
+    transition: background-color 0.3s ease;
+}
+
+.apply-btn:hover {
+    background-color: #d8235b !important;
+    /* Slightly darker on hover */
 }
 </style>

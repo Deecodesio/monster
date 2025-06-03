@@ -1145,7 +1145,7 @@ class RestaurantController extends BaseController
             ->get();
 
         $data = $restaurants::where('id', $restaurant_id)->first();
-        if ($data->address != "") {
+        if ($data !== null && $data->address != "" && $data->address !=null) {
             $decodedText = html_entity_decode($data->address);
             $data->address = $decodedText;
         }
@@ -4637,9 +4637,26 @@ class RestaurantController extends BaseController
 
     public function get_product_details(Request $request)
     {
+        $business_id = $request->business_id;
+        $source_lat = $request->lat;
+        $source_lng = $request->lng;
+
+        if ($source_lat == "null") {
+            $source_lat = DEFAULT_LATITUDE;
+        }
+        if ($source_lng == "null") {
+            $source_lng = DEFAULT_LONGITUDE;
+        }
+
+
+        $nearbyRestaurantIDs = Restaurant::nearDistance_business_rest($source_lat, $source_lng, $business_id);
+        $restaurants = $this->restaurants;
+        $data = $restaurants::where('id', $nearbyRestaurantIDs[0])->first();
+
         $product_id = $request->id;
-        $product = product_details($product_id);
-        $restaurant = $product->restaurant_id;
+        $product = product_details($product_id, $data);
+        // $restaurant = $product->restaurant_id;
+        $restaurant = $data->id;
         $rest_details = DB::table('restaurants')->where('id', $restaurant)->first();
         $specs = DB::table('product_specification')->where('product_id', $product_id)->get();
         $faq = DB::table('product_faq')->where('product_id', $product_id)->get();

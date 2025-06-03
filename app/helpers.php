@@ -1041,11 +1041,13 @@ function secondLanguage_user($name, $second)
 }
 function get_image($each_food, $restaurant_id)
 {
+
     $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
     $cloudflare = DB::table('settings')->where('key_word', 'cloudflare')->first();
     $url = "";
     $acc_hash = "";
+
     if ($cloudflare->value == 1) {
         $get_url = DB::table('settings')->where('key_word', 'cloudflare_url')->first();
         $url = $get_url->value;
@@ -1056,9 +1058,9 @@ function get_image($each_food, $restaurant_id)
 
             if ($cloudflare->value == 1 && $each_food->cloudflare_imageid != null) {
 
-
                 $image[0] = $url . '/' . $acc_hash . '/' . $each_food->cloudflare_imageid . '/' . "w=500";
             } else {
+
                 if (str_starts_with($each_food->image, 'http')) {
                     $image[0] = $each_food->image;
                 } else {
@@ -1294,45 +1296,98 @@ function featured($restaurant_id)
     $is_veg = 0;
     $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
-    if ($business_id->layout_id == 2) {
-        $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-            ->where('food_list.status', 1)->where('food_list.featured', 1)
-            ->join(
-                'category',
-                function ($join) {
-                    $join->on('category.id', '=', 'food_list.category_id');
-                }
-            )
-            ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'category.category_name', 'category.category_secondaryname', 'category.image as cat_image', 'food_list.image as image', 'food_list.cloudflare_imageid as cloudflare_imageid', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
-            ->orderBy('rank')->orderBy('image', 'desc')
-            ->get();
-    } else {
-        $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-            ->where('food_list.status', 1)->where('food_list.featured', 1)
-            ->leftjoin(
-                'menu',
-                function ($join) {
-                    $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
-                    $join->on('menu.id', '=', 'food_list.menu_id');
-                }
-            )
-            ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
-            ->orderBy('rank')->orderBy('image', 'desc')
-            ->get();
-    }
+
+    $city_id = $rest_id->city;
+
+    // Step 1: Build pricing subquery with correct district filter
+    $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
+
+    // Step 2: Main query
+    $food_list = DB::table('food_list')
+        ->where('food_list.status', 1)
+        ->where('food_list.featured', 1)
+
+        // Menu join
+        ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+
+        // ✅ Correct pricing subquery join
+        ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+
+        // Select with pricing override
+        ->select(
+            'food_list.id as food_id',
+            'food_list.name',
+            'food_list.secondary_name',
+            'pricing.price', // district-based price
+            'food_list.secondary_description',
+            'food_list.description',
+            'food_list.category_id',
+            'food_list.is_veg',
+            'pricing.tax as item_tax', // district-based tax
+            'menu.menu_name',
+            'menu.id as menu_id',
+            'food_list.image',
+            // DB::raw('COALESCE(food_list.initial_price, 0) as initial_price'),
+            // DB::raw('COALESCE(food_list.split_payment, 0) as split_payment'),
+            // DB::raw('COALESCE(food_list.bprice, 0) as bprice'),
+            'food_list.out_of_stock',
+            'pricing.label'
+        )
+
+        // Sort
+        ->orderBy('rank')
+        ->orderBy('image', 'desc')
+        ->get();
+
+    // if ($business_id->layout_id == 2) {
+    //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //         ->where('food_list.status', 1)->where('food_list.featured', 1)
+    //         ->join(
+    //             'category',
+    //             function ($join) {
+    //                 $join->on('category.id', '=', 'food_list.category_id');
+    //             }
+    //         )
+    //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'category.category_name', 'category.category_secondaryname', 'category.image as cat_image', 'food_list.image as image', 'food_list.cloudflare_imageid as cloudflare_imageid', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
+    //         ->orderBy('rank')->orderBy('image', 'desc')
+    //         ->get();
+    // } else {
+    //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //         ->where('food_list.status', 1)->where('food_list.featured', 1)
+    //         ->leftjoin(
+    //             'menu',
+    //             function ($join) {
+    //                 $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+    //                 $join->on('menu.id', '=', 'food_list.menu_id');
+    //             }
+    //         )
+    //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
+    //         ->orderBy('rank')->orderBy('image', 'desc')
+    //         ->get();
+    // }
 
 
-    $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
+    // $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
 
     foreach ($food_list as $key => $each_food) {
         $each_food->image = get_image($each_food, $restaurant_id);
-        $food_list[$key]->add_ons = get_addons($each_food, $restaurant_id);
-        $food_list[$key]->groups = get_groups($each_food, $restaurant_id);
-        $food_list[$key]->food_quantity = get_food_quantity($each_food, $restaurant_id);
-        $food_list[$key]->restaurant = $rest_details->id;
-        $food_list[$key]->restaurant_name = $rest_details->restaurant_name;
-        $food_list[$key]->restaurant_address = $rest_details->address;
-        $food_list[$key]->restaurant_image = $rest_details->image;
+        $food_list[$key]->add_ons = []; // get_addons($each_food, $restaurant_id);
+        $food_list[$key]->groups = []; // get_groups($each_food, $restaurant_id);
+        $food_list[$key]->food_quantity = []; // get_food_quantity($each_food, $restaurant_id);
+        $food_list[$key]->restaurant = $rest_id->id;
+        $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
+        $food_list[$key]->restaurant_address = $rest_id->address;
+        $food_list[$key]->restaurant_image = $rest_id->image;
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
 
@@ -1340,11 +1395,11 @@ function featured($restaurant_id)
 
 
         $each_food->slug = strtolower(str_replace(' ', '-', $each_food->name) . '-' . $food_list[$key]->id);
-        if ($each_food->price < $each_food->bprice) {
-            $each_food->disc_value = number_format((100 - ($each_food->price / $each_food->bprice) * 100), 2);
-        } else {
-            $each_food->disc_value = "0";
-        }
+        // if ($each_food->price < $each_food->bprice) {
+        //     $each_food->disc_value = number_format((100 - ($each_food->price / $each_food->bprice) * 100), 2);
+        // } else {
+        $each_food->disc_value = "0";
+        // }
     }
 
     if ($business_id->layout_id == 2) {
@@ -1381,44 +1436,98 @@ function recent($restaurant_id)
     $is_veg = 0;
     $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
-    if ($business_id->layout_id == 2) {
-        $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-            ->where('food_list.status', 1)
-            ->join(
-                'category',
-                function ($join) {
-                    $join->on('category.id', '=', 'food_list.category_id');
-                }
-            )
-            ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'category.category_name', 'category.category_secondaryname', 'category.image as cat_image', 'food_list.image as image', 'food_list.cloudflare_imageid as cloudflare_imageid', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
-            ->orderBy('rank')->orderBy('image', 'desc')
-            ->get();
-    } else {
-        $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-            ->where('food_list.status', 1)
-            ->leftjoin(
-                'menu',
-                function ($join) {
-                    $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
-                    $join->on('menu.id', '=', 'food_list.menu_id');
-                }
-            )
-            ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
-            ->orderBy('rank')->orderBy('image', 'desc')
-            ->get();
-    }
 
-    $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
+    $city_id = $rest_id->city;
+
+    // Step 1: Build pricing subquery with correct district filter
+    $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
+
+    // Step 2: Main query
+    $food_list = DB::table('food_list')
+        ->where('food_list.status', 1)
+        ->where('food_list.featured', 1)
+
+        // Menu join
+        ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+
+        // ✅ Correct pricing subquery join
+        ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+
+        // Select with pricing override
+        ->select(
+            'food_list.id as food_id',
+            'food_list.name',
+            'food_list.secondary_name',
+            'pricing.price', // district-based price
+            'food_list.secondary_description',
+            'food_list.description',
+            'food_list.category_id',
+            'food_list.is_veg',
+            'pricing.tax as item_tax', // district-based tax
+            'menu.menu_name',
+            'menu.id as menu_id',
+            'food_list.image',
+            // DB::raw('COALESCE(food_list.initial_price, 0) as initial_price'),
+            // DB::raw('COALESCE(food_list.split_payment, 0) as split_payment'),
+            // DB::raw('COALESCE(food_list.bprice, 0) as bprice'),
+            'food_list.out_of_stock',
+            'pricing.label'
+        )
+
+        // Sort
+        ->orderBy('rank')
+        ->orderBy('image', 'desc')
+        ->get();
+
+
+    // if ($business_id->layout_id == 2) {
+    //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //         ->where('food_list.status', 1)
+    //         ->join(
+    //             'category',
+    //             function ($join) {
+    //                 $join->on('category.id', '=', 'food_list.category_id');
+    //             }
+    //         )
+    //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'category.category_name', 'category.category_secondaryname', 'category.image as cat_image', 'food_list.image as image', 'food_list.cloudflare_imageid as cloudflare_imageid', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
+    //         ->orderBy('rank')->orderBy('image', 'desc')
+    //         ->get();
+    // } else {
+    //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //         ->where('food_list.status', 1)
+    //         ->leftjoin(
+    //             'menu',
+    //             function ($join) {
+    //                 $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+    //                 $join->on('menu.id', '=', 'food_list.menu_id');
+    //             }
+    //         )
+    //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
+    //         ->orderBy('rank')->orderBy('image', 'desc')
+    //         ->get();
+    // }
+
+    // $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
 
     foreach ($food_list as $key => $each_food) {
         $each_food->image = get_image($each_food, $restaurant_id);
-        $food_list[$key]->add_ons = get_addons($each_food, $restaurant_id);
-        $food_list[$key]->groups = get_groups($each_food, $restaurant_id);
-        $food_list[$key]->food_quantity = get_food_quantity($each_food, $restaurant_id);
-        $food_list[$key]->restaurant = $rest_details->id;
-        $food_list[$key]->restaurant_name = $rest_details->restaurant_name;
-        $food_list[$key]->restaurant_address = $rest_details->address;
-        $food_list[$key]->restaurant_image = $rest_details->image;
+        $food_list[$key]->add_ons = []; // get_addons($each_food, $restaurant_id);
+        $food_list[$key]->groups = []; // get_groups($each_food, $restaurant_id);
+        $food_list[$key]->food_quantity = []; // get_food_quantity($each_food, $restaurant_id);
+        $food_list[$key]->restaurant = $rest_id->id;
+        $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
+        $food_list[$key]->restaurant_address = $rest_id->address;
+        $food_list[$key]->restaurant_image = $rest_id->image;
 
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
@@ -1426,11 +1535,11 @@ function recent($restaurant_id)
 
         $each_food->slug = strtolower(str_replace(' ', '-', $each_food->name) . '-' . $food_list[$key]->id);
 
-        if ($each_food->price < $each_food->bprice) {
-            $each_food->disc_value = number_format((100 - ($each_food->price / $each_food->bprice) * 100), 2);
-        } else {
-            $each_food->disc_value = "0";
-        }
+        // if ($each_food->price < $each_food->bprice) {
+        //     $each_food->disc_value = number_format((100 - ($each_food->price / $each_food->bprice) * 100), 2);
+        // } else {
+        $each_food->disc_value = "0";
+        // }
     }
     if ($business_id->layout_id == 2) {
         foreach ($food_list as $key => $each_menu) {
@@ -1541,58 +1650,119 @@ function menu_availability($food_list)
     }
     return 1;
 }
-function product_details($id)
+function product_details($id, $res)
 {
-    $food_list = DB::table('food_list')->where('food_list.id', $id)
-        ->leftjoin(
-            'menu',
-            function ($join) {
-                $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
-                $join->on('menu.id', '=', 'food_list.menu_id');
-            }
+    $city_id=$res->city;
+    $res_id = $res->id;
+     $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
+
+    // Step 2: Main query
+    $food_list = DB::table('food_list')
+       ->where('food_list.id', $id)
+
+        // Menu join
+        ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+
+        // ✅ Correct pricing subquery join
+        ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+
+        // Select with pricing override
+        ->select(
+            'food_list.id as food_id',
+            'food_list.name',
+            'food_list.secondary_name',
+            'pricing.price', // district-based price
+            'food_list.secondary_description',
+            'food_list.description',
+            'food_list.category_id',
+            'food_list.is_veg',
+            'pricing.tax as item_tax', // district-based tax
+            'menu.menu_name',
+            'menu.id as menu_id',
+            'food_list.image',
+            // DB::raw('COALESCE(food_list.initial_price, 0) as initial_price'),
+            // DB::raw('COALESCE(food_list.split_payment, 0) as split_payment'),
+            // DB::raw('COALESCE(food_list.bprice, 0) as bprice'),
+            'food_list.out_of_stock',
+            'pricing.label'
         )
-        ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.restaurant_id as restaurant_id', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
-        ->orderBy('rank')->orderBy('image', 'desc')
+
+        // Sort
+        ->orderBy('rank')
+        ->orderBy('image', 'desc')
         ->first();
+
+    // $food_list = DB::table('food_list')->where('food_list.id', $id)
+    //     ->leftjoin(
+    //         'menu',
+    //         function ($join) {
+    //             $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+    //             $join->on('menu.id', '=', 'food_list.menu_id');
+    //         }
+    //     )
+    //     ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.restaurant_id as restaurant_id', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
+    //     ->orderBy('rank')->orderBy('image', 'desc')
+    //     ->first();
     $food_list2 = DB::table('food_list')->where('food_list.id', $id)->first();
+
+    // print_r($food_list);
+    // exit;
 
     if ($food_list && $food_list2) {
         // $food_list->image = get_image($food_list, $food_list->restaurant_id);
-        $food_list->restaurant = $food_list->restaurant_id;
 
-        $food_list->add_ons = get_addons($food_list, $food_list->restaurant_id);
-        $food_list->groups = get_groups($food_list, $food_list->restaurant_id);
-        $food_list->food_quantity = get_food_quantity($food_list, $food_list->restaurant_id);
+        // $food_list->restaurant = $food_list->restaurant_id;
+        $food_list->add_ons =get_addons($food_list, $res_id);
+        $food_list->groups = get_groups($food_list, $res_id);
+        $food_list->food_quantity = get_food_quantity($food_list, $res_id);
         $food_list->menu_available = menu_availability($food_list);
-        $food_list->image = get_more_image($food_list, $food_list->restaurant_id);
+        $food_list->image = get_more_image($food_list, $res_id);
+
+        // $food_list->restaurant = $food_list->restaurant_id;
+        // $food_list->add_ons = get_addons($food_list, $food_list->restaurant_id);
+        // $food_list->groups = get_groups($food_list, $food_list->restaurant_id);
+        // $food_list->food_quantity = get_food_quantity($food_list, $food_list->restaurant_id);
+        // $food_list->menu_available = menu_availability($food_list);
+        // $food_list->image = get_more_image($food_list, $food_list->restaurant_id);
 
         $category = DB::table('business_category')->where('id', $food_list2->business_category_id)->first();
-        $subcategory = DB::table('category')->where('id', $food_list2->category_id)->first();
+        // $subcategory = DB::table('category')->where('id', $food_list2->category_id)->first();
 
         if ($category) {
             $food_list->category_name = $category->category_name;
             $food_list->cat_id = $category->id;
             $food_list->slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id);
-            $food_list->sub_slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id . '-' . $subcategory->id);
+            // $food_list->sub_slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id . '-' . $subcategory->id);
+            $food_list->sub_slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id . '-' . $id);
         }
 
 
-        if ($subcategory) {
-            $food_list->sub_category_name = $subcategory->category_name;
-            $food_list->sub_category_id = $subcategory->id;
-        }
+        // if ($subcategory) {
+        //     $food_list->sub_category_name = $subcategory->category_name;
+        //     $food_list->sub_category_id = $subcategory->id;
+        // }
 
-        if ($food_list->price < $food_list->bprice) {
-            $food_list->disc_value = number_format((100 - ($food_list->price / $food_list->bprice) * 100), 2);
-        } else {
+        // if ($food_list->price < $food_list->bprice) {
+        //     $food_list->disc_value = number_format((100 - ($food_list->price / $food_list->bprice) * 100), 2);
+        // } else {
             $food_list->disc_value = "0";
-        }
+        // }
 
-        if ($food_list->split_payment == 1) {
-            $food_list->pending_payment = $food_list->price - $food_list->initial_price;
-        } else {
+        // if ($food_list->split_payment == 1) {
+        //     $food_list->pending_payment = $food_list->price - $food_list->initial_price;
+        // } else {
             $food_list->pending_payment = 0;
-        }
+        // }
 
         $pending_payment_text = DB::table('settings')->where('key_word', 'pending_payment_text')->first();
         $food_list->pending_payment_text = $pending_payment_text->value;
@@ -1670,32 +1840,85 @@ function get_subcat_products($res_id, $id)
     $rest_id = DB::table('restaurants')->where('id', $res_id)->first();
     $restaurant_id = $rest_id->id;
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
+
+    $city_id = $rest_id->city;
+
+    // Step 1: Build pricing subquery with correct district filter
+    $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
+
+    // Step 2: Main query
     $food_list = DB::table('food_list')
-        ->where('food_list.restaurant_id', $res_id)
         ->where('food_list.status', 1)
-        // ->where('food_list.category_id', $id)
         ->where('food_list.business_category_id', $id)
-        ->leftjoin(
-            'menu',
-            function ($join) {
-                $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
-                $join->on('menu.id', '=', 'food_list.menu_id');
-            }
+        
+        // Menu join
+        ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+
+        // ✅ Correct pricing subquery join
+        ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+
+        // Select with pricing override
+        ->select(
+            'food_list.id as food_id',
+            'food_list.name',
+            'food_list.secondary_name',
+            'pricing.price', // district-based price
+            'food_list.secondary_description',
+            'food_list.description',
+            'food_list.category_id',
+            'food_list.is_veg',
+            'pricing.tax as item_tax', // district-based tax
+            'menu.menu_name',
+            'menu.id as menu_id',
+            'food_list.image',
+            // DB::raw('COALESCE(food_list.initial_price, 0) as initial_price'),
+            // DB::raw('COALESCE(food_list.split_payment, 0) as split_payment'),
+            // DB::raw('COALESCE(food_list.bprice, 0) as bprice'),
+            'food_list.out_of_stock',
+            'pricing.label'
         )
-        ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
-        ->orderBy('rank')->orderBy('image', 'desc')
+
+        // Sort
+        ->orderBy('rank')
+        ->orderBy('image', 'desc')
         ->get();
-    $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
+
+    // $food_list = DB::table('food_list')
+    //     ->where('food_list.restaurant_id', $res_id)
+    //     ->where('food_list.status', 1)
+    //     // ->where('food_list.category_id', $id)
+    //     ->where('food_list.business_category_id', $id)
+    //     ->leftjoin(
+    //         'menu',
+    //         function ($join) {
+    //             $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+    //             $join->on('menu.id', '=', 'food_list.menu_id');
+    //         }
+    //     )
+    //     ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.initial_price', 'food_list.split_payment', 'food_list.bprice', 'food_list.out_of_stock')
+    //     ->orderBy('rank')->orderBy('image', 'desc')
+    //     ->get();
+    // $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
 
     foreach ($food_list as $key => $each_food) {
         $each_food->image = get_image($each_food, $restaurant_id);
-        $food_list[$key]->add_ons = get_addons($each_food, $restaurant_id);
-        $food_list[$key]->groups = get_groups($each_food, $restaurant_id);
-        $food_list[$key]->food_quantity = get_food_quantity($each_food, $restaurant_id);
-        $food_list[$key]->restaurant = $rest_details->id;
-        $food_list[$key]->restaurant_name = $rest_details->restaurant_name;
-        $food_list[$key]->restaurant_address = $rest_details->address;
-        $food_list[$key]->restaurant_image = $rest_details->image;
+        $food_list[$key]->add_ons =[]; // get_addons($each_food, $restaurant_id);
+        $food_list[$key]->groups =[]; // get_groups($each_food, $restaurant_id);
+        $food_list[$key]->food_quantity =[]; // get_food_quantity($each_food, $restaurant_id);
+        $food_list[$key]->restaurant = $rest_id->id;
+        $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
+        $food_list[$key]->restaurant_address = $rest_id->address;
+        $food_list[$key]->restaurant_image = $rest_id->image;
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
         $food_list[$key]->cart_status = $rest_id->cart;
@@ -1704,11 +1927,11 @@ function get_subcat_products($res_id, $id)
     }
 
     foreach ($food_list as $key => $each_menu) {
-        if ($food_list[$key]->price < $food_list[$key]->bprice) {
-            $food_list[$key]->disc_value = number_format((100 - ($food_list[$key]->price / $food_list[$key]->bprice) * 100), 2);
-        } else {
+        // if ($food_list[$key]->price < $food_list[$key]->bprice) {
+        //     $food_list[$key]->disc_value = number_format((100 - ($food_list[$key]->price / $food_list[$key]->bprice) * 100), 2);
+        // } else {
             $food_list[$key]->disc_value = "0";
-        }
+        // }
     }
     return $food_list;
 }

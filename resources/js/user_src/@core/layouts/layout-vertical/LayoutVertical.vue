@@ -2,7 +2,7 @@
     <div class="vertical-layout h-100" :class="[layoutClasses]" :data-col="isNavMenuHidden ? '1-column' : null">
         <!-- Navbar -->
         <div v-if="!ismobile" :toggleable="false" :variant="navbarBackgroundColor"
-            class="pad-1 navbar-light shadow-sm pb-2 " :class="[navbarTypeClass]">
+            class=" navbar-light shadow-sm" :class="[navbarTypeClass]">
             <slot name="navbar" :toggleVerticalMenuActive="toggleVerticalMenuActive"
                 :navbarBackgroundColor="navbarBackgroundColor" :navbarTypeClass="[...navbarTypeClass, 'pad-1']">
                 <app-navbar-vertical-layout :toggle-vertical-menu-active="toggleVerticalMenuActive" />

@@ -1,5 +1,5 @@
 <template>
-    <div  v-if="!isempty">
+    <div v-if="!isempty">
         <b-row>
             <b-col md="12">
                 <h2 style="text-align: center">
@@ -8,36 +8,32 @@
                 <div class="hrLine"></div>
             </b-col>
         </b-row>
-
         <!-- Swiper Wrapper -->
-          <!-- Swiper Wrapper -->
-         <div>
-      <div class="swiper-category-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl" >
-  <div id="swiper-button-prev" class="swiper-button-prev"></div>
+        <div class="swiper-category-wrapper mb-5">
+            <!-- <div id="swiper-button-next" class="swiper-button-next"></div> -->
+            <div id="swiper-button-next" class="swiper-button-next" :class="{ 'force-disabled': rows2.length <= 6 }">
+            </div>
+            <swiper ref="mySwiper" class="swiper-multiple rounded text-center" :options="swiperOptions"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
+                <swiper-slide v-for="(data, index) in rows2" :key="index">
+                    <div class="cat-card-main" @click="gotor(data.slug)">
+                        <b-img class="fl" :src="data.img" :alt="data.text" />
+                        <div class="swiper-text pt-md-1 pt-sm-50">
+                            <div class="main_Cat_name">
+                                <b>{{ data.text }}</b>
+                            </div>
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper>
+            <!-- <div id="swiper-button-prev" class="swiper-button-prev"></div>-->
+            <div id="swiper-button-prev" class="swiper-button-prev" :class="{ 'force-disabled': rows2.length <= 5 }">
+            </div>
 
-  <swiper
-    class="swiper-multiple rounded swiper-shadow text-center"
-    :options="swiperOptions"
-    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-  >
-    <swiper-slide v-for="(data, index) in rows2" :key="index">
-      <div class="cat-card-main" @click="gotor(data.slug)">
-        <b-img class="fl" :src="data.img" :alt="data.text" />
-        <div class="swiper-text pt-md-1 pt-sm-50">
-          <div class="main_Cat_name">
-            <b>{{ data.text }}</b>
-          </div>
         </div>
-      </div>
-    </swiper-slide>
-  </swiper>
 
-  <div id="swiper-button-next" class="swiper-button-next"></div>
-</div>
 
     </div>
-    </div>
-
 </template>
 
 <script>
@@ -59,7 +55,7 @@ export default {
     data() {
         return {
             rows: {},
-            rows2: {},
+            rows2: [],
             rows_more: {},
             business_id: 1,
             rows_near: {},
@@ -76,28 +72,27 @@ export default {
             iscat: false,
             isShow: false,
 
-   swiperOptions: {
-  breakpoints: {
-    320: { slidesPerView: 2, spaceBetween: 10 },
-    768: { slidesPerView: 3, spaceBetween: 20 },
-    1024: { slidesPerView: 4, spaceBetween: 30 },
-    1440: { slidesPerView: 2, spaceBetween: 70 },
-  },
-  slidesPerView: 'auto',
-//   spacearound: 20,
-  spaceBetween: 20,
-  centeredSlides: false,
-  freeMode: true,
-  navigation: {
-    nextEl: "#swiper-button-next",
-    prevEl: "#swiper-button-prev",
-  },
-  loop: false,
-}
-
-
+            swiperOptions: {
+                breakpoints: {
+                    320: { slidesPerView: 2, spaceBetween: 10 },
+                    768: { slidesPerView: 3, spaceBetween: 20 },
+                    1024: { slidesPerView: 4, spaceBetween: 30 },
+                    1440: { slidesPerView: 4, spaceBetween: 70 },
+                },
+                slidesPerView: 4, // Desktop default
+                spaceBetween: 20,
+                centeredSlides: false,
+                freeMode: true,
+                loop: false,
+                navigation: {
+                    nextEl: "#swiper-button-prev",
+                    prevEl: "#swiper-button-next",
+                },
+                watchOverflow: false,
+            },
         };
     },
+
     methods: {
         gotor(slug) {
             console.log("slug*****");
@@ -106,18 +101,16 @@ export default {
         },
         toTitleCase(str) {
             return str.replace(/\w\S*/g, function (txt) {
-                return (
-                    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                );
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             });
         },
     },
+
     created() {
         store.commit("deliware_cart/UPDATE_FOOTER", false);
 
-        var lat = localStorage.getItem("latitude");
-        var lng = localStorage.getItem("longitude");
-        var business_id = localStorage.getItem("single_business_id");
+        const business_id = localStorage.getItem("single_business_id");
+
         this.$http.get("/category_lists/" + business_id).then((res) => {
             console.log("category_lists");
             console.log(res);
@@ -128,130 +121,107 @@ export default {
                 this.isempty_cat = true;
             }
 
+            // Log image URLs
             this.rows2.forEach((item) => {
                 console.log("Image URL:", "/" + item.img);
             });
 
+            // Force Swiper to reinitialize in case slide count changed
+            if (this.rows2.length <= 5) {
+                this.swiperInstance.navigation.prevEl.classList.add('force-disabled');
+                this.swiperInstance.navigation.nextEl.classList.add('force-disabled');
+            } else if (this.rows2.length <= 6) {
+                this.swiperInstance.navigation.nextEl.classList.add('force-disabled');
+            }
+
             store.commit("deliware_cart/UPDATE_FOOTER", true);
         });
     },
-};
+}
+
 </script>
 <style scoped>
+.swiper-category-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.swiper-container-rtl .swiper-button-prev:after
-{
-  margin-left: 26px;
-}
-.swiper-container-rtl .swiper-button-next:after{
-  margin-right: 26px;
-}
-.pt-5{
-  padding-top: 0rem !important;
-}
 .cat-card-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  padding: 10px;
-  margin-left: 40px;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px;
 }
 
 .fl {
- width: 250px; height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-left: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+    width: 250px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .fl:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+.swiper-wrapper {
+    display: flex;
+    gap: 50px;
+}
 
+.swiper-slide {
+    width: 200px !important;
+    display: flex;
+    justify-content: center;
+}
 
 .main_Cat_name {
-  margin-top: 8px;
-  font-weight: 600;
-  font-size: 18px;
-  color: black;
-  text-align: center;
-}
-.swiper-slide {
-  width: 200px !important;
-  display: flex;
-  justify-content: center;
-}
-.swiper-button-next,
-.swiper-button-prev {
-
-  width: 30px;
-  height: 30px;
-
-  border-radius: 50%;
-
-  z-index: 10;
-}
-.swiper-button-next{
-    margin-right: 25px;
-}
-.swiper-button-prev{
-    margin-left: 25px;
-}
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  font-size: 18px;
-  font-weight: bold;
-}
-.swiper-category-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  position: relative;
-
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    color: black;
+    text-align: center;
 }
 
-
-.swiper-category-wrapper .swiper-button-prev,
-.swiper-category-wrapper .swiper-button-next {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  z-index: 10;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-.swiper-category-wrapper .swiper-button-prev::after,
-.swiper-category-wrapper .swiper-button-next::after {
-  font-size: 18px;
-
-  /* color: #e91e63; */
-}
-
-
-.swiper-button-prev.swiper-button-disabled,
-.swiper-button-next.swiper-button-disabled {
-  opacity: 1 !important;
-  pointer-events: auto !important;
-}
-
+/* Swiper Buttons */
 .swiper-button-prev,
-.swiper-container-rtl .swiper-button-next{
-    border: none !important;
-
+.swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
+.swiper-button-prev {
+    left: 10px;
+}
+
+.swiper-button-next {
+    right: 10px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    content: '';
+    display: inline-block;
+    font-size: 30px;
+    color: white;
+    font-family: swiper-icons;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+}
 
 
 /* .swiper-button-next,

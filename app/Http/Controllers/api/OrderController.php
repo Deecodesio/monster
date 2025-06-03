@@ -1013,8 +1013,9 @@ class OrderController extends BaseController
             return response()->json(['status' => false, 'error_code' => 101, 'message' => "Request should be JSON"], 200);
         }
 
-        $validator = Validator::make(
-            $request->all(),
+        $validator = $request->validate(
+        // $validator = Validator::make(
+        //     $request->all(),
             [
                 'CustomerID'         => 'required',
                 'RestaurantID'         => 'required',
@@ -1030,9 +1031,10 @@ class OrderController extends BaseController
             ]
         );
 
-        if ($validator->fails()) {
-            return response()->json(['status' => false, 'error_code' => 101, 'message' => cimplode($validator->messages()->all())], 200);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json(['status' => false, 'error_code' => 101, 'message' => cimplode($validator->messages()->all())], 200);
+        // }
+
 
         $Order = new Order();
 

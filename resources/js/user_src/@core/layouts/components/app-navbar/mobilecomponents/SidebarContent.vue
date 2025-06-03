@@ -33,14 +33,15 @@
               $t("Delivery") }}</span></label>
 
         OR
-        <label class="btn btn-secondary tiplabel tiphide take f-size-0 " id="takeaway" type="button"> <input type="radio"
-            class="checktips" hidden name="d_type" id="takeaway" @change="delivery_type(2)" value="2"><span
+        <label class="btn btn-secondary tiplabel tiphide take f-size-0 " id="takeaway" type="button"> <input
+            type="radio" class="checktips" hidden name="d_type" id="takeaway" @change="delivery_type(2)" value="2"><span
             style="color:#282828;"><b-img src="/walk.png" fluid alt="Scan" style="width:70%;" />
             {{ $t("Take Away") }}</span></label>
       </div>
       <div id="takeaway_address" style="display:none;  padding-top: 20px;" class="cart-bord">
         <h4>{{ $t("Take Away") }} {{ $t("From") }}</h4>
-        <p id="demo"><feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{ cart[0].restaurant_address }}</p>
+        <p id="demo"><feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{ cart[0].restaurant_address }}
+        </p>
       </div>
       <div id="delivery_address" style="display:block; padding-top: 20px;" class="cart-bord">
 
@@ -137,7 +138,8 @@
           <b-form-input placeholder="Enter Coupon Code" id="checkout_coupon_value"
             style="height:50px;text-transform:uppercase" />
           <b-input-group-append is-text>
-            <b-button variant="primary" id="applied_coupon_identify" @click="applycoupon()" class="text-yellow mborderw">
+            <b-button variant="primary" id="applied_coupon_identify" @click="applycoupon()"
+              class="text-yellow mborderw">
               {{ $t("Apply") }}
             </b-button>
 
@@ -155,9 +157,10 @@
           <div v-for="(data, index) in tips" :key="index">
 
             <label class="btn btn-primary tiplabel tiphide  f-size-0 " :id="'tips' + data" type="button"
-              style="margin-right: 20px; margin-left: 10px; padding: 10px; "> <input type="radio" class="checktips" hidden
-                name="tips" :id="'tips' + data" @change="addtips(data)" :value=data>{{ $store.state['defaults'].currency
-                }}
+              style="margin-right: 20px; margin-left: 10px; padding: 10px; "> <input type="radio" class="checktips"
+                hidden name="tips" :id="'tips' + data" @change="addtips(data)" :value=data>{{
+                  $store.state['defaults'].currency
+              }}
               {{ data | priceformat }}</label>
           </div>
           <label class="btn btn-primary tiplabel tiphide  f-size-0 " id="ctips" type="button"
@@ -186,8 +189,9 @@
           </tr>
           <tr v-if="$store.state['deliware_cart'].cart_total.discount > 0">
             <td>{{ $t("Discount") }}</td>
-            <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.discount | priceformat
-            }}
+            <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.discount |
+              priceformat
+              }}
             </td>
           </tr>
           <tr id="dcharge_bill" v-if="$store.state['deliware_cart'].cart_total.delivery_charge > 0">
@@ -197,7 +201,8 @@
           </tr>
           <tr id="tips_bill" v-if="$store.state['deliware_cart'].cart_total.tips > 0">
             <td>{{ $t("Tips") }}</td>
-            <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.tips | priceformat }}
+            <td>{{ $store.state['defaults'].currency }} {{ $store.state['deliware_cart'].cart_total.tips | priceformat
+              }}
             </td>
           </tr>
           <tr id="tips_bill" v-if="$store.state['deliware_cart'].cart_total.tax > 0">
@@ -228,7 +233,7 @@
               {{ $t("Proceed") }}
             </b-button>
             <b-button style="height:50px;" class="f-size-2" v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              @click="checklogin()" block variant="primary" v-if="!isdefault">
+              @click="checklogin()" v-if="!isdefault">
               Select Address
             </b-button>
 
@@ -241,7 +246,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 import {
   BRow,
@@ -946,7 +951,7 @@ export default {
 
 }
 </script>
- 
+
 <style scoped>
 .text-l {
   text-align: left;

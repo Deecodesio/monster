@@ -20,16 +20,16 @@
                                     {{ $t("Takeaway") }}
                                 </div>
                             </div> -->
-                              <div class="toggle-container">
-                <div :class="['toggle-option', { 'toggle-active': delivery_type === 1 }]"
-                    @click="select_delivery_type(1)">
-                    Delivery
-                </div>
-                <div :class="['toggle-option', { 'toggle-active': delivery_type === 2 }]"
-                    @click="select_delivery_type(2)">
-                    Takeaway
-                </div>
-            </div>
+                            <div class="toggle-container">
+                                <div :class="['toggle-option', { 'toggle-active': $store.state.deliware_cart.cart_total.dc === 1 }]"
+                                    @click="select_delivery_type(1)">
+                                    Delivery
+                                </div>
+                                <div :class="['toggle-option', { 'toggle-active': $store.state.deliware_cart.cart_total.dc === 2 }]"
+                                    @click="select_delivery_type(2)">
+                                    Takeaway
+                                </div>
+                            </div>
 
                             <div v-for="(data, index) in $store.state['deliware_cart'].cart_items" :key="index">
                                 <b-row>
@@ -94,56 +94,56 @@
                             <div class="checkout_bill_section mt-2">
                                 <table width="100%" cellspacing="5" cellpadding="5">
                                     <tr>
-                                        <td>{{ $t("Item Total") }}</td>
-                                        <td style="float: right;">
+                                        <td style="font-weight: 700; font-size: 16px;color: black;">{{ $t("Item Total") }}</td>
+                                        <td style="float: right; font-weight: 700; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.item_total | priceformat }}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>{{ $t("Packaging Charge") }}</td>
-                                        <td style="float: right;">
+                                        <td style="font-size: 16px;">{{ $t("Packaging Charge") }}</td>
+                                        <td style="float: right ; font-size: 16px;color:black; ">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.packaging_charge | priceformat
                                             }}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>{{ $t("Discount") }}</td>
                                         <td style="float: right;">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.discount | priceformat }}
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr id="dcharge_bill">
-                                        <td>{{ $t("Delivery Charge") }}</td>
-                                        <td style="float: right;">
+                                        <td style="font-size: 16px;">{{ $t("Delivery Charge") }}</td>
+                                        <td style="float: right; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.delivery_charge | priceformat }}
                                         </td>
                                     </tr>
                                     <tr id="tips_bill" v-if="$store.state['deliware_cart'].cart_total.tips">
-                                        <td>{{ $t("Tips") }}</td>
-                                        <td style="float: right;">
+                                        <td style="font-size: 16px; ">{{ $t("Tips") }}</td>
+                                        <td style="float: right; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.tips | priceformat }}
                                         </td>
                                     </tr>
                                     <tr id="tips_bill">
-                                        <td>
+                                        <td style="font-size: 16px; ">
                                             {{ $t("Tax") }}
                                             <span>{{ tax($store.state["defaults"].tax) }}</span>
                                         </td>
-                                        <td style="float: right;">
+                                        <td style="float: right ; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.tax | priceformat }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <b>{{ $t("Bill Total") }} </b>
+                                            <b style="font-weight: 700; font-size: 16px;color: black;">{{ $t("Bill Total") }} </b>
                                         </td>
-                                        <td style="float: right;">
+                                        <td style="float: right;font-size: 16px;color: black;">
                                             <b>{{ $store.state["defaults"].currency }}
                                                 {{ $store.state["deliware_cart"].cart_total.bill | priceformat }}
                                             </b>
@@ -152,12 +152,12 @@
                                 </table>
                             </div>
 
-                            <div class="checkout_proceed mt-2">
-                                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary" block
-                                    @click="proceed_to_payment()">
-                                    {{ $t("Proceed to Payment") }}
-                                </b-button>
-                            </div>
+                            <b-button  v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary" block
+                                style="width: 100%; height: 44px; font-size: 20px; font-weight: 700;margin-top: 16px;"
+                                @click="proceed_to_payment()">
+                                {{ $t("Proceed to Payment") }}
+                            </b-button>
+
                         </div>
                     </b-card>
                 </b-col>
@@ -212,7 +212,7 @@
                             </b-row>
                         </b-card>
                     </b-card>
-                    <b-card class="" v-else>
+                    <b-card class="" v-else>z
                         <div class="checkout_map" id="checkout_map"></div>
                         <div class="checkout_slot_address_section mt-2">
                             <div class="checkout_slot_address_section_left">
@@ -289,23 +289,23 @@ export default {
             selected_day: null,
             selected_time: null,
             show_payment_success: false,
-            
+
 
         }
     },
     directives: {
 
         Ripple,
-    },methods: {
+    }, methods: {
         select_delivery_type(type) {
             this.delivery_type = type;
         },
     },
     Select_delivery_type(type) {
-            this.delivery_type = type
+        this.delivery_type = type
 
-            this.loadcart()
-        },
+        this.loadcart()
+    },
     filters: {
         priceformat(number) {
             var decimals = store.state["defaults"].decimal;
@@ -489,7 +489,7 @@ export default {
                     CookingNotes: localStorage.getItem("instructions") || "",
                     CreatedThrough: "web",
                     CustomerID: userData.id,
-                    DeliveryCharge: 0.0,
+                    DeliveryCharge: bill.delivery_charge, // 0.0,
                     DeliveryMethod: DeliveryMethod,
                     Items: items,
                     Booking_details: bookingDetails,
@@ -682,6 +682,7 @@ export default {
     height: 250px;
     width: 100%;
 }
+
 .toggle-container {
     display: flex;
     background-color: #FF81B633;

@@ -31502,7 +31502,7 @@ html[dir] .pace .pace-progress {
 
 .sidebar {
   position: relative;
-  width: 100%;
+  width: 50%;
   height: 100%;
 }
 
@@ -36624,97 +36624,6 @@ div.dataTables_wrapper .dataTables_info {
 
 [dir] .dark-layout .bootstrap-touchspin .bootstrap-touchspin-injected .disabled-max-min {
   background-color: #b8c2cc !important;
-}
-
-.navigation-header.shopsss-header span {
-  color: #2d9cdb !important;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.bordered-layout .header-navbar {
-  -webkit-box-shadow: none;
-}
-
-[dir] .bordered-layout .header-navbar {
-          -webkit-box-shadow: none;
-                  box-shadow: none;
-  border: 1px solid #ebe9f1;
-}
-
-[dir] .bordered-layout .header-navbar.floating-nav {
-  border: 1px solid #ebe9f1;
-}
-
-.bordered-layout .header-navbar.fixed-top {
-  -webkit-box-shadow: none !important;
-}
-
-[dir] .bordered-layout .header-navbar.fixed-top {
-  border-bottom: 1px solid #ebe9f1;
-  background: #f8f8f8;
-          -webkit-box-shadow: none !important;
-                  box-shadow: none !important;
-}
-
-.bordered-layout .main-menu {
-  -webkit-box-shadow: none;
-}
-
-[dir] .bordered-layout .main-menu {
-          -webkit-box-shadow: none;
-                  box-shadow: none;
-}
-
-[dir=ltr] .bordered-layout .main-menu {
-  border-right: 1px solid #ebe9f1;
-}
-
-[dir=rtl] .bordered-layout .main-menu {
-  border-left: 1px solid #ebe9f1;
-}
-
-[dir] .bordered-layout .main-menu.menu-light .navigation > li.open:not(.menu-item-closing) > a, [dir] .bordered-layout .main-menu.menu-light .navigation > li.sidebar-group-active > a {
-  background: #ededed;
-}
-
-.bordered-layout .dropdown-menu {
-  -webkit-box-shadow: none;
-}
-
-[dir] .bordered-layout .dropdown-menu {
-  border: 1px solid #ebe9f1 !important;
-          -webkit-box-shadow: none;
-                  box-shadow: none;
-}
-
-[dir] .bordered-layout .main-menu .navigation, [dir] .bordered-layout .main-menu {
-  background: #f8f8f8;
-}
-
-.bordered-layout .card,
-.bordered-layout .bs-stepper:not(.wizard-modern):not(.checkout-tab-steps),
-.bordered-layout .bs-stepper.wizard-modern .bs-stepper-content {
-  -webkit-box-shadow: none;
-}
-
-[dir] .bordered-layout .card, [dir] .bordered-layout .bs-stepper:not(.wizard-modern):not(.checkout-tab-steps), [dir] .bordered-layout .bs-stepper.wizard-modern .bs-stepper-content {
-  border: 1px solid #ebe9f1;
-          -webkit-box-shadow: none;
-                  box-shadow: none;
-}
-
-.bordered-layout .footer {
-  -webkit-box-shadow: none !important;
-}
-
-[dir] .bordered-layout .footer {
-          -webkit-box-shadow: none !important;
-                  box-shadow: none !important;
-}
-
-[dir] .bordered-layout .footer-fixed .footer {
-  border-top: 1px solid #ebe9f1;
 }
 
 .dark-layout {
@@ -45286,6 +45195,10 @@ output.b-rating.form-control:focus {
                   box-shadow: none;
 }
 
+.b-sidebar {
+  width: 100% !important;
+}
+
 .b-sidebar.sidebar-lg {
   width: 30rem;
 }
@@ -45304,10 +45217,9 @@ output.b-rating.form-control:focus {
   background-color: #f6f6f6;
 }
 
-.shopsss-header {
-  color: #2d9cdb;
-  font-size: 1.2rem;
-  font-weight: bold;
+.b-sidebar-backdrop {
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 [dir] .b-sidebar-backdrop {

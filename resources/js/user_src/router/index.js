@@ -30,7 +30,7 @@ const router = new VueRouter({
         action: 'read',
       },
     },
-    
+
     {
       path: '*',
       redirect: 'error-404',
@@ -39,23 +39,49 @@ const router = new VueRouter({
 })
 
 // router.beforeEach((to, _, next) => {
-//   const isLoggedIn = isUserLoggedIn()
+//   // First, check if the route exists in our defined routes
+//   const routeExists = router.options.routes.some(route => {
+//     // Check exact path match
+//     if (route.path === to.path) return true
 
-//   if (!canNavigate(to)) {
-//     // Redirect to login if not logged in
-//     if (!isLoggedIn) return next({ name: 'auth-login' })
+//     // Check if it's one of our dynamic routes
+//     if (route.path && (
+//       route.path.includes('/blogs') ||
+//       route.path.includes('/careers') ||
+//       route.path.includes('/franchise')
+//     )) {
+//       // Check if the current path starts with one of these base paths
+//       const pathStart = to.path.split('/')[1]
+//       const routeStart = route.path.split('/')[1]
+//       return pathStart === routeStart
+//     }
 
-//     // If logged in => not authorized
-//     return next({ name: 'misc-not-authorized' })
+//     return false
+//   })
+
+//   // Check if the route is a public route (like blogs, careers, franchise)
+//   if (to.meta && to.meta.publicRoute) {
+//     console.log('Public route detected:', to.path)
+//     return next() // Allow navigation to public routes without restrictions
 //   }
 
-//   // Redirect if logged in
-//   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
-//     const userData = getUserData()
-//     next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
-//   }
+  // const isLoggedIn = isUserLoggedIn()
 
-//   return next()
+  // if (!canNavigate(to)) {
+  //   // Redirect to login if not logged in
+  //   if (!isLoggedIn) return next({ name: 'login' })
+
+  //   // If logged in => not authorized
+  //   return next({ name: 'error-404' })
+  // }
+
+  // // Redirect if logged in
+  // if (to.meta.redirectIfLoggedIn && isLoggedIn) {
+  //   const userData = getUserData()
+  //   next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+  // }
+
+  // return next()
 // })
 
 // ? For splash screen

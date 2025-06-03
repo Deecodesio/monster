@@ -7,60 +7,55 @@
 // 	Author URL: http://www.themeforest.net/user/pixinvent
 // ================================================================================================
 
-@import "../bootstrap-extended/include"; // Bootstrap includes
-@import "../components/include"; // Components includes
-
-.navigation-header.shopsss-header span {
-    color: #2d9cdb !important;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
+@import '../bootstrap-extended/include'; // Bootstrap includes
+@import '../components/include'; // Components includes
 
 .bordered-layout {
-    .header-navbar {
-        box-shadow: none;
-        border: 1px solid $border-color;
-        &.floating-nav {
-            border: 1px solid $border-color;
+  .header-navbar {
+    box-shadow: none;
+    border: 1px solid $border-color;
+    &.floating-nav {
+      border: 1px solid $border-color;
+    }
+    &.fixed-top {
+      border-bottom: 1px solid $border-color;
+      background: $body-bg;
+      box-shadow: none !important;
+    }
+  }
+  .main-menu {
+    border-right: 1px solid $border-color;
+    box-shadow: none;
+    &.menu-light .navigation > li {
+      &.open:not(.menu-item-closing),
+      &.sidebar-group-active {
+        > a {
+          background: darken($white, 7%);
         }
-        &.fixed-top {
-            border-bottom: 1px solid $border-color;
-            background: $body-bg;
-            box-shadow: none !important;
-        }
+      }
     }
-    .main-menu {
-        border-right: 1px solid $border-color;
-        box-shadow: none;
-        &.menu-light .navigation > li {
-            &.open:not(.menu-item-closing),
-            &.sidebar-group-active {
-                > a {
-                    background: darken($white, 7%);
-                }
-            }
-        }
-    }
-    .dropdown-menu {
-        border: 1px solid $border-color !important;
-        box-shadow: none;
-    }
-    .main-menu .navigation,
-    .main-menu {
-        background: $body-bg;
-    }
-    .card,
-    .bs-stepper:not(.wizard-modern):not(.checkout-tab-steps),
-    .bs-stepper.wizard-modern .bs-stepper-content {
-        border: 1px solid $border-color;
-        box-shadow: none;
-    }
+  }
+  .dropdown-menu {
+    border: 1px solid $border-color !important;
+    box-shadow: none;
+  }
+  .main-menu .navigation,
+  .main-menu {
+    background: $body-bg;
+  }
+  .card,
+  .bs-stepper:not(.wizard-modern):not(.checkout-tab-steps),
+  .bs-stepper.wizard-modern .bs-stepper-content {
+    border: 1px solid $border-color;
+    box-shadow: none;
+  }
+
+  .footer {
+    box-shadow: none !important;
+  }
+  .footer-fixed {
     .footer {
-        box-shadow: none !important;
+      border-top: 1px solid $border-color;
     }
-    .footer-fixed {
-        .footer {
-            border-top: 1px solid $border-color;
-        }
-    }
+  }
 }

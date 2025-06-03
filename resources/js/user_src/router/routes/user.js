@@ -280,6 +280,8 @@ export default [
 
   },
 
+
+  // Blog routes
   {
     path: '/blogs',
     name: 'blogs',
@@ -287,7 +289,8 @@ export default [
     meta: {
       publicRoute: true,
       contentRenderer: 'sidebar-left',
-      permission: 'public'
+      permission: 'public',
+      layout: 'full' // Added to ensure consistent layout
     }
   },
   {
@@ -295,8 +298,13 @@ export default [
     name: 'blog-detail',
     component: () => import('@@@/views/blog/BlogDetail.vue'),
     props: true,
+    meta: {
+      publicRoute: true,
+      permission: 'public',
+      layout: 'full' // Added to ensure consistent layout
+    }
   },
-  // Add new career routes
+  // Career routes
   {
     path: '/careers',
     name: 'careers',
@@ -304,7 +312,8 @@ export default [
     meta: {
       publicRoute: true,
       contentRenderer: 'sidebar-left',
-      permission: 'public'
+      permission: 'public',
+      layout: 'full' // Added to ensure consistent layout
     }
   },
   {
@@ -312,6 +321,23 @@ export default [
     name: 'career-detail',
     component: () => import('@@@/views/career/CareerDetail.vue'),
     props: true,
+    meta: {
+      publicRoute: true,
+      permission: 'public',
+      layout: 'full' // Added to ensure consistent layout
+    }
+  },
+  // Franchise route
+  {
+    path: '/franchise',
+    name: 'franchise',
+    component: () => import('@@@/views/franchise/FranchiseList.vue'),
+    meta: {
+      publicRoute: true,
+      contentRenderer: 'sidebar-left',
+      permission: 'public',
+      layout: 'full' // Added to ensure consistent layout
+    }
   }
 
 ]

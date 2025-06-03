@@ -256,7 +256,7 @@ class Order extends Controller
         $this->ItemTotal = $this->itemTotal();
 
         $package_charge = ($this->ItemTotal / 100) * $this->Restaurant->packaging_charge;
-        $this->PackingCharge = $package_charge;
+        $this->PackingCharge =0 ; // $package_charge;
         // $this->Tax 					= $this->calculateTax();
         $this->DeliveryCharge = $this->DeliveryCharge;
         $this->OfferDiscount = 0;
@@ -753,7 +753,7 @@ class Order extends Controller
         $flag = true;
 
         foreach ($this->Items as $itemKey => $EachItem) {
-
+            if (is_array($EachItem->AddonsDetails)) {
             foreach ($EachItem->AddonsDetails as $addonKey => $eachAddon) {
 
                 $requestdetail_addons = new RequestdetailAddons;
@@ -770,6 +770,7 @@ class Order extends Controller
                     break;
                 }
             }
+        }
 
             if (!$flag) {
                 break;

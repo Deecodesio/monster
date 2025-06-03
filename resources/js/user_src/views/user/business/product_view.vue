@@ -22,38 +22,50 @@
                     <span class="bc_active"> {{ product.name }}</span>
                 </b-breadcrumb-item>
             </b-breadcrumb>
-            <b-row class="my-2 ">
-                <b-col cols="12" md="7">
-                    <div class="d-flex align-items-center justify-content-center" v-if="product.image.length <= 1">
+            <b-row class="my-2 align-items-center">
+                <b-col cols="12" sm="6" md="6" lg="6">
+                    <div class="container">
+                    <div class="cont   " v-if="product.image.length <= 1">
                         <b-img :src="product.image[0]" class="product-img" fluid />
                     </div>
                     <gallery :prop="img_to_show" v-else />
 
                     <h4 class="mt-1">{{ $t("Product Description") }}</h4>
-                    <b-card-text>{{ product.description }}</b-card-text>
+                    <b-card-text class="text">{{ product.description }}</b-card-text>
                     <h4 v-if="faq.length" class="mt-1">{{ $t("Frequently Asked Question") }}</h4>
                     <app-collapse accordion type="margin" v-if="faq.length">
                         <app-collapse-item v-for="(faq_data, index) in faq" :key="index" :title="faq_data.question">
                             {{ faq_data.answer }}
                         </app-collapse-item>
                     </app-collapse>
+                    </div>
                 </b-col>
-                <b-col cols="12" md="5" >
+                <b-col cols="12" sm="6" md="6" lg="6">
+                    <div class="container">
                     <h2>{{ product.name }}</h2>
                     <div class="ecommerce-details-price d-flex flex-wrap mt-1">
                         <div class="strike" v-if="product.price < product.bprice">
                             {{ $store.state['defaults'].currency }} {{ product.bprice | priceformat
                             }}
                         </div>
-                        <div class="price_text">
-                            {{ $store.state['defaults'].currency }} {{ product.price | priceformat }}
-                             <strong style="color: black;"> - 1kg</strong>
+                        <div class="price_text" style="text-align: start; line-height: 1; margin-top: 1rem;">
+                            <span style="display: block;">
+                                {{ $store.state['defaults'].currency }} {{ product.price | priceformat }}
+                            </span>
+                            <h5 style="color: black; display: block; font-size: medium; margin-top: 1rem;">
+                                {{ product.label }}
+                            </h5>
                         </div>
-                        <div class="badge"  v-if="product.price < product.bprice">
+
+
+
+
+                        <div class="badge" v-if="product.price < product.bprice">
                             {{ product.disc_value }} % Off
                         </div>
                     </div>
-                    <b-card-text v-if="product.menu_available == 1">{{ $t("Available") }} - <span class="text-success">
+                    <b-card-text v-if="product.menu_available == 1" style="margin-top: 1rem;">{{ $t("Available") }} -
+                        <span class="text-success">
                             {{ $t("In Stock") }}</span></b-card-text>
                     <b-card-text v-else>{{ $t("Not Available") }} - <span class="text-success">
                             {{ $t("Out of Stock") }}</span></b-card-text>
@@ -137,7 +149,6 @@
                                                 </td>
                                                 <td ALIGN="left" width="55%">
                                                     <label :for="'size_' + ga1.id + '_' + ga2.id"
-
                                                         style="font-size:16px;">
                                                         {{ ga2.name }}
                                                     </label>
@@ -403,7 +414,7 @@
                                 </div>
                                 <div v-if="data6.add_ons && data6.add_ons.length">
                                     <div v-if="data6.id == s_fq" style="text-align: left;">
-                                        <h4>{{ $t("Ad   dons") }}</h4>
+                                        <h4>{{ $t("Ad dons") }}</h4>
                                     </div>
                                     <table v-if="data6.id == s_fq" width="50%">
                                         <tr v-for="(d6, i6) in data6.add_ons" :key="i6">
@@ -636,38 +647,40 @@
   <span>Add to Cart</span>
 </b-button>
                     </div> -->
-
                     <div class="d-flex flex-column flex-sm-row pt-1" v-if="product.menu_available == 1 && isopen == 1">
                         <b-button v-if="product.menu_available === 1 && cart_status == 1"
                             v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary"
                             class="btn-cart mr-0 mr-sm-1 mb-1 mb-sm-0" :id="'food_add_' + product.food_id + 'r'"
+                            :key="'food_add_' + product.food_id  + '_' + product.name"
                             :data-price=product.price @click="check_cart(selected)">
                             <b-img src="/monster/plate-white.svg" class="mr-50 add_cart_btn_img"></b-img>
 
                             <span>{{ 'Add to Cart' }}</span>
                         </b-button>
-                        <div class="num-block skin-2" :id="'food_control_' + product.food_id + 'r'" style="display:none"
+                        <div class="num-block skin-2" :id="'food_control_' + product.food_id + 'r'" style="display:none" :key="'food_control_' + product.food_id + '_' + product.name"
                             v-if="product.menu_available === 1 && cart_status == 1">
                             <div class="num-in">
-                                <span class="minus dis" :id="'food_minus_' + product.food_id"
+                                <span class="minus dis" :id="'food_minus_' + product.food_id"  :key="'food_minus_' + product.food_id + '_' + product.name"
                                     @click="removefromcart(product.price, product.item_tax, product.name, product.food_id, product.is_veg, product.add_ons, product.food_quantity, product.image)"></span>
-                                <input type="text" class="in-num" value="1" readonly=""
+                                <input type="text" class="in-num" value="1" readonly=""  :key="'food_qty_' + product.food_id + '_' + product.name"
                                     :id="'food_qty_' + product.food_id + 'r'">
-                                <span class="plus" :id="'food_plus_' + product.food_id"
+                                <span class="plus" :id="'food_plus_' + product.food_id"  :key="'food_plus_' + product.food_id + '_' + product.name"
                                     @click="open_plus(selected)"></span>
                             </div>
                         </div>
                     </div>
 
+                    <div style="font-size: large; margin-top: 2rem; font-weight: bolder; color: black;">
+                        <strong>
+                            Total Price: {{ $store.state['defaults'].currency }}{{ totalPrice }}
+                        </strong>
+                    </div>
 
-         <strong class="mt-2" style=" font-size: large;">
-  Total Price: {{ totalPrice }} {{ $store.state['defaults'].currency }}
-         </strong>
 
 
-                    <div class="d-flex justify-content-middle mt-2 pr-5 ">
-  <img class= "rounded-lg" src="/uploads/7sct.png" alt="Flat 20% Off" width="610" height="132">
-</div>
+                    <div class="d-flex justify-content-middle  pr-5 " style="margin-top: 6rem;">
+                        <img class="rounded-lg" src="/uploads/7sct.png" alt="Flat 20% Off" width="570" height="132">
+                    </div>
                     <!-- <div v-if="table.length">
                         <div v-for="(td, index_td) in table" :key="index_td">
                             <h4 class="mt-1">{{ td.name }}</h4>
@@ -685,9 +698,10 @@
                         </div>
                     </div> -->
 
-
+</div>
                 </b-col>
             </b-row>
+
             <featured :prop="featured" :business_id="business_id" :isopen="isopen" :title="title2"
                 v-if="featured.length" />
         </div>
@@ -773,25 +787,56 @@ export default {
         }
     },
     computed: {
-  totalPrice() {
-    return (this.product.price * this.quantity).toFixed(2);
-  }
-},
-
-    watch: {
-        $route(to, from) {
-            if (this.$route.name == "product") {
-                this.isLoading = true;
-                this.get_product_details()
-                this.loadcart()
-            }
+        totalPrice() {
+            return (this.product.price * this.quantity).toFixed(2);
         }
+    },
+     filters: {
+         priceformat(number){
+         var decimals = store.state['defaults'].decimal;
+         var dec_point = store.state['defaults'].delimiter;
+         var thousands_sep = '';
+         number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+         var n = !isFinite(+number) ? 0 : +number,
+             prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+             sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+             dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+             s = '',
+             toFixedFix = function (n, prec) {
+                 var k = Math.pow(10, prec);
+                 return '' + Math.round(n * k) / k;
+             };
+       
+         s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+         if (s[0].length > 3) {
+             s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+         }
+         if ((s[1] || '').length < prec) {
+             s[1] = s[1] || '';
+             s[1] += new Array(prec - s[1].length + 1).join('0');
+         }
+         return s.join(dec);
+   
+      
+       },
+    },
+    watch: {
+        async $route(to, from) {
+            // if (this.$route.name == "product") {
+            if (to.name == "product") {
+                this.isLoading = true;
+                console.log('route.id');
+                  console.log(this.product.food_id);
+               await this.get_product_details()
+               await this.loadcart()              
+            }
+        },
     },
 
     created() {
         this.get_product_details()
         this.loadcart()
-
+        
         this.$http.get('/single_restaurant_products/' + this.lat + '/' + this.lng + '/' + this.business_id)
             .then(res => {
                 this.featured = res.data.featured
@@ -818,13 +863,14 @@ export default {
                 this.$router.push({ name: 'sub_cat_list', params: { slug: this.product.sub_slug } });
 
         },
-        get_product_details() {
+      async get_product_details() {
             store.commit('deliware_cart/UPDATE_FOOTER', false)
 
             const productSlug = this.$route.params.slug
             const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
 
-            this.$http.get('/get_product_details/' + productId)
+            // this.$http.get('/get_product_details/' + productId)
+            this.$http.get('/get_product_details/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id) 
                 .then(res => {
                     this.product = res.data.product
                     console.log(this.product)
@@ -867,10 +913,8 @@ export default {
                     this.faq = res.data.faq
                     this.table = res.data.table
                     this.cart_status = res.data.cart_status
-
-                    this.single_restaurant()
+                    // this.single_restaurant()
                     store.commit('deliware_cart/UPDATE_FOOTER', true)
-
                 })
         },
         check_size(data, adds, group, size) {
@@ -913,26 +957,39 @@ input[type="radio"] {
     height: 0;
     width: 0;
 }
-.img-fluid{
-    width:540px !important;
-    height:358px !important;
+
+.img-fluid {
+    width: 580px !important;
+    height: 358px !important;
     margin-right: 22rem !important;
 }
+
+.text {
+    width: 580px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .custom-add-btn {
-  background-color: #FF007A !important;
-  border-color: #FF007A !important;
-  color: #fff !important;
-  border-radius: 10px;
-  font-weight: 600;
+    background-color: #FF007A !important;
+    border-color: #FF007A !important;
+    color: #fff !important;
+    border-radius: 10px;
+    font-weight: 600;
 }
 
 .custom-add-btn:hover,
 .custom-add-btn:focus,
 .custom-add-btn:active {
-  background-color: #e6006b !important; /* Slightly darker pink */
-  border-color: #e6006b !important;
-  box-shadow: none !important;
+    background-color: #e6006b !important;
+    /* Slightly darker pink */
+    border-color: #e6006b !important;
+    box-shadow: none !important;
 }
-
+.container {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
 
 </style>
