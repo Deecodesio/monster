@@ -23,7 +23,7 @@ export default {
                 this.rows = res.data.restaurants;
             });
     },
-    addCustomizedProduct(selected) {
+    addCustomizedProduct(selected) {       
         localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
         if (Array.isArray(selected.food_image)) {
             var food_image_a = selected.food_image[0];
@@ -36,6 +36,7 @@ export default {
             restaurant_name = selected.restaurant_name,
             restaurant_address = selected.restaurant_address,
             restaurant_image = selected.restaurant_image,
+           packaging_charge= selected.packaging_charge,         
             taxperc = selected.taxperc,
             name = selected.name,
             food_image = food_image_a,
@@ -513,6 +514,7 @@ export default {
                         restaurant_name: restaurant_name,
                         restaurant_address: restaurant_address,
                         restaurant_image: restaurant_image,
+                        restaurant_packaging_charge: packaging_charge,
                         sizePrice: selectedSizePrice,
                         taxperc: taxperc,
                         food_image: food_image,
@@ -569,6 +571,7 @@ export default {
                                     restaurant_name: restaurant_name,
                                     restaurant_address: restaurant_address,
                                     restaurant_image: restaurant_image,
+                                    restaurant_packaging_charge: packaging_charge,
                                     sizePrice: selectedSizePrice,
                                     taxperc: taxperc,
                                     food_image: food_image,
@@ -596,6 +599,7 @@ export default {
                             restaurant_name: restaurant_name,
                             restaurant_address: restaurant_address,
                             restaurant_image: restaurant_image,
+                            restaurant_packaging_charge: packaging_charge,
                             sizePrice: selectedSizePrice,
                             taxperc: taxperc,
                             food_image: food_image,
@@ -647,6 +651,7 @@ export default {
                                     restaurant_name: restaurant_name,
                                     restaurant_address: restaurant_address,
                                     restaurant_image: restaurant_image,
+                                    restaurant_packaging_charge: packaging_charge,
                                     sizePrice: selectedSizePrice,
                                     taxperc: taxperc,
                                     food_image: food_image,
@@ -674,6 +679,7 @@ export default {
                             restaurant_name: restaurant_name,
                             restaurant_address: restaurant_address,
                             restaurant_image: restaurant_image,
+                            restaurant_packaging_charge: packaging_charge,
                             sizePrice: selectedSizePrice,
                             taxperc: taxperc,
                             food_image: food_image,
@@ -701,6 +707,7 @@ export default {
                 restaurant_name: restaurant_name,
                 restaurant_address: restaurant_address,
                 restaurant_image: restaurant_image,
+                restaurant_packaging_charge: packaging_charge,
                 sizePrice: selectedSizePrice,
                 taxperc: taxperc,
                 food_image: food_image,
@@ -763,9 +770,8 @@ export default {
         let restaurant_packaging_charge = 0;
         let packaging_charge = 0;
         if (packaging_charge == 0) {
-            packaging_charge = JSON.parse(
-                localStorage.getItem("RES_PACK_CHARGE")
-            );
+            packaging_charge =cart.length !== 0?(cart[0].restaurant_packaging_charge || 0):0;
+            //  JSON.parse(localStorage.getItem("RES_PACK_CHARGE"));
         }
         if (cart.length === 0) {
         } else {
@@ -843,13 +849,14 @@ export default {
                 let thisAmount = parseFloat(
                     ((item.price + item.addonsPrice) * item.quantity).toFixed(2)
                 );
-                tot_tax += parseFloat((thisAmount / 100) * item.taxperc);
+                tot_tax += parseFloat((thisAmount / 100) * (item.taxperc || 0));
                 localStorage.setItem("tot_tax", tot_tax);
-                if (is_tax == 0) {
-                    tot_amt = total_price + tot_tax;
-                } else {
+
+                // if (is_tax == 0) {
+                //     tot_amt = total_price + tot_tax;
+                // } else {
                     tot_amt = total_price;
-                }
+                // }
                 item_amount_total += thisAmount;
             });
           
@@ -884,6 +891,7 @@ export default {
                     : (
                           tot_amt -
                           parseFloat(offer_discount) +
+                          tot_tax+
                           restaurant_packaging_charge +
                           delivery_charge_calc
                       ).toFixed(2);
@@ -915,6 +923,7 @@ export default {
          }, 300);
     },
     open_plus(data) {
+          console.log("Res Data", data);
         let selected = {};
         if (
             !data.food_quantity.length &&
@@ -927,7 +936,9 @@ export default {
             selected.restaurant_name = data.restaurant_name;
             selected.restaurant_address = data.restaurant_address;
             selected.restaurant_image = data.restaurant_image;
-            selected.taxperc = parseFloat(data.taxperc);
+            selected.packaging_charge = data.restaurant_packaging_charge;            
+            // selected.taxperc = parseFloat(data.taxperc);
+            selected.taxperc = parseFloat(data.item_tax);
             selected.price = parseFloat(data.price);
             selected.add_ons = data.add_ons;
             selected.food_quantity = data.food_quantity;
@@ -974,7 +985,9 @@ export default {
         selected.restaurant_name = data.restaurant_name;
         selected.restaurant_address = data.restaurant_address;
         selected.restaurant_image = data.restaurant_image;
-        selected.taxperc = parseFloat(data.taxperc);
+        selected.packaging_charge = data.restaurant_packaging_charge;          
+        // selected.taxperc = parseFloat(data.taxperc);
+        selected.taxperc = parseFloat(data.item_tax);
         selected.price = parseFloat(data.price);
         selected.add_ons = data.add_ons;
         selected.food_quantity = data.food_quantity;
@@ -986,6 +999,7 @@ export default {
     check_cart(selected) {
         console.log("Res Data Name", selected.restaurant_name);
         console.log("Res Data", selected.restaurant);
+      
         localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
 
         // *** ‘Add to Cart’ is not restaurant-based, so the conditions mentioned below have been removed. ***

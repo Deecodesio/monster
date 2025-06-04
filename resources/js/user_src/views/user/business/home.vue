@@ -1,19 +1,35 @@
 <template>
-    <!-- Main Content --> 
-     <b-row style="margin-top: 110px">
+    <!-- Main Content -->
+    <b-row style="margin-top: 110px">
         <b-col cols="12">
             <!-- Loading Spinner -->
-            <div v-if="is_loading" class="mt-1 text-center d-flex flex-column align-items-center">
-                <lottie-player src="/animations/loading.json" background="#FFFDFD" speed="1"
-                    style="width: 300px; height: 500px" loop autoplay></lottie-player>
+            <div
+                v-if="is_loading"
+                class="mt-1 text-center d-flex flex-column align-items-center"
+            >
+                <lottie-player
+                    src="/animations/loading.json"
+                    background="#FFFDFD"
+                    speed="1"
+                    style="width: 300px; height: 500px"
+                    loop
+                    autoplay
+                ></lottie-player>
             </div>
             <!-- Loaded Components -->
-            <div  class="mx-5 py-5"  v-if="!is_loading">
-                <component v-for="component in componentOrder" :is="component.name" :key="component.name"
-                    :prop="component.prop" :business_id="business_id" :isopen="isopen" :title="component.title"
-                    :prop2="component.id"></component>
+            <div class="mx-5 py-5" v-if="!is_loading">
+                <component
+                    v-for="component in componentOrder"
+                    :is="component.name"
+                    :key="component.name"
+                    :prop="component.prop"
+                    :business_id="business_id"
+                    :isopen="isopen"
+                    :title="component.title"
+                    :prop2="component.id"
+                ></component>
             </div>
-            <sectionB/>
+            <sectionB />
             <!-- Shop Location Div -->
             <div
                 class="container-fluid"
@@ -35,7 +51,7 @@ import page1 from "@@@/views/user/static_pages/page1.vue";
 import page2 from "@@@/views/user/static_pages/page2.vue";
 import store from "@@@/store";
 import banner from "@@@/views/user/home/banner.vue";
-import Ourshops from "./ourshops.vue";
+import Ourshops from "./OurShops.vue";
 import sectionB from "./sectionB.vue";
 
 export default {
@@ -68,10 +84,12 @@ export default {
             componentOrder: [],
             is_loading: false,
             is_loading: false,
+            settings: [],
         };
     },
     created() {
         this.get_products();
+        this.get_settings();
     },
     methods: {
         get_pages() {
@@ -99,16 +117,31 @@ export default {
                 this.is_loading = false;
             });
         },
+        get_settings() {
+            this.$http.get("/get_settings").then((res) => {
+                this.settings = res.data.setting;
+                console.log("settings", this.settings);
+                // Find the tax_inclusive setting
+                const taxSetting = this.settings.find(
+                    (s) => s.key_word === "tax_inclusive"
+                );
+
+                if (taxSetting) {
+                    const taxValue = parseInt(taxSetting.value, 10);
+                    localStorage.setItem("IS_TAX_INCLUSIVE", taxValue);
+                }
+            });
+        },
         get_products() {
             store.commit("deliware_cart/UPDATE_FOOTER", false);
             this.$http
                 .get(
                     "/single_restaurant_products/" +
-                    this.lat +
-                    "/" +
-                    this.lng +
-                    "/" +
-                    this.business_id
+                        this.lat +
+                        "/" +
+                        this.lng +
+                        "/" +
+                        this.business_id
                 )
                 .then((res) => {
                     this.featured = res.data.featured;

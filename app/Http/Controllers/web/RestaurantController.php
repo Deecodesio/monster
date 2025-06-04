@@ -2132,8 +2132,10 @@ class RestaurantController extends BaseController
         $category = $this->category;
         $cart = $this->cart;
         $restaurants = $this->restaurants;
+
         $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
         $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
+        
         if ($request->header('authId') != "") {
             $user_id = $request->header('authId');
         } else {

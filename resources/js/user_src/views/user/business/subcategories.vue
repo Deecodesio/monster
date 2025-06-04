@@ -11,7 +11,7 @@
 
 
 
-                <div class="mt-5 mb-3 text-center">
+                <div class="text-center" style="margin-top: 80px; margin-bottom: 0px;">
                     <h2>{{ $t(" Product Categories")}}</h2>
                     <hr class="mx-auto">
                 </div>
@@ -57,7 +57,7 @@
         </div>
         <div v-if="cat_products.length">
             <div class="container">
-                <div class="mt-2 mb-2">
+                <div class="mt-3 mb-1">
                     <b-breadcrumb separator="|">
                         <b-breadcrumb-item to="/">
                             <span class="bc_active bc_home">HOME</span>

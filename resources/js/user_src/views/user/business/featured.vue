@@ -3,11 +3,11 @@
         <b-row>
             <b-col md="12">
                 <div v-if="title == 'Top Selling Products'">
-                    <h2 style="text-align: center">{{ title }}</h2>
+                    <h2 style="text-align: center;margin-top: 55px;margin-bottom: 10px;">{{ title }}</h2>
                     <div class="hrLine" v-if="title != ''"></div>
                 </div>
                 <div v-if="title == 'Best Seller'">
-                    <h2>{{ title }}</h2>
+                    <h2 style="text-align: center;margin-bottom: 10px;margin-top: 0px;">{{ title }}</h2>
                     <div class="hrLine1" v-if="title != ''"></div>
                 </div>
                 <b-row>
@@ -96,6 +96,8 @@ import goback from './cartfunctions.js'
 import loadcart from './cartfunctions.js'
 import single_restaurant from './cartfunctions.js'
 import product_modal from './product_modal.vue'
+import store from "@@@/store";
+
 export default {
     components: {
         BButton, BRow, BCol, BAlert, BCard, BCardText, BMedia, BMediaAside, BMediaBody, BLink, BImg, BImgLazy, product_modal,
@@ -134,8 +136,8 @@ export default {
         }
     },
     created() {
-        this.loadcart()
-
+        this.loadcart(),
+         store.commit("deliware_cart/UPDATE_FOOTER", true)
     },
     methods: {
         ...goback,
@@ -159,7 +161,8 @@ export default {
             var str2 = str.replace(/[^A-Z0-9]+/ig, "-").toLowerCase();
             this.$router.push({ name: 'product', params: { slug: slug } });
 
-        }
+        },
+        
     },
 }
 </script>
@@ -171,7 +174,10 @@ export default {
 
 .hrLine {
     max-width: 75px;
-    margin: 10px auto;
+    margin-top:5px;
+    margin-bottom: 25px !important;
+    margin-left: auto;
+    margin-right: auto;
     border: 3px solid #ffce00;
     border-radius: 5px;
     background-color: #ffce00;
@@ -179,12 +185,14 @@ export default {
 
 .hrLine1 {
     max-width: 75px;
-    margin-inline-start: 0;
-    margin-bottom: 5px;
+   margin-left: auto;
+    margin-right: auto;
+    margin-top:5px;
+    margin-bottom: 25px !important;
     border: 3px solid #ffce00;
     border-radius: 5px;
     background-color: #ffce00;
-}
+} 
 
 .product_card_img {
     width: 100%;

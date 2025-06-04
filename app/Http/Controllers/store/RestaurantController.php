@@ -972,45 +972,45 @@ class RestaurantController extends BaseController
 
         return view('store/restaurant_view', ['restaurant' => $restaurant_view]);
     }
-    public function product_list(Request $request)
-    {
-        //  $data = DB::table('food_list')->whereBetween('id',[9062,12544])->update(['business_category_id' => 13]);
-        $restaurant_id = $request->id;
+    // public function product_list(Request $request)
+    // {
+    //     //  $data = DB::table('food_list')->whereBetween('id',[9062,12544])->update(['business_category_id' => 13]);
+    //     $restaurant_id = $request->id;
 
-        $res_details = DB::table('restaurants')->where('id', $restaurant_id)
-            ->first();
-        $business = DB::table('business_type')->where('id', $res_details->business_type)
-            ->first();
+    //     $res_details = DB::table('restaurants')->where('id', $restaurant_id)
+    //         ->first();
+    //     $business = DB::table('business_type')->where('id', $res_details->business_type)
+    //         ->first();
 
-        if ($business->layout_id == 2) {
-            $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-                ->leftJoin('category', 'category.id', '=', 'food_list.category_id')
-                ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
-                ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*', 'category.*',  'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
-                ->get();
-        } else {
-            $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-                ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
-                ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
-                ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*',  'menu.*', 'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
-                ->get();
-        }
-        foreach ($data as $d) {
-            if (file_exists(public_path('/')  . $d->image)) {
-                $d->image = BASE_URL .  $d->image;
-            } else {
-                $d->image = BASE_URL .  "def_logo.jpg";
-            }
-            $d->name = $this->secondLanguage_store($d->name, $d->secondary_name);
-            $d->description = $this->secondLanguage_store($d->description, $d->secondary_description);
-        }
-        $download_path = BASE_URL . UPLOADS_PATH . $request->id . "_products.csv";
-        $response_Array = json_encode(['data' => $data, 'download_path' => $download_path, 'business' => $business->layout_id]);
-        return $response_Array;
-        // $data->download = BASE_URL.UPLOADS_PATH.$request->id."_products.csv";
-        // return response()->json($data);
-        // return view('store/product_list', ['data' => $data]);
-    }
+    //     if ($business->layout_id == 2) {
+    //         $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //             ->leftJoin('category', 'category.id', '=', 'food_list.category_id')
+    //             ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+    //             ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*', 'category.*',  'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
+    //             ->get();
+    //     } else {
+    //         $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //             ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+    //             ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+    //             ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*',  'menu.*', 'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
+    //             ->get();
+    //     }
+    //     foreach ($data as $d) {
+    //         if (file_exists(public_path('/')  . $d->image)) {
+    //             $d->image = BASE_URL .  $d->image;
+    //         } else {
+    //             $d->image = BASE_URL .  "def_logo.jpg";
+    //         }
+    //         $d->name = $this->secondLanguage_store($d->name, $d->secondary_name);
+    //         $d->description = $this->secondLanguage_store($d->description, $d->secondary_description);
+    //     }
+    //     $download_path = BASE_URL . UPLOADS_PATH . $request->id . "_products.csv";
+    //     $response_Array = json_encode(['data' => $data, 'download_path' => $download_path, 'business' => $business->layout_id]);
+    //     return $response_Array;
+    //     // $data->download = BASE_URL.UPLOADS_PATH.$request->id."_products.csv";
+    //     // return response()->json($data);
+    //     // return view('store/product_list', ['data' => $data]);
+    // }
 
     public function add_product(Request $request)
     {
@@ -5818,7 +5818,8 @@ class RestaurantController extends BaseController
         $response_Array = json_encode(['message' => $message, 'status' => $status, 'user_list' => $rt2]);
         return $response_Array;
     }
-    public function get_food_list_by_menu_pos(Request $request)
+
+     public function get_food_list_by_menu_pos(Request $request)
     {
 
 
@@ -5836,44 +5837,97 @@ class RestaurantController extends BaseController
 
         // $user_id = $request->header('authId');
         $is_veg = $request->is_veg;
-        if ($business_type->layout_id == 2) {
-            $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-                ->join('category', 'category.id', 'food_list.category_id')
-                ->where('food_list.status', 1)
 
-                ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'category.category_name', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax',  'food_list.image as image')
+          $city_id = $rest->city;
 
-                ->orderBy('image', 'desc')
-                ->get();
-        } else {
+    // Step 1: Build pricing subquery with correct district filter
+    $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
 
-            $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
-                ->where('food_list.status', 1)
-                ->join(
-                    'menu',
-                    function ($join) {
-                        $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
-                        $join->on('menu.id', '=', 'food_list.menu_id');
-                    }
-                )
-                ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image')
+    // Step 2: Main query
+    $food_list = DB::table('food_list')
+        ->join('business_category', 'business_category.id', 'food_list.business_category_id')
+        ->where('food_list.status', 1)
 
-                ->orderBy('rank')->orderBy('image', 'desc')
-                ->get();
-        }
+        // Menu join
+        ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+
+        // ✅ Correct pricing subquery join
+        ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+
+        // Select with pricing override
+        ->select(
+            'food_list.id as food_id',
+            'food_list.name',
+            'food_list.secondary_name',
+            'pricing.price', // district-based price
+            'food_list.secondary_description',
+            'food_list.description',
+            'food_list.business_category_id',
+            'business_category.category_name',
+            'food_list.is_veg',
+            'pricing.tax as item_tax', // district-based tax
+            'menu.menu_name',
+            'menu.id as menu_id',
+            'food_list.image',
+            // DB::raw('COALESCE(food_list.initial_price, 0) as initial_price'),
+            // DB::raw('COALESCE(food_list.split_payment, 0) as split_payment'),
+            // DB::raw('COALESCE(food_list.bprice, 0) as bprice'),
+            'food_list.out_of_stock',
+            'pricing.label'
+        )
+
+        // Sort
+        ->orderBy('rank')
+        ->orderBy('image', 'desc')
+        ->get();
+
+        // if ($business_type->layout_id == 2) {
+        //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->join('category', 'category.id', 'food_list.category_id')
+        //         ->where('food_list.status', 1)
+
+        //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'category.category_name', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax',  'food_list.image as image')
+
+        //         ->orderBy('image', 'desc')
+        //         ->get();
+        // } else {
+
+        //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->where('food_list.status', 1)
+        //         ->join(
+        //             'menu',
+        //             function ($join) {
+        //                 $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+        //                 $join->on('menu.id', '=', 'food_list.menu_id');
+        //             }
+        //         )
+        //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image')
+
+        //         ->orderBy('rank')->orderBy('image', 'desc')
+        //         ->get();
+        // }
 
 
 
         foreach ($food_list as $key => $each_food) {
             if ($each_food->image != "") {
-
-
                 $food_list[$key]->image = File::exists(public_path('product_image/') . $each_food->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $each_food->image : (File::exists(public_path('restaurant_uploads/') . $restaurant_id . '/' . 'Product/' . $each_food->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $restaurant_id . '/' . 'Product/' . $each_food->image : (File::exists(public_path('common_images/') . $each_food->image) ? BASE_URL  . UPLOADS_PATH_COMMON . $each_food->image : BASE_URL  . $each_food->image));
             } else {
                 $food_list[$key]->image = BASE_URL  . "fork.svg";
             }
         }
 
+          //Existing Not Used
         foreach ($food_list as $key => $each_food) {
             $this_addon = DB::table('foodlist_addons')
                 ->join('add_ons', 'add_ons.id', '=', 'foodlist_addons.addons_id')
@@ -5891,9 +5945,11 @@ class RestaurantController extends BaseController
                 $this_addon[$addon_key]->pivot = ['foodlist_id' => $each_food->food_id, 'addons_id' => $each_addon->id];
             }
 
-            $food_list[$key]->add_ons = $this_addon;
+            // $food_list[$key]->add_ons = $this_addon;
+            $food_list[$key]->add_ons = [];
         }
 
+      
         foreach ($food_list as $key => $each_food) {
 
             $item_count = 0;
@@ -5929,9 +5985,10 @@ class RestaurantController extends BaseController
                 ];
             }
 
-            $food_list[$key]->food_quantity = $this_size;
+            // $food_list[$key]->food_quantity = $this_size;
+            $food_list[$key]->food_quantity =[];
         }
-
+         // Existing Not Used
         $new_food_list = [];
 
         foreach ($food_list as $key => $each_food) {
@@ -5939,11 +5996,13 @@ class RestaurantController extends BaseController
             if ($is_veg == 1 && $each_food->is_veg == 0) {
                 continue;
             }
-            if ($business_type->layout_id == 2) {
-                $new_food_list[$each_food->category_id][] = $each_food;
-            } else {
-                $new_food_list[$each_food->menu_id][] = $each_food;
-            }
+
+              $new_food_list[$each_food->business_category_id][] = $each_food;
+            // if ($business_type->layout_id == 2) {
+            //     $new_food_list[$each_food->category_id][] = $each_food;
+            // } else {
+            //     $new_food_list[$each_food->menu_id][] = $each_food;
+            // }
         }
 
         $return_food_list = [];
@@ -5973,7 +6032,7 @@ class RestaurantController extends BaseController
 
             if ($business_type->layout_id == 2) {
                 $return_food_list[] = [
-                    'menu_id' => $each_menu[0]->category_id,
+                    'menu_id' => $each_menu[0]->business_category_id,
                     'menu_available' => $available,
                     'menu_name' => $each_menu[0]->category_name,
                     'items' => $each_menu,
@@ -6003,6 +6062,639 @@ class RestaurantController extends BaseController
             'items' => $return_food_list,
             'restaurant_detail' => $restaurant_detail,
             'business_type' => $business_type->layout_id,
+        ], 200);
+    }
+
+    // public function get_food_list_by_menu_pos(Request $request)
+    // {
+
+
+
+    //     $restaurant_id = $request->restaurant_id;
+    //     $foodlist = $this->foodlist;
+    //     $category = $this->category;
+    //     $cart = $this->cart;
+    //     $restaurants = $this->restaurants;
+
+
+    //     $rest = DB::table('restaurants')->where('id', $restaurant_id)->first();
+    //     $business_type = DB::table('business_type')->where('id', $rest->business_type)->first();
+
+
+    //     // $user_id = $request->header('authId');
+    //     $is_veg = $request->is_veg;
+    //     if ($business_type->layout_id == 2) {
+    //         $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //             ->join('category', 'category.id', 'food_list.category_id')
+    //             ->where('food_list.status', 1)
+
+    //             ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'category.category_name', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax',  'food_list.image as image')
+
+    //             ->orderBy('image', 'desc')
+    //             ->get();
+    //     } else {
+
+    //         $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+    //             ->where('food_list.status', 1)
+    //             ->join(
+    //                 'menu',
+    //                 function ($join) {
+    //                     $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+    //                     $join->on('menu.id', '=', 'food_list.menu_id');
+    //                 }
+    //             )
+    //             ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'menu.id as menu_id', 'food_list.image as image')
+
+    //             ->orderBy('rank')->orderBy('image', 'desc')
+    //             ->get();
+    //     }
+
+
+
+    //     foreach ($food_list as $key => $each_food) {
+    //         if ($each_food->image != "") {
+
+
+    //             $food_list[$key]->image = File::exists(public_path('product_image/') . $each_food->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $each_food->image : (File::exists(public_path('restaurant_uploads/') . $restaurant_id . '/' . 'Product/' . $each_food->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $restaurant_id . '/' . 'Product/' . $each_food->image : (File::exists(public_path('common_images/') . $each_food->image) ? BASE_URL  . UPLOADS_PATH_COMMON . $each_food->image : BASE_URL  . $each_food->image));
+    //         } else {
+    //             $food_list[$key]->image = BASE_URL  . "fork.svg";
+    //         }
+    //     }
+
+    //     foreach ($food_list as $key => $each_food) {
+    //         $this_addon = DB::table('foodlist_addons')
+    //             ->join('add_ons', 'add_ons.id', '=', 'foodlist_addons.addons_id')
+    //             ->where('foodlist_id', $each_food->food_id)
+    //             ->select('foodlist_addons.addons_id as id', 'add_ons.name',  'add_ons.secondary_name', 'add_ons.price', 'foodlist_addons.created_at', 'foodlist_addons.updated_at')
+    //             ->get()->toArray();
+
+    //         if (!$this_addon) {
+    //             $food_list[$key]->add_ons = [];
+    //             continue;
+    //         }
+
+    //         foreach ($this_addon as $addon_key => $each_addon) {
+    //             $this_addon[$addon_key]->restaurant_id = $restaurant_id;
+    //             $this_addon[$addon_key]->pivot = ['foodlist_id' => $each_food->food_id, 'addons_id' => $each_addon->id];
+    //         }
+
+    //         $food_list[$key]->add_ons = $this_addon;
+    //     }
+
+    //     foreach ($food_list as $key => $each_food) {
+
+    //         $item_count = 0;
+
+    //         $food_list[$key]->item_count = $item_count;
+
+
+    //         $this_size = DB::table('foodlist_foodquantity')
+    //             ->join('food_quantity', 'food_quantity.id', '=', 'foodlist_foodquantity.foodquantity_id')
+    //             ->where('foodlist_id', $each_food->food_id)
+    //             ->select(
+    //                 'foodlist_foodquantity.foodquantity_id as id',
+    //                 'food_quantity.name',
+    //                 'food_quantity.secondary_name',
+    //                 'foodlist_foodquantity.price',
+    //                 'foodlist_foodquantity.is_default',
+    //                 'foodlist_foodquantity.created_at',
+    //                 'foodlist_foodquantity.updated_at'
+    //             )
+    //             ->get()->toArray();
+
+    //         if (!$this_size) {
+    //             $food_list[$key]->food_quantity = [];
+    //             continue;
+    //         }
+
+    //         foreach ($this_size as $size_key => $each_size) {
+    //             $this_size[$size_key]->pivot = [
+    //                 'foodlist_id' => $each_food->food_id,
+    //                 'foodquantity_id' => $each_size->id,
+    //                 'price' => $each_size->price,
+    //                 'is_default' => $each_size->is_default
+    //             ];
+    //         }
+
+    //         $food_list[$key]->food_quantity = $this_size;
+    //     }
+
+    //     $new_food_list = [];
+
+    //     foreach ($food_list as $key => $each_food) {
+
+    //         if ($is_veg == 1 && $each_food->is_veg == 0) {
+    //             continue;
+    //         }
+    //         if ($business_type->layout_id == 2) {
+    //             $new_food_list[$each_food->category_id][] = $each_food;
+    //         } else {
+    //             $new_food_list[$each_food->menu_id][] = $each_food;
+    //         }
+    //     }
+
+    //     $return_food_list = [];
+    //     foreach ($new_food_list as $key => $each_menu) {
+
+    //         // checking menu avaible now
+    //         $available = 0;
+    //         if ($business_type->layout_id == 2) {
+    //         } else {
+    //             $menutime = DB::table('menu_timing')->where('menu_id', $each_menu[0]->menu_id)->get();
+    //             if (sizeof($menutime)) {
+
+    //                 foreach ($menutime as $key => $time) {
+    //                     $times = Carbon::now();
+    //                     $current_time = $times->toTimeString();
+    //                     $date1 = $current_time;
+    //                     $date2 = $time->from_time;
+    //                     $date3 = $time->to_time;
+    //                     if ($date1 > $date2 && $date1 < $date3) {
+    //                         $available = 1;
+    //                     }
+    //                 }
+    //             } else {
+    //                 $available = 1; //latest feature so some menu dont assume time so set is available
+    //             }
+    //         }
+
+    //         if ($business_type->layout_id == 2) {
+    //             $return_food_list[] = [
+    //                 'menu_id' => $each_menu[0]->category_id,
+    //                 'menu_available' => $available,
+    //                 'menu_name' => $each_menu[0]->category_name,
+    //                 'items' => $each_menu,
+    //             ];
+    //         } else {
+    //             $return_food_list[] = [
+    //                 'menu_id' => $each_menu[0]->menu_id,
+    //                 'menu_available' => $available,
+    //                 'menu_name' => $each_menu[0]->menu_name,
+    //                 'items' => $each_menu,
+    //             ];
+    //         }
+    //     }
+    //     // print_r($return_food_list);
+    //     $restaurant_detail = $restaurants::where('id', $restaurant_id)->select('id', 'restaurant_name', 'image', 'address')->first();
+    //     if (!$restaurant_detail) {
+    //         $response_array = ['status' => false, 'error_code' => 101, 'message' => 'Restaurant not found'];
+    //         return response()->json($response_array, 200);
+    //     }
+
+    //     $return_food_list = $this->updateSecondaryLang($return_food_list, $request);
+
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'recommended' => [],
+    //         'items' => $return_food_list,
+    //         'restaurant_detail' => $restaurant_detail,
+    //         'business_type' => $business_type->layout_id,
+    //     ], 200);
+    // }
+
+    // Previous This Function Copy In web Restaurant controller
+      public function get_food_list_by_menu_id(Request $request)
+    {
+
+        $restaurant_id = $request->restaurant_id;
+        $menu_id = $request->menu_id;
+        $foodlist = $this->foodlist;
+        $category = $this->category;
+        $cart = $this->cart;
+        $restaurants = $this->restaurants;
+
+        $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
+        $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
+        
+        if ($request->header('authId') != "") {
+            $user_id = $request->header('authId');
+        } else {
+            $user_id = $request->authId;
+        }
+
+        if (empty($user_id)) {
+            // return response()->json(['status' => false, 'error_code' => 101, 'message' => 'User not found'], 200);
+        }
+
+        // $user_id = $request->header('authId');
+        $is_veg = $request->is_veg;
+
+        $check_for_cart = $cart::where('user_id', $user_id)->get();
+
+             $city_id = $rest_id->city;
+
+    // Step 1: Build pricing subquery with correct district filter
+    $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
+
+    // Step 2: Main query
+    $food_list = DB::table('food_list')
+        ->join('business_category', 'business_category.id', 'food_list.business_category_id')
+        ->where('food_list.business_category_id', $menu_id)
+        ->where('food_list.status', 1)
+
+        // Menu join
+        ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+
+        // ✅ Correct pricing subquery join
+        ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+
+        // Select with pricing override
+        ->select(
+            'food_list.id as food_id',
+            'food_list.name',
+            'food_list.secondary_name',
+            'pricing.price', // district-based price
+            'food_list.secondary_description',
+            'food_list.description',
+            'food_list.business_category_id',
+            'business_category.category_name',
+            'business_category.image as cat_image',
+            'food_list.is_veg',
+            'pricing.tax as item_tax', // district-based tax
+            'menu.menu_name',
+            'menu.id as menu_id',
+            'food_list.image',
+            // DB::raw('COALESCE(food_list.initial_price, 0) as initial_price'),
+            // DB::raw('COALESCE(food_list.split_payment, 0) as split_payment'),
+            // DB::raw('COALESCE(food_list.bprice, 0) as bprice'),
+            'food_list.out_of_stock',
+            'pricing.label'
+        )
+
+        // Sort
+        ->orderBy('rank')
+        ->orderBy('image', 'desc')
+        ->get();
+
+        // if ($business_id->layout_id == 2) {
+        //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->where('food_list.category_id', $menu_id)
+        //         ->where('food_list.status', 1)
+        //         ->join(
+        //             'category',
+        //             function ($join) {
+        //                 $join->on('category.id', '=', 'food_list.category_id');
+        //             }
+        //         )
+        //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'category_name', 'category_secondaryname', 'category.image as cat_image', 'food_list.image as image', 'food_list.cloudflare_imageid as cloudflare_imageid')
+        //         //->where('food_list.name', 'BBQ Chicken Wings')
+        //         ->orderBy('rank')->orderBy('image', 'desc')
+        //         ->get();
+        // } else {
+        //     $food_list = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->where('food_list.menu_id', $menu_id)
+        //         ->where('food_list.status', 1)
+        //         ->join(
+        //             'menu',
+        //             function ($join) {
+        //                 $join->on('menu.restaurant_id', '=', 'food_list.restaurant_id');
+        //                 $join->on('menu.id', '=', 'food_list.menu_id');
+        //             }
+        //         )
+        //         ->select('food_list.id as food_id', 'name', 'secondary_name', 'price', 'secondary_description',  'description', 'food_list.category_id', 'is_veg', 'tax as item_tax', 'menu_name', 'secondary_menu_name', 'menu.id as menu_id', 'food_list.image as image', 'food_list.cloudflare_imageid as cloudflare_imageid')
+        //         //->where('food_list.name', 'BBQ Chicken Wings')
+        //         ->orderBy('rank')->orderBy('image', 'desc')
+        //         ->get();
+        // }
+        $cloudflare = DB::table('settings')->where('key_word', 'cloudflare')->first();
+        $url = "";
+        $acc_hash = "";
+        if ($cloudflare->value == 1) {
+            $get_url = DB::table('settings')->where('key_word', 'cloudflare_url')->first();
+            $url = $get_url->value;
+
+            $get_acchash = DB::table('settings')->where('key_word', 'ACCOUNT_HASH')->first();
+            $acc_hash = $get_acchash->value;
+        }
+
+        foreach ($food_list as $key => $each_food) {
+
+
+            if ($each_food->image != "" && $each_food->image != "undefined") {
+                if ($cloudflare->value == 1 && $each_food->cloudflare_imageid != null) {
+
+
+                    $food_list[$key]->image = $url . '/' . $acc_hash . '/' . $each_food->cloudflare_imageid . '/' . "w=500";
+                } else {
+                    if (str_starts_with($each_food->image, 'http')) {
+                        $food_list[$key]->image = $each_food->image;
+                    } else {
+                        $food_list[$key]->image = File::exists(public_path('product_image/') . $each_food->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $each_food->image : (File::exists(public_path('restaurant_uploads/') . $restaurant_id . '/' . 'Product/' . $each_food->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $restaurant_id . '/' . 'Product/' . $each_food->image : (File::exists(public_path('common_images/') . $each_food->image) ? BASE_URL  .  UPLOADS_PATH_COMMON . $each_food->image : BASE_URL  . $each_food->image));
+                        if ($business_id->layout_id == 2) {
+                            $food_list[$key]->cat_image = BASE_URL  . $each_food->cat_image;
+                        }
+                    }
+                }
+            } else {
+                $food_list[$key]->image = BASE_URL  . "fork.svg";
+                if ($business_id->layout_id == 2) {
+                    $food_list[$key]->cat_image = BASE_URL  . "no-storeprod.jpg";
+                    $food_list[$key]->image = BASE_URL  . "no-storeprod.jpg";
+                } else {
+                    $food_list[$key]->image = BASE_URL  . "fork.svg";
+                    $food_list[$key]->cat_image = BASE_URL  . "fork.svg";
+                }
+            }
+
+
+
+
+
+            // if ($each_food->image != "") {
+            //     $food_list[$key]->image = File::exists(public_path('product_image/') . $each_food->image) ? BASE_URL  . UPLOADS_PATH_PRODUCT . $each_food->image : (File::exists(public_path('restaurant_uploads/') . $restaurant_id . '/' . 'Product/' . $each_food->image) ? BASE_URL  . RESTAURANT_UPLOADS_PATH . $restaurant_id . '/' . 'Product/' . $each_food->image : (File::exists(public_path('common_images/') . $each_food->image) ? BASE_URL  .  UPLOADS_PATH_COMMON . $each_food->image : BASE_URL  . $each_food->image));
+            //     if ($business_id->layout_id == 2) {
+            //         $food_list[$key]->cat_image = BASE_URL  . $each_food->cat_image;
+            //     }
+
+            // } else {
+            //     $food_list[$key]->image = BASE_URL  . "fork.svg";
+            //     if ($business_id->layout_id == 2) {
+            //         $food_list[$key]->cat_image = BASE_URL  . "no-storeprod.jpg";
+            //         $food_list[$key]->image = BASE_URL  . "no-storeprod.jpg";
+            //     } else {
+            //         $food_list[$key]->image = BASE_URL  . "fork.svg";
+            //         $food_list[$key]->cat_image = BASE_URL  . "fork.svg";
+            //     }
+            // }
+        }
+
+        // Existing Not Used
+        foreach ($food_list as $key => $each_food) {
+            $this_addon = DB::table('foodlist_addons')
+                ->join('add_ons', 'add_ons.id', '=', 'foodlist_addons.addons_id')
+                ->where('foodlist_id', $each_food->food_id)
+                ->select('foodlist_addons.addons_id as id', 'add_ons.name',  'add_ons.secondary_name', 'add_ons.price', 'foodlist_addons.created_at', 'foodlist_addons.updated_at')
+                ->get()->toArray();
+
+            if (!$this_addon) {
+                $food_list[$key]->add_ons = [];
+                continue;
+            }
+
+            foreach ($this_addon as $addon_key => $each_addon) {
+                $this_addon[$addon_key]->restaurant_id = $restaurant_id;
+                $this_addon[$addon_key]->pivot = ['foodlist_id' => $each_food->food_id, 'addons_id' => $each_addon->id];
+            }
+
+            // $food_list[$key]->add_ons = $this_addon;
+            $food_list[$key]->add_ons = [];
+        }
+        foreach ($food_list as $key => $each_food) {
+
+            $this_gaddon = DB::table('foodlist_addons')
+                ->where('foodlist_id', $each_food->food_id)
+                ->where('addons_id', null)
+                ->get();
+            $add_group = [];
+            foreach ($this_gaddon as $addon_key => $each_addon) {
+
+                if ($each_addon->addon_group != null) {
+                    $group = DB::table('addon_group')->where('id', $each_addon->addon_group)->first();
+                    $array_group = json_decode($group->add_ons);
+
+                    foreach ($array_group as $ag) {
+                        $addon_detail = DB::table('add_ons')->where('id', $ag)->first();
+
+
+                        $gadd_ons[] = [
+                            'id' => $ag,
+                            'name' => $this->secondLanguage_user($addon_detail->name, $addon_detail->secondary_name),
+                            'secondary_name' => $addon_detail->secondary_name,
+                            'price' => $addon_detail->price
+
+                        ];
+                    }
+                    $add_group[] = [
+                        'id' => $each_addon->addon_group,
+                        'name' => $this->secondLanguage_user($group->name, $group->secondary_name),
+                        'min' => $group->min,
+                        'max' => $group->max,
+                        'allow_multiple' => $group->allow_multiple,
+                        'mandatory' => $group->mandatory,
+                        'group_addons' => $gadd_ons
+
+                    ];
+                }
+            }
+            // $food_list[$key]->groups = $add_group;
+            $food_list[$key]->groups = [];
+        }       
+
+        foreach ($food_list as $key => $each_food) {
+
+            $item_count = 0;
+            if (count($check_for_cart) != 0) {
+                foreach ($check_for_cart as $check_for_item) {
+                    if ($each_food->food_id == $check_for_item->food_id) {
+                        $item_count = $check_for_item->quantity;
+                    }
+                }
+            }
+            $food_list[$key]->item_count = $item_count;
+
+
+            $this_size = DB::table('foodlist_foodquantity')
+                ->join('food_quantity', 'food_quantity.id', '=', 'foodlist_foodquantity.foodquantity_id')
+                ->where('foodlist_id', $each_food->food_id)
+                ->select(
+                    'foodlist_foodquantity.foodquantity_id as id',
+                    'food_quantity.name',
+                    'food_quantity.secondary_name',
+                    'foodlist_foodquantity.price',
+                    'foodlist_foodquantity.is_default',
+                    'foodlist_foodquantity.created_at',
+                    'foodlist_foodquantity.updated_at',
+                    'foodlist_foodquantity.addons_id',
+                    'foodlist_foodquantity.addon_group',
+                )
+                ->get()->toArray();
+
+            if (!$this_size) {
+                $food_list[$key]->food_quantity = [];
+                continue;
+            }
+
+            foreach ($this_size as $size_key => $each_size) {
+                $sadd_group = [];
+
+                if ($each_size->name) {
+                    $each_size->name = $this->secondLanguage_user($each_size->name, $each_size->secondary_name);
+                }
+
+                if ($each_size->addon_group != null) {
+                    $sg = $each_size->addon_group;
+                    $sg_group = json_decode($sg);
+
+
+                    foreach ($sg_group as $sgg) {
+                        $sgadd_ons = [];
+                        $sgg_group = DB::table('addon_group')->where('id', $sgg)->first();
+
+                        $sarray_group = json_decode($sgg_group->add_ons);
+                        foreach ($sarray_group as $sag) {
+                            $saddon_detail = DB::table('add_ons')->where('id', $sag)->first();
+                            $variant = DB::table('foodlist_foodquantity_addons')->where('food_list', $each_food->food_id)->where('food_quantity', $each_size->id)->where('group_id', $sgg)->where('addon', $sag)->first();
+                            if ($variant) {
+                                $price = $variant->price;
+                                $stock = $variant->stock;
+                            } else {
+                                $price = $saddon_detail->price;
+                                $stock = 0;
+                            }
+                            $sgadd_ons[] = [
+                                'id' => $sag,
+                                'name' => $this->secondLanguage_user($saddon_detail->name, $saddon_detail->secondary_name),
+                                'secondary_name' => $saddon_detail->secondary_name,
+                                'price' => $price,
+                                'stock' => $stock
+                            ];
+                        }
+                        $sadd_group[] = [
+                            'id' => $sgg,
+                            'name' => $this->secondLanguage_user($sgg_group->name, $sgg_group->secondary_name),
+                            'min' => $sgg_group->min,
+                            'max' => $sgg_group->max,
+                            'allow_multiple' => $sgg_group->allow_multiple,
+                            'mandatory' => $sgg_group->mandatory,
+                            'group_addons' => $sgadd_ons
+
+                        ];
+                    }
+                }
+                $this_size[$size_key]->groups = $sadd_group;
+                $saa_addons = [];
+
+                if ($each_size->addons_id != null) {
+                    $sa = $each_size->addons_id;
+                    $sa_group = json_decode($sa);
+
+                    foreach ($sa_group as $saa) {
+                        $sa_detail = DB::table('add_ons')->where('id', $saa)->first();
+                        $variant = DB::table('foodlist_foodquantity_addons')->where('food_list', $each_food->food_id)->where('food_quantity', $each_size->id)->where('addon', (int)$saa)->first();
+                        if ($variant) {
+                            $price = $variant->price;
+                            $stock = $variant->stock;
+                        } else {
+                            $price = $sa_detail->price;
+                            $stock = 0;
+                        }
+                        $saa_addons[] = [
+                            'id' => $saa,
+                            'name' => $this->secondLanguage_user($sa_detail->name, $sa_detail->secondary_name),
+                            'secondary_name' => $sa_detail->secondary_name,
+                            'price' => $price,
+                            'stock' => $stock
+                        ];
+                    }
+                }
+                $this_size[$size_key]->add_ons = $saa_addons;
+                $this_size[$size_key]->pivot = [
+                    'foodlist_id' => $each_food->food_id,
+                    'foodquantity_id' => $each_size->id,
+                    'price' => $each_size->price,
+                    'is_default' => $each_size->is_default
+                ];
+            }
+
+            // $food_list[$key]->food_quantity = $this_size;
+            $food_list[$key]->food_quantity = [];
+        }
+          // Existing Not Used
+
+        $new_food_list = [];
+        if ($business_id->layout_id == 2) {
+            foreach ($food_list as $key => $each_food) {
+
+                if ($is_veg == 1 && $each_food->is_veg == 0) {
+                    continue;
+                }
+
+                $new_food_list[$each_food->business_category_id][] = $each_food;
+            }
+        } else {
+            foreach ($food_list as $key => $each_food) {
+
+                if ($is_veg == 1 && $each_food->is_veg == 0) {
+                    continue;
+                }
+
+                $new_food_list[$each_food->menu_id][] = $each_food;
+            }
+        }
+
+
+        $return_food_list = [];
+        if ($business_id->layout_id == 2) {
+            foreach ($new_food_list as $key => $each_menu) {
+
+
+                $available = 1;
+
+
+                $return_food_list[] = [
+                    'menu_id' => $each_menu[0]->business_category_id,
+                    'menu_available' => $available,
+                    // 'menu_name' => $this->secondLanguage_user($each_menu[0]->category_name, $each_menu[0]->category_secondaryname),
+                    'menu_name' =>$each_menu[0]->category_name,
+                    'items' => $each_menu,
+                ];
+            }
+        } else {
+            foreach ($new_food_list as $key => $each_menu) {
+
+                // checking menu avaible now
+                $available = 0;
+                $menutime = DB::table('menu_timing')->where('menu_id', $each_menu[0]->menu_id)->get();
+                if (sizeof($menutime)) {
+
+                    foreach ($menutime as $key => $time) {
+                        $times = Carbon::now();
+                        $current_time = $times->toTimeString();
+                        $date1 = $current_time;
+                        $date2 = $time->from_time;
+                        $date3 = $time->to_time;
+                        if ($date1 > $date2 && $date1 < $date3) {
+                            $available = 1;
+                        }
+                    }
+                } else {
+                    $available = 1; //latest feature so some menu dont assume time so set is available
+                }
+
+                $return_food_list[] = [
+                    'menu_id' => $each_menu[0]->menu_id,
+                    'menu_available' => $available,
+                    'menu_name' => $this->secondLanguage_user($each_menu[0]->menu_name, $each_menu[0]->secondary_menu_name),
+                    'items' => $each_menu,
+                ];
+            }
+        }
+        // print_r($return_food_list);
+        $restaurant_detail = $restaurants::where('id', $restaurant_id)->select('id', 'restaurant_name', 'image', 'address')->first();
+        if (!$restaurant_detail) {
+            $response_array = ['status' => false, 'error_code' => 101, 'message' => 'Restaurant not found'];
+            return response()->json($response_array, 200);
+        }
+
+        $return_food_list = $this->updateSecondaryLang_web($return_food_list, $request);
+        return response()->json([
+            'status' => true,
+            'recommended' => [],
+            'items' => $return_food_list,
+            'restaurant_detail' => $restaurant_detail,
+            'business_id' => $business_id->layout_id,
+            'pharmacy_id' => $business_id->p_status
         ], 200);
     }
 
@@ -6584,5 +7276,79 @@ class RestaurantController extends BaseController
 
         ];
         return response()->json($response_array, 200);
+    }
+
+
+    public function product_list($id)
+    {
+        $restaurant_id = $id;
+
+        $res_details = DB::table('restaurants')->where('id', $restaurant_id)
+            ->first();
+        // $business = DB::table('business_type')->where('id', $res_details->business_type)
+        //     ->first();
+
+        // if ($business->layout_id == 2) {
+        //     $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->leftJoin('category', 'category.id', '=', 'food_list.category_id')
+        //         ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+        //         ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*', 'category.*',  'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
+        //         ->get();
+        // } else {
+        //     $data = DB::table('food_list')->where('food_list.restaurant_id', $restaurant_id)
+        //         ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+        //         ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+        //         ->select('food_list.id as food_id', 'business_category.category_name as business_name', 'food_list.*',  'menu.*', 'food_list.status as f_status', 'food_list.out_of_stock as stock_status')
+        //         ->get();
+        // }
+        //  $download_path = BASE_URL . UPLOADS_PATH . $request->id . "_products.csv";
+        // $response_Array = json_encode(['data' => $data, 'download_path' => $download_path, 'business' => $business->layout_id]);
+        // return $response_Array;
+
+          $city_id = $res_details->city;
+
+    // Step 1: Build pricing subquery with correct district filter
+    $pricingSubquery = DB::table('food_list_pricing_district')
+        ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
+        ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
+        ->select(
+            'food_list_pricing.product_id',
+            'food_list_pricing.price',
+            'food_list_pricing.tax',
+            'food_list_pricing.label'
+        );
+
+        $data = DB::table('food_list')
+            ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
+            ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+            ->leftJoinSub($pricingSubquery, 'pricing', function ($join) {
+            $join->on('pricing.product_id', '=', 'food_list.id');
+        })
+            ->select(
+                'food_list.id as food_id',
+                'pricing.price as new_price',
+                'pricing.tax as item_tax',
+                'pricing.label',
+                'business_category.category_name as business_name',
+                'food_list.*',
+                'menu.*',
+                'food_list.status as f_status',
+                'food_list.out_of_stock as stock_status'
+            )
+            ->get();
+
+        foreach ($data as $d) {
+            $imagePath = 'product_image/' . $d->image;
+            if (file_exists(public_path($imagePath))) {
+                $d->image = BASE_URL .  $imagePath;
+            } else {
+                $d->image = BASE_URL .  "def_logo.jpg";
+            }
+            $d->name = $this->secondLanguage_store($d->name, $d->secondary_name);
+            $d->description = $this->secondLanguage_store($d->description, $d->secondary_description);
+        }
+        $download_path = BASE_URL . UPLOADS_PATH . "_products.csv";
+        $response_Array = json_encode(['data' => $data, 'download_path' => $download_path, 'business' => '']);
+        return $response_Array;
     }
 }

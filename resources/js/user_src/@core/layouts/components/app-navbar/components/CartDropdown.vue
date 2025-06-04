@@ -1,7 +1,8 @@
 <template>
     <div class="card">
-        <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.sidebar-right
-            variant="btn btn-gradient-primary btnpad" v-if="this.$route.name !== 'checkout'">
+        <!-- <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.sidebar-right @click="goToCart" -->
+        <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.sidebar-right @click="goToCart"
+            variant="btn btn-gradient-primary btnpad" v-if="!['checkout', 'my_cart', 'delivery_address'].includes($route.name)">
             <feather-icon icon="ShoppingCartIcon" class="mr-50 ico-color3" />
             <span class="align-middle" v-if="$store.state['deliware_cart'].cartItemsCount">{{
                 $store.state['deliware_cart'].cartItemsCount }}
@@ -10,7 +11,7 @@
             <span class="align-middle" v-if="!$store.state['deliware_cart'].cartItemsCount">{{ $t("My Cart") }} </span>
         </b-button>
 
-        <b-sidebar id="sidebar-right" bg-variant="white" right backdrop shadow ref="sidebar"
+        <!-- <b-sidebar id="sidebar-right" bg-variant="white" right backdrop shadow ref="sidebar"
             sidebar-class="custom-sidebar">
             <template #header="{ hide }">
                 <div class="custom-cart-header">
@@ -19,7 +20,7 @@
                 </div>
             </template>
             <sidebar-content :cart="$store.state['deliware_cart'].cart_items" />
-        </b-sidebar>
+        </b-sidebar> -->
     </div>
 
 </template>
@@ -70,6 +71,9 @@ export default {
     },
 
     methods: {
+          goToCart() {
+    this.$router.push({ name: 'my_cart' }); // use your route name or path here
+  },
         fetchItems() {
             if (localStorage.getItem("cart")) {
                 this.cart = store.state['deliware_cart'].cart_items

@@ -165,6 +165,7 @@ Route::group(
         Route::get('/layout', 'RestaurantController@layout');
         Route::get('/get_tips', 'UserController@get_tips');
         Route::get('/get_cancellation_reasons', 'UserController@get_cancellation_reasons');
+        Route::get('/get_settings', 'UserController@get_settings');
 
         Route::post('/order_ratings/{delivery_boy_rating}/{restaurant_rating}/{request_id}/{restaurant_feedback}', 'RestaurantController@order_ratings');
         Route::get('/verify_restaurant/{id}/{code}', 'RestaurantController@verify_restaurant');
@@ -189,7 +190,7 @@ Route::group(
         Route::get('/blog-categories/{id}/blogs', 'BlogCategoryController@blogs');
 
         // Blog Routes
-        Route::get('/blogs', 'BlogController@index');
+        // Route::get('/blogs', 'BlogController@index');
         Route::get('/blogs/{slug}', 'BlogController@show');
         Route::get('/blogs/category/{categoryId}', 'BlogController@byCategory');
 

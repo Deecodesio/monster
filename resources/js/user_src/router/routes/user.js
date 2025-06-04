@@ -111,6 +111,18 @@ export default [
   },
 
   {
+    path: "/my_cart",
+    name: "my_cart",
+    component: () => import("@@@/views/user/business/my_cart.vue"),
+  },
+
+   {
+    path: "/delivery_address",
+    name: "delivery_address",
+    component: () => import("@@@/views/user/business/address.vue"),
+  },
+
+  {
     path: "/sub_categories/:slug",
     name: "sub_cat_list",
     component: () => import("@@@/views/user/business/category_list.vue"),
@@ -285,30 +297,21 @@ export default [
   {
     path: '/blogs',
     name: 'blogs',
-    component: () => import('@@@/views/blog/BlogList.vue'),
-    meta: {
-      publicRoute: true,
-      contentRenderer: 'sidebar-left',
-      permission: 'public',
-      layout: 'full' // Added to ensure consistent layout
-    }
+    // component: () => import('@@@/views/user/business/blog/BlogList.vue'),
+
   },
   {
     path: '/blogs/:slug',
     name: 'blog-detail',
-    component: () => import('@@@/views/blog/BlogDetail.vue'),
-    props: true,
-    meta: {
-      publicRoute: true,
-      permission: 'public',
-      layout: 'full' // Added to ensure consistent layout
-    }
+    // component: () => import('@@@/views/user/business/blog/BlogDetail.vue'),
+
+
   },
   // Career routes
   {
     path: '/careers',
     name: 'careers',
-    component: () => import('@@@/views/career/CareerList.vue'),
+    // component: () => import('@@@/views/user/business/career/CareerList.vue'),
     meta: {
       publicRoute: true,
       contentRenderer: 'sidebar-left',
@@ -319,7 +322,7 @@ export default [
   {
     path: '/careers/:id',
     name: 'career-detail',
-    component: () => import('@@@/views/career/CareerDetail.vue'),
+    // component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
     props: true,
     meta: {
       publicRoute: true,
@@ -331,13 +334,33 @@ export default [
   {
     path: '/franchise',
     name: 'franchise',
-    component: () => import('@@@/views/franchise/FranchiseList.vue'),
-    meta: {
-      publicRoute: true,
-      contentRenderer: 'sidebar-left',
-      permission: 'public',
-      layout: 'full' // Added to ensure consistent layout
-    }
+    // component: () => import('@@@/views/user/business/franchise/FranchiseList.vue'),
+
+  },
+    {
+    path: '/Bulk-Orders',
+    name: 'BulkOrders',
+    // component: () => import('@@@/views/user/business/Bulk-Orders.vue'),
+   props: true,
+  meta: {
+    resource: 'dashboard',
+    action: 'read',
   }
+  },
+
+ {
+  path: "/shop-location/:city",
+  name: "StoreList", // Must match name used in `this.$router.push({ name: 'StoreList', ... })`
+  component: () => import("@@@/views/user/business/Shop-Location.vue"), // Must match the correct file name
+
+
+
+  props: true,
+  meta: {
+    resource: 'dashboard',
+    action: 'read',
+  }
+}
+
 
 ]

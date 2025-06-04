@@ -3,7 +3,13 @@
         <div class="shope-container mb-5 text-center" v-if="shopList.length">
             <h3 class="shope-title mx-3">Our Shops</h3>
             <div class="shop-grid">
-                <div class="shop-box" v-for="shop in shopList" :key="shop.id">
+                <div
+                    class="shop-box"
+                    v-for="shop in shopList"
+                    :key="shop.id"
+                    @click="goToCity(shop.city)"
+                    style="cursor: pointer"
+                >
                     {{ shop.city }}
                 </div>
             </div>
@@ -12,6 +18,8 @@
 </template>
 
 <script>
+import store from "@@@/store";
+
 export default {
     data() {
         return {
@@ -20,16 +28,23 @@ export default {
     },
 
     created() {
+        store.commit("deliware_cart/UPDATE_FOOTER", true);
         this.$http
             .get("/restaurant_cities")
             .then((response) => {
                 console.log("Shop Data", response.data);
                 this.shopList = response.data;
                 console.log("List", this.shopList);
+                 store.commit("deliware_cart/UPDATE_FOOTER", true);
             })
             .catch((error) => {
                 console.error("Error fetching restaurant cities:", error);
             });
+    },
+    methods: {
+        goToCity(city) {
+            this.$router.push({ name: "StoreList", params: { city } });
+        },
     },
 };
 </script>

@@ -17,20 +17,28 @@
             </b-nav-item>
             <!-- <b-nav-item  @click="redirect(1)" class="white_text"> -->
             <b-nav-item :to="{ name: 'blogs' }" class="white_text">
-                <span class="white_text">
+                <!-- <span class="white_text">
                     {{ $t("Blog") }}
-                </span>
+                </span> -->
             </b-nav-item>
+
             <!-- <b-nav-item @click="redirect(2)" class="white_text"> -->
             <b-nav-item :to="{ name: 'careers' }" class="white_text">
-                <span class="white_text">
+                <!-- <span class="white_text">
                     {{ $t("Career") }}
-                </span>
+                </span> -->
+
             </b-nav-item>
+
             <b-nav-item @click="redirect(3)" class="white_text">
-                <span class="white_text">
+                <!-- <span class="white_text">
                     {{ $t("Franchisee") }}
-                </span>
+                </span> -->
+            </b-nav-item>
+            <b-nav-item :to="{ name: 'BulkOrders' }" class="white_text">
+                <!-- <span class="white_text">
+                    {{ $t("Bulk Orders") }}
+                </span> -->
             </b-nav-item>
         </b-nav>
     </b>
@@ -52,7 +60,7 @@ export default {
             } else if (link == 2) {
                 var link1 = "https://monsterfoods.in/careers/";
             } else {
-                var link1 = "https://monsterfoods.in/franchisee/";
+                // var link1 = "https://monsterfoods.in/franchisee/";
             }
             window.open(link1, "_blank");
         },

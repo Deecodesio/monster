@@ -2,14 +2,14 @@
     <div v-if="!isempty">
         <b-row>
             <b-col md="12">
-                <h2 style="text-align: center">
+                <h2 style="text-align: center;margin-top: 15px; margin-bottom: 10px;">
                     {{ $t("Product Categories") }}
                 </h2>
                 <div class="hrLine"></div>
             </b-col>
         </b-row>
         <!-- Swiper Wrapper -->
-        <div class="swiper-category-wrapper mb-5">
+        <div class="swiper-category-wrapper mb-0">
             <!-- <div id="swiper-button-next" class="swiper-button-next"></div> -->
             <div id="swiper-button-next" class="swiper-button-next" :class="{ 'force-disabled': rows2.length <= 6 }">
             </div>
@@ -245,7 +245,10 @@ export default {
 
 .hrLine {
     max-width: 75px;
-    margin: 10px auto;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
     border: 3px solid #ffce00;
     border-radius: 5px;
     background-color: #ffce00;

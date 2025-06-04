@@ -1,7 +1,8 @@
 <template>
     <b-row>
         <div class="d-flex justify-content-center align-items-center container-xs px-4" style="padding-left: 12.5rem !important;">
-            <b-col md="2" class="pt-1">
+            <!-- md="2" class="pt-1" -->
+            <b-col> 
                 <b-link class="navbar-brand " to="/">
                     <span class="brand-logo">
                         <b-img :src=rows_detail :alt=alt class="logo_image" />
@@ -17,7 +18,7 @@
             <b-col md="4">
                 <search-bar />
             </b-col>
-            <b-col md="4" class="pt-3 text-r" style="display: flex; flex-direction: row-reverse;margin-top: 10px !important; ">
+            <b-col md="4" class="pt-2 text-r" style="display: flex; flex-direction: row-reverse;margin-top: 10px !important; ">
 
 
                 <user-dropdown style="margin: 0px 20px 0px 20px;" />
@@ -122,7 +123,10 @@ export default {
 <style lang="scss" scoped>
 .logo_image {
     // max-width: 180px !important;
-    max-width: 200px !important;
+    max-width: 800px !important;
+    padding: 0% !important;
+    height:  60px !important;
+
 }
 
 .text-r {
@@ -135,4 +139,5 @@ export default {
 .pad-1 {
     padding: 10px 20px !important;
 }
+ 
 </style>

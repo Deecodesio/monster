@@ -40,7 +40,8 @@ Route::group(
     Route::post('/edit_store_menu', 'RestaurantController@edit_restaurant_menu');
     Route::post('/store_menu_rank', 'RestaurantController@menu_sort_save');
     Route::post('/menu_sort', 'RestaurantController@menu_sort');
-    Route::post('/product_list', 'RestaurantController@product_list');
+    // Route::post('/product_list', 'RestaurantController@product_list');
+    Route::post('/product_list/{id}', 'RestaurantController@product_list');
     Route::get('/product-status-toggle/{id}', 'RestaurantController@productStatus');
     Route::get('/delete_product/{id}', 'RestaurantController@delete_product_list');
     Route::get('/category_list_one/{id}/{restaurant_id}', 'RestaurantController@category_lists');
@@ -90,6 +91,7 @@ Route::group(
 
     Route::get('/get_logo', 'SettingController@get_logo');
     Route::get('/get_food_list_by_menu/{restaurant_id}/{order_id}', 'RestaurantController@get_food_list_by_menu');
+    Route::get('/get_food_list_by_menu_id/{menu_id}/{restaurant_id}', 'RestaurantController@get_food_list_by_menu_id');
     Route::get('/fetchorder/{id}', 'RestaurantController@fetchorder');
     Route::get('/print_order_bill/{id}', 'RestaurantController@printOrderBill');
 

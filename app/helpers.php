@@ -1388,6 +1388,7 @@ function featured($restaurant_id)
         $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
         $food_list[$key]->restaurant_address = $rest_id->address;
         $food_list[$key]->restaurant_image = $rest_id->image;
+        $food_list[$key]->restaurant_packaging_charge = $rest_id->packaging_charge;
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
 
@@ -1652,9 +1653,9 @@ function menu_availability($food_list)
 }
 function product_details($id, $res)
 {
-    $city_id=$res->city;
+    $city_id = $res->city;
     $res_id = $res->id;
-     $pricingSubquery = DB::table('food_list_pricing_district')
+    $pricingSubquery = DB::table('food_list_pricing_district')
         ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
         ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
         ->select(
@@ -1666,7 +1667,7 @@ function product_details($id, $res)
 
     // Step 2: Main query
     $food_list = DB::table('food_list')
-       ->where('food_list.id', $id)
+        ->where('food_list.id', $id)
 
         // Menu join
         ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
@@ -1722,7 +1723,7 @@ function product_details($id, $res)
         // $food_list->image = get_image($food_list, $food_list->restaurant_id);
 
         // $food_list->restaurant = $food_list->restaurant_id;
-        $food_list->add_ons =get_addons($food_list, $res_id);
+        $food_list->add_ons = get_addons($food_list, $res_id);
         $food_list->groups = get_groups($food_list, $res_id);
         $food_list->food_quantity = get_food_quantity($food_list, $res_id);
         $food_list->menu_available = menu_availability($food_list);
@@ -1755,13 +1756,13 @@ function product_details($id, $res)
         // if ($food_list->price < $food_list->bprice) {
         //     $food_list->disc_value = number_format((100 - ($food_list->price / $food_list->bprice) * 100), 2);
         // } else {
-            $food_list->disc_value = "0";
+        $food_list->disc_value = "0";
         // }
 
         // if ($food_list->split_payment == 1) {
         //     $food_list->pending_payment = $food_list->price - $food_list->initial_price;
         // } else {
-            $food_list->pending_payment = 0;
+        $food_list->pending_payment = 0;
         // }
 
         $pending_payment_text = DB::table('settings')->where('key_word', 'pending_payment_text')->first();
@@ -1858,7 +1859,7 @@ function get_subcat_products($res_id, $id)
     $food_list = DB::table('food_list')
         ->where('food_list.status', 1)
         ->where('food_list.business_category_id', $id)
-        
+
         // Menu join
         ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
 
@@ -1912,13 +1913,14 @@ function get_subcat_products($res_id, $id)
 
     foreach ($food_list as $key => $each_food) {
         $each_food->image = get_image($each_food, $restaurant_id);
-        $food_list[$key]->add_ons =[]; // get_addons($each_food, $restaurant_id);
-        $food_list[$key]->groups =[]; // get_groups($each_food, $restaurant_id);
-        $food_list[$key]->food_quantity =[]; // get_food_quantity($each_food, $restaurant_id);
+        $food_list[$key]->add_ons = []; // get_addons($each_food, $restaurant_id);
+        $food_list[$key]->groups = []; // get_groups($each_food, $restaurant_id);
+        $food_list[$key]->food_quantity = []; // get_food_quantity($each_food, $restaurant_id);
         $food_list[$key]->restaurant = $rest_id->id;
         $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
         $food_list[$key]->restaurant_address = $rest_id->address;
         $food_list[$key]->restaurant_image = $rest_id->image;
+        $food_list[$key]->restaurant_packaging_charge = $rest_id->packaging_charge;
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
         $food_list[$key]->cart_status = $rest_id->cart;
@@ -1930,7 +1932,7 @@ function get_subcat_products($res_id, $id)
         // if ($food_list[$key]->price < $food_list[$key]->bprice) {
         //     $food_list[$key]->disc_value = number_format((100 - ($food_list[$key]->price / $food_list[$key]->bprice) * 100), 2);
         // } else {
-            $food_list[$key]->disc_value = "0";
+        $food_list[$key]->disc_value = "0";
         // }
     }
     return $food_list;

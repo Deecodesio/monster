@@ -181,38 +181,54 @@
                       {{ setting.value }} {{ req_details.item_total }}
                     </p>
                   </div>
-                  <div class="invoice-total-item">
+                  <!-- <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t('Packing') }} {{ $t('charge') }}
                     </p>
                     <p class="invoice-total-amount">
                       {{ setting.value }} {{ req_details.restaurant_packaging_charge }}
                     </p>
-                  </div>
-                  <div class="invoice-total-item">
+                  </div> -->
+                  <!-- <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t('delivery') }} {{ $t('Fee') }}
                     </p>
                     <p class="invoice-total-amount">
                       {{ setting.value }} {{ req_details.delivery_charge }}
                     </p>
+                  </div> -->
+                   <div class="invoice-total-item">
+                    <p class="invoice-total-title">
+                       CGST  :
+                    </p>
+                    <p class="invoice-total-amount">
+                      {{ setting.value }} {{ req_details.rtax/2 }}
+                    </p>
                   </div>
-                  <div class="invoice-total-item">
+                   <div class="invoice-total-item">
+                    <p class="invoice-total-title">
+                       SGST :
+                    </p>
+                    <p class="invoice-total-amount">
+                      {{ setting.value }} {{ req_details.rtax/2 }}
+                    </p>
+                  </div>
+                  <!-- <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t('tax') }} :
                     </p>
                     <p class="invoice-total-amount">
                       {{ setting.value }} {{ req_details.rtax }}
                     </p>
-                  </div>
-                  <div class="invoice-total-item">
+                  </div> -->
+                  <!-- <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t('Tips') }} :
                     </p>
                     <p class="invoice-total-amount">
                       {{ setting.value }} {{ req_details.tips }}
                     </p>
-                  </div>
+                  </div> -->
                   <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t('total') }} {{ $t('discount') }}:
@@ -267,10 +283,10 @@
             @click="Cancel(req_details.request_id);">
             {{ $t('cancel') }}
           </b-button>
-          <b-button v-if="req_details.order_status < 3 && req_details.order_status != -3"
+          <!-- <b-button v-if="req_details.order_status < 3 && req_details.order_status != -3"
             v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block @click="revise">
             {{ $t('Revise Order') }}
-          </b-button>
+          </b-button> -->
         </b-card>
         <b-card>
           <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary" class="mb-75" block
@@ -376,7 +392,8 @@ export default {
       pharmacy: '',
       layout: '',
       selectMode: 'multi',
-      fields: ['image', 'action', 'Name', 'description', 'size', 'addons', 'quantity', 'price'],
+      // fields: ['image', 'action', 'Name', 'description', 'size', 'addons', 'quantity', 'price'],
+      fields: ['image', 'action', 'Name', 'quantity', 'price'],
       selected: [],
       marked: []
     }

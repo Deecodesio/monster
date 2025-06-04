@@ -1,8 +1,8 @@
 <template>
     <b-row @click="showModal" class="location ">
-        <b-col cols="12">
+        <b-col cols="12" style="padding-bottom:22px !important;">
             <h5 class="size"><b>{{ $t("DeliveringTo") }}</b></h5>
-            <p id="demo" class="wrap" style="font-size: 14px; float:left;   font-weight: 400;  width:145px;">
+            <p id="demo" class="wrap" style="font-size: 14px; float:left;   font-weight: 400;  width:auto;max-width:175px;margin-right:10px !important;">
                 <feather-icon
                     icon="MapPinIcon" size="16" class="ico-color2" style="color: #FFCE00 !important;"/> 
                     {{ address }}</p>
@@ -309,7 +309,7 @@ p {
 .wrap {
     white-space: nowrap;
     overflow: hidden !important;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis !important;
 }
 </style>
 <style lang="scss">

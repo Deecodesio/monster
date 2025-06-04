@@ -1,6 +1,6 @@
 <template>
-    <div class="pt-11">
-        <b-card>
+    <div class="pt-11" style="background-color:#FFFFFF !important;">
+        <b-card style="margin-top: 80px !important;background-color:  white !important; box-shadow: none;">
             <b-row>
                 <b-col lg="6" md="12" cols="12">
                     <div id="map" style="width: 100%; height: 650px"></div>
@@ -165,7 +165,6 @@
                                             </div> -->
                                         </div>
                                     </b-card-body>
-
                                     <!-- Spacer -->
                                     <hr class="hrcolor" />
 
@@ -174,11 +173,11 @@
                                         <b-row class="invoice-spacing">
                                             <!-- Col: Invoice To -->
                                             <b-col cols="12" xl="6" class="p-0">
-                                                <h6 class="mb-2">
+                                                <p class="mb-2" style="font-weight: 600;size: 16px;">
                                                     {{
                                                         $t("Customer Details")
                                                     }}:
-                                                </h6>
+                                                </p>
                                                 <h6 class="mb-25">
                                                     {{ req_details.user_name }}
                                                 </h6>
@@ -198,13 +197,13 @@
 
                                             <!-- Col: Payment Details -->
                                             <b-col xl="6" cols="12" class="p-0">
-                                                <h6 class="mb-2">
+                                                <p class="mb-2" style="font-weight: 600;size: 16px;">
                                                     {{
                                                         $t(
                                                             "Store Details"
                                                         )
                                                     }}:
-                                                </h6>
+                                                </p>
                                                 <h6 class="mb-25">
                                                     {{
                                                         req_details.restaurant_name
@@ -228,13 +227,13 @@
                                     </b-card-body>
 
                                     <!-- Invoice Description: Table -->
-                                    <b-table-lite responsive :items="food_details" :fields="[
+                                    <!-- <b-table-lite responsive :items="food_details" :fields="[
                                         'Name',
-                                        'description',
+                                        // 'description',
                                         'quantity',
                                         'price',
-                                    ]">
-                                        <template #cell(taskDescription)="data">
+                                     ]">
+                                        <template #cell(taskDescription)="data" >
                                             <b-card-text class="font-weight-bold mb-25">
                                                 {{ data.item.Name }}
                                             </b-card-text>
@@ -242,29 +241,48 @@
                                                 {{ data.item.description }}
                                             </b-card-text>
                                         </template>
-                                    </b-table-lite>
+                                    </b-table-lite> -->
+                                                        <b-table-lite 
+                    responsive 
+                    :items="food_details" 
+                    :fields="[
+                        { key: 'Name', label: 'NAME', thStyle: { color: 'black', background: '#FF81B633', fontWeight: '400', fontSize: '16px' },tdClass: ' px-2' },
+                         { key: 'quantity', label: 'QUANTITY', thStyle: { color: 'black', background: '#FF81B633', fontWeight: '400', fontSize: '16px' }, tdClass: ' px-5' },
+                        { key: 'price', label: 'PRICE', thStyle: { color: 'black', background: '#FF81B633', fontWeight: '400', fontSize: '16px' }, tdClass: ' px-4' },
+                    ]">
+                    
+                    <template #cell(taskDescription)="data" >
+                        <b-card-text class="font-weight-bold mb-25 ">
+                        {{ data.item.Name }}
+                        </b-card-text>
+                    </template>
+                    </b-table-lite>
 
-                                    <!-- Invoice Description: Total -->
-                                    <b-card-body class="invoice-padding pb-0">
-                                        <b-row>
-                                            <b-col cols="12" md="6" class="mt-md-0 mt-3" order="2" order-md="1">
-                                                <b-card-text class="mb-0">
-                                                    <span class="font-weight-bold"></span>
-                                                    <span class="ml-75"></span>
-                                                </b-card-text>
-                                            </b-col>
+                               <!-- Invoice Description: Total -->
+                                    <b-card-body class="invoice-padding pb-0" >
+                                        
+                                                <!-- <b-col cols="12" md="6" class="mt-md-0 mt-3" order="2" order-md="1">
+                                                    <b-card-text class="mb-0">
+                                                        <span class="font-weight-bold"></span>
+                                                        <span class="ml-75"></span>
+                                                    </b-card-text>
+                                                </b-col> -->
 
                                             <!-- Col: Total -->
-                                            <b-col cols="12" md="6" class="mt-md-6 d-flex justify-content-end mb-2"
-                                                order="1" order-md="2">
+                                 
                                                 <div class="invoice-total-wrapper">
                                                     <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
+                                                        <p class="invoice-total-title"  >
+                                                            <!-- {{
+                                                                $t(
+                                                                    "Order Summary"
+                                                                )
+                                                            }} -->
                                                             {{
                                                                 $t(
                                                                     "Item Total"
                                                                 )
-                                                            }}:
+                                                            }}
                                                         </p>
                                                         <p class="invoice-total-amount">
                                                             {{ $store.state['defaults'].currency }} {{
@@ -298,18 +316,36 @@
                                                                 req_details.delivery_charge }}
                                                         </p>
                                                     </div>
-                                                    <div class="invoice-total-item">
+                                                    <!-- <div class="invoice-total-item">
                                                         <p class="invoice-total-title">
-                                                            {{ $t("Tax") }}:
+                                                            {{ $t("Tax") }}
                                                         </p>
                                                         <p class="invoice-total-amount">
                                                             {{ $store.state['defaults'].currency }} {{ req_details.rtax
                                                             }}
                                                         </p>
+                                                    </div> -->
+                                                       <div class="invoice-total-item">
+                                                        <p class="invoice-total-title">
+                                                            CGST
+                                                        </p>
+                                                        <p class="invoice-total-amount">
+                                                            {{ $store.state['defaults'].currency }} {{ req_details.rtax /2
+                                                            }}
+                                                        </p>
                                                     </div>
                                                     <div class="invoice-total-item">
                                                         <p class="invoice-total-title">
-                                                            {{ $t("Tips") }}:
+                                                            SGST
+                                                        </p>
+                                                        <p class="invoice-total-amount">
+                                                            {{ $store.state['defaults'].currency }} {{ req_details.rtax /2
+                                                            }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="invoice-total-item">
+                                                        <p class="invoice-total-title">
+                                                            {{ $t("Tips") }}
                                                         </p>
                                                         <p class="invoice-total-amount">
                                                             {{ $store.state['defaults'].currency }} {{ req_details.tips
@@ -335,17 +371,18 @@
                                                                 $t(
                                                                     "Wallet"
                                                                 )
-                                                            }}(-):
+                                                            }}
+                                                             <!-- (-): -->
                                                         </p>
                                                         <p class="invoice-total-amount">
                                                             {{ $store.state['defaults'].currency }} {{
                                                                 req_details.wallet_amounts }}
                                                         </p>
                                                     </div>
-                                                    <hr class="my-50 hrcolor" />
+                                                    <!-- <hr class="my-50 hrcolor" / > -->
                                                     <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            {{ $t("Total") }}:
+                                                        <p class="invoice-total-title" style="font-weight: 600 !important; font-size: 16px !important;">
+                                                            {{ $t("Total") }}
                                                         </p>
                                                         <p class="invoice-total-amount">
                                                             {{ $store.state['defaults'].currency }} {{
@@ -354,8 +391,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                            </b-col>
-                                        </b-row>
+                                            
                                     </b-card-body>
                                 </b-card>
                             </b-col>
@@ -672,5 +708,9 @@ export default {
 
 .pt-11 {
     padding-top: 6rem !important;
+}
+.invoice-total-item{
+    width:  360px !important ;
+
 }
 </style>

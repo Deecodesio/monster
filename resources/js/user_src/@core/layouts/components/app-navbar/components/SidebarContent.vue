@@ -132,14 +132,16 @@
                                 style="font-family: Quicksand;font-weight:400;font-size: 16px;margin-bottom: 8px;">
                                 <feather-icon icon="MapPinIcon" size="16" class="ico-color2" /> {{ rows }}
                             </p>
-                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary"
+                            <!-- <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary"
                                 style="padding:0px;font-family: Quicksand;font-weight:400;font-size: 14px;"
-                                @click="checklogin()">
+                                @click="checklogin()"> -->
+                                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary"
+                                style="padding:0px;font-family: Quicksand;font-weight:400;font-size: 14px;"
+                                @click="changeaddress()">
                                 <i class="fa-solid fa-circle-plus"></i>
                                 <span class="f-size-0"  style="padding:0px;font-family: Quicksand;font-weight:400;font-size: 14px;" >{{ $t("Add") }} {{
                                     $t("New") }}
-                                    {{
-                                        $t("Address") }}</span>
+                                    {{$t("Address") }}</span>
                             </b-button>
 
                             <b-sidebar id="sidebar-address" bg-variant="white" right backdrop shadow width="130%"
@@ -258,12 +260,12 @@
                                     }}</td>
                                 <td>{{ $store.state['defaults'].currency }} 25</td>
                             </tr> -->
-                            <tr>
+                            <!-- <tr>
                                 <td class="font-size" style="font-weight:400; font-size: 15px;color:#666666;">{{
                                     $t("Taxes & Fees")
                                     }}</td>
                                 <td>{{ $store.state['defaults'].currency }} 15</td>
-                            </tr>
+                            </tr> -->
 
                             <tr v-if="$store.state['deliware_cart'].cart_total.packaging_charge > 0">
                                 <td class="font-size">{{ $t("Packaging Charge") }}</td>
@@ -326,9 +328,7 @@
                                 <td>
                                     <b style="font-weight:700; font-size: 18px;color:black">
                                         {{ $store.state['defaults'].currency }}
-                                        {{
-                                            ($store.state['deliware_cart'].cart_total.bill | price_format_final)                                             
-                                        }}
+                                        {{ ($store.state['deliware_cart'].cart_total.bill) }}
                                     </b>
                                 </td>
                             </tr>
@@ -508,6 +508,10 @@ export default {
         select_delivery_type(type) {
             this.delivery_type = type;
         },
+           changeaddress() {
+      this.$router.push({ name: 'choose-delivery-address' }); // Ensure route name matches
+      console.log('Address change triggered');
+    }
     },
     computed: {
 
@@ -1063,6 +1067,7 @@ export default {
                 restaurant_name = cart[0].name,
                 restaurant_address = cart[0].restaurant_name,
                 restaurant_image = cart[0].restaurant_image,
+                packaging_charge= cart[0].packaging_charge,      
                 taxperc = parseFloat(item_tax);
             let foodIndex = cart.findIndex(function (food, index) {
                 return food.id == id;
@@ -1087,6 +1092,7 @@ export default {
                     restaurant_name: restaurant_name,
                     restaurant_address: restaurant_address,
                     restaurant_image: restaurant_image,
+                    restaurant_packaging_charge: packaging_charge,
                     sizePrice: 0,
                     taxperc: taxperc,
                     food_image: food_image,
@@ -1140,7 +1146,7 @@ export default {
             var DELIVERY_CHARGE = localStorage.getItem('DC');
             localStorage.getItem('DC', JSON.stringify(DELIVERY_CHARGE));
             var DELIVERY_CHARGE_TYPE = localStorage.getItem('DELIVERY_CHARGE_TYPE');
-            var packaging_charge = localStorage.getItem('RES_PACK_CHARGE');
+            var packaging_charge = 0 ; // localStorage.getItem('RES_PACK_CHARGE');
             var DELIVERY_CHARGE_BASEDON = localStorage.getItem('DC_BON');
             // let cart = JSON.parse(localStorage.getItem("cart"));
             var lat = localStorage.getItem('latitude');
@@ -1185,10 +1191,10 @@ export default {
             let item_amount_total = 0;
             let restaurant_packaging_charge = 0;
 
-            // Commanded for temporary
-            // if (packaging_charge == 0) {
-            //     packaging_charge = JSON.parse(localStorage.getItem('RES_PACK_CHARGE'));
-            // }
+            if (packaging_charge == 0) {
+                packaging_charge =cart.length !== 0?(cart[0].restaurant_packaging_charge||0):0;
+                //  JSON.parse(localStorage.getItem('RES_PACK_CHARGE'));
+            }
             if (cart.length === 0) {
             } else {
                 cart.forEach(function (item, i) {
@@ -1220,16 +1226,18 @@ export default {
                     total_price += parseFloat((item.quantity * (item.price + item.addonsPrice)).toFixed(2));
                     total_item++;
                     let thisAmount = parseFloat(((item.price + item.addonsPrice) * item.quantity).toFixed(2));
-                    tot_tax += parseFloat((thisAmount / 100) * item.taxperc);
+                    tot_tax += parseFloat((thisAmount / 100) * (item.taxperc || 0 ));
                     localStorage.setItem('tot_tax', tot_tax);
-                    // if (is_tax == 0) { // Need to work based on settings 
-                    if (tot_tax > 0) {
-                        tot_amt = total_price + tot_tax;
-                    } else {
+                    // if (is_tax == 0) { 
+                    //     tot_amt = total_price + tot_tax;
+                                               
+                    // } else {
                         tot_amt = total_price;
-                    }
+                       
+                    // }                  
                     item_amount_total += thisAmount;
                 })
+                 console.log("tot_amt175*********", tot_amt);
                 restaurant_packaging_charge = parseFloat((item_amount_total / 100) * packaging_charge); // Refer above - Commanded for temporary
 
                 var dc = this.delivery_type
@@ -1244,7 +1252,7 @@ export default {
                     var delivery_charge_calc = 0;
                     var tips = 0;
                 }
-                total_price = tot_amt === 0 ? tot_amt : (tot_amt - parseFloat(offer_discount) + restaurant_packaging_charge + delivery_charge_calc + parseFloat(tips)).toFixed(2);
+                total_price = tot_amt === 0 ? tot_amt : (tot_amt - parseFloat(offer_discount) + tot_tax + restaurant_packaging_charge + delivery_charge_calc + parseFloat(tips)).toFixed(2);
                 localStorage.setItem('tot_amt', total_price);
                 if (total_price < parseFloat(wallet)) {
                     wallet = total_price;

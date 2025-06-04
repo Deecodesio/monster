@@ -129,7 +129,27 @@
                                             {{ $store.state["deliware_cart"].cart_total.tips | priceformat }}
                                         </td>
                                     </tr>
-                                    <tr id="tips_bill">
+                                     <tr id="cgst_bill">
+                                        <td style="font-size: 16px; ">
+                                            CGST
+                                            <span>{{ tax($store.state["defaults"].tax) }}</span>
+                                        </td>
+                                        <td style="float: right ; font-size: 16px;color: black;">
+                                            {{ $store.state["defaults"].currency }}
+                                            {{ ($store.state["deliware_cart"].cart_total.tax/2) | priceformat }}
+                                        </td>
+                                    </tr>
+                                     <tr id="sgst_bill">
+                                        <td style="font-size: 16px; ">
+                                            SGST
+                                            <span>{{ tax($store.state["defaults"].tax) }}</span>
+                                        </td>
+                                        <td style="float: right ; font-size: 16px;color: black;">
+                                            {{ $store.state["defaults"].currency }}
+                                            {{ ($store.state["deliware_cart"].cart_total.tax/2) | priceformat }}
+                                        </td>
+                                    </tr>
+                                    <!-- <tr id="tips_bill">
                                         <td style="font-size: 16px; ">
                                             {{ $t("Tax") }}
                                             <span>{{ tax($store.state["defaults"].tax) }}</span>
@@ -138,7 +158,7 @@
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.tax | priceformat }}
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>
                                             <b style="font-weight: 700; font-size: 16px;color: black;">{{ $t("Bill Total") }} </b>
@@ -553,7 +573,7 @@ export default {
             const response = await axios.post("/api/ConfirmOrder", orderData);
             if (response.data.status) {
                 this.show_success();
-                this.clear_cart()
+                this.clear_cart();
                 setTimeout(() => {
                     this.$router.push({ name: "trackorder", params: { id: order_id } });
                 }, 2000);

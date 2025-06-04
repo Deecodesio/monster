@@ -15,7 +15,7 @@
                 </div>
             </b-col>
             <b-col lg="6" md="6" cols="12">
-                <vue-autosuggest
+                <!-- <vue-autosuggest
                     v-model="query"     
                     :suggestions="suggestions"
                     :input-props="inputProps"
@@ -23,7 +23,7 @@
                     :render-suggestion="renderSuggestion"
                     :limit="10"
                     @input="fetchResults"
-                />
+                /> -->
                 <div v-if="isLoading" class="ecommerce-searchbar mt-1">
                     <b-row>
                        
@@ -210,7 +210,7 @@
                                     }}
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>{{ $t("Packaging Charge") }}</td>
                                 <td>
                                     {{ setting.value }}
@@ -219,8 +219,8 @@
                                             | price_format_final
                                     }}
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>{{ $t("Discount") }}</td>
                                 <td>
                                     {{ setting.value }}
@@ -228,10 +228,28 @@
                                        cdiscount | price_format_final
                                     }}
                                 </td>
-                            </tr>
+                            </tr> -->
                             
-                           
-                            <tr id="tips_bill">
+                           <tr id="cgst_bill">
+    <td>
+        {{ $t("CGST") }}
+    </td>
+    <td>
+        {{ setting.value }}
+        {{ (ctax / 2) | price_format_final }}
+    </td>
+</tr>
+<tr id="sgst_bill">
+    <td>
+        {{ $t("SGST") }}
+    </td>
+    <td>
+        {{ setting.value }}
+        {{ (ctax / 2) | price_format_final }}
+    </td>
+</tr>
+
+                            <!-- <tr id="tips_bill">
                                 <td>
                                     {{ $t("Tax") }}
                                     
@@ -242,7 +260,7 @@
                                        ctax  | price_format_final
                                     }} 
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td>
                                     <b>{{ $t("Bill Total") }} </b>
@@ -781,7 +799,8 @@ export default {
             })
           })
       }else{
-        this.$http.get('/get_food_list_by_menu_id/'+refName+'/'+this.rest_id)
+        // this.$http.get('/get_food_list_by_menu_id/'+refName+'/'+this.rest_id)
+        this.$http.get('/store/get_food_list_by_menu_id/'+refName+'/'+this.rest_id)
         .then(res => {
        
           
@@ -874,6 +893,18 @@ export default {
       return false
     },
     create_order(){
+        console.log(this.pos_customer);
+            if (this.pos_customer === -1) {
+   this.$toast({
+                                component: ToastificationContent,
+                                position: "bottom-right",
+                                props: {
+                                    title: 'Add Customer to place order',
+                                    icon: "UserIcon",
+                                    variant: "danger",
+                                },
+                            });
+}
         
             localStorage.setItem("store_cart", localStorage.getItem("store_cart") || "[]");
             const cart = JSON.parse(localStorage.getItem("store_cart"));
@@ -992,11 +1023,11 @@ export default {
             this.selected.food_image = food_image;
             this.selected.name = name;
 
-            if (add_ons.length > 0 || food_quantity.length > 0) {
-                this.add_ons = add_ons;
-                this.food_quantity = food_quantity;
-                this.$refs["addon-modal"].show();
-            } else {
+            // if (add_ons.length > 0 || food_quantity.length > 0) {
+            //     this.add_ons = add_ons;
+            //     this.food_quantity = food_quantity;
+            //     this.$refs["addon-modal"].show();
+            // } else {
                 if (cart.length && cart[0].restaurant != restaurant) {
                     let ok = confirm("The items previously will be deleted");
                     if (ok) {
@@ -1036,7 +1067,7 @@ export default {
                 let cartn = JSON.parse(localStorage.getItem("store_cart"));
               
                 this.loadcart();
-            }
+            // }
         },
         number_format(number, decimals, dec_point, thousands_sep) {
             // Strip all characters but numerical ones.
@@ -1120,11 +1151,11 @@ export default {
                     );
                     tot_tax += parseFloat((thisAmount / 100) * item.taxperc);
                     localStorage.setItem("tot_tax", tot_tax);
-                    if (is_tax == 0) {
-                        tot_amt = total_price + tot_tax;
-                    } else {
+                    // if (is_tax == 0) {
+                    //     tot_amt = total_price + tot_tax;
+                    // } else {
                         tot_amt = total_price;
-                    }
+                    // }
 
                     item_amount_total += thisAmount;
                 });
@@ -1138,11 +1169,16 @@ export default {
                
                 var  delivery_charge_calc = 0;
                 var tips = 0;
+                /// ****
+                restaurant_packaging_charge =0;
+                offer_discount =0;
+                 /// ****
                 total_price =
                     tot_amt === 0
                         ? tot_amt
                         : (
                               tot_amt +
+                              tot_tax +
                               restaurant_packaging_charge +
                               DELIVERY_CHARGE
                           ).toFixed(2);

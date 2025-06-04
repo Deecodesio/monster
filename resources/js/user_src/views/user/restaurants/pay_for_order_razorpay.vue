@@ -118,7 +118,7 @@ export default {
 
             rows: {},
             loading: false,
-
+            show_payment_success: false,
             script: "https://checkout.razorpay.com/v1/checkout.js",
         };
     },
@@ -218,6 +218,9 @@ export default {
                     });
                 }, 2000);
             });
+        },
+          show_success() {
+            this.show_payment_success = !this.show_payment_success
         },
     },
     created() {},

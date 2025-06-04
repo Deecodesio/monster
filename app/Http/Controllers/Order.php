@@ -256,7 +256,7 @@ class Order extends Controller
         $this->ItemTotal = $this->itemTotal();
 
         $package_charge = ($this->ItemTotal / 100) * $this->Restaurant->packaging_charge;
-        $this->PackingCharge =0 ; // $package_charge;
+        $this->PackingCharge = $package_charge;
         // $this->Tax 					= $this->calculateTax();
         $this->DeliveryCharge = $this->DeliveryCharge;
         $this->OfferDiscount = 0;

@@ -4551,6 +4551,13 @@ class UserController extends BaseController
         return response()->json(['status' => true, 'message' => 'Success', 'reasons' => $reasons], 200);
     }
 
+    public function get_settings()
+    {
+         $settings = DB::table('settings')->where('status', 1)->get();
+
+        return response()->json(['status' => true, 'message' => 'Success', 'setting' => $settings], 200);
+    }
+
     public function order_cancel(Request $request)
     {
         $validator = Validator::make(
