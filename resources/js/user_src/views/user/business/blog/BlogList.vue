@@ -131,7 +131,7 @@
 
 <script>
 import { ref, computed, onMounted } from "@vue/composition-api";
-import Ourshops from '../OurShops.vue';
+import Ourshops from '../ourshops.vue';
 import {
     BRow,
     BCol,

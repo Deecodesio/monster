@@ -196,9 +196,9 @@ export default {
 
 .product_card_img {
     width: 100%;
-    height: 275px;
+    height: 245px;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%);
 }
 </style>

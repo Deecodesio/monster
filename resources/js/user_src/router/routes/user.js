@@ -297,13 +297,13 @@ export default [
   {
     path: '/blogs',
     name: 'blogs',
-    // component: () => import('@@@/views/user/business/blog/BlogList.vue'),
+    component: () => import('@@@/views/user/business/blog/BlogList.vue'),
 
   },
   {
     path: '/blogs/:slug',
     name: 'blog-detail',
-    // component: () => import('@@@/views/user/business/blog/BlogDetail.vue'),
+    component: () => import('@@@/views/user/business/blog/BlogDetail.vue'),
 
 
   },
@@ -311,55 +311,35 @@ export default [
   {
     path: '/careers',
     name: 'careers',
-    // component: () => import('@@@/views/user/business/career/CareerList.vue'),
-    meta: {
-      publicRoute: true,
-      contentRenderer: 'sidebar-left',
-      permission: 'public',
-      layout: 'full' // Added to ensure consistent layout
-    }
+    component: () => import('@@@/views/user/business/career/CareerList.vue'),
+   
   },
+
   {
     path: '/careers/:id',
     name: 'career-detail',
-    // component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
-    props: true,
-    meta: {
-      publicRoute: true,
-      permission: 'public',
-      layout: 'full' // Added to ensure consistent layout
-    }
+    component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
+
   },
   // Franchise route
   {
     path: '/franchise',
     name: 'franchise',
-    // component: () => import('@@@/views/user/business/franchise/FranchiseList.vue'),
+    component: () => import('@@@/views/user/business/franchise/FranchiseList.vue'),
 
   },
-    {
+  {
     path: '/Bulk-Orders',
     name: 'BulkOrders',
-    // component: () => import('@@@/views/user/business/Bulk-Orders.vue'),
-   props: true,
-  meta: {
-    resource: 'dashboard',
-    action: 'read',
-  }
-  },
+    component: () => import('@@@/views/user/business/Bulk-Orders.vue'),
+},
 
  {
   path: "/shop-location/:city",
-  name: "StoreList", // Must match name used in `this.$router.push({ name: 'StoreList', ... })`
-  component: () => import("@@@/views/user/business/Shop-Location.vue"), // Must match the correct file name
-
-
-
+  name: "StoreList", 
+  component: () => import('@@@/views/user/business/Shop-Location.vue'),
   props: true,
-  meta: {
-    resource: 'dashboard',
-    action: 'read',
-  }
+ 
 }
 
 

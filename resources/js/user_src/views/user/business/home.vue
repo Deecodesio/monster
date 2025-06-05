@@ -51,7 +51,7 @@ import page1 from "@@@/views/user/static_pages/page1.vue";
 import page2 from "@@@/views/user/static_pages/page2.vue";
 import store from "@@@/store";
 import banner from "@@@/views/user/home/banner.vue";
-import Ourshops from "./OurShops.vue";
+import Ourshops from "./ourshops.vue";
 import sectionB from "./sectionB.vue";
 
 export default {

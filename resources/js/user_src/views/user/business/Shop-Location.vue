@@ -1,84 +1,60 @@
 <template>
     <div>
         <div class="store-wrapper">
-            <h3 class="location">Location: {{ selectedCity }}</h3>
-            <div class="store-grid">
-                <div v-for="(store, index) in storeList" :key="index" class="store-card">
-                    <h4 class="store-name">{{ store.name }}</h4>
-                    <p class="store-address">
-                        <strong>Address :</strong> {{ store.address }}
-                    </p>
-                    <img :src="store.mapUrl" alt="Map" class="map-img" />
-                </div>
+            <div id="gmap"></div>
+            <div class="px-3 py5" v-if="restaurantCities.length">
+                <h4>Restaurant Cities</h4>
+                <ul>
+                    <li v-for="city in restaurantCities" :key="city.id">
+                        {{ city.city }}
+                    </li>
+                </ul>
             </div>
         </div>
-
-        <div class="container-fluid" style=" padding-right: 0; padding-left: 0">
+        <div class="container-fluid" style="padding-top: 3rem; padding-left: 0">
             <Ourshops />
         </div>
     </div>
 </template>
 
 <script>
-import Ourshops from "./OurShops.vue";
+import Ourshops from "./ourshops.vue";
 export default {
     components: {
-        Ourshops
+        Ourshops,
     },
     name: "StoreList",
     props: ["city"],
     data() {
         return {
-            selectedCity: this.city || "Bengaluru",
-            storeList: []
+            restaurantCities: [],
+            url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            zoom: 8,
+            center: [13.08268, 80.270721],
+            circle: {
+                center: [13.08268, 80.270721],
+                radius: 4500,
+                color: "#EA5455",
+            },
         };
     },
-    computed: {
-        selectedLocation() {
-            return this.$route.params.city || "Bengaluru";
-        },
-        filteredStores() {
-            // Filter stores to only those that match the selected city (case insensitive)
-            return this.stores.filter(store =>
-                store.city.toLowerCase() === this.selectedLocation.toLowerCase()
-            );
-        }
-    },
     created() {
-        // Dummy data simulation – replace this with your API call
-        this.storeList = [
-            {
-                name: "Store name",
-                address: `${this.selectedCity}, Tamil Nadu, India`,
-                mapUrl: "https://via.placeholder.com/400x200?text=Map+1"
-            },
-            {
-                name: "Store name",
-                address: `${this.selectedCity}, Tamil Nadu, India`,
-                mapUrl: "https://via.placeholder.com/400x200?text=Map+2"
-            },
-            {
-                name: "Store name",
-                address: `${this.selectedCity}, Tamil Nadu, India`,
-                mapUrl: "https://via.placeholder.com/400x200?text=Map+3"
-            },
-            {
-                name: "Store name",
-                address: `${this.selectedCity}, Tamil Nadu, India`,
-                mapUrl: "https://via.placeholder.com/400x200?text=Map+4"
-            },
-            {
-                name: "Store name",
-                address: `${this.selectedCity}, Tamil Nadu, India`,
-                mapUrl: "https://via.placeholder.com/400x200?text=Map+5"
-            },
-            {
-                name: "Store name",
-                address: `${this.selectedCity}, Tamil Nadu, India`,
-                mapUrl: "https://via.placeholder.com/400x200?text=Map+6"
-            }
-        ];
-    }
+        this.$http.get("/restaurant_by_city" + this.$route.params.city).then((response) => {
+            this.restaurantCities = response.data;
+            console.log("Restaurant Cities", response.data);
+        });
+    },
+    mounted() {
+        this.track_order();
+        this.initMap();
+        this.initTrHeight();
+        this.importAll(
+            require.context("@/assets/images/banner/", true, /\.jpg$/)
+        );
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.initTrHeight);
+    },
 };
 </script>
 

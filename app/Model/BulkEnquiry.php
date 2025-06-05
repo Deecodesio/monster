@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class Franchise extends Model
+class BulkEnquiry extends Model
 {
     use HasFactory;
 
-    protected $table = 'franchise';
+    protected $table = 'bulk_enquiry';
 
     protected $fillable = [
         'name',
         'phone_1',
         'phone_2',
         'email_id',
-        'shop_location_plan',
+        'product_id',
+        'business_category_id',
         'message',
         'address',
         'pincode',

@@ -61,6 +61,7 @@ Route::group(
 
         Route::get('/top_selling/{restaurant_id}', 'RestaurantController@top_selling');
         Route::get('/restaurant_cities', 'RestaurantController@allCityList');
+        Route::get('/restaurant_by_city/{id}', 'RestaurantController@getRestaurants');
 
 
         Route::get('/get_food_list_by_menu/{restaurant_id}', 'RestaurantController@get_food_list_by_menu');
@@ -171,50 +172,6 @@ Route::group(
         Route::get('/verify_restaurant/{id}/{code}', 'RestaurantController@verify_restaurant');
 
         Route::get('/verify_driver/{id}/{code}', 'RestaurantController@verify_driver');
-
-        // Basic CareerJobController CRUD operations
-        Route::get('career-jobs/', 'CareerJobController@index'); // GET /api/career-jobs
-        Route::post('career-jobs/', 'CareerJobController@store'); // POST /api/career-jobs
-        Route::get('career-jobs/{id}', 'CareerJobController@show'); // GET /api/career-jobs/{id}
-        Route::put('/career-jobs{id}', 'CareerJobController@update'); // PUT /api/career-jobs/{id}
-        Route::delete('career-jobs/{id}', 'CareerJobController@destroy'); // DELETE /api/career-jobs/{id}
-
-        // Additional routes for CareerJobController
-        Route::patch('career-jobs/{id}/toggle-status', 'CareerJobController@toggleStatus'); // PATCH /api/career-jobs/{id}/toggle-status
-        Route::get('career-jobs/active/list', 'CareerJobController@getActiveJobs'); // GET /api/career-jobs/active/list
-        Route::get('career-jobs/statistics/overview', 'CareerJobController@getJobsStats'); // GET /api/career-jobs/statistics/overview
-
-        // Blog Category Routes
-        Route::get('/blog-categories', 'BlogCategoryController@index');
-        Route::get('/blog-categories/{id}', 'BlogCategoryController@show');
-        Route::get('/blog-categories/{id}/blogs', 'BlogCategoryController@blogs');
-
-        // Blog Routes
-        // Route::get('/blogs', 'BlogController@index');
-        Route::get('/blogs/{slug}', 'BlogController@show');
-        Route::get('/blogs/category/{categoryId}', 'BlogController@byCategory');
-
-        // Job Application Routes
-        Route::get('/job-applications', 'JobApplicationController@index');
-        Route::post('/job-applications', 'JobApplicationController@store');
-        Route::get('/job-applications/{id}', 'JobApplicationController@show');
-        Route::put('/job-applications/{id}', 'JobApplicationController@update');
-        Route::delete('/job-applications/{id}', 'JobApplicationController@destroy');
-        Route::get('/job-applications/stats', 'JobApplicationController@getApplicationStats');
-        Route::get('/job-applications/{id}/download-resume', 'JobApplicationController@downloadResume');
-        Route::delete('/job-applications/bulk-destroy', 'JobApplicationController@bulkDestroy');
-        Route::get('/job-applications/export', 'JobApplicationController@exportApplications');
-        Route::get('/job-applications/job/{careerJobId}', 'JobApplicationController@getApplicationsByJob');
-        Route::get('/active-jobs', 'JobApplicationController@getActiveJobs');
-
-        // Franchise Routes
-        Route::get('/franchises', 'FranchiseController@index');
-        Route::post('/franchises', 'FranchiseController@store');
-        Route::get('/franchises/{id}', 'FranchiseController@show');
-        Route::put('/franchises/{id}', 'FranchiseController@update');
-        Route::delete('/franchises/{id}', 'FranchiseController@destroy');
-        Route::get('/franchises/stats', 'FranchiseController@getFranchiseStats');
-
 
         Route::POST('/add_wallet', 'UserController@add_wallet');
         Route::POST('/add_wallet_1', 'UserController@add_wallet_1');

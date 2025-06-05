@@ -7,28 +7,30 @@
         {{ $t("Add a Store") }}
       </b-nav-item>
       <b-nav-item @click="redirect(2)">{{ $t("Deliver with Us") }}</b-nav-item> -->
-            <b-nav-item :to="{ name: 'privacypolicy' }">
+            <!-- <b-nav-item :to="{ name: 'privacypolicy' }"> -->
+            <b-nav-item>
                 <span class="white_text">
                     {{ $t("Privacy Policy") }}
                 </span>
             </b-nav-item>
-            <b-nav-item :to="{ name: 'terms_conditions' }">
+            <!-- <b-nav-item :to="{ name: 'terms_conditions' }"> -->
+            <b-nav-item>
                 <span class="white_text">
                     {{ $t("Terms and Conditions") }}
                 </span>
             </b-nav-item>
-            <b-nav-item :to="{ name: 'cancellation' }">
+            <!-- <b-nav-item :to="{ name: 'cancellation' }"> -->
+            <b-nav-item >
                 <span class="white_text">
                     {{ $t("Cancellation Policy") }}
                 </span>
             </b-nav-item>
-            <b-nav-item :to="{ name: 'shipping' }">
+            <!-- <b-nav-item :to="{ name: 'shipping' }"> -->
+            <b-nav-item>
                 <span class="white_text">
                     {{ $t("Shipping and Delivery Policy") }}
                 </span>
             </b-nav-item>
-
-
             <!-- <b-nav-item :to="{ name: 'privacypolicy' }">{{$t("Return Policy")}}</b-nav-item> -->
         </b-nav>
     </b>

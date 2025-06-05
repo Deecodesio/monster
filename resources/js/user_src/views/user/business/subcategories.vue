@@ -15,9 +15,8 @@
                     <h2>{{ $t(" Product Categories")}}</h2>
                     <hr class="mx-auto">
                 </div>
-
-                <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">
                     <!-- Navigation Buttons (Now Outside Swiper) -->
+                <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">                   
                     <div id="swiper-button-prev" class="swiper-button-prev"></div>
                     <swiper class="swiper-multiple rounded swiper-shadow text-center" :options="swiperOptions"
                         :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">

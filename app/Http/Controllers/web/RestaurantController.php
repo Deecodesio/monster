@@ -1145,7 +1145,7 @@ class RestaurantController extends BaseController
             ->get();
 
         $data = $restaurants::where('id', $restaurant_id)->first();
-        if ($data !== null && $data->address != "" && $data->address !=null) {
+        if ($data !== null && $data->address != "" && $data->address != null) {
             $decodedText = html_entity_decode($data->address);
             $data->address = $decodedText;
         }
@@ -2135,7 +2135,7 @@ class RestaurantController extends BaseController
 
         $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
         $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
-        
+
         if ($request->header('authId') != "") {
             $user_id = $request->header('authId');
         } else {
@@ -4884,11 +4884,77 @@ class RestaurantController extends BaseController
         ])->header('Content-Type', 'text/xml');
     }
 
-     
+
     public function allCityList()
     {
         $city_list = DB::table('add_city')->where('status', 1)->get();
 
         return response()->json($city_list);
+    }
+
+    public function getRestaurants($id)
+    {
+        $cityId = $id;
+
+        $restaurants = DB::table('restaurants')
+            ->where('city', $cityId)
+            ->get();
+
+        $restaurantList = [];
+
+        // Loop through each restaurant and prepare an array with desired fields.
+        foreach ($restaurants as $data) {
+            $restaurantList[] = [
+                'id'            => $data->id,
+                'name' =>  $this->secondLanguage_user($data->restaurant_name, $data->restaurant_secondary_name),
+                'phone' => $data->phone,
+                'email' => $data->email,
+                'delivery_type'          => json_decode($data->delivery_type),
+                'address'       => $data->address,
+                'lat'     => $data->lat,
+                'lng'     => $data->lng,
+                'discount'      => $data->discount,
+                'is_open'       => $data->is_open,
+                'travel_time'   => $data->estimated_delivery_time,
+                'opening_time_1' => $data->opening_time_1,
+                'closing_time_1' => $data->closing_time_1,
+                'opening_second_time_1' => $data->opening_second_time_1,
+                'closing_second_time_1' => $data->closing_second_time_1,
+                'opening_time_2' => $data->opening_time_2,
+                'closing_time_2' => $data->closing_time_2,
+                'opening_second_time_2' => $data->opening_second_time_2,
+                'closing_second_time_2' => $data->closing_second_time_2,
+                'opening_time_3' => $data->opening_time_3,
+                'closing_time_3' => $data->closing_time_3,
+                'opening_second_time_3' => $data->opening_second_time_3,
+                'closing_second_time_3' => $data->closing_second_time_3,
+                'opening_time_4' => $data->opening_time_4,
+                'closing_time_4' => $data->closing_time_4,
+                'opening_second_time_4' => $data->opening_second_time_4,
+                'closing_second_time_4' => $data->closing_second_time_4,
+                'opening_time_5' => $data->opening_time_5,
+                'closing_time_5' => $data->closing_time_5,
+                'opening_second_time_5' => $data->opening_second_time_5,
+                'closing_second_time_5' => $data->closing_second_time_5,
+                'opening_time_6' => $data->opening_time_6,
+                'closing_time_6' => $data->closing_time_6,
+                'opening_second_time_6' => $data->opening_second_time_6,
+                'closing_second_time_6' => $data->closing_second_time_6,
+                'opening_time_7' => $data->opening_time_7,
+                'closing_time_7' => $data->closing_time_7,
+                'opening_second_time_7' => $data->opening_second_time_7,
+                'closing_second_time_7' => $data->closing_second_time_7,
+                'packaging_charge' => $data->packaging_charge,
+                'DeliveryChargeBasedOn' => $data->DeliveryChargeBasedOn,
+            ];
+        }
+
+        // Return status true if list is not empty, otherwise false.
+        $status = !empty($restaurantList);
+
+        return response()->json([
+            'status' => $status,
+            'data'   => $restaurantList
+        ]);
     }
 }
