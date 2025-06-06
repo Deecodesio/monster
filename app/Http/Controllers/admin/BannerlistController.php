@@ -18,7 +18,7 @@ class BannerlistController extends BaseController
 		$data = DB::table('offers_banner')
 			->leftjoin('restaurants', 'restaurants.id', '=', 'offers_banner.restaurant_id')
 			->leftjoin('add_city', 'add_city.id', '=', 'offers_banner.city_id')
-			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id', 'offers_banner.status', 'offers_banner.featured', 'offers_banner.cloudflare_bannerid as c_bannerid')
+			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id', 'offers_banner.banner_type as banner_type', 'offers_banner.status', 'offers_banner.featured', 'offers_banner.cloudflare_bannerid as c_bannerid')
 			->get();
 		$cloudflare = DB::table('settings')->where('key_word', 'cloudflare')->first();
 		foreach ($data as $d) {
@@ -49,7 +49,7 @@ class BannerlistController extends BaseController
 		$data = DB::table('offers_banner')
 			->leftjoin('restaurants', 'restaurants.id', '=', 'offers_banner.restaurant_id')
 			->leftjoin('add_city', 'add_city.id', '=', 'offers_banner.city_id')
-			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id', 'offers_banner.status', 'offers_banner.featured', 'offers_banner.cloudflare_bannerid as c_bannerid')
+			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id', 'offers_banner.banner_type as banner_type', 'offers_banner.status', 'offers_banner.featured', 'offers_banner.cloudflare_bannerid as c_bannerid')
 			->get();
 		foreach ($data as $d) {
 			if ($cloudflare->value == 1 && $d->c_bannerid != null) {
@@ -106,6 +106,7 @@ class BannerlistController extends BaseController
 			$product = $request->product;
 			$city_id = $request->city_id;
 			$status = $request->status;
+			$banner_type = $request->banner_type;
 			if ($request->existing == "undefined") {
 				$image  = basename($request->banner_image);
 			} else {
@@ -124,6 +125,7 @@ class BannerlistController extends BaseController
 						'city_id' => $city_id,
 						'image' => $image,
 						'status' => $status,
+						'banner_type' => $banner_type,
 						'cloudflare_bannerid' => null,
 						'category' => $category,
 						'product' => $product
@@ -133,6 +135,7 @@ class BannerlistController extends BaseController
 						'restaurant_id' => $restaurant_id,
 						'city_id' => $city_id,
 						'status' => $status,
+						'banner_type' => $banner_type,
 						'category' => $category,
 						'product' => $product
 
@@ -147,6 +150,7 @@ class BannerlistController extends BaseController
 					'city_id' => $city_id,
 					'image' => $image,
 					'status' => $status,
+					'banner_type' => $banner_type,
 					'category' => $category,
 					'product' => $product
 

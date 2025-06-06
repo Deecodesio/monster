@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="mx-3 py-5" style="margin-top: 25rem">
+    <div style="margin-top: 150px">
+        <div class="mx-3 py-5">
             <!-- Loading state -->
             <div v-if="loading" class="text-center">
                 <b-spinner label="Loading..."></b-spinner>
@@ -58,7 +58,7 @@
 
 <script>
 import { ref, onMounted } from "@vue/composition-api";
-import Ourshops from '../ourshops.vue';
+import Ourshops from "../ourshops.vue";
 
 import {
     BCard,

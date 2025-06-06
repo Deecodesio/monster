@@ -3,8 +3,8 @@
         <b-nav vertical>
             <h2 class="white_text">{{ $t("Quick Links") }}</h2>
 
-            <!-- <b-nav-item :to="{ name: 'about_us' }" class="white_text"> -->
-            <b-nav-item  class="white_text">
+            <b-nav-item :to="{ name: 'about_us' }" class="white_text">
+            <!-- <b-nav-item class="white_text"> -->
                 <span class="white_text"> {{ $t("About Us") }}</span>
             </b-nav-item>
 
@@ -16,34 +16,33 @@
                     {{ $t("Contact") }}
                 </span>
             </b-nav-item> -->
-            
+
             <!-- <b-nav-item @click="redirect(2)" class="white_text"> -->
             <!-- <b-nav-item :to="{ name: 'careers' }" class="white_text"> -->
-            <b-nav-item  class="white_text">
+            <b-nav-item :to="{ name: 'careers' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Career") }}
                 </span>
             </b-nav-item>
 
-            <b-nav-item @click="redirect(3)" class="white_text">
+            <!-- <b-nav-item @click="redirect(3)" class="white_text"> -->
+                   <b-nav-item :to="{ name: 'franchise' }" class="white_text">
                 <span class="white_text">
-                    {{ $t("Franchisee") }}
+                    {{ $t("Franchise") }}
                 </span>
             </b-nav-item>
-            <!-- <b-nav-item :to="{ name: 'BulkOrders' }" class="white_text"> -->
-            <b-nav-item  class="white_text">
+            <b-nav-item :to="{ name: 'BulkOrders' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Bulk Orders") }}
                 </span>
+
             </b-nav-item>
             <!-- <b-nav-item  @click="redirect(1)" class="white_text"> -->
-            <!-- <b-nav-item :to="{ name: 'blogs' }" class="white_text"> -->
-            <b-nav-item  class="white_text">
+            <b-nav-item :to="{ name: 'blogs' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Blog") }}
                 </span>
             </b-nav-item>
-
         </b-nav>
     </b>
 </template>

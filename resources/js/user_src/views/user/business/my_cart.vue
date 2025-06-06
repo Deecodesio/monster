@@ -2404,13 +2404,13 @@ export default {
     /* margin-left: 20px; */
     /* margin-top: 35px;
     font-family: quicksand;
-    margin-left: 200px; */ 
+    margin-left: 200px; */
       font-size: 28px;
   font-weight: 700;
   color: black;
   margin-bottom: 20px;
   font-family: quicksand;
-  text-align: center; 
+  text-align: center;
 }
 .cart-container {
   max-width: 1200px;

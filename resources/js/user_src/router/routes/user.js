@@ -116,7 +116,7 @@ export default [
     component: () => import("@@@/views/user/business/my_cart.vue"),
   },
 
-   {
+  {
     path: "/delivery_address",
     name: "delivery_address",
     component: () => import("@@@/views/user/business/address.vue"),
@@ -304,7 +304,7 @@ export default [
     path: '/blogs/:slug',
     name: 'blog-detail',
     component: () => import('@@@/views/user/business/blog/BlogDetail.vue'),
-
+    props: true,
 
   },
   // Career routes
@@ -312,15 +312,15 @@ export default [
     path: '/careers',
     name: 'careers',
     component: () => import('@@@/views/user/business/career/CareerList.vue'),
-   
-  },
-
-  {
-    path: '/careers/:id',
-    name: 'career-detail',
-    component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
 
   },
+
+{
+  path: '/careers/:id',
+  name: 'career-detail',
+  component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
+  props: true,
+},
   // Franchise route
   {
     path: '/franchise',
@@ -332,15 +332,15 @@ export default [
     path: '/Bulk-Orders',
     name: 'BulkOrders',
     component: () => import('@@@/views/user/business/Bulk-Orders.vue'),
-},
+  },
 
- {
-  path: "/shop-location/:city",
-  name: "StoreList", 
-  component: () => import('@@@/views/user/business/Shop-Location.vue'),
-  props: true,
- 
-}
+  {
+    path: "/shop-location/:city",
+    name: "StoreList",
+    component: () => import('@@@/views/user/business/Shop-Location.vue'),
+    props: true,
+
+  }
 
 
 ]

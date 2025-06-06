@@ -2,7 +2,6 @@
   <div>
     <banner />
     <div class="container mb-2">
-      <h4>{{ $t("About Us") }}</h4>
       <div v-html="rows[0].aboutus">
 
       </div>

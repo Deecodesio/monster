@@ -46,6 +46,7 @@ Route::group(
         Route::get('/banner_list/{lat}/{lng}', 'UserController@banner_list');
         Route::get('/category_lists/{id}', 'UserController@category_lists');
         Route::get('/category_list', 'UserController@category_list');
+        Route::get('/product_list_by_category/{id}', 'UserController@categoryWiseProductList');
         Route::get('/todays_special_restaurant/{lat}/{lng}', 'UserController@todays_special_restaurant');
         Route::get('/todays_special_store/{lat}/{lng}', 'UserController@todays_special_store');
 
@@ -196,7 +197,7 @@ Route::group(
 
 
         // Route::get('/get_product_details/{id}', 'RestaurantController@get_product_details');
-        Route::get('/get_product_details/{lat}/{lng}/{id}/{business_id}', 'RestaurantController@get_product_details');
+        Route::get('/get_product_details/{lat}/{lng}/{id}/{business_id}/{category_id}', 'RestaurantController@get_product_details');
 
         Route::get('calc_delivery_charge/{restaurant_id}/{lat}/{lng}/{itemtotal}', 'UserController@calc_delivery_charge');
 

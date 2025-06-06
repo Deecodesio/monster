@@ -19,7 +19,7 @@
                                 : data2.menu_available !== 1
                         }">
                             <b-img class="bor product_card_img" :src="data2.image[0]" blank-color="#ccc"
-                                @click="goto_product(data2.food_id, data2.name, data2.slug)" />
+                                @click="goto_product(data2.food_id, data2.name, data2.slug, data2)" />
 
                             <div class="p10">
                                 <h4 class="media-heading pt-0" @click="open_image(data2, data2)" style=" color: black;font-family:Poppins ;">
@@ -155,11 +155,17 @@ export default {
             }
 
         },
-        goto_product(id, name, slug) {
+        goto_product(id, name, slug, data) {
+            console.log("business_category_id", data);
             var str = name
             str.replace(/\-/g, "")
             var str2 = str.replace(/[^A-Z0-9]+/ig, "-").toLowerCase();
-            this.$router.push({ name: 'product', params: { slug: slug } });
+            this.$router.push({ 
+              name: 'product'
+            , params: { 
+                slug: slug,
+                category_id: data.business_category_id
+            } });
 
         },
         

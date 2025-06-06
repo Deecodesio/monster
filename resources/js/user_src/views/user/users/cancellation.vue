@@ -2,8 +2,6 @@
     <div>
         <banner />
         <div class="container  mb-2">
-            <h4>{{ $t("Cancellation Policy") }}</h4>
-
             <div v-html="rows[0].terms_conditions">
 
             </div>

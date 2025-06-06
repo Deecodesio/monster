@@ -12,30 +12,17 @@
                     <!-- Scrollable Address List -->
                     <div class="box">
                         <div class="address-list">
-                            <div
-                                v-for="(data, index) in addresses"
-                                :key="index"
-                                class="address-card"
-                                :class="{
-                                    'default-address': data.isDefault,
-                                    'selected-address':
-                                        selectedAddress === data.id,
-                                }"
-                                @click="setdefault(data.id)"
-                            >
+                            <div v-for="(data, index) in addresses" :key="index" class="address-card" :class="{
+                                'default-address': data.isDefault,
+                                'selected-address':
+                                    selectedAddress === data.id,
+                            }" @click="setdefault(data.id)">
                                 <div class="address-header">
-                                    <span
-                                        class="address-tag"
-                                        v-if="data.isDefault"
-                                        >DEFAULT</span
-                                    >
+                                    <span class="address-tag" v-if="data.isDefault">DEFAULT</span>
                                     <span class="address-type">{{
                                         data.type | add_type
                                     }}</span>
-                                    <button
-                                        class="edit-btn"
-                                        @click.stop="editAddress(data)"
-                                    >
+                                    <button class="edit-btn" @click.stop="editAddress(data)">
                                         Edit
                                     </button>
                                 </div>
@@ -50,71 +37,45 @@
                             <!-- Add New Address Card -->
                         </div>
                     </div>
-                    <b-modal
-                        id="modal-address"
-                        title="Login"
-                        ok-only
-                        ok-title="Login"
-                        cancel-title="Close"
-                        hide-footer
-                        hide-header
-                        size="lg"
-                        centered
-                        ref="my-modal"
-                    >
+                    <b-modal id="modal-address" title="Login" ok-only ok-title="Login" cancel-title="Close" hide-footer
+                        hide-header size="lg" centered ref="my-modal">
                         <b-row>
                             <b-col lg="12" md="12" sm="12">
                                 <div id="gmap"></div>
                             </b-col>
 
                             <div class="d-grid mx-2">
-                                <h3
-                                    class="modal-title"
-                                    style="
+                                <h3 class="modal-title" style="
                                         font-family: Quicksand;
                                         font-weight: 700;
                                         font-size: 20px;
                                         margin-top: 15px;
-                                    "
-                                >
+                                    ">
                                     Enter Address Details
                                 </h3>
 
-                                <p
-                                    class="modal-subtitle"
-                                    style="
+                                <p class="modal-subtitle" style="
                                         font-family: Quicksand;
                                         font-weight: 400;
                                         font-size: 14px;
                                         color: #6b7280;
                                         margin-top: 15px;
-                                    "
-                                >
+                                    ">
                                     Please provide complete address information
                                     for accurate delivery
                                 </p>
 
                                 <div class="d-flex">
-                                    <label class="label_class"
-                                        >Address Type</label
-                                    >
+                                    <label class="label_class">Address Type</label>
                                 </div>
                                 <div class="demo-inline-spacing">
-                                    <b-button
-                                        v-ripple.400="
-                                            'rgba(113, 102, 240, 0.15)'
-                                        "
-                                        :variant="
-                                            addressType.value == address.type
-                                                ? 'primary'
-                                                : 'outline-primary'
-                                        "
-                                        v-for="(
-                                            addressType, index
-                                        ) in addressTypes"
-                                        :key="index"
-                                        @click="selecttype(addressType.value)"
-                                    >
+                                    <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'
+                                        " :variant="addressType.value == address.type
+                                            ? 'primary'
+                                            : 'outline-primary'
+                                            " v-for="(
+addressType, index
+                                        ) in addressTypes" :key="index" @click="selecttype(addressType.value)">
                                         {{ addressType.label }}
                                     </b-button>
                                 </div>
@@ -125,149 +86,77 @@
                                     <b-form>
                                         <b-row style="margin-bottom: 20px">
                                             <b-col md="6" xl="6" class="mb-1">
-                                                <b-form-group
-                                                    :label="$t('Name')"
-                                                >
-                                                    <validation-provider
-                                                        #default="{ errors }"
-                                                        rules="required"
-                                                        name="Name"
-                                                    >
-                                                        <b-form-input
-                                                            id="basicInput"
-                                                            placeholder="Name"
-                                                            v-model="
-                                                                address.name
-                                                            "
-                                                        />
-                                                        <small
-                                                            class="text-danger"
-                                                            >{{
-                                                                errors[0]
-                                                            }}</small
-                                                        >
+                                                <b-form-group :label="$t('Name')">
+                                                    <validation-provider #default="{ errors }" rules="required"
+                                                        name="Name">
+                                                        <b-form-input id="basicInput" placeholder="Name" v-model="address.name
+                                                            " />
+                                                        <small class="text-danger">{{
+                                                            errors[0]
+                                                            }}</small>
                                                     </validation-provider>
                                                 </b-form-group>
                                             </b-col>
                                             <b-col md="6" xl="6" class="mb-1">
-                                                <b-form-group
-                                                    :label="
-                                                        $t(
-                                                            'Apartment & Flat No.'
-                                                        )
-                                                    "
-                                                >
-                                                    <validation-provider
-                                                        #default="{ errors }"
-                                                        rules="required"
-                                                        name="Apartment & Flat No."
-                                                    >
-                                                        <b-form-input
-                                                            id="basicInput"
-                                                            placeholder="Apartment & Flat No."
-                                                            v-model="
-                                                                address.flat_no
-                                                            "
-                                                        />
-                                                        <small
-                                                            class="text-danger"
-                                                            >{{
-                                                                errors[0]
-                                                            }}</small
-                                                        >
+                                                <b-form-group :label="$t(
+                                                    'Apartment & Flat No.'
+                                                )
+                                                    ">
+                                                    <validation-provider #default="{ errors }" rules="required"
+                                                        name="Apartment & Flat No.">
+                                                        <b-form-input id="basicInput" placeholder="Apartment & Flat No."
+                                                            v-model="address.flat_no
+                                                                " />
+                                                        <small class="text-danger">{{
+                                                            errors[0]
+                                                            }}</small>
                                                     </validation-provider>
                                                 </b-form-group>
                                             </b-col>
                                             <b-col md="6" xl="6" class="mb-1">
-                                                <b-form-group
-                                                    :label="$t('Landmark')"
-                                                >
-                                                    <validation-provider
-                                                        #default="{ errors }"
-                                                        rules="required"
-                                                        name="Landmark"
-                                                    >
-                                                        <b-form-input
-                                                            id="basicInput"
-                                                            placeholder="Landmark"
-                                                            v-model="
-                                                                address.landmark
-                                                            "
-                                                        />
-                                                        <small
-                                                            class="text-danger"
-                                                            >{{
-                                                                errors[0]
-                                                            }}</small
-                                                        >
+                                                <b-form-group :label="$t('Landmark')">
+                                                    <validation-provider #default="{ errors }" rules="required"
+                                                        name="Landmark">
+                                                        <b-form-input id="basicInput" placeholder="Landmark" v-model="address.landmark
+                                                            " />
+                                                        <small class="text-danger">{{
+                                                            errors[0]
+                                                            }}</small>
                                                     </validation-provider>
                                                 </b-form-group>
                                             </b-col>
                                             <b-col md="6" xl="6" class="mb-1">
-                                                <b-form-group
-                                                    :label="$t('Address')"
-                                                >
-                                                    <validation-provider
-                                                        #default="{ errors }"
-                                                        rules="required"
-                                                        name="Address"
-                                                    >
-                                                        <b-form-input
-                                                            class="ht-1"
-                                                            v-model="rows"
-                                                            placeholder="Enter Address"
-                                                            id="searchMapInput"
-                                                        />
-                                                        <small
-                                                            class="text-danger"
-                                                            >{{
-                                                                errors[0]
-                                                            }}</small
-                                                        >
+                                                <b-form-group :label="$t('Address')">
+                                                    <validation-provider #default="{ errors }" rules="required"
+                                                        name="Address">
+                                                        <b-form-input class="ht-1" v-model="rows"
+                                                            placeholder="Enter Address" id="searchMapInput" />
+                                                        <small class="text-danger">{{
+                                                            errors[0]
+                                                            }}</small>
                                                     </validation-provider>
-                                                    <input
-                                                        type="hidden"
-                                                        id="selectedadd"
-                                                    />
+                                                    <input type="hidden" id="selectedadd" />
                                                 </b-form-group>
                                             </b-col>
                                         </b-row>
-                                        <input
-                                            type="hidden"
-                                            id="latitude"
-                                            name="latitude"
-                                            :value="lat"
-                                        />
-                                        <input
-                                            type="hidden"
-                                            id="longitude"
-                                            name="longitude"
-                                            :value="lng"
-                                        />
+                                        <input type="hidden" id="latitude" name="latitude" :value="lat" />
+                                        <input type="hidden" id="longitude" name="longitude" :value="lng" />
                                         <b-row>
                                             <b-col md="6" xl="6" class="mb-1">
                                             </b-col>
-                                            <b-col
-                                                md="6"
-                                                class="pad0 pt-1 add_model_btn"
-                                            >
-                                                <div class="">
-                                                    <b-button
-                                                        class="f-size-2"
-                                                        v-ripple.400="
-                                                            'rgba(255, 255, 255, 0.15)'
-                                                        "
-                                                        block
-                                                        variant="primary"
-                                                        type="submit"
-                                                        @click.prevent="
+                                            <b-col md="6" class="pad0 pt-1 add_model_btn">
+                                                <!-- <div class="">
+                                                    <b-button class="f-size-2" v-ripple.400="'rgba(255, 255, 255, 0.15)'
+                                                        " block variant="primary" type="submit" @click.prevent="
                                                             add_address
-                                                        "
-                                                    >
+                                                        ">
                                                         {{ $t("Save") }}
                                                         {{ $t("Address") }}
                                                     </b-button>
-                                                </div>
+                                                </div> -->
+                                                <b-button @click.prevent="add_address">
+                                                    {{ isEditing ? "Update Address" : "Save Address" }}
+                                                </b-button>
                                             </b-col>
                                         </b-row>
                                     </b-form>
@@ -381,13 +270,17 @@ export default {
         return {
             rows: localStorage.getItem("address"),
             address: {
+                id: null,
                 flat_no: "",
                 landmark: "",
                 address: "",
                 type: 1,
                 lat: null,
                 lng: null,
+                name: "",
+                selectedAddress: null,
             },
+            isEditing: false,
             userData: store.state["defaults"].username,
             user: {},
             loading: false,
@@ -403,7 +296,7 @@ export default {
     },
     props: {
         prop: {
-            default: () => {},
+            default: () => { },
         },
     },
     filters: {
@@ -452,110 +345,172 @@ export default {
     },
 
     methods: {
-        selecttype(addr_type) {
-            this.address.type = addr_type;
-        },
-        get_address() {
-            var user = store.state["defaults"].username;
-            this.$http.get("/get_delivery_address/" + user.id).then((res) => {
-                this.address = res.data.data;
-                 this.$store.commit("deliware_cart/setAddresses", res.data.data);
-            });
-        },
-        is_loggedinfunc: function () {
-            const stored = localStorage.getItem("webuserData");
-            if (stored === null) {
-                return true;
-            } else {
-                return stored == "true";
-            }
-        },
-        setdefault(id) {
-            var user = JSON.parse(localStorage.getItem("webuserData"));
-            this.$http
-                .get("/set_delivery_address/" + id + "/" + user.id)
-                .then((res) => {
-                    if (res.data.status == true) {
-                        localStorage.setItem("latitude", res.data.address.lat);
-                        localStorage.setItem("longitude", res.data.address.lng);
-                        localStorage.setItem(
-                            "address",
-                            res.data.address.address
-                        );
 
-                           store.commit(
-                            "deliware_cart/setSelectedAddress",
-                           res.data.address.address
-                        );
+        editAddress(addressData) {
+            this.isEditing = true;
+            console.log('Edit clicked', addressData);
 
-                        console.log("ekjhasdhg", res.data.address.address);
-                        this.$router.push({ name: 'my_cart' });
-                        // this.$emit(
-                        //     "clicked-show-detail",
-                        //     res.data.address.address
-                        // );
+            // Populate the address object with the data to edit
+            this.address = {
+                id: addressData.id,
+                flat_no: addressData.flat_no,
+                landmark: addressData.landmark,
+                address: addressData.address,
+                type: addressData.type,
+                lat: addressData.lat,
+                lng: addressData.lng,
+                name: addressData.name,
+            };
+            this.lat = addressData.lat;
+            this.lng = addressData.lng;
+                this.rows = addressData.address;
+            this.$nextTick(() => {
+            this.rows = addressData.address;
+
+            // Safely set hidden inputs
+            const latitudeInput = document.getElementById('latitude');
+            const longitudeInput = document.getElementById('longitude');
+            const selectedAddInput = document.getElementById('selectedadd');
+
+            if (latitudeInput) latitudeInput.value = addressData.lat;
+            if (longitudeInput) longitudeInput.value = addressData.lng;
+            if (selectedAddInput) selectedAddInput.value = addressData.address;
+
+                this.$nextTick(() => {
+            // Show modal first
+            this.$refs['my-modal'].show();
+            
+            // Initialize map after slight delay
+            setTimeout(() => {
+                this.initMapForEdit(addressData.lat, addressData.lng, addressData.address);
+            }, 300);
+        });
+    
+        });
+
+        try {
+            if (!addressData) throw new Error('No address data provided');
+            // ... rest of method (if needed)
+        } catch (error) {
+            console.error('Edit error:', error);
+            this.$toast.error('Failed to load address for editing');
+        }
+       },
+
+            selecttype(addr_type) {
+                this.address.type = addr_type;
+            },
+            get_address() {
+                var user = store.state["defaults"].username;
+                this.$http.get("/get_delivery_address/" + user.id).then((res) => {
+                    this.address = res.data.data;
+                    this.$store.commit("deliware_cart/setAddresses", res.data.data);
+                });
+            },
+            is_loggedinfunc: function () {
+                const stored = localStorage.getItem("webuserData");
+                if (stored === null) {
+                    return true;
+                } else {
+                    return stored == "true";
+                }
+            },
+            setdefault(id) {
+                var user = JSON.parse(localStorage.getItem("webuserData"));
+                this.$http
+                    .get("/set_delivery_address/" + id + "/" + user.id)
+                    .then((res) => {
+                        if (res.data.status == true) {
+                            localStorage.setItem("latitude", res.data.address.lat);
+                            localStorage.setItem("longitude", res.data.address.lng);
+                            localStorage.setItem(
+                                "address",
+                                res.data.address.address
+                            );
+
+                            store.commit(
+                                "deliware_cart/setSelectedAddress",
+                                res.data.address.address
+                            );
+
+                            console.log("ekjhasdhg", res.data.address.address);
+                            this.$router.push({ name: 'my_cart' });
+                            // this.$emit(
+                            //     "clicked-show-detail",
+                            //     res.data.address.address
+                            // );
+                        }
+                    });
+            },
+            add_address() {
+                this.$refs.simpleRules.validate().then((success) => {
+                    if (success) {
+                        var user = JSON.parse(localStorage.getItem("webuserData"));
+
+                        var sc = document.getElementById("selectedadd").value;
+                        this.rows = sc;
+                        var latitude = document.getElementById("latitude").value;
+                        var longitude = document.getElementById("longitude").value;
+                        let city = new FormData();
+                        city.append("address", sc);
+                        city.append("lat", latitude);
+                        city.append("lng", longitude);
+                        city.append("type", this.address.type);
+                        city.append("landmark", this.address.landmark);
+                        city.append("flat_no", this.address.flat_no);
+                        city.append("user_id", user.id);
+
+                        let apiUrl = "/add_delivery_address";
+                        let method = "post";
+                        if (this.isEditing && this.address.id) {
+                            apiUrl = `/update_delivery_address/${this.address.id}`;
+                            method = "post"; // or "put" depending on your API
+                            formData.append("_method", "PUT"); // if using Laravel
+                        }
+
+                        this.$http
+                            .post("/add_delivery_address", city)
+                            .then((response) => {
+                                if (response.data.status == true) {
+                                    this.$toast({
+                                        component: ToastificationContent,
+                                        position: "bottom-right",
+                                        props: {
+                                            title: response.data.message,
+                                            icon: "CoffeeIcon",
+                                            variant: "success",
+                                        },
+                                    });
+                                    this.$refs["my-modal"].hide();
+                                    this.$http
+                                        .get("/get_delivery_address/" + user.id)
+                                        .then((res) => {
+                                            this.address = res.data.data;
+                                            this.get_address();
+                                            // this.$router.push({ name: 'delivery_address' });
+                                            // this.$emit("clicked-show-detail", sc);
+                                        });
+                                } else {
+                                    this.$toast({
+                                        component: ToastificationContent,
+                                        position: "bottom-right",
+                                        props: {
+                                            title: response.data.message,
+                                            icon: "CoffeeIcon",
+                                            variant: "failure",
+                                        },
+                                    });
+                                }
+                            })
+                            .catch((error) => console.log(error))
+                            .finally(() => (this.loading = false));
                     }
                 });
         },
-        add_address() {
-            this.$refs.simpleRules.validate().then((success) => {
-                if (success) {
-                    var user = JSON.parse(localStorage.getItem("webuserData"));
-
-                    var sc = document.getElementById("selectedadd").value;
-                    this.rows = sc;
-                    var latitude = document.getElementById("latitude").value;
-                    var longitude = document.getElementById("longitude").value;
-                    let city = new FormData();
-                    city.append("address", sc);
-                    city.append("lat", latitude);
-                    city.append("lng", longitude);
-                    city.append("type", this.address.type);
-                    city.append("landmark", this.address.landmark);
-                    city.append("flat_no", this.address.flat_no);
-                    city.append("user_id", user.id);
-
-                    this.$http
-                        .post("/add_delivery_address", city)
-                        .then((response) => {
-                            if (response.data.status == true) {
-                                this.$toast({
-                                    component: ToastificationContent,
-                                    position: "bottom-right",
-                                    props: {
-                                        title: response.data.message,
-                                        icon: "CoffeeIcon",
-                                        variant: "success",
-                                    },
-                                });
-                                this.$refs["my-modal"].hide();
-                                this.$http
-                                    .get("/get_delivery_address/" + user.id)
-                                    .then((res) => {
-                                        this.address = res.data.data;
-                                        this.get_address();
-                                        // this.$router.push({ name: 'delivery_address' });
-                                        // this.$emit("clicked-show-detail", sc);
-                                    });
-                            } else {
-                                this.$toast({
-                                    component: ToastificationContent,
-                                    position: "bottom-right",
-                                    props: {
-                                        title: response.data.message,
-                                        icon: "CoffeeIcon",
-                                        variant: "failure",
-                                    },
-                                });
-                            }
-                        })
-                        .catch((error) => console.log(error))
-                        .finally(() => (this.loading = false));
-                }
-            });
-        },
         showModal() {
             if (localStorage.getItem("webuserData")) {
+                this.isEditing = false;
+                this.resetAddressForm();
                 this.$refs["my-modal"].show();
             } else {
                 this.$toast({
@@ -648,21 +603,21 @@ export default {
                             address = [
                                 (place.address_components[0] &&
                                     place.address_components[0].short_name) ||
-                                    "",
+                                "",
                                 (place.address_components[1] &&
                                     place.address_components[1].short_name) ||
-                                    "",
+                                "",
                                 (place.address_components[2] &&
                                     place.address_components[2].short_name) ||
-                                    "",
+                                "",
                             ].join(" ");
                         }
 
                         infowindow.setContent(
                             "<div><strong>" +
-                                place.name +
-                                "</strong><br>" +
-                                address
+                            place.name +
+                            "</strong><br>" +
+                            address
                         );
                         infowindow.open(map, marker);
                         var geocoder = new google.maps.Geocoder();
@@ -725,9 +680,9 @@ export default {
                                             ).value = currentLongitude;
                                             infowindow.setContent(
                                                 "<div>" +
-                                                    results[0]
-                                                        .formatted_address +
-                                                    "<br>"
+                                                results[0]
+                                                    .formatted_address +
+                                                "<br>"
                                             );
                                             infowindow.open(map, marker);
                                         }
@@ -739,9 +694,25 @@ export default {
                     clearInterval(timer);
                 }
             }, 1000);
+
         },
+        resetAddressForm() {
+            this.address = {
+                id: null,
+                flat_no: "",
+                landmark: "",
+                address: "",
+                type: 1,
+                lat: null,
+                lng: null,
+                name: ""
+            };
+            this.rows = localStorage.getItem("address");
+        },
+
     },
 };
+
 </script>
 
 <style scoped>
@@ -873,6 +844,7 @@ export default {
     transition: all 0.2s ease;
     background-color: #ffffff;
 }
+
 .add-new-card:hover {
     background-color: #f5f5f5;
     border-color: #1976d2;
@@ -1011,6 +983,7 @@ export default {
     gap: 8px;
     flex-wrap: wrap;
 }
+
 .circle-container {
     width: 38px;
     height: 38px;

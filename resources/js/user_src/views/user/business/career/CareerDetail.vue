@@ -1,173 +1,172 @@
 <template>
-  <div class="career-detail">
-    <!-- Loading state -->
-    <div v-if="loading" class="text-center">
-      <b-spinner label="Loading..."></b-spinner>
-    </div>
+    <div class="career-detail" style="margin-top: 150px">
+        <!-- Loading state -->
+        <div v-if="loading" class="text-center">
+            <b-spinner label="Loading..."></b-spinner>
+        </div>
 
-    <!-- Error state -->
-    <div v-else-if="error" class="alert alert-danger">
-      {{ error }}
-    </div>
+        <!-- Error state -->
+        <div v-else-if="error" class="alert alert-danger">
+            {{ error }}
+        </div>
 
-    <!-- Career content -->
-    <div v-else>
-      <b-card no-body>
-        <b-card-body>
-          <h1 class="job-title mb-3">{{ job.job_name }}</h1>
-          <div class="job-meta mb-4">
-            <div class="d-flex align-items-center mb-2">
-              <b-icon icon="calendar" class="mr-2"></b-icon>
-              <small class="text-muted">Posted on {{ formatDate(job.created_at) }}</small>
-            </div>
-            <div class="d-flex align-items-center">
-              <b-icon icon="geo-alt-fill" class="mr-2"></b-icon>
-              <small class="text-muted">{{ job.location_name }}, {{ job.state_name }}</small>
-            </div>
-          </div>
-          
-          <h4 class="mt-4 mb-3">Job Description</h4>
-          <div
-            class="job-content mb-5"
-            v-html="job.job_details"
-          />
-          
-          <!-- Apply Online Form -->
-          <div class="apply-form mt-5">
-            <h3 class="mb-4">Apply Online</h3>
-            <b-alert
-              v-model="showSuccessAlert"
-              variant="success"
-              dismissible
-            >
-              Your application has been submitted successfully!
-            </b-alert>
-            
-            <b-form @submit.prevent="submitApplication">
-              <b-row>
-                <b-col md="6">
-                  <b-form-group
-                    label="Full Name"
-                    label-for="name"
-                  >
-                    <b-form-input
-                      id="name"
-                      v-model="form.name"
-                      :state="nameState"
-                      required
-                    ></b-form-input>
-                    <b-form-invalid-feedback v-if="!nameState">
-                      Name is required
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-                </b-col>
-                
-                <b-col md="6">
-                  <b-form-group
-                    label="Email"
-                    label-for="email"
-                  >
-                    <b-form-input
-                      id="email"
-                      v-model="form.email"
-                      type="email"
-                      :state="emailState"
-                      required
-                    ></b-form-input>
-                    <b-form-invalid-feedback v-if="!emailState">
-                      Please enter a valid email
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-                </b-col>
-                
-                <b-col md="6">
-                  <b-form-group
-                    label="Contact Number"
-                    label-for="contact_number"
-                  >
-                    <b-form-input
-                      id="contact_number"
-                      v-model="form.contact_number"
-                      :state="contactState"
-                      required
-                    ></b-form-input>
-                    <b-form-invalid-feedback v-if="!contactState">
-                      Contact number is required
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-                </b-col>
-                
-                <b-col md="6">
-                  <b-form-group
-                    label="Resume (PDF only, max 5MB)"
-                    label-for="resume"
-                  >
-                    <b-form-file
-                      id="resume"
-                      v-model="form.resume"
-                      :state="resumeState"
-                      accept=".pdf"
-                      placeholder="Choose a file or drop it here..."
-                      drop-placeholder="Drop file here..."
-                      required
-                    ></b-form-file>
-                    <b-form-invalid-feedback v-if="!resumeState">
-                      Please upload a PDF file (max 5MB)
-                    </b-form-invalid-feedback>
-                  </b-form-group>
-                </b-col>
-                
-                <b-col cols="12" class="mt-3">
-                  <b-button
-                    type="submit"
+        <!-- Career content -->
+        <div v-else>
+            <!-- Top summary card (like list view) -->
+            <b-card-body class="custom-card h-100 job-card mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mt-2 mb-2 mb-0">{{ job.job_name }}</h4>
+                    <small class="text-muted">
+                        {{ formatDate(job.created_at) }}
+                    </small>
+                </div>
+                <div class="d-flex align-items-center">
+                    <b-icon icon="geo-alt-fill" class="mr-2"></b-icon>
+                    <span>{{ job.location_name }}</span>
+                </div>
+                <p class="clamp-text-2">
+                    {{ job.job_details }}
+                </p>
+                <b-button
+                    style="width: 22rem"
                     variant="primary"
-                    :disabled="submitting"
-                  >
-                    <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
-                    {{ submitting ? 'Submitting...' : 'Submit Application' }}
-                  </b-button>
-                </b-col>
-              </b-row>
-            </b-form>
-          </div>
-        </b-card-body>
-      </b-card>
+                    :to="{
+                        name: 'career-detail',
+                        params: { id: job.id },
+                    }"
+                    class="mt-auto"
+                >
+                    View Details
+                </b-button>
+            </b-card-body>
 
-      <!-- Back to careers button -->
-      <div class="text-center mt-4">
-        <b-button
-          variant="outline-primary"
-          :to="{ name: 'careers' }"
-        >
-          <b-icon icon="arrow-left" class="mr-1"></b-icon>
-          Back to Careers
-        </b-button>
-      </div>
+            <!-- Full job content, no card -->
+            <div class="mb-5">
+                <h2 style="color: black">{{ job.job_name }}</h2>
+                <div class="text-muted">
+                    {{ job.location_name }}, {{ job.state_name }}
+                </div>
+                <div v-html="job.job_details"></div>
+                <div class="text-muted mt-2">
+                    Posted: {{ formatDate(job.created_at) }}
+                </div>
+            </div>
+
+            <!-- Full-width Apply Online Form -->
+            <div class="mt-5">
+                <h3 class="mb-4">Apply Online</h3>
+                <b-alert
+                    v-model="showSuccessAlert"
+                    variant="success"
+                    dismissible
+                >
+                    Your application has been submitted successfully!
+                </b-alert>
+
+                <b-form @submit.prevent="submitApplication">
+                    <b-row>
+                        <b-col cols="12">
+                            <b-form-group label="Full Name" label-for="name">
+                                <b-form-input
+                                    id="name"
+                                    v-model="form.name"
+                                    :state="nameState"
+                                    required
+                                    class="custom-input"
+                                ></b-form-input>
+                                <b-form-invalid-feedback v-if="!nameState">
+                                    Name is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12">
+                            <b-form-group label="Email" label-for="email">
+                                <b-form-input
+                                    id="email"
+                                    v-model="form.email"
+                                    type="email"
+                                    :state="emailState"
+                                    required
+                                    class="custom-input"
+                                ></b-form-input>
+                                <b-form-invalid-feedback v-if="!emailState">
+                                    Please enter a valid email
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12">
+                            <b-form-group
+                                label="Contact Number"
+                                label-for="contact_number"
+                            >
+                                <b-form-input
+                                    id="contact_number"
+                                    v-model="form.contact_number"
+                                    :state="contactState"
+                                    required
+                                    class="custom-input"
+                                ></b-form-input>
+                                <b-form-invalid-feedback v-if="!contactState">
+                                    Contact number is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12">
+                            <b-form-group
+                                label="Resume (PDF only, max 5MB)"
+                                label-for="resume"
+                            >
+                                <b-form-file
+                                    id="resume"
+                                    v-model="form.resume"
+                                    :state="resumeState"
+                                    accept=".pdf"
+                                    placeholder="Choose a file or drop it here..."
+                                    drop-placeholder="Drop file here..."
+                                    required
+                                    class="custom-input"
+                                ></b-form-file>
+                                <b-form-invalid-feedback v-if="!resumeState">
+                                    Please upload a PDF file (max 5MB)
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col cols="12" class="mt-3 text-right">
+                            <b-button
+                                type="submit"
+                                class="btn-black"
+                                :disabled="submitting"
+                            >
+                                <b-spinner
+                                    small
+                                    v-if="submitting"
+                                    class="mr-1"
+                                ></b-spinner>
+                              Submit
+                            </b-button>
+                        </b-col>
+                    </b-row>
+                </b-form>
+            </div>
+
+            <!-- Back to careers button -->
+            <!-- <div class="text-start mt-4">
+                <b-button variant="outline-primary" :to="{ name: 'careers' }">
+                    <b-icon icon="arrow-left" class="mr-1"></b-icon>
+                    Back to Careers
+                </b-button>
+            </div> -->
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import { ref, computed, onMounted } from '@vue/composition-api'
-import { 
-  BCard, 
-  BCardBody, 
-  BButton, 
-  BSpinner, 
-  BIcon,
-  BForm,
-  BFormGroup,
-  BFormInput,
-  BFormFile,
-  BFormInvalidFeedback,
-  BRow,
-  BCol,
-  BAlert
-} from 'bootstrap-vue'
-import axios from 'axios'
-
-export default {
-  components: {
+import { ref, computed, onMounted } from "@vue/composition-api";
+import {
     BCard,
     BCardBody,
     BButton,
@@ -180,194 +179,239 @@ export default {
     BFormInvalidFeedback,
     BRow,
     BCol,
-    BAlert
-  },
-  props: {
-    id: {
-      type: [String, Number],
-      required: true,
+    BAlert,
+} from "bootstrap-vue";
+import axios from "axios";
+export default {
+    props: ["id"],
+    components: {
+        BCard,
+        BCardBody,
+        BButton,
+        BSpinner,
+        BIcon,
+        BForm,
+        BFormGroup,
+        BFormInput,
+        BFormFile,
+        BFormInvalidFeedback,
+        BRow,
+        BCol,
+        BAlert,
     },
-  },
-  setup(props) {
-    const job = ref({})
-    const loading = ref(true)
-    const error = ref(null)
-    const submitting = ref(false)
-    const showSuccessAlert = ref(false)
-    
-    const form = ref({
-      name: '',
-      email: '',
-      contact_number: '',
-      resume: null,
-      career_job_id: props.id
-    })
-    
-    const nameState = computed(() => {
-      return form.value.name ? true : null
-    })
-    
-    const emailState = computed(() => {
-      if (!form.value.email) return null
-      const re = /^\S+@\S+\.\S+$/
-      return re.test(form.value.email)
-    })
-    
-    const contactState = computed(() => {
-      return form.value.contact_number ? true : null
-    })
-    
-    const resumeState = computed(() => {
-      if (!form.value.resume) return null
-      
-      // Check file type
-      if (form.value.resume.type !== 'application/pdf') {
-        return false
-      }
-      
-      // Check file size (5MB max)
-      if (form.value.resume.size > 5 * 1024 * 1024) {
-        return false
-      }
-      
-      return true
-    })
+    setup(props) {
+        const job = ref({});
+        const loading = ref(true);
+        const error = ref(null);
+        const submitting = ref(false);
+        const showSuccessAlert = ref(false);
 
-    const fetchJob = async () => {
-      try {
-        loading.value = true
-        const response = await axios.get(`/career-jobs/${props.id}`)
-        job.value = response.data
-        loading.value = false
-      } catch (err) {
-        error.value = 'Error loading job: ' + err.message
-        loading.value = false
-        console.error('Error fetching job:', err)
-      }
-    }
+        const form = ref({
+            name: "",
+            email: "",
+            contact_number: "",
+            resume: null,
+            career_job_id: props.id,
+        });
 
-    const submitApplication = async () => {
-      // Validate form
-      if (!nameState.value || !emailState.value || !contactState.value || !resumeState.value) {
-        return
-      }
-      
-      try {
-        submitting.value = true
-        
-        // Create form data for file upload
-        const formData = new FormData()
-        formData.append('name', form.value.name)
-        formData.append('email', form.value.email)
-        formData.append('contact_number', form.value.contact_number)
-        formData.append('attach_resume', form.value.resume)
-        formData.append('career_job_id', props.id)
-        
-        await axios.post('/job-applications', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        
-        // Reset form
-        form.value = {
-          name: '',
-          email: '',
-          contact_number: '',
-          resume: null,
-          career_job_id: props.id
-        }
-        
-        // Show success message
-        showSuccessAlert.value = true
-        
-        // Scroll to top of form
-        window.scrollTo({
-          top: document.querySelector('.apply-form').offsetTop - 100,
-          behavior: 'smooth'
-        })
-        
-        submitting.value = false
-      } catch (err) {
-        error.value = 'Error submitting application: ' + err.message
-        submitting.value = false
-        console.error('Error submitting application:', err)
-      }
-    }
+        const nameState = computed(() => (form.value.name ? true : null));
+        const emailState = computed(() => {
+            if (!form.value.email) return null;
+            const re = /^\S+@\S+\.\S+$/;
+            return re.test(form.value.email);
+        });
+        const contactState = computed(() =>
+            form.value.contact_number ? true : null
+        );
+        const resumeState = computed(() => {
+            if (!form.value.resume) return null;
+            if (form.value.resume.type !== "application/pdf") return false;
+            if (form.value.resume.size > 5 * 1024 * 1024) return false;
+            return true;
+        });
 
-    const formatDate = date => {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString(undefined, options)
-    }
+        const fetchJob = async () => {
+            try {
+                loading.value = true;
+                const response = await axios.get(
+                    `/api/career-jobs/${props.id}`
+                );
+                job.value = response.data.data || response.data; // support both {data: {...}} and {...}
+                loading.value = false;
+            } catch (err) {
+                error.value = "Error loading job: " + err.message;
+                loading.value = false;
+            }
+        };
 
-    onMounted(fetchJob)
+        const submitApplication = async () => {
+            if (
+                !nameState.value ||
+                !emailState.value ||
+                !contactState.value ||
+                !resumeState.value
+            ) {
+                return;
+            }
+            try {
+                submitting.value = true;
+                const formData = new FormData();
+                formData.append("name", form.value.name);
+                formData.append("email", form.value.email);
+                formData.append("contact_number", form.value.contact_number);
+                formData.append("attach_resume", form.value.resume);
+                formData.append("career_job_id", props.id);
 
-    return {
-      job,
-      loading,
-      error,
-      formatDate,
-      form,
-      nameState,
-      emailState,
-      contactState,
-      resumeState,
-      submitting,
-      submitApplication,
-      showSuccessAlert
-    }
-  },
-}
+                await axios.post("/api/job-applications", formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+
+                form.value = {
+                    name: "",
+                    email: "",
+                    contact_number: "",
+                    resume: null,
+                    career_job_id: props.id,
+                };
+                showSuccessAlert.value = true;
+                window.scrollTo({
+                    top: document.querySelector(".apply-form").offsetTop - 100,
+                    behavior: "smooth",
+                });
+                submitting.value = false;
+            } catch (err) {
+                error.value = "Error submitting application: " + err.message;
+                submitting.value = false;
+            }
+        };
+
+        const formatDate = (date) => {
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            return new Date(date).toLocaleDateString(undefined, options);
+        };
+
+        onMounted(fetchJob);
+
+        return {
+            job,
+            loading,
+            error,
+            formatDate,
+            form,
+            nameState,
+            emailState,
+            contactState,
+            resumeState,
+            submitting,
+            submitApplication,
+            showSuccessAlert,
+        };
+    },
+};
 </script>
 
 <style lang="scss" scoped>
+.btn-black {
+    background-color: #000 !important;
+    border-color: #000 !important;
+    color: #fff !important;
+}
 .career-detail {
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+    padding: 2rem;
 }
 
 .job-title {
-  font-size: 2.5rem;
-  font-weight: 700;
+    font-size: 2.5rem;
+    font-weight: 700;
 }
 
 .job-meta {
-  color: #6c757d;
+    color: #6c757d;
 }
 
 .job-content {
-  line-height: 1.8;
-  font-size: 1.1rem;
-  
-  ::v-deep img {
-    max-width: 100%;
-    height: auto;
-    margin: 1.5rem 0;
-  }
-  
-  ::v-deep h2, ::v-deep h3, ::v-deep h4 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  ::v-deep p {
-    margin-bottom: 1.5rem;
-  }
-  
-  ::v-deep ul, ::v-deep ol {
-    margin-bottom: 1.5rem;
-    padding-left: 2rem;
-  }
-  
-  ::v-deep li {
-    margin-bottom: 0.5rem;
-  }
+    line-height: 1.8;
+    font-size: 1.1rem;
+
+    ::v-deep img {
+        max-width: 100%;
+        height: auto;
+        margin: 1.5rem 0;
+    }
+
+    ::v-deep h2,
+    ::v-deep h3,
+    ::v-deep h4 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    ::v-deep p {
+        margin-bottom: 1.5rem;
+    }
+
+    ::v-deep ul,
+    ::v-deep ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    ::v-deep li {
+        margin-bottom: 0.5rem;
+    }
 }
 
 .apply-form {
-  background-color: #f8f9fa;
-  padding: 2rem;
-  border-radius: 0.5rem;
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+.custom-select-border {
+    border: 3px solid #26323870 !important;
+    box-shadow: none;
+    border-radius: 8px;
+}
+.custom-card {
+    border: 1.5px solid #afafaf70 !important;
+    border-radius: 24px;
+    height: 10rem;
+}
+.featured-job {
+    .featured-img {
+        height: 100%;
+        background-color: #f8f9fa;
+    }
+}
+.job-card {
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Clamp to 2 lines in summary card */
+.clamp-text-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.custom-input {
+      padding: 0.438rem 1rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1.5px solid #26323870 !important;
+    /* border-radius: 8px; */
+    -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.custom-file-label {
+    padding: 0.438rem 1rem;
+    background-color: #fff;
+    /* border: 1px solid #d8d6de; */
+    border-radius: 0.357rem;
 }
 </style>

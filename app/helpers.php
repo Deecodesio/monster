@@ -1332,6 +1332,7 @@ function featured($restaurant_id)
             'food_list.secondary_description',
             'food_list.description',
             'food_list.category_id',
+            'food_list.business_category_id',
             'food_list.is_veg',
             'pricing.tax as item_tax', // district-based tax
             'menu.menu_name',
@@ -1473,6 +1474,7 @@ function recent($restaurant_id)
             'food_list.secondary_description',
             'food_list.description',
             'food_list.category_id',
+            'food_list.business_category_id',
             'food_list.is_veg',
             'pricing.tax as item_tax', // district-based tax
             'menu.menu_name',
@@ -1877,6 +1879,7 @@ function get_subcat_products($res_id, $id)
             'food_list.secondary_description',
             'food_list.description',
             'food_list.category_id',
+            'food_list.business_category_id',
             'food_list.is_veg',
             'pricing.tax as item_tax', // district-based tax
             'menu.menu_name',

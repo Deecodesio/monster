@@ -3,19 +3,11 @@
         <div class="shope-container mb-5 text-center" v-if="shopList.length">
             <h3 class="shope-title mx-3">Our Shops</h3>
             <div class="shop-grid">
-                <!-- <div
+                <div
                     class="shop-box"
                     v-for="shop in shopList"
                     :key="shop.id"
-                    @click="goToCity(shop.id)"
-                    style="cursor: pointer"
-                >
-                    {{ shop.city }}
-                </div> -->
-                 <div
-                    class="shop-box"
-                    v-for="shop in shopList"
-                    :key="shop.id"
+                    @click="goToCity(shop.id, shop.city)"
                     style="cursor: pointer"
                 >
                     {{ shop.city }}
@@ -50,14 +42,28 @@ export default {
             });
     },
     methods: {
-        goToCity(city) {
-            const target = { name: "StoreList", params: { city } };
-            if (
-                this.$route.name !== "StoreList" ||
-                this.$route.params.city !== city
-            ) {
-                this.$router.push(target);
-            }
+        goToCity(cityId, cityName) {
+            this.$http.get("/restaurant_by_city/" + cityId).then((response) => {
+                const data = response.data.data;
+                if (Array.isArray(data) && data.length > 0) {
+                    this.$router.push({
+                        name: "StoreList",
+                        params: { city: cityId },
+                        query: { name: cityName },
+                    });
+                } else {
+                    this.$bvToast &&
+                        this.$bvToast.toast(
+                            "No restaurants found for this city.",
+                            {
+                                position: "bottom-right",
+                                title: "Info",
+                                variant: "danger",
+                                solid: true,
+                            }
+                        );
+                }
+            });
         },
     },
 };

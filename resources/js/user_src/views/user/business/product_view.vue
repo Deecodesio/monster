@@ -21,7 +21,7 @@
                 <b-breadcrumb-item @click="nav_to(1)">
                     <span class="bc_active bc_home">{{
                         product.category_name
-                    }}</span>
+                        }}</span>
                 </b-breadcrumb-item>
                 <!-- <b-breadcrumb-item @click="nav_to(2)">
                     <span class="bc_active bc_home"> {{ product.sub_category_name }}</span>
@@ -41,7 +41,7 @@
                         <h4 class="mt-1">{{ $t("Product Description") }}</h4>
                         <b-card-text class="text">{{
                             product.description
-                        }}</b-card-text>
+                            }}</b-card-text>
                         <h4 v-if="faq.length" class="mt-1">
                             {{ $t("Frequently Asked Question") }}
                         </h4>
@@ -174,12 +174,12 @@ data4, index4
                                                                 ga2.id
                                                                 " :data-name="ga2.name
                                                                     " :data-price="ga2.price
-                                                                    " @change="
-                                                                    validate_sizeaddons(
-                                                                        ga1,
-                                                                        ga2
-                                                                    )
-                                                                    " :value="ga2.id">
+                                                                        " @change="
+                                                                        validate_sizeaddons(
+                                                                            ga1,
+                                                                            ga2
+                                                                        )
+                                                                        " :value="ga2.id">
                                                         </b-form-checkbox>
                                                     </td>
                                                     <td ALIGN="left" width="55%">
@@ -228,7 +228,7 @@ data4, index4
                                                                 ga2.id
                                                                 " :data-name="ga2.name
                                                                     " :data-price="ga2.price
-                                                                    " :value="ga2.id">
+                                                                        " :value="ga2.id">
                                                         </b-form-radio>
                                                     </td>
                                                     <td ALIGN="left" width="55%">
@@ -297,7 +297,7 @@ data4, index4
                                                                 )
                                                                 " :data-name="ga2.name
                                                                     " :data-price="ga2.price
-                                                                    " :value="ga2.id">
+                                                                        " :value="ga2.id">
                                                             <feather-icon icon="PlusIcon" class="ico-color" size="15" />
                                                         </b-button>
                                                         <input type="hidden" :id="'hidden_' +
@@ -330,8 +330,8 @@ data4, index4
                                                                         ga2.id
                                                                         " :data-name="ga2.name
                                                                             " :data-price="ga2.price
-                                                                            " :data-value="ga2.id
-                                                                            " />
+                                                                                " :data-value="ga2.id
+                                                                                " />
                                                                 <span class="plus" :id="'size_plus' +
                                                                     ga1.id +
                                                                     '_' +
@@ -506,13 +506,13 @@ data8, index8
                                                                         data8.id
                                                                         " :data-name="data8.name
                                                                             " :data-price="data8.price
-                                                                            " @change="
-                                                                            validate_sizeaddons(
-                                                                                data7,
-                                                                                data8
-                                                                            )
-                                                                            " :value="data8.id
-                                                                            ">
+                                                                                " @change="
+                                                                                validate_sizeaddons(
+                                                                                    data7,
+                                                                                    data8
+                                                                                )
+                                                                                " :value="data8.id
+                                                                                ">
                                                                 </b-form-checkbox>
                                                             </td>
                                                             <td ALIGN="left" width="55%">
@@ -572,8 +572,8 @@ data8, index8
                                                                         data8.id
                                                                         " :data-name="data8.name
                                                                             " :data-price="data8.price
-                                                                            " :value="data8.id
-                                                                            ">
+                                                                                " :value="data8.id
+                                                                                ">
                                                                 </b-form-radio>
                                                             </td>
                                                             <td ALIGN="left" width="55%">
@@ -665,8 +665,8 @@ data8, index8
                                                                         )
                                                                         " :data-name="data8.name
                                                                             " :data-price="data8.price
-                                                                            " :value="data8.id
-                                                                            ">
+                                                                                " :value="data8.id
+                                                                                ">
                                                                     <feather-icon icon="PlusIcon" class="ico-color"
                                                                         size="15" />
                                                                 </b-button>
@@ -700,8 +700,8 @@ data8, index8
                                                                                 data8.id
                                                                                 " :data-name="data8.name
                                                                                     " :data-price="data8.price
-                                                                                    " :data-value="data8.id
-                                                                                    " />
+                                                                                        " :data-value="data8.id
+                                                                                        " />
                                                                         <span class="plus" :id="'size_plus' +
                                                                             data7.id +
                                                                             '_' +
@@ -842,12 +842,12 @@ d6, i6
                                                                 ga2.id
                                                                 " :data-name="ga2.name
                                                                     " :data-price="ga2.price
-                                                                    " @change="
-                                                                    validate_sizeaddons(
-                                                                        ga1,
-                                                                        ga2
-                                                                    )
-                                                                    " :value="ga2.id">
+                                                                        " @change="
+                                                                        validate_sizeaddons(
+                                                                            ga1,
+                                                                            ga2
+                                                                        )
+                                                                        " :value="ga2.id">
                                                         </b-form-checkbox>
                                                     </td>
                                                     <td ALIGN="left" width="55%">
@@ -896,7 +896,7 @@ d6, i6
                                                                 ga2.id
                                                                 " :data-name="ga2.name
                                                                     " :data-price="ga2.price
-                                                                    " :value="ga2.id">
+                                                                        " :value="ga2.id">
                                                         </b-form-radio>
                                                     </td>
                                                     <td ALIGN="left" width="55%">
@@ -968,7 +968,7 @@ d6, i6
                                                                 )
                                                                 " :data-name="ga2.name
                                                                     " :data-price="ga2.price
-                                                                    " :value="ga2.id">
+                                                                        " :value="ga2.id">
                                                             <feather-icon icon="PlusIcon" class="ico-color" size="15" />
                                                         </b-button>
                                                         <input type="hidden" :id="'hidden_' +
@@ -1001,8 +1001,8 @@ d6, i6
                                                                         ga2.id
                                                                         " :data-name="ga2.name
                                                                             " :data-price="ga2.price
-                                                                            " :data-value="ga2.id
-                                                                            " />
+                                                                                " :data-value="ga2.id
+                                                                                " />
                                                                 <span class="plus" :id="'size_plus' +
                                                                     ga1.id +
                                                                     '_' +
@@ -1233,8 +1233,18 @@ data4, index4
                         </div>
 
                         <div class="d-flex justify-content-middle pr-5" style="margin-top: 30px">
-                            <img class="rounded-lg" src="/uploads/7sct.png" alt="Flat 20% Off" width="570"
-                                height="132" />
+                            <!-- <img class="rounded-lg" src="/uploads/7sct.png" alt="Flat 20% Off" width="570"
+                                height="132" /> -->
+                            <swiper class="swiper-multiple" :options="swiperOptions"
+                                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" style="width: 1000px; height: 175px;">
+                                <swiper-slide v-for="(data, index) in rows" :key="index">
+                                    <div class="img-wrapper" style="width: 100%; height: fit-content;">
+                                        <img class="top_ban_img" :src="data.banner_image" alt="banner" />
+                                    </div>
+                                </swiper-slide>
+
+                                <!-- <div slot="pagination" class="swiper-pagination mt-5"></div> -->
+                            </swiper>
                         </div>
                         <!-- <div v-if="table.length">
                         <div v-for="(td, index_td) in table" :key="index_td">
@@ -1257,7 +1267,7 @@ data4, index4
             </b-row>
             <div>
                 <h2 style="text-align: center;margin-top: 15px; margin-bottom: 10px;">Top Selling Products</h2>
-                 <div class="hrLine"></div>
+                <div class="hrLine"></div>
             </div>
             <featured :prop="featured" :business_id="business_id" :isopen="isopen" :title="title2"
                 v-if="featured.length" />
@@ -1299,12 +1309,17 @@ import check_cart from "./cartfunctions.js";
 import AppCollapse from "@core/components/app-collapse/AppCollapse.vue";
 import AppCollapseItem from "@core/components/app-collapse/AppCollapseItem.vue";
 import { BBreadcrumb, BBreadcrumbItem } from "bootstrap-vue";
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/css/swiper.css";
 
 export default {
     directives: {
         Ripple,
     },
     components: {
+        Swiper,
+        SwiperSlide,
+        BCard,
         BCard,
         BCardBody,
         BRow,
@@ -1329,6 +1344,32 @@ export default {
     },
     data() {
         return {
+            isempty: false,
+            swiperOptions: {
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                    },
+                    760: {
+                        slidesPerView: 1,
+                        spaceBetween: 30,
+                    },
+
+                    1200: {
+                        slidesPerView: 1,
+                        spaceBetween: 30,
+                    },
+                },
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: true,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+            },
             product: {
                 image: [],
                 food_quantity: [],
@@ -1416,9 +1457,11 @@ export default {
     },
 
     created() {
+        var lat = localStorage.getItem("latitude");
+        var lng = localStorage.getItem("longitude");
+        this.isempty = true;
         this.get_product_details();
         this.loadcart();
-
         this.$http
             .get(
                 "/single_restaurant_products/" +
@@ -1440,6 +1483,31 @@ export default {
         ...open_plus,
         ...removefromcart,
         ...loadcart,
+        goto(data) {
+            console.log(data);
+            if (data.redirect_type != 0) {
+                if (data.redirect_type == 1) {
+                    var str = data.redirect_name;
+                    str.replace(/\-/g, "");
+                    var str2 = str.replace(/[^A-Z0-9]+/gi, "-").toLowerCase();
+
+                    this.$router.push({
+                        name: "cat_list",
+                        params: { slug: data.redirect_to },
+                    });
+                }
+                if (data.redirect_type == 2) {
+                    var str = data.redirect_name;
+                    str.replace(/\-/g, "");
+                    var str2 = str.replace(/[^A-Z0-9]+/gi, "-").toLowerCase();
+
+                    this.$router.push({
+                        name: "product",
+                        params: { id: data.redirect_to, name: str2 },
+                    });
+                }
+            }
+        },
         nav_to(ty) {
             if (ty == 1) {
                 var str = this.product.category_name;
@@ -1461,9 +1529,13 @@ export default {
             store.commit("deliware_cart/UPDATE_FOOTER", false);
 
             const productSlug = this.$route.params.slug;
+            const categoryId = this.$route.params.category_id;
             const productId = productSlug.substring(
                 productSlug.lastIndexOf("-") + 1
             );
+
+            console.log("adjkashjks");
+            console.log(categoryId);
 
             // this.$http.get('/get_product_details/' + productId)
             this.$http
@@ -1475,11 +1547,17 @@ export default {
                     "/" +
                     productId +
                     "/" +
-                    this.business_id
+                    this.business_id +
+                    "/" +
+                    categoryId
                 )
                 .then((res) => {
-                    this.product = res.data.product;
 
+                    this.product = res.data.product;
+                    this.rows = res.data.product_banner;
+                    console.log('res.data.product_banner');
+                    console.log(res.data);
+                    console.log(this.rows);
                     this.img_to_show = [];
                     if (this.product.image.length > 0) {
                         for (var i = 0; i < this.product.image.length; i++) {
@@ -1574,6 +1652,8 @@ input[type="radio"] {
     width: 580px !important;
     height: 358px !important;
     margin-right: 22rem !important;
+    object-fit: cover;
+  border-radius: 8px;
 }
 
 .text {
@@ -1604,6 +1684,7 @@ input[type="radio"] {
     padding: 10px;
     box-sizing: border-box;
 }
+
 .hrLine {
     max-width: 75px;
     margin-top: 5px;
@@ -1613,5 +1694,37 @@ input[type="radio"] {
     border: 3px solid #ffce00;
     border-radius: 5px;
     background-color: #ffce00;
+}
+
+.rounded {
+    border-radius: 2px !important;
+}
+
+/* .rounded3 {
+    cursor: pointer;
+} */
+
+.pt-6 {
+    padding-top: 0px !important;
+}
+
+.swiper-pagination {
+    width: 100% !important;
+    text-align: center !important;
+    display: block !important;
+    position: relative !important;
+}
+
+.img-wrapper {
+    height: 280px;
+    border-radius: 22px;
+}
+
+.top_ban_img {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+    border-radius: 22px;
+    display: block;
 }
 </style>

@@ -4640,6 +4640,7 @@ class RestaurantController extends BaseController
     public function get_product_details(Request $request)
     {
         $business_id = $request->business_id;
+        $category_id = $request->category_id;
         $source_lat = $request->lat;
         $source_lng = $request->lng;
 
@@ -4663,6 +4664,19 @@ class RestaurantController extends BaseController
         $specs = DB::table('product_specification')->where('product_id', $product_id)->get();
         $faq = DB::table('product_faq')->where('product_id', $product_id)->get();
         $tables = DB::table('table_type')->where('product_id', $product_id)->get();
+
+        $product_banner = DB::table('offers_banner')
+			->leftjoin('restaurants', 'restaurants.id', '=', 'offers_banner.restaurant_id')
+			->leftjoin('add_city', 'add_city.id', '=', 'offers_banner.city_id')
+			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.banner_type as banner_type', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id')
+			->where('offers_banner.banner_type', 2)
+			->where('offers_banner.category', $category_id)
+			->get();
+
+		foreach ($product_banner as $d) {
+			$d->banner_image = BASE_URL . UPLOADS_PATH . $d->banner_image;
+		}
+
         $table = [];
         foreach ($tables as $td) {
             $rows = DB::table('product_specification')->where('table_type', $td->id)->get();
@@ -4681,6 +4695,7 @@ class RestaurantController extends BaseController
         $response_array = [
             'status' => true,
             'product' => $product,
+            'product_banner' => $product_banner,
             'restaurant' => $rest_details,
             'specs' => $specs,
             'faq' => $faq,

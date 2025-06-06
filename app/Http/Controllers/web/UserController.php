@@ -1293,9 +1293,7 @@ class UserController extends BaseController
         }
     }
 
-    public function test_pk(Request $request)
-    {
-    }
+    public function test_pk(Request $request) {}
 
     public function storeLocation2Session(Request $request)
     {
@@ -4553,7 +4551,7 @@ class UserController extends BaseController
 
     public function get_settings()
     {
-         $settings = DB::table('settings')->where('status', 1)->get();
+        $settings = DB::table('settings')->where('status', 1)->get();
 
         return response()->json(['status' => true, 'message' => 'Success', 'setting' => $settings], 200);
     }
@@ -5354,5 +5352,28 @@ class UserController extends BaseController
         $status = true;
         $response_Array = json_encode(['order_status' => $order_status, 'status' => $status, 'rider_id' => $rider_id, 'tracking_detail' => $tracking_detail, 'locations' => $locations, 'center' => $center, 'user' => $user]);
         return $response_Array;
+    }
+
+    public function categoryWiseProductList($categoryid)
+    {
+        $productList = DB::table('food_list')
+            ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+            ->where('food_list.business_category_id', $categoryid) // changed condition
+            ->select(
+                'food_list.id as food_id',
+                'business_category.category_name as business_name',
+                'food_list.*',
+                'food_list.status as f_status',
+                'food_list.out_of_stock as stock_status'
+            )
+            ->get();
+
+
+        $status = $productList->isNotEmpty(); // returns true if there’s any record
+
+        return response()->json([
+            'status' => $status,
+            'data' => $productList,
+        ]);
     }
 }

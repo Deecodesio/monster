@@ -124,7 +124,7 @@ $font-family-sans-serif: 'Montserrat', Helvetica, Arial, serif !default;
 $font-family-monospace: 'Montserrat', Helvetica, Arial, serif !default;
 
 // stylelint-enable value-keyword-case
-$font-size-base: 1rem !default;
+$font-size-base: 1.15rem !default; // 1rem !default;
 $font-size-lg: ceil($font-size-base * 1.25) !default;
 $font-size-sm: ceil($font-size-base * 0.85) !default;
 
@@ -151,7 +151,7 @@ $display4-weight: $font-weight-normal !default;
 $lead-font-size: $font-size-base * 1.14 !default;
 $lead-font-weight: $font-weight-normal !default;
 
-$small-font-size: 0.857rem !default;
+$small-font-size: 0.986rem !default; // 0.857rem !default;
 
 $text-muted: #b9b9c3 !default;
 $hr-border-color: $border-color !default;
@@ -173,7 +173,7 @@ $table-head-color: $headings-color !default;
 $table-dark-bg: $dark !default;
 $table-dark-border-color: #404040 !default;
 
-$table-th-font-size: 0.857rem !default; // custom
+$table-th-font-size: 0.986rem !default; // 0.857rem !default; // custom
 
 // Buttons + Forms
 $btn-padding-y: 0.786rem !default;
@@ -197,12 +197,12 @@ $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, bo
     box-shadow 0.15s ease-in-out, background 0s, border 0s !default;
 
 // Forms
-$custom-control-border-color: #d8d6de;
+$custom-control-border-color: #FF006B; // #d8d6de;
 $label-margin-bottom: 0.2857rem !default;
 
 $input-padding-y: 0.438rem !default;
 $input-padding-x: 1rem !default;
-$input-font-size: 1rem !default;
+$input-font-size: 1.15rem !default;
 $input-line-height: $line-height-base !default;
 
 $input-padding-y-sm: 0.188rem !default;
@@ -325,7 +325,7 @@ $pagination-disabled-color: $text-muted !default;
 $pagination-disabled-bg: #f3f2f7 !default;
 
 $pagination-font-size-lg: 1.14rem !default; // custom
-$pagination-font-size-sm: 0.857rem !default; // custom
+$pagination-font-size-sm: 0.986rem !default; // 0.857rem !default; // custom
 
 // Cards
 $card-spacer-y: 1.5rem !default;
@@ -370,14 +370,14 @@ $floating-nav-margin: 1.3rem;
 $tooltip-bg: #323232 !default;
 $tooltip-padding-y: 0.4rem !default;
 $tooltip-padding-x: 0.775rem !default;
-$tooltip-font-size: 0.857rem !default;
+$tooltip-font-size:  0.986rem !default; //0.857rem !default;
 $tooltip-border-radius: 0.358rem !default;
 $tooltip-opacity: 1 !default;
 $tooltip-max-width: 220px !default;
 
 // Popovers
 
-$popover-font-size: 1rem !default;
+$popover-font-size: 1.15rem !default;
 $popover-border-width: 0 !default;
 $popover-border-radius: 0.358rem !default;
 $popover-border-color: $border-color !default;
@@ -393,7 +393,7 @@ $popover-header-padding-x: 1.21rem !default;
 $toast-max-width: 380px !default;
 $toast-padding-x: 1.14rem !default;
 $toast-padding-y: 0.15rem !default;
-$toast-font-size: 0.857rem !default;
+$toast-font-size: 0.986rem !default; //  0.857rem !default;
 $toast-color: $body-color !default;
 $toast-border-width: 0 !default;
 $toast-border-radius: 0.286rem !default;

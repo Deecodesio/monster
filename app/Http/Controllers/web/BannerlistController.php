@@ -17,7 +17,8 @@ class BannerlistController extends BaseController
 		$data = DB::table('offers_banner')
 			->leftjoin('restaurants', 'restaurants.id', '=', 'offers_banner.restaurant_id')
 			->leftjoin('add_city', 'add_city.id', '=', 'offers_banner.city_id')
-			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id')
+			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.banner_type as banner_type', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id')
+			->where('offers_banner.banner_type', 1)
 			->get();
 
 		foreach ($data as $d) {

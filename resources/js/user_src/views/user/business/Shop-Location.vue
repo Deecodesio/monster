@@ -1,71 +1,129 @@
 <template>
     <div>
-        <div class="store-wrapper">
-            <div id="gmap"></div>
-            <div class="px-3 py5" v-if="restaurantCities.length">
-                <h4>Restaurant Cities</h4>
-                <ul>
-                    <li v-for="city in restaurantCities" :key="city.id">
-                        {{ city.city }}
-                    </li>
-                </ul>
+        <div class="px-3" style="margin-top: 10rem">
+            <div class="store-name">Location: {{ $route.query.name }}</div>
+            <div
+                class="store-grid"
+                :class="{ 'single-card': restaurantCities.length === 1 }"
+                v-if="restaurantCities.length"
+            >
+                <div
+                    v-for="city in restaurantCities"
+                    :key="city.id"
+                    class="store-card"
+                >
+                    <div class="store-name mt-4">{{ city.name }}</div>
+                    <div class="store-address">{{ city.address }}</div>
+                    <div
+                        :id="`gmap-${city.id}`"
+                        style="
+                            height: 322px;
+                            width: 620.44px;
+                            margin-bottom: 1rem;
+                        "
+                    ></div>
+                </div>
             </div>
         </div>
-        <div class="container-fluid" style="padding-top: 3rem; padding-left: 0">
+        <div class="mt-5" style="padding-top: 0% ; padding-left: 0%">
             <Ourshops />
         </div>
     </div>
 </template>
 
 <script>
+import { LMap, LTileLayer, LCircle } from "vue2-leaflet";
 import Ourshops from "./ourshops.vue";
 export default {
-    components: {
-        Ourshops,
-    },
+    components: { LMap, LTileLayer, LCircle, Ourshops },
     name: "StoreList",
     props: ["city"],
     data() {
         return {
             restaurantCities: [],
-            url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            zoom: 8,
-            center: [13.08268, 80.270721],
-            circle: {
-                center: [13.08268, 80.270721],
-                radius: 4500,
-                color: "#EA5455",
-            },
         };
     },
     created() {
-        this.$http.get("/restaurant_by_city" + this.$route.params.city).then((response) => {
-            this.restaurantCities = response.data;
-            console.log("Restaurant Cities", response.data);
-        });
+        this.$http
+            .get("/restaurant_by_city/" + this.$route.params.city)
+            .then((response) => {
+                this.restaurantCities = response.data.data;
+                setTimeout(() => {
+                    this.restaurantCities.forEach((city) => {
+                        // Parse lat/lng as numbers
+                        const lat = parseFloat(city.lat);
+                        const lng = parseFloat(city.lng);
+
+                        // Create the map
+                        const map = new google.maps.Map(
+                            document.getElementById(`gmap-${city.id}`),
+                            {
+                                zoom: 15,
+                                center: { lat, lng },
+                                styles: [
+                                    {
+                                        featureType: "administrative",
+                                        elementType: "geometry",
+                                        stylers: [{ visibility: "off" }],
+                                    },
+                                    {
+                                        featureType: "poi",
+                                        stylers: [{ visibility: "off" }],
+                                    },
+                                    {
+                                        featureType: "road",
+                                        stylers: [{ visibility: "off" }],
+                                    },
+                                    {
+                                        featureType: "road",
+                                        elementType: "labels.icon",
+                                        stylers: [{ visibility: "off" }],
+                                    },
+                                    {
+                                        featureType: "transit",
+                                        stylers: [{ visibility: "off" }],
+                                    },
+                                ],
+                            }
+                        );
+
+                        // Add a marker
+                        var marker = new google.maps.Marker({
+                            position: { lat, lng },
+                            map: map,
+                            icon: "/rest-pin2.svg", // or your custom icon
+                        });
+                        var content =
+                            ' <i class="fa-solid fa-motorcycle"></i> ' +
+                            city.name;
+                        var infowindow = new google.maps.InfoWindow();
+                        infowindow.setContent(content);
+                        infowindow.open(map, marker);
+
+                        google.maps.event.addListener(
+                            marker,
+                            "click",
+                            (function (marker, i) {
+                                return function () {
+                                    var content = "<b>" + city.name + "</b>";
+                                    var infowindow =
+                                        new google.maps.InfoWindow();
+                                    infowindow.setContent(content);
+                                    infowindow.open(map, marker);
+                                };
+                            })(marker)
+                        );
+                    });
+                }, 100); // slight delay to ensure DOM is ready
+            });
     },
     mounted() {
-        this.track_order();
-        this.initMap();
-        this.initTrHeight();
-        this.importAll(
-            require.context("@/assets/images/banner/", true, /\.jpg$/)
-        );
-    },
-    destroyed() {
-        window.removeEventListener("resize", this.initTrHeight);
+        this.$nextTick(() => {});
     },
 };
 </script>
 
 <style scoped>
-.store-wrapper {
-    padding: 13rem 24px;
-    background: #fff;
-    /* min-height: 100vh; */
-    margin-left: 2rem;
-}
-
 .location {
     font-weight: 600;
     margin-bottom: 28px;
@@ -77,7 +135,6 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 32px;
-    padding-top: 5rem;
 }
 
 .store-card {
@@ -90,18 +147,19 @@ export default {
 }
 
 .store-name {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    margin-top: 0;
-    color: #111;
+    font-size: 25px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 100%;
 }
 
 .store-address {
-    font-size: 15px;
-    color: #222;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 400;
+    min-height: 3em;
+    margin-top: 12px;
     margin-bottom: 12px;
-    margin-top: 0;
 }
 
 .map-img {
@@ -112,6 +170,18 @@ export default {
     margin-top: 0;
     margin-bottom: 0;
     display: block;
+}
+/* Goggle map */
+.vue2leaflet-map {
+    &.leaflet-container {
+        height: 350px;
+    }
+}
+</style>
+<style scoped>
+#gmap {
+    height: 400px;
+    width: 40%;
 }
 
 @media (max-width: 900px) {

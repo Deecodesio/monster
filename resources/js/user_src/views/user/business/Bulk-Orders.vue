@@ -1,235 +1,156 @@
 <template>
     <div>
-        <div class="mt-5 mx-3 py-6">
-            <top_banners />
-            <h4 class="text-center mb-4" style="font-size: x-large">
-                Bulk Orders
-            </h4>
-            <div class="container mt-5 form-box">
-                <!-- <h5 class="text-center mb-4" style="font-weight: bolder;">SUBMIT FOR BULK ORDER</h5> -->
+      <div class="mt-5 mx-3 py-6">
+        <top_banners /></div>
+        <h4 class="text-center mb-4" style="font-size: x-large">
+            Bulk Orders
+        </h4>
+        <div id="apply-form" class="apply-form mt-5">
+            <b-form @submit.prevent="submitApplication">
+                <b-card>
+                    <b-row>
+                        <b-col md="6">
+                            <b-form-group label="Full Name" label-for="name">
+                                <b-form-input id="name" v-model="form.name" :state="nameState" required></b-form-input>
+                                <b-form-invalid-feedback v-if="!nameState">
+                                    Name is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
 
-                <form @submit.prevent="handleSubmit">
-                    <!-- Name -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label required"
-                            >Name</label
-                        >
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.name"
-                                type="text"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
+                        <b-col md="6">
+                            <b-form-group label="Email" label-for="email_id">
+                                <b-form-input id="email_id" v-model="form.email_id" type="email" :state="emailState"
+                                    required></b-form-input>
+                                <b-form-invalid-feedback v-if="!emailState">
+                                    Please enter a valid email
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
 
-                    <!-- State -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label required"
-                            >State</label
-                        >
-                        <div class="col-sm-9">
-                            <select v-model="form.state" class="form-control">
-                                <option disabled value="">Select State</option>
-                                <option
-                                    v-for="(state, index) in states"
-                                    :key="index"
-                                    :value="state"
+                        <b-col md="6">
+                            <b-form-group label="Primary Phone Number" label-for="phone_1">
+                                <b-form-input id="phone_1" v-model="form.phone_1" :state="phone1State"
+                                    required></b-form-input>
+                                <b-form-invalid-feedback v-if="!phone1State">
+                                    Phone number is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                            <b-form-group label="Alternative Phone Number (Optional)" label-for="phone_2">
+                                <b-form-input id="phone_2" v-model="form.phone_2"></b-form-input>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="12">
+                            <b-form-group label="Address" label-for="address">
+                                <b-form-textarea id="address" v-model="form.address" rows="3" :state="addressState"
+                                    required></b-form-textarea>
+                                <b-form-invalid-feedback v-if="!addressState">
+                                    Address is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                            <b-form-group label="State" label-for="state">
+                                <b-form-input id="state" v-model="form.state" :state="stateState"
+                                    required></b-form-input>
+                                <b-form-invalid-feedback v-if="!stateState">
+                                    State is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                            <b-form-group label="District" label-for="district">
+                                <b-form-input id="district" v-model="form.district" :state="districtState"
+                                    required></b-form-input>
+                                <b-form-invalid-feedback v-if="!districtState">
+                                    District is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                            <b-form-group label="Taluk" label-for="taluk">
+                                <b-form-input id="taluk" v-model="form.taluk" :state="talukState"
+                                    required></b-form-input>
+                                <b-form-invalid-feedback v-if="!talukState">
+                                    Taluk is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                            <b-form-group label="Pincode" label-for="pincode">
+                                <b-form-input id="pincode" v-model="form.pincode" :state="pincodeState"
+                                    required></b-form-input>
+                                <b-form-invalid-feedback v-if="!pincodeState">
+                                    Pincode is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6">
+                            <b-form-group label="Product Category" label-for="business_category_id">
+                                <b-form-select
+                                    id="business_category_id"
+                                    v-model="form.business_category_id"
+                                    :options="categoryOptions"
+                                    :state="categoryState"
+                                    required
+                                    class="form-control"
+                                    @change="onCategoryChange"
                                 >
-                                    {{ state }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+                                    <template #first>
+                                        <option :value="null" disabled>Select a category</option>
+                                    </template>
+                                </b-form-select>
+                                <b-form-invalid-feedback v-if="!form.business_category_id">
+                                    Product Category is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
 
-                    <!-- District -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label required"
-                            >District</label
-                        >
-                        <div class="col-sm-9">
-                            <select
-                                v-model="form.district"
-                                class="form-control"
-                            >
-                                <option disabled value="">
-                                    Select District
-                                </option>
-                                <option
-                                    v-for="(district, index) in districts"
-                                    :key="index"
-                                    :value="district"
+                        <b-col md="6">
+                            <b-form-group label="Product" label-for="product_id">
+                                <b-form-select
+                                    id="product_id"
+                                    v-model="form.product_id"
+                                    :options="productOptions"
+                                    :state="productState"
+                                    :disabled="!form.business_category_id"
+                                    required
+                                    class="form-control"
                                 >
-                                    {{ district }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+                                    <template #first>
+                                        <option :value="null" disabled>Select a product</option>
+                                    </template>
+                                </b-form-select>
+                                <b-form-invalid-feedback v-if="!form.product_id">
+                                    Product is required
+                                </b-form-invalid-feedback>
+                            </b-form-group>
+                        </b-col>
 
-                    <!-- Taluk -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Taluk</label>
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.taluk"
-                                type="text"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
+                        <b-col md="12">
+                            <b-form-group label="Additional Message (Optional)" label-for="message">
+                                <b-form-textarea id="message" v-model="form.message" rows="3"></b-form-textarea>
+                            </b-form-group>
+                        </b-col>
 
-                    <!-- Pin code -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Pin code</label>
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.pincode"
-                                type="text"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Address -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Address</label>
-                        <div class="col-sm-9">
-                            <textarea
-                                v-model="form.address"
-                                class="form-control"
-                                rows="2"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Phone1 -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Phone1</label>
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.phone1"
-                                type="text"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Phone2 -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Phone2</label>
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.phone2"
-                                type="text"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Mail ID -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Mail ID</label>
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.mail"
-                                type="email"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Message -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Message</label>
-                        <div class="col-sm-9">
-                            <textarea
-                                v-model="form.message1"
-                                class="form-control"
-                                rows="2"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Mail ID (again) -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Mail ID</label>
-                        <div class="col-sm-9">
-                            <input
-                                v-model="form.mail"
-                                type="email"
-                                class="form-control"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Product Category -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label required"
-                            >Product Category</label
-                        >
-                        <div class="col-sm-9">
-                            <select
-                                v-model="form.category"
-                                class="form-control"
-                            >
-                                <option disabled value="">
-                                    Select Category
-                                </option>
-                                <option
-                                    v-for="(cat, index) in categories"
-                                    :key="index"
-                                    :value="cat"
-                                >
-                                    {{ cat }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Products -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label required"
-                            >Products</label
-                        >
-                        <div class="col-sm-9">
-                            <select
-                                v-model="form.products"
-                                class="form-control"
-                            >
-                                <option disabled value="">
-                                    Select Product
-                                </option>
-                                <option
-                                    v-for="(product, index) in products"
-                                    :key="index"
-                                    :value="product"
-                                >
-                                    {{ product }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Message (again) -->
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Message</label>
-                        <div class="col-sm-9">
-                            <textarea
-                                v-model="form.message2"
-                                class="form-control"
-                                rows="2"
-                            />
-                        </div>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-primary px-5">
-                            SAVE
-                        </button>
-                    </div>
-                </form>
-            </div>
+                        <b-col cols="12" class="mt-3">
+                            <b-button type="submit" variant="primary" :disabled="submitting">
+                                <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                {{ submitting ? 'Submitting...' : 'Submit Application' }}
+                            </b-button>
+                        </b-col>
+                    </b-row>
+                </b-card>
+            </b-form>
         </div>
         <div class="container-fluid" style="padding-top: 3rem; padding-left: 0">
             <Ourshops />
@@ -240,68 +161,241 @@
 <script>
 import Ourshops from "./ourshops.vue";
 import Top_banners from "./top_banners.vue";
+import axios from "axios";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+import { BRow, BCol, BCard, BButton, BSpinner, BForm, BFormGroup, BFormInput, BFormTextarea, BFormInvalidFeedback, BFormSelect } from 'bootstrap-vue'
+
 export default {
+    name: 'BulkOrders',
     components: {
         Ourshops,
-        top_banners,
+        Top_banners,
+        BRow,
+        BCol,
+        BCard,
+        BButton,
+        BSpinner,
+        BForm,
+        BFormGroup,
+        BFormInput,
+        BFormTextarea,
+        BFormInvalidFeedback,
+        BFormSelect
     },
     data() {
         return {
             form: {
-                name: "",
-                state: "",
-                district: "",
-                taluk: "",
-                pincode: "",
-                address: "",
-                phone1: "",
-                phone2: "",
-                mail: "",
-                message1: "",
-                category: "",
-                products: "",
-                message2: "",
+                name: '',
+                email_id: '',
+                phone_1: '',
+                phone_2: '',
+                address: '',
+                state: '',
+                district: '',
+                taluk: '',
+                pincode: '',
+                business_category_id: null,
+                product_id: null,
+                message: ''
             },
-            states: [],
-            districts: [],
-            categories: [],
-            products: [],
-        };
+            categoryOptions: [],
+            productOptions: [],
+            submitting: false,
+            loadingProducts: false
+        }
+    },
+    computed: {
+        nameState() {
+            return this.form.name ? true : false
+        },
+        emailState() {
+            if (!this.form.email_id) return false
+            const re = /^\S+@\S+\.\S+$/
+            return re.test(this.form.email_id)
+        },
+        phone1State() {
+            return this.form.phone_1 ? true : false
+        },
+        addressState() {
+            return this.form.address ? true : false
+        },
+        stateState() {
+            return this.form.state ? true : false
+        },
+        districtState() {
+            return this.form.district ? true : false
+        },
+        talukState() {
+            return this.form.taluk ? true : false
+        },
+        pincodeState() {
+            return this.form.pincode ? true : false
+        },
+        categoryState() {
+            return this.form.business_category_id ? true : false
+        },
+        productState() {
+            return this.form.product_id ? true : false
+        }
     },
     methods: {
-        handleSubmit() {
-            console.log("Form Submitted:", this.form);
+        async fetchCategories() {
+            try {
+                const business_id = localStorage.getItem("single_business_id");
+                const response = await axios.get(`/category_lists/${business_id}`);
+                this.categoryOptions = response.data.data.map(category => ({
+                    value: category.id,
+                    text: category.name || category.text || category.title
+                }));
+            } catch (error) {
+                console.error("Failed to fetch categories:", error);
+                this.$toast.error("Failed to load categories", {
+                    timeout: 3000,
+                    position: "top-right"
+                });
+            }
         },
+        async fetchProducts(categoryId) {
+            if (!categoryId) {
+                this.productOptions = [];
+                this.form.product_id = null;
+                return;
+            }
+
+            this.loadingProducts = true;
+            try {
+                const response = await axios.get(`http://localhost:3000/product_list_by_category/${categoryId}`);
+                this.productOptions = response.data.data.map(product => ({
+                    value: product.id,
+                    text: product.name || product.text || product.title
+                }));
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                this.$toast.error("Failed to load products", {
+                    timeout: 3000,
+                    position: "top-right"
+                });
+            } finally {
+                this.loadingProducts = false;
+            }
+        },
+        onCategoryChange(categoryId) {
+            this.form.product_id = null;
+            this.fetchProducts(categoryId);
+        },
+        async submitApplication() {
+            // Validate all required fields
+            if (!this.nameState || !this.emailState || !this.phone1State ||
+                !this.addressState || !this.stateState || !this.districtState ||
+                !this.talukState || !this.pincodeState || !this.categoryState || !this.productState) {
+                this.$toast.error("Please fill all required fields", {
+                    timeout: 3000,
+                    position: "top-right"
+                });
+                return;
+            }
+
+            this.submitting = true;
+            try {
+                const response = await axios.post("http://127.0.0.1:8000/api/bulk_enquiry", this.form);
+
+                if (response.status === 200 || response.status === 201) {
+                    this.$toast.success("Form submitted successfully!", {
+                        timeout: 3000,
+                        position: "top-right"
+                    });
+                    this.resetForm();
+                } else {
+                    this.$toast.error("Something went wrong. Please try again.", {
+                        timeout: 3000,
+                        position: "top-right"
+                    });
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                let errorMessage = "Failed to submit form";
+                if (error.response) {
+                    errorMessage = error.response.data.message || errorMessage;
+                }
+                this.$toast.error(errorMessage, {
+                    timeout: 3000,
+                    position: "top-right"
+                });
+            } finally {
+                this.submitting = false;
+            }
+        },
+        resetForm() {
+            this.form = {
+                name: '',
+                email_id: '',
+                phone_1: '',
+                phone_2: '',
+                address: '',
+                state: '',
+                district: '',
+                taluk: '',
+                pincode: '',
+                business_category_id: null,
+                product_id: null,
+                message: ''
+            };
+        }
     },
-};
+    mounted() {
+        this.fetchCategories();
+    }
+}
 </script>
 
 <style scoped>
-.required::after {
-    content: " *";
-    color: red;
-}
-.form-control {
-    border-radius: 3px !important; /* smaller corner radius */
-    border-width: 1px !important; /* thin border */
-    box-shadow: none !important; /* no extra shadow */
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-/* Ensure the outer container has a clean, visible border */
-.form-box {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 2rem;
+.top-banner-wrapper {
+    padding: 2rem 1.5rem;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    max-width: 1280px;
+    margin: 0 auto;
 }
-::v-deep .form-group label {
-    font-size: 1.1rem;
+
+.apply-form {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 960px;
+    margin: 3rem auto;
+    scroll-margin-top: 100px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* General banner style */
+.banner-img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Headings */
+.text-center.mb-4 {
+    font-size: 1.75rem;
     font-weight: 600;
-    color: #222;
+    color: #212529;
+    margin-top: 2rem;
+}
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+    .apply-form {
+        padding: 1.5rem;
+        margin: 2rem 1rem;
+    }
+
+    .top-banner-wrapper {
+        padding: 1.5rem 1rem;
+    }
+
+    .text-center.mb-4 {
+        font-size: 1.5rem;
+    }
 }
 </style>
