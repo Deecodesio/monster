@@ -52,8 +52,9 @@ class CareerJobController extends BaseController
             $query->orderBy($sortBy, $sortOrder);
 
             // Pagination
-            $perPage = $request->get('per_page', 15);
-            $jobs = $query->paginate($perPage);
+            // $perPage = $request->get('per_page', 15);
+            // $jobs = $query->paginate($perPage);
+             $jobs = $query->get();
 
             return response()->json([
                 'success' => true,
@@ -75,29 +76,46 @@ class CareerJobController extends BaseController
     public function store(Request $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
+            $validator = $request->validate([
                 'job_name' => 'required|string|max:255',
                 'job_details' => 'required|string',
                 'location_id' => 'required|exists:add_city,id',
                 'state_id' => 'required|exists:add_city,state_id',
                 'created_by' => 'required|exists:roles,id',
-                'status' => ['sometimes', Rule::in(['active', 'inactive'])]
+                'status' => 'required'
             ]);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed',
-                    'errors' => $validator->errors()
-                ], 422);
+            // if ($validator->fails()) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'Validation failed',
+            //         'errors' => $validator->errors()
+            //     ], 422);
+            // }
+
+             if (!empty($validator['id'])) {
+                // Update
+                $careerJob = CareerJob::find($validator['id']);
+
+                if ($careerJob) {
+                    $careerJob->update($validator);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Career job not found',
+                    ], 404);
+                }
+            } else {
+                // Create new
+                $careerJob = CareerJob::create($validator);
             }
 
-            $job = CareerJob::create($validator->validated());
+            // $job = CareerJob::create($validator->validated());
 
             return response()->json([
                 'success' => true,
                 'message' => 'Career job created successfully',
-                'data' => $job->load(['city', 'state', 'creator'])
+                'data' => $careerJob->load(['city', 'state', 'creator'])
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -298,5 +316,27 @@ class CareerJobController extends BaseController
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function job_status($id)
+    {
+
+        $area_list = CareerJob::findOrFail($id);
+        if ($area_list->status == 1) {
+            $status = 2;
+            $msg = "Status Inactive";
+        } else {
+            $status = 1;
+            $msg = "Status Active";
+        }
+
+        $area_list->status = $status;
+        $area_list->save();
+
+        $message = $msg;
+        $status = true;
+        $response_Array = json_encode(['message' => $message, 'status' => $status]);
+
+        return $response_Array;
     }
 }

@@ -95,4 +95,15 @@ class BulkEnquiry extends Model
     {
         return $this->address . ', ' . $this->taluk . ', ' . $this->district . ', ' . $this->state . ' - ' . $this->pincode;
     }
+
+      public function businessCategory()
+    {
+        return $this->belongsTo(BusinessCategory::class);
+    }
+
+    // Relationship to Product
+    public function product()
+    {
+        return $this->belongsTo(Foodlist::class);
+    }
 }

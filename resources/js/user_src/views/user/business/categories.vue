@@ -8,9 +8,9 @@
                 <div class="hrLine"></div>
             </b-col>
         </b-row>
-        <!-- Swiper Wrapper --> 
+        <!-- Swiper Wrapper -->
         <!-- <div class="swiper-category-wrapper mb-0">
-            <div id="swiper-button-next" class="swiper-button-next"></div>
+
             <div id="swiper-button-next" class="swiper-button-next" :class="{ 'force-disabled': rows2.length <= 6 }">
             </div>
             <swiper ref="mySwiper" class="swiper-multiple rounded text-center" :options="swiperOptions"
@@ -26,13 +26,11 @@
                     </div>
                 </swiper-slide>
             </swiper>
-            <div id="swiper-button-prev" class="swiper-button-prev"></div>
-            <div id="swiper-button-prev" class="swiper-button-prev" :class="{ 'force-disabled': rows2.length <= 5 }">
-            </div>
+
 
         </div> -->
 
-               <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">                   
+               <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">
                     <div id="swiper-button-prev" class="swiper-button-prev"></div>
                     <swiper class="swiper-multiple rounded swiper-shadow text-center" :options="swiperOptions"
                         :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
@@ -52,7 +50,7 @@
                 </div>
 
 
-   
+
 </template>
 
 <script>
@@ -91,26 +89,27 @@ export default {
             iscat: false,
             isShow: false,
 
-            swiperOptions: {
-                breakpoints: {
-                    320: { slidesPerView: 2, spaceBetween: 10 },
-                    768: { slidesPerView: 3, spaceBetween: 20 },
-                    1024: { slidesPerView: 4, spaceBetween: 30 },
-                    1440: { slidesPerView: 4, spaceBetween: 70 },
-                },
-                slidesPerView: 4, // Desktop default
-                spaceBetween: 20,
-                centeredSlides: false,
-                freeMode: true,
-                loop: false,
-                navigation: {
-                    nextEl: "#swiper-button-prev",
-                    prevEl: "#swiper-button-next",
-                },
-                watchOverflow: false,
-            },
+        swiperOptions: {
+  breakpoints: {
+    320: { slidesPerView: 2, slidesPerGroup: 1, spaceBetween: 10 },
+    768: { slidesPerView: 3, slidesPerGroup: 1, spaceBetween: 20 },
+    1024: { slidesPerView: 4, slidesPerGroup: 2, spaceBetween: 30 },
+    1440: { slidesPerView: 4, slidesPerGroup: 2, spaceBetween: 70 },
+  },
+  slidesPerView: 4,
+  slidesPerGroup: 2, // 👈 Move 2 slides per click
+  spaceBetween: 20,
+  loop: false,
+  navigation: {
+    nextEl: "#swiper-button-next",
+    prevEl: "#swiper-button-prev",
+  },
+  watchOverflow: true,
+},
+
         };
     },
+
 
     methods: {
         gotor(slug) {
@@ -160,149 +159,40 @@ export default {
 
 </script>
 <style scoped>
-/* .swiper-category-wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
-/* .cat-card-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    padding: 10px;
-} */
-
-.fl {
-    width: 250px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.fl:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.swiper-wrapper {
-    display: flex;
-    gap: 50px;
-}
-
-.swiper-slide {
-    width: 200px !important;
-    display: flex;
-    justify-content: center;
-}
-/* 
-.main_Cat_name {
-    margin-top: 8px;
-    font-weight: 600;
-    font-size: 18px;
-    color: black;
-    text-align: center;
-} */
-
-/* Swiper Buttons */
-/* .swiper-button-prev,
-.swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    color: white;
-    z-index: 10;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-} */
-
-/* .swiper-button-prev {
-    left: 10px;
-}
-
-.swiper-button-next {
-    right: 10px;
-} */
-
-/* .swiper-button-prev::after,
-.swiper-button-next::after {
-    content: '';
-    display: inline-block;
-    font-size: 30px;
-    color: white;
-    font-family: swiper-icons;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-} */
-
-
-/* .swiper-button-next,
-.swiper-container-rtl .swiper-button-prev {
-    right: 10px;
-    left: auto;
-    background-color: #f4fffd90;
-    border-radius: 10px;
-    top: 45%;
-}
-
-.swiper-button-prev,
-.swiper-container-rtl .swiper-button-next {
-    left: 10px;
-    right: auto;
-    background-color: #f4fffd90;
-    border-radius: 10px;
- border: 2px solid #f4fffd;
-    top: 45%;
-} */
-
 .hrLine {
-    max-width: 75px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 3px solid #ffce00;
-    border-radius: 5px;
-    background-color: #ffce00;
+  max-width: 75px;
+  margin: 5px auto 15px;
+  border: 3px solid #ffce00;
+  border-radius: 5px;
+  background-color: #ffce00;
 }
- /* &&& */
- .pt-5{
-  padding-top: 0rem !important;
-}
+
+/* Category Card */
 .cat-card-main {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  padding: 10px;
-  margin-left: 40px;
-
+  padding: 6px;
+  cursor: pointer;
 }
 
+/* Image Styling */
 .fl {
- width: 250px; height: 150px;
+  width: 220px;
+  height: 130px;
   object-fit: cover;
   border-radius: 12px;
-  margin-left: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin-left: 6rem;
 }
-
 .fl:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-
-
+/* Category Name Text */
 .main_Cat_name {
   margin-top: 8px;
   font-weight: 600;
@@ -310,41 +200,41 @@ export default {
   color: black;
   text-align: center;
 }
+
+/* Swiper Slide */
 .swiper-slide {
   width: 200px !important;
   display: flex;
   justify-content: center;
 }
+
+/* Navigation Buttons */
 .swiper-button-next,
 .swiper-button-prev {
-
   width: 30px;
   height: 30px;
-
   border-radius: 50%;
-
   z-index: 10;
 }
-.swiper-button-next{
-    margin-right: 25px;
+.swiper-button-next {
+  margin-right: 25px;
 }
-.swiper-button-prev{
-    margin-left: 25px;
+.swiper-button-prev {
+  margin-left: 25px;
 }
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 18px;
   font-weight: bold;
 }
+
 .swiper-category-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   position: relative;
-
 }
-
 
 .swiper-category-wrapper .swiper-button-prev,
 .swiper-category-wrapper .swiper-button-next {
@@ -356,27 +246,79 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
-
 .swiper-category-wrapper .swiper-button-prev::after,
 .swiper-category-wrapper .swiper-button-next::after {
   font-size: 18px;
-
-  /* color: #e91e63; */
 }
-
 
 .swiper-button-prev.swiper-button-disabled,
 .swiper-button-next.swiper-button-disabled {
   opacity: 1 !important;
   pointer-events: auto !important;
 }
-
 .swiper-button-prev,
-.swiper-container-rtl .swiper-button-next{
-    border: none !important;}
-.subcat_slider{
-    width:100%;
+.swiper-container-rtl .swiper-button-next {
+  border: none !important;
 }
+
+/* --------- Responsive Breakpoints ---------- */
+
+/* Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+  .fl {
+    width: 160px;
+    height: 100px;
+    margin-left: 3rem;
+  }
+  .main_Cat_name {
+    font-size: 16px;
+  }
+  .swiper-slide {
+    width: 160px !important;
+  }
+}
+
+/* Small Tablets / Large Phones (600px - 767px) */
+@media (max-width: 767px) {
+  .fl {
+    width: 120px;
+    height: 72px;
+    margin-left: 2rem;
+  }
+  .cat-card-main {
+    padding: 4px;
+  }
+  .main_Cat_name {
+    font-size: 14px;
+  }
+  .swiper-slide {
+    width: 120px !important;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Mobile Phones (Below 600px) */
+@media (max-width: 599px) {
+  .fl {
+    width: 90px;
+    height: 54px;
+    margin-left: 1rem;
+  }
+  .main_Cat_name {
+    font-size: 12px;
+  }
+  .swiper-slide {
+    width: 90px !important;
+  }
+}
+</style>
+
+<style lang="scss">
+@import '~@resources/scss/vue/libs/swiper.scss';
 </style>

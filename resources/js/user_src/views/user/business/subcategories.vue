@@ -16,7 +16,7 @@
                     <hr class="mx-auto">
                 </div>
                     <!-- Navigation Buttons (Now Outside Swiper) -->
-                <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">                   
+                <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">
                     <div id="swiper-button-prev" class="swiper-button-prev"></div>
                     <swiper class="swiper-multiple rounded swiper-shadow text-center" :options="swiperOptions"
                         :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
@@ -130,17 +130,22 @@ export default {
             cat_products: [],
 
             swiperOptions: {
-                breakpoints: {
-                    320: { slidesPerView: 2, spaceBetween: 10 },
-    768: { slidesPerView: 3, spaceBetween: 20 },
-    1024: { slidesPerView: 4, spaceBetween: 30 },
-    1440: { slidesPerView: 2, spaceBetween: 70 },
-                },
-                navigation: {
-                    nextEl: '#swiper-button-next', // Use ID
-                    prevEl: '#swiper-button-prev', // Use ID
-                },
-            },
+  breakpoints: {
+    320: { slidesPerView: 2, slidesPerGroup: 1, spaceBetween: 10 },
+    768: { slidesPerView: 3, slidesPerGroup: 1, spaceBetween: 20 },
+    1024: { slidesPerView: 4, slidesPerGroup: 2, spaceBetween: 30 },
+    1440: { slidesPerView: 4, slidesPerGroup: 2, spaceBetween: 70 },
+  },
+  slidesPerView: 4,
+  slidesPerGroup: 2, // 👈 Move 2 slides per click
+  spaceBetween: 20,
+  loop: false,
+  navigation: {
+    nextEl: "#swiper-button-next",
+    prevEl: "#swiper-button-prev",
+  },
+  watchOverflow: true,
+},
 
             sub_categories: [],
             title3: '',
@@ -150,7 +155,7 @@ export default {
         }
     },
     watch: {
-        $route(to, from) {          
+        $route(to, from) {
             this.get_created()
         }
     },
@@ -162,7 +167,7 @@ export default {
             this.is_clicked = true
             this.cat_products=[];
             this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + id + '/' + this.business_id)
-                .then(res => {                    
+                .then(res => {
                     this.cat_products = res.data.cat_products
                     this.title = name
                     this.loadcart()
@@ -204,7 +209,7 @@ export default {
                 const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
                 this.cat_products=[];
                 this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id)
-                    .then(res => {                        
+                    .then(res => {
                         this.cat_products = res.data.cat_products
                         this.title = res.data.title
                         this.loadcart()
@@ -235,7 +240,7 @@ export default {
                 const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
                 this.cat_products=[];
                 this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id)
-                    .then(res => {                     
+                    .then(res => {
                         this.cat_products = res.data.cat_products
                         this.title = res.data.title
                         this.loadcart()

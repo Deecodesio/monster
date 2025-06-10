@@ -36,7 +36,7 @@ class CareerJob extends Model
 
     public function state()
     {
-        return $this->belongsTo(AddCity::class, 'state_id', 'state_id');
+        return $this->belongsTo(State::class, 'state_id', 'id');
     }
 
     public function creator()
@@ -47,12 +47,12 @@ class CareerJob extends Model
     // Scopes for filtering
     public function scopeActive(Builder $query)
     {
-        return $query->where('status', 'active');
+        return $query->where('status', 1);
     }
 
     public function scopeInactive(Builder $query)
     {
-        return $query->where('status', 'inactive');
+        return $query->where('status', 2);
     }
 
     public function scopeByLocation(Builder $query, $locationId)

@@ -8,6 +8,14 @@ export default [
         route: "user_management",
         resource: "user-view",
         action: "read",
+        // children: [
+        //     {
+        //         title: "Add Consumer",
+        //         route: "add-consumer", 
+        //         resource: "user-create",
+        //         action: "create",
+        //     },
+        // ]
     },
     {
         title: "Order Management",

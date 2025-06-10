@@ -3047,16 +3047,19 @@ export default {
                 }
             });
         this.$http
-            .get("/store/business_category_list/" + localStorage.id)
+            // .get("/store/business_category_list/" + localStorage.id)
+            .get("/admin/business_category_lists")
             .then((res) => {
                 this.bus_category = res.data;
             });
-        this.$http.get("/store/product_imgs/" + localStorage.id).then((res) => {
+        // this.$http.get("/store/product_imgs/" + localStorage.id).then((res) => {
+        this.$http.get("/admin/product_imgs").then((res) => {
             this.imgs = res.data;
             console.log(this.imgs);
         });
         this.$http
-            .get("/store/business_type/" + localStorage.id)
+            // .get("/store/business_type/" + localStorage.id)
+            .get("/admin/business_type")
             .then((res) => {
                 if (res.data.layout_id == 2) {
                     this.layout_id = res.data.layout_id;

@@ -4,27 +4,16 @@
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('name')">
-                        <b-form-input
-                            id="name"
-                            :placeholder="$t('name')"
-                            v-model="bulkOrder.name"
-                            :required="!bulkOrder.name"
-                        />
+                        <b-form-input id="name" :placeholder="$t('name')" v-model="bulkOrder.name"
+                            :required="!bulkOrder.name" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('state')">
-                        <v-select
-                            id="state"
-                            v-model="bulkOrder.state"
-                            :options="state_list"
-                            label="state"
-                            :reduce="(sel) => sel.id"
-                            :placeholder="$t('select state')"
-                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                            :required="!bulkOrder.state"
-                            @input="onStateChange"
-                        />
+                        <v-select id="state" v-model="bulkOrder.state" :options="state_list" label="state"
+                            :reduce="(sel) => sel.id" :placeholder="$t('select state')"
+                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :required="!bulkOrder.state"
+                            @input="onStateChange" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -32,28 +21,15 @@
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('city')">
-                        <v-select
-                            id="city"
-                            v-model="bulkOrder.city"
-                            :options="city_list"
-                            label="city"
-                            :reduce="(sel) => sel.value"
-                            :placeholder="$t('select city')"
-                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                            :required="!bulkOrder.city"
-                        />
+                        <v-select id="city" v-model="bulkOrder.city" :options="city_list" label="city"
+                            :reduce="(sel) => sel.value" :placeholder="$t('select city')"
+                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :required="!bulkOrder.city" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('taluk')">
-                        <v-select
-                            v-model="bulkOrder.taluk"
-                            :options="city_list"
-                            label="taluk"
-                            :reduce="(sel) => sel.id"
-                            :placeholder="$t('select taluk')"
-                            :required="!bulkOrder.taluk"
-                        />
+                        <v-select v-model="bulkOrder.taluk" :options="city_list" label="taluk" :reduce="(sel) => sel.id"
+                            :placeholder="$t('select taluk')" :required="!bulkOrder.taluk" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -61,24 +37,14 @@
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('pincode')">
-                        <b-form-input
-                            id="pincode"
-                            type="text"
-                            :placeholder="$t('pincode')"
-                            v-model="bulkOrder.pincode"
-                            :required="!bulkOrder.pincode"
-                        />
+                        <b-form-input id="pincode" type="text" :placeholder="$t('pincode')" v-model="bulkOrder.pincode"
+                            :required="!bulkOrder.pincode" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('address')">
-                        <b-form-input
-                            id="address"
-                            type="text"
-                            :placeholder="$t('address')"
-                            v-model="bulkOrder.address"
-                            :required="!bulkOrder.address"
-                        />
+                        <b-form-input id="address" type="text" :placeholder="$t('address')" v-model="bulkOrder.address"
+                            :required="!bulkOrder.address" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -86,28 +52,19 @@
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('phone_one')">
-                        <b-form-input
-                            id="phone1"
-                            type="tel"
-                            :placeholder="$t('phone_one')"
-                            v-model="bulkOrder.phone1"
-                            :required="!bulkOrder.phone1"
-                        />
+                        <b-form-input id="phone1" type="tel" :placeholder="$t('phone_one')" v-model="bulkOrder.phone1"
+                            :required="!bulkOrder.phone1" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('phone_two')">
-                        <b-form-input
-                            id="phone2"
-                            type="tel"
-                            :placeholder="$t('phone_two')"
-                            v-model="bulkOrder.phone2"
-                        />
+                        <b-form-input id="phone2" type="tel" :placeholder="$t('phone_two')"
+                            v-model="bulkOrder.phone2" />
                     </b-form-group>
                 </b-col>
             </b-row>
 
-            <b-row>
+            <!-- <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('email')">
                         <b-form-input
@@ -118,8 +75,17 @@
                             :required="!bulkOrder.email"
                         />
                     </b-form-group>
-                </b-col>
-                <b-col md="6">
+                         <b-form-group :label="$t('Shop place plan')">
+                        <b-form-input
+                            id="Shop_place_plan"
+                            type="Shop_place_plan"
+                            :placeholder="$t('Shop place plan')"
+                            v-model="bulkOrder.Shop_place_plan"
+                            :required="!bulkOrder.Shop_place_plan"
+                        />
+                    </b-form-group>
+                </b-col> -->
+            <!-- <b-col md="6">
                     <b-form-group :label="$t('product') + ' ' + $t('category')">
                         <v-select
                             v-model="bulkOrder.category_id"
@@ -132,6 +98,30 @@
                             @input="onCategoryStateChange"
                         />
                     </b-form-group>
+                </b-col> -->
+            <!-- </b-row> -->
+
+            <b-row>
+
+
+                <!-- Email and Shop place plan (right side) -->
+                <b-col md="6">
+                    <b-form-group :label="$t('email')">
+                        <b-form-input id="email" type="email" :placeholder="$t('email')" v-model="bulkOrder.email"
+                            :required="!bulkOrder.email" />
+                    </b-form-group>
+
+                    <b-form-group :label="$t('Shop place plan')">
+                        <b-form-input id="Shop_place_plan" type="Shop_place_plan" :placeholder="$t('Shop place plan')"
+                            v-model="bulkOrder.Shop_place_plan" :required="!bulkOrder.Shop_place_plan" />
+                    </b-form-group>
+                </b-col>
+
+                <b-col md="6">
+                    <b-form-group :label="$t('messages')">
+                        <b-form-textarea id="message" v-model="bulkOrder.message" :placeholder="$t('messages')" rows="4"
+                            style="resize: none; height: 105px" :required="!bulkOrder.message" />
+                    </b-form-group>
                 </b-col>
             </b-row>
 
@@ -139,7 +129,7 @@
                 <!-- Left Column -->
                 <b-col md="6">
                     <!-- Taluk -->
-                    <b-form-group :label="$t('product')">
+                    <!-- <b-form-group :label="$t('product')">
                         <v-select
                             v-model="bulkOrder.product_id"
                             :options="product_list"
@@ -148,10 +138,10 @@
                             :placeholder="$t('product')"
                             :required="!bulkOrder.product_id"
                         />
-                    </b-form-group>
+                    </b-form-group> -->
 
                     <!-- Status -->
-                    <b-form-group :label="$t('status')">
+                    <!-- <b-form-group :label="$t('status')">
                         <v-select
                             v-model="bulkOrder.status"
                             :options="options"
@@ -161,33 +151,17 @@
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                             :required="!bulkOrder.status"
                         />
-                    </b-form-group>
+                    </b-form-group> -->
                 </b-col>
 
                 <!-- Right Column -->
-                <b-col md="6">
-                    <b-form-group :label="$t('messages')">
-                        <b-form-textarea
-                            id="message"
-                            v-model="bulkOrder.message"
-                            :placeholder="$t('messages')"
-                            rows="4"
-                            style="resize: none; height: 105px"
-                            :required="!bulkOrder.message"
-                        />
-                    </b-form-group>
-                </b-col>
+
             </b-row>
 
             <b-row>
                 <!-- submit and reset -->
                 <b-col>
-                    <b-button
-                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                        type="submit"
-                        variant="primary"
-                        class="mr-1"
-                    >
+                    <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
                         {{ $t("save") }}
                     </b-button>
                 </b-col>
@@ -291,20 +265,24 @@ export default {
                 "email",
                 this.bulkOrder.email ? this.bulkOrder.email : ""
             );
+            // brand.append(
+            //     "product_category",
+            //     this.bulkOrder.product_category
+            //         ? this.bulkOrder.product_category
+            //         : ""
+            // );
+            // brand.append(
+            //     "product",
+            //     this.bulkOrder.product_id ? this.bulkOrder.product_id : ""
+            // );
+            // brand.append("status", this.bulkOrder.status);
+            // brand.append(
+            //     "message",
+            //     this.bulkOrder.message ? this.bulkOrder.message : ""
+            // );
             brand.append(
-                "product_category",
-                this.bulkOrder.product_category
-                    ? this.bulkOrder.product_category
-                    : ""
-            );
-            brand.append(
-                "product",
-                this.bulkOrder.product_id ? this.bulkOrder.product_id : ""
-            );
-            brand.append("status", this.bulkOrder.status);
-            brand.append(
-                "message",
-                this.bulkOrder.message ? this.bulkOrder.message : ""
+                "Shop_place_plan",
+                this.bulkOrder.Shop_place_plan ? this.bulkOrder.Shop_place_plan : ""
             );
 
             // this.$http
@@ -319,6 +297,22 @@ export default {
             //     })
             //     .catch((error) => console.log(error))
             //     .finally(() => (this.loading = false));
+            this.$http.post("/admin/store_brand", brand)
+                .then((response) => {
+                    if (response.data.status == true) {
+                        this.$router.push({ name: "brands_list" });
+                        this.popToast(response, "CheckIcon", "success");
+                    } else {
+                        this.popToast(response, "AlertTriangleIcon", "danger");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.popToast({
+                        data: { message: "An error occurred while saving" }
+                    }, "AlertTriangleIcon", "danger");
+                })
+                .finally(() => (this.loading = false));
         },
         popToast(response, icon, variant) {
             this.$toast({

@@ -753,8 +753,7 @@ class ItemmasterController extends BaseController
 		}
 		if ($request->id != "undefined") {
 
-			if($request->banner_image)
-			{
+			if ($request->banner_image) {
 				if ($request->existing1 == "undefined" || !$request->existing1) {
 					$image_upload1  = basename($request->banner_image);
 				} else {
@@ -765,7 +764,7 @@ class ItemmasterController extends BaseController
 						$image_upload1 = $this->custom->common_upload_images_cat_1($request, 'banner_image', public_path('category_image/'));
 					}
 				}
-			}else{
+			} else {
 				$image_upload1 = $request->banner_image;
 			}
 
@@ -813,21 +812,20 @@ class ItemmasterController extends BaseController
 			$msg = "Business Type Updated Successfully";
 		} else {
 
-			if($request->banner_image)
-			{
-				
+			if ($request->banner_image) {
+
 				if ($request->existing1 == "undefined" || !$request->existing1) {
 					$image_upload1  = basename($request->banner_image);
 				} else {
-					
+
 					if ($request->existing1 == 1) {
 						$image_upload1 = $request->banner_image;
 					} else {
-						
+
 						$image_upload1 = $this->custom->common_upload_images_cat_1($request, 'banner_image', public_path('category_image/'));
 					}
 				}
-			}else{
+			} else {
 				$image_upload1 = $request->banner_image;
 			}
 			if ($request->image) {
@@ -850,7 +848,7 @@ class ItemmasterController extends BaseController
 					'secondary_name' => $this->secound_lang_name($request->secondary_name),
 					'image' => $image_upload ? 'category_image/' . $image_upload : '',
 					'banner_image' => $image_upload1 ? 'category_image/' . $image_upload1 : '',
-                    'status' => $request->status,
+					'status' => $request->status,
 					'layout_id' => $l_id,
 					'p_status' => $p_id,
 					'cloudflare_imageid' => null,
@@ -1588,5 +1586,24 @@ class ItemmasterController extends BaseController
 		$response_array = array('data' => $data);
 
 		return response()->json($response_array, 200);
+	}
+
+	public function product_imgs()
+	{
+		$data = [];
+
+		// Collect images from common_images
+		foreach (File::glob(public_path('common_images') . '/*') as $path) {
+			$product_image = basename($path);
+			$data[] = BASE_URL . 'common_images/' . $product_image;
+		}
+
+		// Collect images from product_image
+		foreach (File::glob(public_path('product_image') . '/*') as $path) {
+			$product_image = basename($path);
+			$data[] = BASE_URL . UPLOADS_PATH_PRODUCT . $product_image;
+		}
+
+		return response()->json($data);
 	}
 }

@@ -51,8 +51,9 @@ class FranchiseController extends BaseController
             $query->orderBy($sortBy, $sortOrder);
 
             // Pagination
-            $perPage = $request->get('per_page', 15);
-            $franchises = $query->paginate($perPage);
+            // $perPage = $request->get('per_page', 15);
+            // $franchises = $query->paginate($perPage);
+            $franchises = $query->get();
 
             return response()->json([
                 'success' => true,
@@ -75,6 +76,7 @@ class FranchiseController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
+                'id' => 'required|string',
                 'name' => 'required|string|max:255',
                 'phone_1' => 'required|string|max:255',
                 'phone_2' => 'nullable|string|max:255',
@@ -96,7 +98,24 @@ class FranchiseController extends BaseController
                 ], 422);
             }
 
-            $franchise = Franchise::create($validator->validated());
+            // $franchise = Franchise::create($validator->validated());
+
+            if (!empty($validator['id'])) {
+                // Update
+                $franchise = Franchise::find($validator['id']);
+
+                if ($franchise) {
+                    $franchise->update($validator);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Franchise not found',
+                    ], 404);
+                }
+            } else {
+                // Create new
+                $franchise = Franchise::create($validator);
+            }
 
             return response()->json([
                 'success' => true,

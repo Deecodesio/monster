@@ -2,37 +2,88 @@
     <b-row>
         <b-col cols="12">
             <b-card>
-                <b-row>
+                <b-modal
+                    id="confirm-delete-modal"
+                    ref="confirmDeleteModal"
+                    title="Please Confirm"
+                    ok-title="Yes"
+                    cancel-title="No"
+                    ok-variant="danger"
+                    cancel-variant="outline-secondary"
+                    @ok="confirmDelete"
+                >
+                    <p class="my-2">
+                        Please confirm that you want to delete
+                        <strong>{{
+                            selectedBrand ? selectedBrand.name : ""
+                        }}</strong>
+                        banner
+                    </p>
+                </b-modal>
+
+                <!-- <b-row>
+          <b-col md="6">
+            <div class="custom-search d-flex justify-content-start">
+              <b-button variant="primary" :to="{ name: 'add_bulk' }">
+                <i class="fa-solid fa-plus"></i> {{ $t('add bulk order') }}
+              </b-button>
+            </div> 
+          </b-col>
+          
+          <b-col md="6">
+        
+            <div class="custom-search d-flex justify-content-end">
+              <b-form-group>
+                <div class="d-flex align-items-center">
+                  <label class="mr-1">{{ $t('message.seachLabel') }}</label>
+                  <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text" class="d-inline-block" />
+                </div>
+              </b-form-group>
+            </div>
+           
+          </b-col>
+        </b-row> -->
+                <b-row style="margin-bottom: 10px !important">
+                    <!-- Left Section: Bulk Order + Export Buttons -->
                     <b-col md="6">
-                        <div class="custom-search d-flex justify-content-start">
+                        <div
+                            class="d-flex justify-content-start align-items-center"
+                        >
                             <b-button
                                 variant="primary"
-                                :to="{ name: 'add_franchise' }"
+                                :to="{ name: 'add_blog' }"
+                                class="mr-2"
+                                style="box-shadow: none !important"
                             >
                                 <i class="fa-solid fa-plus"></i>
-                                {{ $t("Add Franchies") }}
+                                {{ $t("Add Blog") }}
                             </b-button>
+
+                            <!-- <b-button variant="primary" class="mr-2" @click="exportPDF" style=" box-shadow: none !important;">
+                <i class="fa fa-download mr-1"></i> Export PDF
+              </b-button>
+
+              <b-button variant="primary" @click="exportExcel" style=" box-shadow: none !important;">
+                <i class="fa fa-download mr-1"></i> Export Excel
+              </b-button> -->
                         </div>
                     </b-col>
-                    <b-col md="6">
-                        <!-- input search -->
-                        <div class="custom-search d-flex justify-content-end">
-                            <b-form-group>
-                                <div class="d-flex align-items-center">
-                                    <label class="mr-1">{{
-                                        $t("message.seachLabel")
-                                    }}</label>
-                                    <b-form-input
-                                        v-model="searchTerm"
-                                        :placeholder="$t('message.seachLabel')"
-                                        type="text"
-                                        class="d-inline-block"
-                                    />
-                                </div>
-                            </b-form-group>
-                        </div>
 
-                        <!-- input search -->
+                    <!-- Right Section: Search Input -->
+                    <b-col md="6">
+                        <div
+                            class="d-flex justify-content-end align-items-center"
+                        >
+                            <label class="mr-1">{{
+                                $t("message.seachLabel")
+                            }}</label>
+                            <b-form-input
+                                v-model="searchTerm"
+                                :placeholder="$t('message.seachLabel')"
+                                type="text"
+                                class="d-inline-block w-50"
+                            />
+                        </div>
                     </b-col>
                 </b-row>
 
@@ -53,28 +104,51 @@
                 >
                     <template slot="table-row" slot-scope="props">
                         <!-- Column: Name -->
-                        <div
-                            v-if="props.column.field === 'image'"
-                            class="text-nowrap"
-                        ></div>
+                        <span v-if="props.column.field === 'name'">
+                            {{ props.row.name }}
+                        </span>
 
-                        <div
-                            v-if="props.column.field === 'order_id'"
-                            class="text-nowrap"
-                        >
-                            <span class="text-nowrap">{{
-                                props.row.order_id
-                            }}</span>
-                            <br />
-                            <span class="text-nowrap">
-                                <b-badge
-                                    :variant="statusVariant(props.row.status)"
-                                >
-                                    {{ props.row.status }}
-                                </b-badge>
-                            </span>
-                        </div>
+                        <!-- Column: Address -->
+                        <span v-else-if="props.column.field === 'address'">
+                            {{ props.row.address }}
+                        </span>
 
+                        <!-- Column: Date -->
+                        <span v-else-if="props.column.field === 'date'">
+                            {{ props.row.date }}
+                        </span>
+
+                        <!-- Column: Product -->
+                        <span v-else-if="props.column.field === 'product'">
+                            {{ props.row.product }}
+                        </span>
+
+                        <!-- Column: Quantity -->
+                        <span v-else-if="props.column.field === 'quantity'">
+                            {{ props.row.quantity }}
+                        </span>
+
+                        <!-- Column: Pin code -->
+                        <span v-else-if="props.column.field === 'pin_code'">
+                            {{ props.row.pin_code }}
+                        </span>
+
+                        <!-- Column: Mobile No. -->
+                        <span v-else-if="props.column.field === 'mobile'">
+                            {{ props.row.mobile }}
+                        </span>
+
+                        <!-- Column: Email -->
+                        <span v-else-if="props.column.field === 'email'">
+                            {{ props.row.email }}
+                        </span>
+
+                        <!-- Column: Status -->
+                        <!-- <span v-else-if="props.column.field === 'status'">
+              <b-badge :variant="statusVariant(props.row.status)">
+                {{ props.row.status === 1 ? $t('active') : $t('inactive') }}
+              </b-badge>
+            </span> -->
                         <span v-else-if="props.column.field === 'status'">
                             <b-button
                                 v-if="props.row.status === 1"
@@ -97,29 +171,20 @@
                         </span>
 
                         <!-- Column: Action -->
-                        <span v-else-if="props.column.field === 'action'">
-                            <!-- View Icon -->
-                            <feather-icon
-                                :id="`invoice-row-${props.row.id}-view-icon`"
-                                icon="EyeIcon"
-                                size="16"
-                                class="mx-1"
-                                cursor="pointer"
-                                @click="viewRow(props.row)"
-                            />
-                            <b-tooltip
-                                placement="left"
-                                :title="$t('view')"
-                                :target="`invoice-row-${props.row.id}-view-icon`"
-                            />
+                        <!-- <span v-else-if="props.column.field === 'action'">
+              <feather-icon :id="`invoice-row-${props.row.id}-preview-icon`" icon="EditIcon" size="16" class="mx-1"
+                cursor="pointer" @click="$router.push({ name: 'edit_Brand', params: { id: props.row.id } })" />
+              <b-tooltip placement="left" :title="$t('edit_country')" :target="`invoice-row-${props.row.id}-preview-icon`" />
+            </span> -->
 
+                        <span v-else-if="props.column.field === 'action'">
                             <!-- Edit Icon -->
                             <feather-icon
-                                :id="`invoice-row-${props.row.id}-edit-icon`"
+                                :id="`invoice-row-${props.row.id}-preview-icon`"
                                 icon="EditIcon"
                                 size="16"
                                 class="mx-1"
-                                cursor="pointer"
+                                style="cursor: pointer"
                                 @click="
                                     $router.push({
                                         name: 'edit_Brand',
@@ -130,7 +195,7 @@
                             <b-tooltip
                                 placement="left"
                                 :title="$t('edit_country')"
-                                :target="`invoice-row-${props.row.id}-edit-icon`"
+                                :target="`invoice-row-${props.row.id}-preview-icon`"
                             />
 
                             <!-- Delete Icon -->
@@ -139,17 +204,16 @@
                                 icon="Trash2Icon"
                                 size="16"
                                 class="mx-1 text-danger"
-                                cursor="pointer"
-                                @click="deleteRow(props.row)"
+                                style="cursor: pointer"
+                                @click="deleteBrand(props.row)"
                             />
                             <b-tooltip
                                 placement="left"
-                                :title="$t('delete')"
                                 :target="`invoice-row-${props.row.id}-delete-icon`"
                             />
                         </span>
 
-                        <!-- Column: Common -->
+                        <!-- Default case -->
                         <span v-else>
                             {{ props.formattedRow[props.column.field] }}
                         </span>
@@ -212,6 +276,7 @@
                             </div>
                         </div>
                     </template>
+
                     <div
                         slot="emptystate"
                         style="text-align: center"
@@ -270,48 +335,21 @@ export default {
     },
     data() {
         return {
+            selectedBrand: null,
             pageLength: 10,
             dir: false,
             Loading: true,
             codeColumnSearch,
             columns: [
-                //  {
-                //   label: 'Logo',
-                //   field: 'image',
+                {
+                    label: this.$t("Blog Name"),
+                    field: "Blog Name",
+                },
+                {
+                    label: this.$t("Blog Image"),
+                    field: "Blog Image",
+                },
 
-                // },
-                {
-                    label: this.$t("name"),
-                    field: "name",
-                },
-                {
-                    label: this.$t("address"),
-                    field: "address",
-                },
-                {
-                    label: this.$t("date"),
-                    field: "date",
-                },
-                {
-                    label: this.$t("taluk"),
-                    field: "taluk",
-                },
-                {
-                    label: this.$t("district"),
-                    field: "district",
-                },
-                {
-                    label: this.$t("pin code"),
-                    field: "pin code",
-                },
-                {
-                    label: this.$t("mobile no"),
-                    field: "mobile no",
-                },
-                {
-                    label: this.$t("mail id"),
-                    field: "mail id",
-                },
                 {
                     label: this.$t("action"),
                     field: "action",
@@ -320,14 +358,6 @@ export default {
             rows: [],
             searchTerm: "",
         };
-    },
-    methods: {
-        handleedit(id) {
-            this.$router.push({
-                name: "add_Brand",
-                params: { id: data.item.id },
-            });
-        },
     },
     computed: {
         statusVariant() {
@@ -338,17 +368,13 @@ export default {
                 4: "light-warning",
                 5: "light-info",
             };
-
             return (status) => statusColor[status];
         },
-
         direction() {
             if (store.state.appConfig.isRTL) {
-                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
                 this.dir = true;
                 return this.dir;
             }
-            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             this.dir = false;
             return this.dir;
         },
@@ -360,67 +386,60 @@ export default {
         });
     },
     methods: {
-        changedefault(id) {
-            this.$http.get("/admin/brand_status/" + id).then((res) => {
-                if (res.data.message === "Status Active") {
-                    this.$toast({
-                        component: ToastificationContent,
-                        position: "bottom-right",
-                        props: {
-                            title: this.$t(res.data.message),
-                            icon: "CheckIcon",
-                            variant: "success",
-                        },
-                    });
-                } else {
-                    this.$toast({
-                        component: ToastificationContent,
-                        position: "bottom-right",
-                        props: {
-                            title: this.$t(res.data.message),
-                            icon: "HeartIcon",
-                            variant: "danger",
-                        },
-                    });
-                }
+        deleteBrand(brand) {
+            this.selectedBrand = brand;
+            this.$refs.confirmDeleteModal.show();
+        },
 
-                this.$http.get("/admin/brands_list").then((res) => {
-                    this.rows = res.data;
-                });
-            });
-        },
-        viewRow(row) {
-            alert("View: " + JSON.stringify(row));
-        },
-        deleteRow(row) {
+        confirmDelete() {
+            const id = this.selectedBrand.id;
             this.$http
-                .delete("/admin/brand/" + row.id)
-                .then((res) => {
-                    this.$toast({
-                        component: ToastificationContent,
-                        position: "bottom-right",
-                        props: {
-                            title: this.$t(res.data.message),
-                            icon: "CheckIcon",
-                            variant: "success",
-                        },
+                .delete(`/api/brands/${id}`)
+                .then(() => {
+                    this.$bvToast.toast("Brand deleted successfully", {
+                        title: "Success",
+                        variant: "success",
+                        solid: true,
                     });
+                    // Refresh brand list
                     this.$http.get("/admin/brands_list").then((res) => {
                         this.rows = res.data;
                     });
                 })
-                .catch((error) => {
-                    this.$toast({
-                        component: ToastificationContent,
-                        position: "bottom-right",
-                        props: {
-                            title: this.$t("Failed to delete brand."),
-                            icon: "AlertTriangleIcon",
-                            variant: "danger",
-                        },
+                .catch(() => {
+                    this.$bvToast.toast("Failed to delete brand", {
+                        title: "Error",
+                        variant: "danger",
+                        solid: true,
                     });
-                    console.error(error);
                 });
+        },
+
+        handleAction(row) {
+            console.log("Action clicked for row:", row);
+        },
+
+        changedefault(id) {
+            this.$http.get("/admin/brand_status/" + id).then((res) => {
+                this.$toast({
+                    component: ToastificationContent,
+                    position: "bottom-right",
+                    props: {
+                        title: this.$t(res.data.message),
+                        icon:
+                            res.data.message === "Status Active"
+                                ? "CheckIcon"
+                                : "HeartIcon",
+                        variant:
+                            res.data.message === "Status Active"
+                                ? "success"
+                                : "danger",
+                    },
+                });
+                this.$http.get("/admin/brands_list").then((res) => {
+                    this.rows = res.data;
+                });
+            });
         },
     },
 };
@@ -430,7 +449,7 @@ export default {
 @import "~@resources/scss/vue/libs/vue-good-table.scss";
 @import "~@resources/scss/vue/pages/page-profile.scss";
 
-#brand-img {
-    width: 75px;
+.custom-search .b-form-input {
+    max-width: 250px;
 }
 </style>

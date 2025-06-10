@@ -633,6 +633,77 @@ export default [
     },
 
     {
+        path: "/admin/blog",
+        name: "blog",
+        component: () => import("@/views/admin/blog/blog.vue"),
+        meta: {
+            pageTitle: "Blog",
+            breadcrumb: [
+                {
+                    text: "Blog",
+                },
+                {
+                    text: "Blog",
+                    active: true,
+                },
+            ],
+            resource: "blog",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/add_blog",
+        name: "add_blog",
+        component: () => import("@/views/admin/Blog/add_blog.vue"),
+        meta: {
+            pageTitle: "Add Blog",
+            breadcrumb: [
+                { text: "Blog" },
+                { text: "Add Blog", active: true },
+            ],
+            resource: "blog",
+            action: "read",
+        },
+    },
+    {
+        path: "/admin/add_blog_category",
+        name: "add_blog_category",
+        component: () => import("@/views/admin/Blog/add_blog_category.vue"),
+        meta: {
+            pageTitle: "Add Blog Category",
+            breadcrumb: [
+                { text: "Blog" },
+                { text: "Add Blog Category", active: true },
+            ],
+            resource: "blog",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/blog_category",
+        name: "blog_category",
+        component: () => import("@/views/admin/blog/blog_category.vue"),
+        meta: {
+            pageTitle: "Blog Category",
+            breadcrumb: [
+                {
+                    text: "Blog",
+                },
+                {
+                    text: "Blog Category",
+                    active: true,
+                },
+            ],
+            resource: "blog",
+            action: "read",
+        },
+    },
+
+
+
+    {
         path: "/admin/promocode_lists",
         name: "promocode_list",
         component: () => import("@/views/admin/promocodes/promocode_list.vue"),
@@ -2628,8 +2699,28 @@ export default [
         },
     },
 
-
      {
+        path: "/admin/edit_bulk",
+        name: "edit_bulk",
+        component: () => import("@/views/admin/bulkOrder/add_bulk.vue"),
+        meta: {
+            pageTitle: "Edit Bulk Orders",
+            breadcrumb: [
+                {
+                    text: "Bulk Orders",
+                },
+                {
+                    text: "Edit Bulk Orders",
+                    active: true,
+                },
+            ],
+            resource: "bulk-order",
+            action: "read",
+        },
+    },
+
+
+    {
         path: "/admin/franchise",
         name: "franchise",
         component: () => import("@/views/admin/franchise/franchise.vue"),
@@ -2669,7 +2760,7 @@ export default [
         },
     },
 
-     {
+    {
         path: "/admin/job_vacancy",
         name: "job_vacancy",
         component: () => import("@/views/admin/job_vacancy/job_vacancy.vue"),
@@ -2708,4 +2799,39 @@ export default [
             action: "read",
         },
     },
+
+      {
+        path: "/admin/edit_job_vacancy",
+        name: "edit_job_vacancy",
+        component: () => import("@/views/admin/job_vacancy/add_job_vacancy.vue"),
+        meta: {
+            pageTitle: "Edit Job Vacancy",
+            breadcrumb: [
+                {
+                    text: "Job Vacancy",
+                },
+                {
+                    text: "Edit Job Vacancy",
+                    active: true,
+                },
+            ],
+            resource: "job-vacancy",
+            action: "read",
+        },
+    },
+
+      {
+        path: '/admin/consumer/add',
+        name: 'add-consumer',
+        component: () => import('@/views/admin/consumer/addconsumer.vue'),
+        meta: {
+            pageTitle: 'Add Consumer',
+            breadcrumb: [
+                { text: 'Consumer Management' },
+                { text: 'Add Consumer', active: true },
+            ],
+            resource: 'user-create',
+            action: 'create',
+        },
+    }
 ];

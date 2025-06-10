@@ -294,7 +294,7 @@ Route::group(
         Route::post('add_to_pacakge', 'ItemmasterController@add_to_pacakge');
         Route::get('pacakge_list', 'ItemmasterController@pacakge_list');
         Route::get('delete_package/{id}', 'ItemmasterController@delete_package');
-
+        Route::get('product_imgs', 'ItemmasterController@product_imgs');
 
         Route::get('edit_carrier/{id}', 'ItemmasterController@edit_carrier');
         Route::post('add_to_carrier', 'ItemmasterController@add_to_carrier');

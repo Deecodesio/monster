@@ -48,6 +48,25 @@ export default [
         ],
     },
     {
+        title: "Blogs",
+        icon: "ImageIcon",
+        children: [
+            {
+                title: "Blog",
+                route: "blog",
+                resource: "reason",
+                action: "read",
+            },
+            {
+                title: "Blog category",
+                route: "blog_category",
+                resource: "reason",
+                action: "read",
+            },
+
+        ],
+    },
+    {
         title: "Promocodes",
         icon: "GiftIcon",
         children: [

@@ -14,6 +14,14 @@
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('state')">
+                        <b-form-input
+                            id="state"
+                            :placeholder="$t('select state')"
+                            v-model="bulkOrder.state"
+                            :required="!bulkOrder.state"
+                        />
+                    </b-form-group>
+                    <!-- <b-form-group :label="$t('state')">
                         <v-select
                             id="state"
                             v-model="bulkOrder.state"
@@ -25,13 +33,22 @@
                             :required="!bulkOrder.state"
                             @input="onStateChange"
                         />
-                    </b-form-group>
+                    </b-form-group> -->
                 </b-col>
             </b-row>
 
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('city')">
+                        <b-form-input
+                            id="city"
+                            :placeholder="$t('select city')"
+                            v-model="bulkOrder.district"
+                            :required="!bulkOrder.district"
+                        />
+                    </b-form-group>
+
+                    <!-- <b-form-group :label="$t('city')">
                         <v-select
                             id="city"
                             v-model="bulkOrder.city"
@@ -42,10 +59,18 @@
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                             :required="!bulkOrder.city"
                         />
-                    </b-form-group>
+                    </b-form-group> -->
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('taluk')">
+                        <b-form-input
+                            id="taluk"
+                            :placeholder="$t('select taluk')"
+                            v-model="bulkOrder.taluk"
+                            :required="!bulkOrder.taluk"
+                        />
+                    </b-form-group>
+                    <!-- <b-form-group :label="$t('taluk')">
                         <v-select
                             v-model="bulkOrder.taluk"
                             :options="city_list"
@@ -54,7 +79,7 @@
                             :placeholder="$t('select taluk')"
                             :required="!bulkOrder.taluk"
                         />
-                    </b-form-group>
+                    </b-form-group> -->
                 </b-col>
             </b-row>
 
@@ -90,8 +115,8 @@
                             id="phone1"
                             type="tel"
                             :placeholder="$t('phone_one')"
-                            v-model="bulkOrder.phone1"
-                            :required="!bulkOrder.phone1"
+                            v-model="bulkOrder.phone_1"
+                            :required="!bulkOrder.phone_1"
                         />
                     </b-form-group>
                 </b-col>
@@ -101,7 +126,7 @@
                             id="phone2"
                             type="tel"
                             :placeholder="$t('phone_two')"
-                            v-model="bulkOrder.phone2"
+                            v-model="bulkOrder.phone_2"
                         />
                     </b-form-group>
                 </b-col>
@@ -114,21 +139,20 @@
                             id="email"
                             type="email"
                             :placeholder="$t('email')"
-                            v-model="bulkOrder.email"
-                            :required="!bulkOrder.email"
+                            v-model="bulkOrder.email_id"
+                            :required="!bulkOrder.email_id"
                         />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('product') + ' ' + $t('category')">
                         <v-select
-                            v-model="bulkOrder.category_id"
+                            v-model="bulkOrder.business_category_id"
                             :options="product_category"
                             label="category_name"
                             :reduce="(sel) => sel.id"
                             :placeholder="$t('category')"
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                            :required="!bulkOrder.category_id"
                             @input="onCategoryStateChange"
                         />
                     </b-form-group>
@@ -151,7 +175,7 @@
                     </b-form-group>
 
                     <!-- Status -->
-                    <b-form-group :label="$t('status')">
+                    <!-- <b-form-group :label="$t('status')">
                         <v-select
                             v-model="bulkOrder.status"
                             :options="options"
@@ -161,7 +185,7 @@
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                             :required="!bulkOrder.status"
                         />
-                    </b-form-group>
+                    </b-form-group> -->
                 </b-col>
 
                 <!-- Right Column -->
@@ -173,7 +197,6 @@
                             :placeholder="$t('messages')"
                             rows="4"
                             style="resize: none; height: 105px"
-                            :required="!bulkOrder.message"
                         />
                     </b-form-group>
                 </b-col>
@@ -187,8 +210,16 @@
                         type="submit"
                         variant="primary"
                         class="mr-1"
+                        :disabled="loading"
                     >
-                        {{ $t("save") }}
+                        <b-spinner small v-if="loading"></b-spinner>
+                        {{ loading ? $t("saving") : $t("save") }}
+                    </b-button>
+                    <b-button
+                        variant="outline-secondary"
+                        @click="$router.go(-1)"
+                    >
+                        {{ $t("cancel") }}
                     </b-button>
                 </b-col>
             </b-row>
@@ -198,6 +229,7 @@
 
 <script>
 import BCardCode from "@core/components/b-card-code";
+import { BSpinner } from "bootstrap-vue";
 import {
     BRow,
     BCol,
@@ -234,12 +266,14 @@ export default {
         BTooltip,
         BTabs,
         BTab,
+        BSpinner,
     },
     directives: {
         Ripple,
     },
     data() {
         return {
+            loading: false,
             state_list: [],
             city_list: [],
             product_category: [],
@@ -248,13 +282,165 @@ export default {
                 { value: 1, text: this.$t("active") },
                 { value: 2, text: this.$t("inactive") },
             ],
-            bulkOrder: {},
+            bulkOrder: {
+                name: "",
+                state: null,
+                city: null,
+                taluk: null,
+                pincode: "",
+                address: "",
+                phone1: "",
+                phone2: "",
+                email: "",
+                category_id: null,
+                product_id: null,
+                status: 1, // Default to active
+                message: "",
+            },
         };
     },
+    // methods: {
+    //     addBulkOrder() {
+    //         let brand = new FormData();
+    //         brand.append("id", this.bulkOrder.id);
+    //         brand.append(
+    //             "name",
+    //             this.bulkOrder.name ? this.bulkOrder.name : ""
+    //         );
+    //         brand.append(
+    //             "state",
+    //             this.bulkOrder.state ? this.bulkOrder.state : ""
+    //         );
+    //         brand.append(
+    //             "city",
+    //             this.bulkOrder.city ? this.bulkOrder.city : ""
+    //         );
+    //         brand.append(
+    //             "taluk",
+    //             this.bulkOrder.taluk ? this.bulkOrder.taluk : ""
+    //         );
+    //         brand.append(
+    //             "pincode",
+    //             this.bulkOrder.pincode ? this.bulkOrder.pincode : ""
+    //         );
+    //         brand.append(
+    //             "address",
+    //             this.bulkOrder.address ? this.bulkOrder.address : ""
+    //         );
+    //         brand.append(
+    //             "phone1",
+    //             this.bulkOrder.phone1 ? this.bulkOrder.phone1 : ""
+    //         );
+    //         brand.append(
+    //             "phone2",
+    //             this.bulkOrder.phone2 ? this.bulkOrder.phone2 : ""
+    //         );
+    //         brand.append(
+    //             "email",
+    //             this.bulkOrder.email ? this.bulkOrder.email : ""
+    //         );
+    //         brand.append(
+    //             "product_category",
+    //             this.bulkOrder.product_category
+    //                 ? this.bulkOrder.product_category
+    //                 : ""
+    //         );
+    //         brand.append(
+    //             "product",
+    //             this.bulkOrder.product_id ? this.bulkOrder.product_id : ""
+    //         );
+    //         brand.append("status", this.bulkOrder.status);
+    //         brand.append(
+    //             "message",
+    //             this.bulkOrder.message ? this.bulkOrder.message : ""
+    //         );
+
+    //         // this.$http
+    //         //     .post("/admin/store_brand", brand)
+    //         //     .then((response) => {
+    //         //         if (response.data.status == true) {
+    //         //             this.$router.push({ name: "brands_list" });
+    //         //             this.popToast(response, "CheckIcon", "success");
+    //         //         } else {
+    //         //             this.popToast(response, "AlertTriangleIcon", "danger");
+    //         //         }
+    //         //     })
+    //         //     .catch((error) => console.log(error))
+    //         //     .finally(() => (this.loading = false));
+    //     },
+    //     popToast(response, icon, variant) {
+    //         this.$toast({
+    //             component: ToastificationContent,
+    //             position: "bottom-right",
+    //             props: {
+    //                 title: this.$t(response.data.message),
+    //                 icon: icon,
+    //                 variant: variant,
+    //             },
+    //         });
+    //     },
+
+    //     onStateChange(stateId) {
+    //         this.$http
+    //             .get("/admin/city_list_by_state/" + stateId)
+    //             .then((res) => {
+    //                 this.city_list = res.data;
+    //                 console.log(this.city_list);
+    //             });
+    //     },
+
+    //     onCategoryStateChange(catId) {
+    //         this.$http
+    //             .get("/admin/product_list_by_category/" + catId)
+    //             .then((res) => {
+    //                 this.product_list = res.data;
+    //                 console.log(this.product_list);
+    //             });
+    //     },
+    // },
+    // created() {
+    //     this.$http.get("/admin/state_list").then((res) => {
+    //         this.state_list = res.data;
+    //         console.log(this.state_list);
+    //     });
+
+    //     this.$http.get("/admin/business_category_lists").then((res) => {
+    //         this.product_category = res.data;
+    //         console.log("product_category assd");
+    //         console.log(this.product_category);
+    //     });
+    // },
     methods: {
         addBulkOrder() {
+            if (!this.bulkOrder.business_category_id) {
+                this.popToast(
+                    {
+                        data: {
+                            message: "Category is required.",
+                        },
+                    },
+                    "AlertTriangleIcon",
+                    "danger"
+                );
+                return;
+            }
+            if (!this.bulkOrder.product_id) {
+                this.popToast(
+                    {
+                        data: {
+                            message: "Product is required.",
+                        },
+                    },
+                    "AlertTriangleIcon",
+                    "danger"
+                );
+                return;
+            }
+            // Set loading state
+            this.loading = true;
+
             let brand = new FormData();
-            brand.append("id", this.bulkOrder.id);
+            brand.append("id", this.bulkOrder.id || "");
             brand.append(
                 "name",
                 this.bulkOrder.name ? this.bulkOrder.name : ""
@@ -264,8 +450,8 @@ export default {
                 this.bulkOrder.state ? this.bulkOrder.state : ""
             );
             brand.append(
-                "city",
-                this.bulkOrder.city ? this.bulkOrder.city : ""
+                "district",
+                this.bulkOrder.district ? this.bulkOrder.district : ""
             );
             brand.append(
                 "taluk",
@@ -280,25 +466,25 @@ export default {
                 this.bulkOrder.address ? this.bulkOrder.address : ""
             );
             brand.append(
-                "phone1",
-                this.bulkOrder.phone1 ? this.bulkOrder.phone1 : ""
+                "phone_1",
+                this.bulkOrder.phone_1 ? this.bulkOrder.phone_1 : ""
             );
             brand.append(
-                "phone2",
-                this.bulkOrder.phone2 ? this.bulkOrder.phone2 : ""
+                "phone_2",
+                this.bulkOrder.phone_2 ? this.bulkOrder.phone_2 : ""
             );
             brand.append(
-                "email",
-                this.bulkOrder.email ? this.bulkOrder.email : ""
+                "email_id",
+                this.bulkOrder.email_id ? this.bulkOrder.email_id : ""
             );
             brand.append(
-                "product_category",
-                this.bulkOrder.product_category
-                    ? this.bulkOrder.product_category
+                "business_category_id",
+                this.bulkOrder.business_category_id
+                    ? this.bulkOrder.business_category_id
                     : ""
             );
             brand.append(
-                "product",
+                "product_id",
                 this.bulkOrder.product_id ? this.bulkOrder.product_id : ""
             );
             brand.append("status", this.bulkOrder.status);
@@ -307,19 +493,39 @@ export default {
                 this.bulkOrder.message ? this.bulkOrder.message : ""
             );
 
-            // this.$http
-            //     .post("/admin/store_brand", brand)
-            //     .then((response) => {
-            //         if (response.data.status == true) {
-            //             this.$router.push({ name: "brands_list" });
-            //             this.popToast(response, "CheckIcon", "success");
-            //         } else {
-            //             this.popToast(response, "AlertTriangleIcon", "danger");
-            //         }
-            //     })
-            //     .catch((error) => console.log(error))
-            //     .finally(() => (this.loading = false));
+            console.log("Brand data to be sent:", brand);
+
+            // Make the API call
+            this.$http
+                .post("/api/bulk_enquiry", brand)
+                .then((response) => {
+
+                    console.log("Response from API:", response);
+                    if (response.data.success == true) {
+                        this.$router.push({ name: "bulk_orders" });
+                        this.popToast(response, "CheckIcon", "success");
+                    } else {
+                        this.popToast(response, "AlertTriangleIcon", "danger");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.popToast(
+                        {
+                            data: {
+                                message: "Failed to save. Please try again.",
+                            },
+                        },
+                        "AlertTriangleIcon",
+                        "danger"
+                    );
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
         },
+
+        // Keep all existing methods exactly the same below
         popToast(response, icon, variant) {
             this.$toast({
                 component: ToastificationContent,
@@ -351,16 +557,23 @@ export default {
         },
     },
     created() {
-        this.$http.get("/admin/state_list").then((res) => {
-            this.state_list = res.data;
-            console.log(this.state_list);
-        });
+        // this.$http.get("/admin/state_list").then((res) => {
+        //     this.state_list = res.data;
+        //     console.log(this.state_list);
+        // });
 
         this.$http.get("/admin/business_category_lists").then((res) => {
             this.product_category = res.data;
             console.log("product_category assd");
-            console.log(this.product_category);
+            console.log(this.product_category); 
         });
+        if (this.$route.params.id) {
+      this.$http.get('/api/bulk_enquiry/' + this.$route.params.id)
+        .then(res => {
+          this.bulkOrder = res.data.data;
+          this.onCategoryStateChange(this.bulkOrder.business_category_id);
+        })
+    }
     },
 };
 </script>

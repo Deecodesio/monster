@@ -15,12 +15,7 @@
             <div v-else>
                 <b-card no-body>
                     <div class="featured-image-container mt-3">
-                        <b-img
-                            :src="blog.featured_image"
-                            fluid
-                            class="featured-image"
-                            alt="Blog featured image"
-                        />
+                        <b-img :src="blog.featured_image" fluid class="featured-image" alt="Blog featured image" />
                     </div>
                     <b-card-body>
                         <h1 class="blog-title mb-3">{{ blog.title }}</h1>
@@ -41,16 +36,13 @@
                 <!-- Back to blogs button -->
                 <div class="text-center mt-4">
                     <b-button variant="outline-primary" :to="{ name: 'blogs' }">
-                        <b-icon icon="arrow-left" class="mr-1"></b-icon>
+                        <!-- <b-icon icon="arrow-left" class="mr"></b-icon> -->
                         Back to Blogs
                     </b-button>
                 </div>
             </div>
         </div>
-        <div
-            class="container-fluid"
-            style="margin-top: 50px; padding-right: 0; padding-left: 0"
-        >
+        <div class="container-fluid" style="margin-top: 50px; padding-right: 0; padding-left: 0">
             <Ourshops />
         </div>
     </div>
@@ -137,7 +129,10 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 5rem;
+    padding: 30px;
 }
+
 
 .blog-title {
     font-size: 2.5rem;

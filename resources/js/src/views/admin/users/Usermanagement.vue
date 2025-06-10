@@ -11,13 +11,32 @@
         <b-card>
 
           <!-- input search -->
-          <div class="custom-search d-flex justify-content-end">
+          <!-- <div class="custom-search d-flex justify-content-end">
             <b-form-group>
               <div class="d-flex align-items-center">
                 <label class="mr-1">{{ $t('message.seachLabel') }}</label>
                 <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text" class="d-inline-block" />
               </div>
             </b-form-group>
+          </div> -->
+          <!-- Top bar with search on left and Add button on right -->
+          <div class="d-flex justify-content-between align-items-center mb-1">
+
+
+          <b-button variant="primary" @click="$router.push({ name: 'add-consumer' })">
+  <span style="font-size: 1.5em;">+</span> Add Consumer
+</b-button>
+
+
+
+            <b-form-group class="mb-0">
+              <div class="d-flex align-items-center">
+                <label class="mr-1">{{ $t('message.seachLabel') }}</label>
+                <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text"
+                  class="d-inline-block" />
+              </div>
+            </b-form-group>
+
           </div>
 
           <!-- table -->
@@ -25,9 +44,9 @@
             enabled: true,
             externalQuery: searchTerm
           }" :pagination-options="{
-  enabled: true,
-  perPage: pageLength
-}">
+            enabled: true,
+            perPage: pageLength
+          }">
             <template slot="table-row" slot-scope="props">
 
               <!-- Column: Name -->
@@ -71,13 +90,13 @@
               </span>
               <!-- Column: Action -->
               <span v-else-if="props.column.field === 'action'">
-              
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'"  variant="outline-warning"
-                  @click="verify(props.row.code_id)"  v-if="props.row.wall_status == 0 && props.row.topup_code !== ''" >
+
+                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-warning"
+                  @click="verify(props.row.code_id)" v-if="props.row.wall_status == 0 && props.row.topup_code !== ''">
                   {{ $t('verify') }} {{ $t('code') }}
                 </b-button>
 
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'"  variant="outline-success"
+                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-success"
                   @click="setpop(props.row.id)" v-else>
                   {{ $t('add') }} {{ $t('wallet') }}
                 </b-button>
@@ -157,7 +176,7 @@
       <form ref="form" @submit.prevent="verify_otp">
         <b-form-group>
           <b-form-input type="number" :placeholder="$t('OTP')" v-model="Wallet.otp" />
-          <b-form-input id="code_id" type="number" v-model="Wallet.id" hidden="hidden"/>
+          <b-form-input id="code_id" type="number" v-model="Wallet.id" hidden="hidden" />
         </b-form-group>
 
         <b-col>
@@ -297,11 +316,11 @@ export default {
       .then(res => {
         this.rows = res.data;
         this.Loading = false;
-        if(process.env.MIX_IS_DEMO){
-          for(let i=0;i<this.rows.length;i++){
-          this.rows[i].phone = "**********"
-          this.rows[i].email = "**********"
-        }
+        if (process.env.MIX_IS_DEMO) {
+          for (let i = 0; i < this.rows.length; i++) {
+            this.rows[i].phone = "**********"
+            this.rows[i].email = "**********"
+          }
         }
       })
 
@@ -314,6 +333,9 @@ export default {
       })
   },
   methods: {
+    goToAddConsumer() {
+      this.$router.push({ name: 'add-consumer' })
+    },
     add_wallet() {
       // this.Wallet.id = document.getElementById("modval1").value;
       this.Wallet.amount = this.Wallet.amount;
@@ -338,13 +360,13 @@ export default {
                 },
               })
               this.$http.get('/admin/user_list')
-      .then(res => {
-        this.rows = res.data;
-        this.Loading = false;
-      })
-      this.Wallet.amount = '';
-      this.Wallet.otp = '';
-      this.Wallet.id = '';
+                .then(res => {
+                  this.rows = res.data;
+                  this.Loading = false;
+                })
+              this.Wallet.amount = '';
+              this.Wallet.otp = '';
+              this.Wallet.id = '';
 
             } else {
 
@@ -390,13 +412,13 @@ export default {
                 },
               })
               this.$http.get('/admin/user_list')
-      .then(res => {
-        this.rows = res.data;
-        this.Loading = false;
-      })
-      this.Wallet.amount = '';
-      this.Wallet.otp = '';
-      this.Wallet.id = '';
+                .then(res => {
+                  this.rows = res.data;
+                  this.Loading = false;
+                })
+              this.Wallet.amount = '';
+              this.Wallet.otp = '';
+              this.Wallet.id = '';
             } else {
 
               this.$toast({
@@ -422,26 +444,36 @@ export default {
 
     setpop(id) {
       this.$refs['my-modal1'].show();
-    //  this.setpop1(id);
-     this.Wallet.id= id;
+      //  this.setpop1(id);
+      this.Wallet.id = id;
     },
     // setpop1(id)
     // {
-      
+
     //   this.Wallet.id= id;
-     
+
     // },
 
     verify(id) {
       this.$refs['my-modal'].show();
-      
-      this.Wallet.id= id;
+
+      this.Wallet.id = id;
     }
 
   }
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
+.b-button.btn-danger {
+  background-color: #E01764;
+  /* similar to your pinkish-red */
+  border-color:#E01764;
+  color: #fff;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
 @import '~@resources/scss/vue/libs/vue-good-table.scss';
 </style>

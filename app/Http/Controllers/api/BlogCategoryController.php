@@ -29,14 +29,31 @@ class BlogCategoryController extends BaseController
     {
         $validated = $request->validate([
             'name' => 'required|max:255',
+            'id' => 'nullable',
             'description' => 'nullable'
         ]);
 
-        $category = BlogCategory::create([
-            'name' => $validated['name'],
-            'slug' => Str::slug($validated['name']),
-            'description' => $validated['description'] ?? null
-        ]);
+        if (!empty($validated['id'])) {
+            // Update
+            $category = BlogCategory::find($validated['id']);
+
+            if ($category) {
+                $category->update($validated);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Blog category not found',
+                ], 404);
+            }
+        } else {
+            $category = BlogCategory::create([
+                'name' => $validated['name'],
+                'slug' => Str::slug($validated['name']),
+                'description' => $validated['description'] ?? null
+            ]);
+        }
+
+
 
         return response()->json($category, 201);
     }

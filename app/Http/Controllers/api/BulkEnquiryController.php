@@ -51,8 +51,10 @@ class BulkEnquiryController extends BaseController
             $query->orderBy($sortBy, $sortOrder);
 
             // Pagination
-            $perPage = $request->get('per_page', 15);
-            $franchises = $query->paginate($perPage);
+            // $perPage = $request->get('per_page', 15);
+            // $franchises = $query->paginate($perPage);
+            $query = BulkEnquiry::with(['product']);
+            $franchises = $query->get();
 
             return response()->json([
                 'success' => true,
@@ -75,6 +77,7 @@ class BulkEnquiryController extends BaseController
     {
         try {
             $validator = $request->validate([
+                'id' => 'nullable|string',
                 'name' => 'required|string|max:255',
                 'phone_1' => 'required|string|max:255',
                 'phone_2' => 'nullable|string|max:255',
@@ -89,14 +92,32 @@ class BulkEnquiryController extends BaseController
                 'business_category_id' => 'required|int|exists:business_category,id',
             ]);
 
-            $bulkEnquiry = BulkEnquiry::create($validator);
+            // $bulkEnquiry = BulkEnquiry::create($validator);
+
+            if (!empty($validator['id'])) {
+                // Update
+                $bulkEnquiry = BulkEnquiry::find($validator['id']);
+
+                if ($bulkEnquiry) {
+                    $bulkEnquiry->update($validator);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Bulk enquiry not found',
+                    ], 404);
+                }
+            } else {
+                // Create new
+                $bulkEnquiry = BulkEnquiry::create($validator);
+            }
+
 
             return response()->json([
                 'success' => true,
                 'message' => 'Bulk enquiry submitted successfully',
                 'data' => $bulkEnquiry
             ], 201);
-        } catch (\Exception $e) {           
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to submit bulk enquiry',
