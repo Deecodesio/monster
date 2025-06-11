@@ -15,47 +15,81 @@ class BlogCategoryController extends BaseController
 {
     public function index()
     {
-        $categories = BlogCategory::orderBy('name', 'asc')->get();
-        return response()->json($categories);
+        try {
+            $categories = BlogCategory::orderBy('name', 'asc')->get();
+            return response()->json([
+                'success' => true,
+                'message' => 'Blog categories retrieved successfully',
+                'data' => $categories
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve blog categories',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function show($id)
     {
-        $category = BlogCategory::findOrFail($id);
-        return response()->json($category);
+        try {
+            $category = BlogCategory::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'Blog category retrieved successfully',
+                'data' => $category
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Blog category not found',
+                'error' => $e->getMessage()
+            ], 404);
+        }
     }
 
     public function store(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|max:255',
-            'id' => 'nullable',
-            'description' => 'nullable'
-        ]);
-
-        if (!empty($validated['id'])) {
-            // Update
-            $category = BlogCategory::find($validated['id']);
-
-            if ($category) {
-                $category->update($validated);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Blog category not found',
-                ], 404);
-            }
-        } else {
-            $category = BlogCategory::create([
-                'name' => $validated['name'],
-                'slug' => Str::slug($validated['name']),
-                'description' => $validated['description'] ?? null
+        try {
+            $validated = $request->validate([
+                'name' => 'required|max:255',
+                'id' => 'nullable',
+                'description' => 'nullable'
             ]);
+
+            if (!empty($validated['id'])) {
+                // Update
+                $category = BlogCategory::find($validated['id']);
+
+                if ($category) {
+                    $category->update($validated);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Blog category not found',
+                    ], 404);
+                }
+            } else {
+                $category = BlogCategory::create([
+                    'name' => $validated['name'],
+                    'slug' => Str::slug($validated['name']),
+                    'description' => $validated['description'] ?? null
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Franchise application submitted successfully',
+                'data' => $category
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to submit franchise application',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-
-
-        return response()->json($category, 201);
     }
 
     public function update(Request $request, $id)

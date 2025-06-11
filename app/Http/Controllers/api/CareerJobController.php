@@ -77,6 +77,7 @@ class CareerJobController extends BaseController
     {
         try {
             $validator = $request->validate([
+                'id' => 'nullable|string',
                 'job_name' => 'required|string|max:255',
                 'job_details' => 'required|string',
                 'location_id' => 'required|exists:add_city,id',

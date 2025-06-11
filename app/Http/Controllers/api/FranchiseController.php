@@ -75,8 +75,8 @@ class FranchiseController extends BaseController
     public function store(Request $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'id' => 'required|string',
+             $validator = $request->validate([
+                'id' => 'nullable|string',
                 'name' => 'required|string|max:255',
                 'phone_1' => 'required|string|max:255',
                 'phone_2' => 'nullable|string|max:255',
@@ -90,13 +90,13 @@ class FranchiseController extends BaseController
                 'state' => 'required|string|max:255'
             ]);
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation failed',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
+            // if ($validator->fails()) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'message' => 'Validation failed',
+            //         'errors' => $validator->errors()
+            //     ], 422);
+            // }
 
             // $franchise = Franchise::create($validator->validated());
 

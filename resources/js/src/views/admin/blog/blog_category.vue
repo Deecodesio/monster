@@ -23,7 +23,9 @@
 
                 <b-row style="margin-bottom: 10px !important">
                     <b-col md="6">
-                        <div class="d-flex justify-content-start align-items-center">
+                        <div
+                            class="d-flex justify-content-start align-items-center"
+                        >
                             <b-button
                                 variant="primary"
                                 :to="{ name: 'add_blog_category' }"
@@ -31,13 +33,17 @@
                                 style="box-shadow: none !important"
                             >
                                 <i class="fa-solid fa-plus"></i>
-                                {{ $t("Blog Category") }}
+                                {{ $t("Add Blog Category") }}
                             </b-button>
                         </div>
                     </b-col>
                     <b-col md="6">
-                        <div class="d-flex justify-content-end align-items-center">
-                            <label class="mr-1">{{ $t("message.seachLabel") }}</label>
+                        <div
+                            class="d-flex justify-content-end align-items-center"
+                        >
+                            <label class="mr-1">{{
+                                $t("message.seachLabel")
+                            }}</label>
                             <b-form-input
                                 v-model="searchTerm"
                                 :placeholder="$t('message.seachLabel')"
@@ -67,13 +73,43 @@
                         <span v-if="props.column.field === 'name'">
                             {{ props.row.name }}
                         </span>
-                        <span v-else-if="props.column.field === 'message'">
-                            {{ props.row.message }}
+                        <span v-else-if="props.column.field === 'description'">
+                            {{ props.row.description }}
                         </span>
                         <span v-else-if="props.column.field === 'action'">
-                            <b-button size="sm" variant="danger" @click="deleteCategory(props.row)">
-                                <feather-icon icon="TrashIcon" size="16" />
-                            </b-button>
+                            <!-- Edit Icon -->
+                            <feather-icon
+                                :id="`invoice-row-${props.row.id}-preview-icon`"
+                                icon="EditIcon"
+                                size="16"
+                                class="mx-1"
+                                style="cursor: pointer"
+                                @click="
+                                    $router.push({
+                                        name: 'edit_blog_category',
+                                        params: { id: props.row.id },
+                                    })
+                                "
+                            />
+                            <b-tooltip
+                                placement="left"
+                                :title="$t('Edit Category')"
+                                :target="`invoice-row-${props.row.id}-preview-icon`"
+                            />
+
+                            <!-- Delete Icon -->
+                            <feather-icon
+                                :id="`invoice-row-${props.row.id}-delete-icon`"
+                                icon="Trash2Icon"
+                                size="16"
+                                class="mx-1 text-danger"
+                                style="cursor: pointer"
+                                @click="deleteCategory(props.row)"
+                            />
+                            <b-tooltip
+                                placement="left"
+                                :target="`invoice-row-${props.row.id}-delete-icon`"
+                            />
                         </span>
                     </template>
 
@@ -118,10 +154,16 @@
                                     "
                                 >
                                     <template #prev-text>
-                                        <feather-icon icon="ChevronLeftIcon" size="18" />
+                                        <feather-icon
+                                            icon="ChevronLeftIcon"
+                                            size="18"
+                                        />
                                     </template>
                                     <template #next-text>
-                                        <feather-icon icon="ChevronRightIcon" size="18" />
+                                        <feather-icon
+                                            icon="ChevronRightIcon"
+                                            size="18"
+                                        />
                                     </template>
                                 </b-pagination>
                             </div>
@@ -142,7 +184,16 @@
 </template>
 
 <script>
-import { BRow, BCol, BCard, BButton, BFormInput, BFormSelect, BPagination, BImg } from "bootstrap-vue";
+import {
+    BRow,
+    BCol,
+    BCard,
+    BButton,
+    BFormInput,
+    BFormSelect,
+    BPagination,
+    BImg,
+} from "bootstrap-vue";
 import { VueGoodTable } from "vue-good-table";
 import store from "@/store/index";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
@@ -172,7 +223,7 @@ export default {
                 },
                 {
                     label: this.$t("Description"),
-                    field: "message",
+                    field: "description",
                 },
                 {
                     label: this.$t("action"),
@@ -199,7 +250,7 @@ export default {
     methods: {
         fetchCategories() {
             this.$http.get("/api/blog-categories").then((res) => {
-                this.rows = res.data;
+                this.rows = res.data.data;
                 this.Loading = false;
             });
         },

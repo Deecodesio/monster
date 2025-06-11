@@ -16,8 +16,8 @@
                 <b-col md="12">
                     <b-form-group :label="$t('description')">
                         <b-form-textarea
-                            id="message"
-                            v-model="blog_category.message"
+                            id="description"
+                            v-model="blog_category.description"
                             :placeholder="$t('description')"
                             rows="4"
                             style="resize: none; height: 105px"
@@ -82,12 +82,23 @@ export default {
             },
         };
     },
+     created() {
+        console.log("Add Blog Category Page Loaded");
+        console.log(this.$route.params.id);
+        if (this.$route.params.id) {
+      this.$http.get('/api/blog-categories/' + this.$route.params.id)
+        .then(res => {
+          this.blog_category = res.data.data;
+        })
+    }
+    },
    methods: {
     addBlogCategory() {
         let form = new FormData();
+        form.append("id", this.blog_category.id || "");
         form.append("name", this.blog_category.name);
         form.append("status", this.blog_category.status);
-        form.append("description", this.blog_category.message);
+        form.append("description", this.blog_category.description || "");
 
         this.$http
             .post("/api/blog-categories", form)
@@ -95,7 +106,7 @@ export default {
                 if (response.data.success === true) {
                     this.popToast(response, "CheckIcon", "success");
                     setTimeout(() => {
-                        this.$router.push({ name: "blog_category_list" });
+                        this.$router.push({ name: "blog_category" });
                     }, 1000); 
                 } else {
                     this.popToast(response, "AlertTriangleIcon", "danger");

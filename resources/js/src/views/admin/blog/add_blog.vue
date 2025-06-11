@@ -1,49 +1,67 @@
 <template>
     <b-card>
-        <b-form @submit.prevent="addJobVacancy">
+        <b-form @submit.prevent="addBlog">
             <b-row>
                 <b-col md="6">
-                    <b-form-group label="Blog Name">
-                        <b-form-input class="rose-border" v-model="job.name" />
+                    <b-form-group :label="$t('name')">
+                        <b-form-input
+                            id="name"
+                            :placeholder="$t('Blog Name')"
+                            v-model="blog.title"
+                            :required="!blog.title"
+                        />
                     </b-form-group>
 
-                    <!-- <b-form-group label="Date ">
-                        <b-form-input
-                            class="rose-border"
-                            type="date"
-                            v-model="job.date"
-                        />
-                    </b-form-group> -->
-
-                    <!-- <b-form-group label="Created By">
-                        <b-form-input
-                            class="rose-border"
-                            v-model="job.created_by"
-                        />
-                    </b-form-group> -->
-
                     <b-form-group label="Category">
-                        <b-form-select
-                            class="rose-border"
-                            v-model="job.status"
+                        <v-select
+                            id="state"
+                            v-model="blog.category_id"
                             :options="categoryOptions"
-                            :placeholder="$t('Category')"
+                            label="name"
+                            :reduce="(sel) => sel.id"
+                            :placeholder="$t('Select Category')"
+                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                            :required="!blog.category_id"
                         />
                     </b-form-group>
                     <b-form-group :label="$t('Blog image')">
                         <b-form-file
-                            v-model="carrier.image"
-                            placeholder="Choose a file or drop it here..."
-                            drop-placeholder="Drop file here..."
+                            v-model="blog.featured_image"
+                            drop-placeholder="Drag your image"
                             @change="onFileChange1"
                             accept=".jpg, .png, .jpeg"
                         />
+                        <b-form-group>
+                            <b-img
+                                :src="url1 ? url1 : ('/blogs/' + blog.featured_image)"
+                                rounded
+                                fluid
+                                id="avatar-img"
+                                alt="category photo"
+                                v-if="blog.featured_image"
+                            />
+                            <b-img
+                                src="/no_image.png"
+                                id="avatar-img"
+                                fluid
+                                alt="Scan"
+                                v-else
+                            />
+                        </b-form-group>
+
+                        <!-- <b-form-file
+                            v-model="blog.featured_image"
+                            placeholder="Choose a file or drop it here..."
+                            drop-placeholder="Drop file here..."
+                            @change="onFileChange1"
+                            accept=".jpg, .png, .jpeg"  
+                        /> -->
                     </b-form-group>
-                    <b-form-group :label="$t('Export')">
+                    <b-form-group :label="$t('Excerpt')">
                         <b-form-textarea
-                            id="message"
-                            v-model="bulkOrder.message"
-                            :placeholder="$t('Export')"
+                            id="excerpt"
+                            v-model="blog.excerpt"
+                            :placeholder="$t('Excerpt')"
                             rows="4"
                             style="resize: none; height: 105px"
                         />
@@ -63,15 +81,16 @@
                 </b-col>
 
                 <b-col md="6">
-                    <div class="container-fluid card-editor mb-0">
+                    <div style="padding-bottom: calc(0.438rem + 1px)">
                         Blog Details
                     </div>
                     <b-row>
-                        <b-col class="quill-editor ql-editor" md="12">
+                        <b-col md="12">
                             <b-form-group>
                                 <quill-editor
-                                    v-model="job.details"
+                                    v-model="blog.content"
                                     :options="snowOption"
+                                    style="height: 275px"
                                 />
                             </b-form-group>
                         </b-col>
@@ -97,6 +116,7 @@ import {
     BCard,
     BCardText,
 } from "bootstrap-vue";
+import vSelect from "vue-select";
 import { quillEditor } from "vue-quill-editor";
 import Ripple from "vue-ripple-directive";
 
@@ -111,23 +131,29 @@ export default {
         BCard,
         BCardText,
         quillEditor,
+        vSelect,
+    },
+    watch: {
+        "blog.content"(val) {
+            console.log("Quill updated:", val);
+        },
     },
     data() {
         return {
-            job: {
-                name: "",
-                city: "",
-                state: "",
-                date: "",
+            url1: null,
+            blog: {
+                title: "",
                 created_by: "",
                 status: "",
-                details: "",
+                featured_image: null,
+                category_id: "",
+                content: "",
             },
             snowOption: {
                 theme: "snow",
             },
             loading: false,
-            categoryOptions: [{ value: "", text: "Category" }],
+            categoryOptions: [],
             carrier: {
                 image: null,
             },
@@ -139,31 +165,61 @@ export default {
     directives: {
         Ripple,
     },
+    created() {
+        this.$http.get("/api/blog-categories").then((res) => {
+            this.categoryOptions = res.data.data;
+        });
+        console.log(this.$route.params);
+        console.log(this.$route.params.id);
+        if (this.$route.params.id) {
+            this.$http
+                .get("/api/blogs/" + this.$route.params.id)
+                .then((res) => {
+                    this.blog = res.data;
+                    console.log("content", this.blog.content);
+                });
+        }
+    },
     methods: {
-        addJobVacancy() {
+        onFileChange1(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.url1 = reader.result;
+            };
+        },
+
+        addBlog() {
+
+            console.log("Adding blog with data:", this.blog.featured_image);
+            // return null;
+            
             this.loading = true;
             const data = new FormData();
-            data.append("name", this.job.name);
-            data.append("city", this.job.city);
-            data.append("state", this.job.state);
-            data.append("date", this.job.date);
-            data.append("created_by", this.job.created_by);
-            data.append("status", this.job.status);
-            data.append("details", this.job.details);
+            data.append("id", this.blog.id || "");
+            data.append("title", this.blog.title);
+            data.append("created_by", localStorage.admin_id);
+            data.append("status", this.blog.status);
+            data.append("content", this.blog.content);
+            data.append("excerpt", this.blog.excerpt);
+            data.append("featured_image", this.blog.featured_image);
+            data.append("category_id", this.blog.category_id);
 
             this.$http
-                .post("/admin/job-vacancy", data)
+                .post("/api/blogs", data)
                 .then((response) => {
-                    this.$toast({
-                        title: this.$t("Job vacancy saved successfully!"),
-                        variant: "success",
-                        position: "bottom-right",
-                    });
-                    // Optionally reset form here
+                    console.log("Response from API:", response);
+                    if (response.data.success == true) {
+                        this.$router.push({ name: "blog" });
+                        this.popToast(response, "CheckIcon", "success");
+                    } else {
+                        this.popToast(response, "AlertTriangleIcon", "danger");
+                    }
                 })
                 .catch((error) => {
                     this.$toast({
-                        title: this.$t("Failed to save job vacancy."),
+                        title: this.$t("Failed to save blog."),
                         variant: "danger",
                         position: "bottom-right",
                     });
@@ -178,6 +234,9 @@ export default {
 </script>
 
 <style scoped>
+#avatar-img {
+    width: 9.92rem;
+}
 .rose-border {
     border: 1px solid #e91e63;
     box-shadow: none;
@@ -186,11 +245,11 @@ export default {
 .card-editor {
     margin-left: 115px;
 }
-.quill-editor {
+/* .quill-editor {
     min-height: 200px;
     max-height: 300px;
     overflow-y: auto;
-}
+} */
 .ql-editor {
     min-height: 180px;
     max-height: 260px;

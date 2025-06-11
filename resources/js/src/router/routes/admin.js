@@ -655,7 +655,7 @@ export default [
     {
         path: "/admin/add_blog",
         name: "add_blog",
-        component: () => import("@/views/admin/Blog/add_blog.vue"),
+        component: () => import("@/views/admin/blog/add_blog.vue"),
         meta: {
             pageTitle: "Add Blog",
             breadcrumb: [
@@ -667,14 +667,43 @@ export default [
         },
     },
     {
+        path: "/admin/edit_blog/:id",
+        name: "edit_blog",
+        component: () => import("@/views/admin/blog/add_blog.vue"),
+        meta: {
+            pageTitle: "Edit Blog",
+            breadcrumb: [
+                { text: "Blog" },
+                { text: "Edit Blog", active: true },
+            ],
+            resource: "blog",
+            action: "read",
+        },
+    },
+    {
         path: "/admin/add_blog_category",
         name: "add_blog_category",
-        component: () => import("@/views/admin/Blog/add_blog_category.vue"),
+        component: () => import("@/views/admin/blog/add_blog_category.vue"),
         meta: {
             pageTitle: "Add Blog Category",
             breadcrumb: [
                 { text: "Blog" },
                 { text: "Add Blog Category", active: true },
+            ],
+            resource: "blog",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/edit_blog_category",
+        name: "edit_blog_category",
+        component: () => import("@/views/admin/blog/add_blog_category.vue"),
+        meta: {
+            pageTitle: "Edit Blog Category",
+            breadcrumb: [
+                { text: "Blog" },
+                { text: "Edit Blog Category", active: true },
             ],
             resource: "blog",
             action: "read",
@@ -2752,6 +2781,26 @@ export default [
                 },
                 {
                     text: "Add Franchise",
+                    active: true,
+                },
+            ],
+            resource: "franchise",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/edit_franchise",
+        name: "edit_franchise",
+        component: () => import("@/views/admin/franchise/add_franchise.vue"),
+        meta: {
+            pageTitle: "Edit Franchise",
+            breadcrumb: [
+                {
+                    text: "Franchise",
+                },
+                {
+                    text: "Edit Franchise",
                     active: true,
                 },
             ],

@@ -41,6 +41,28 @@ class Custom
         return $imageName;
     }
 
+      public static function upload_image_blogs($request, $param)
+    {
+
+        if (!$request->file($param)) {
+            return null;
+        }
+
+        $extension = $request->file($param)->getClientOriginalExtension();
+        $mime = $request->file($param)->getMimeType();
+
+        $allowedExtensions = ['jpg', 'jpeg', 'png'];
+        $allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!in_array($extension, $allowedExtensions) || !in_array($mime, $allowedMimes)) {
+            return null;
+        }
+
+        $imageName = self::random_string(32) . '.' . $request->file($param)->getClientOriginalExtension();
+        $imageName =  str_replace(' ', '', $imageName);
+        $request->file($param)->move('blogs/', $imageName);
+        return $imageName;
+    }
+
     public static function upload_pickupdrop($request, $param)
     {
 

@@ -2,7 +2,7 @@
     <b-card>
         <b-form @submit.prevent="addBulkOrder">
             <b-row>
-                <b-col md="6">
+                <!-- <b-col md="6">
                     <b-form-group :label="$t('name')">
                         <b-form-input
                             id="name"
@@ -11,7 +11,7 @@
                             :required="!bulkOrder.name"
                         />
                     </b-form-group>
-                </b-col>
+                </b-col> -->
                 <b-col md="6">
                     <b-form-group :label="$t('state')">
                         <b-form-input
@@ -525,7 +525,7 @@ export default {
                 });
         },
 
-        // Keep all existing methods exactly the same below
+        
         popToast(response, icon, variant) {
             this.$toast({
                 component: ToastificationContent,

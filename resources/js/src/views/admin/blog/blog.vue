@@ -104,51 +104,39 @@
                 >
                     <template slot="table-row" slot-scope="props">
                         <!-- Column: Name -->
-                        <span v-if="props.column.field === 'name'">
-                            {{ props.row.name }}
+                        <span v-if="props.column.field === 'blogName'">
+                            {{ props.row.title }}
                         </span>
 
-                        <!-- Column: Address -->
-                        <span v-else-if="props.column.field === 'address'">
-                            {{ props.row.address }}
-                        </span>
+                        <div
+                            v-if="props.column.field === 'blogImage'"
+                            class="text-nowrap"
+                        >
+                            <b-img
+                                :src= "'/blogs/' + props.row.featured_image"
+                                rounded
+                                fluid
+                                width="100%"
+                                height="50%"
+                                id="blog-img"
+                                alt="blog photo"
+                            />
+                        </div>
 
                         <!-- Column: Date -->
-                        <span v-else-if="props.column.field === 'date'">
-                            {{ props.row.date }}
+                        <span v-else-if="props.column.field === 'category'">
+                            {{
+                                props.row.category
+                                    ? props.row.category.name
+                                    : ""
+                            }}
                         </span>
 
                         <!-- Column: Product -->
-                        <span v-else-if="props.column.field === 'product'">
-                            {{ props.row.product }}
+                        <span v-else-if="props.column.field === 'excerpt'">
+                            {{ props.row.excerpt }}
                         </span>
 
-                        <!-- Column: Quantity -->
-                        <span v-else-if="props.column.field === 'quantity'">
-                            {{ props.row.quantity }}
-                        </span>
-
-                        <!-- Column: Pin code -->
-                        <span v-else-if="props.column.field === 'pin_code'">
-                            {{ props.row.pin_code }}
-                        </span>
-
-                        <!-- Column: Mobile No. -->
-                        <span v-else-if="props.column.field === 'mobile'">
-                            {{ props.row.mobile }}
-                        </span>
-
-                        <!-- Column: Email -->
-                        <span v-else-if="props.column.field === 'email'">
-                            {{ props.row.email }}
-                        </span>
-
-                        <!-- Column: Status -->
-                        <!-- <span v-else-if="props.column.field === 'status'">
-              <b-badge :variant="statusVariant(props.row.status)">
-                {{ props.row.status === 1 ? $t('active') : $t('inactive') }}
-              </b-badge>
-            </span> -->
                         <span v-else-if="props.column.field === 'status'">
                             <b-button
                                 v-if="props.row.status === 1"
@@ -180,21 +168,21 @@
                         <span v-else-if="props.column.field === 'action'">
                             <!-- Edit Icon -->
                             <feather-icon
-                                :id="`invoice-row-${props.row.id}-preview-icon`"
+                                :id="`invoice-row-${props.row.slug}-preview-icon`"
                                 icon="EditIcon"
                                 size="16"
                                 class="mx-1"
                                 style="cursor: pointer"
                                 @click="
                                     $router.push({
-                                        name: 'edit_Brand',
-                                        params: { id: props.row.id },
+                                        name: 'edit_blog',
+                                        params: { id: props.row.slug },
                                     })
                                 "
                             />
                             <b-tooltip
                                 placement="left"
-                                :title="$t('edit_country')"
+                                :title="$t('Edit Blog')"
                                 :target="`invoice-row-${props.row.id}-preview-icon`"
                             />
 
@@ -205,7 +193,7 @@
                                 size="16"
                                 class="mx-1 text-danger"
                                 style="cursor: pointer"
-                                @click="deleteBrand(props.row)"
+                                @click="deleteBlog(props.row)"
                             />
                             <b-tooltip
                                 placement="left"
@@ -335,7 +323,7 @@ export default {
     },
     data() {
         return {
-            selectedBrand: null,
+            selectedBlog: null,
             pageLength: 10,
             dir: false,
             Loading: true,
@@ -343,13 +331,20 @@ export default {
             columns: [
                 {
                     label: this.$t("Blog Name"),
-                    field: "Blog Name",
+                    field: "blogName",
                 },
                 {
                     label: this.$t("Blog Image"),
-                    field: "Blog Image",
+                    field: "blogImage",
                 },
-
+                {
+                    label: this.$t("Category"),
+                    field: "category",
+                },
+                {
+                    label: this.$t("excerpt"),
+                    field: "excerpt",
+                },
                 {
                     label: this.$t("action"),
                     field: "action",
@@ -380,34 +375,34 @@ export default {
         },
     },
     created() {
-        this.$http.get("/admin/brands_list").then((res) => {
-            this.rows = res.data;
+        this.$http.get("/api/getBlogs").then((res) => {
+            this.rows = res.data.data;
             this.Loading = false;
         });
     },
     methods: {
-        deleteBrand(brand) {
-            this.selectedBrand = brand;
+        deleteBlog(blog) {
+            this.selectedBlog = blog;
             this.$refs.confirmDeleteModal.show();
         },
 
         confirmDelete() {
-            const id = this.selectedBrand.id;
+            const id = this.selectedBlog.id;
             this.$http
-                .delete(`/api/brands/${id}`)
+                .delete(`/api/blogs/${id}`)
                 .then(() => {
-                    this.$bvToast.toast("Brand deleted successfully", {
+                    this.$bvToast.toast("Blog deleted successfully", {
                         title: "Success",
                         variant: "success",
                         solid: true,
                     });
-                    // Refresh brand list
-                    this.$http.get("/admin/brands_list").then((res) => {
-                        this.rows = res.data;
+                    // Refresh blog list
+                    this.$http.get("/api/getBlogs").then((res) => {
+                        this.rows = res.data.data;
                     });
                 })
                 .catch(() => {
-                    this.$bvToast.toast("Failed to delete brand", {
+                    this.$bvToast.toast("Failed to delete blog", {
                         title: "Error",
                         variant: "danger",
                         solid: true,

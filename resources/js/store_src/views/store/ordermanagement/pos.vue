@@ -84,7 +84,9 @@
                                                 </h5>
                                           
                                                 <b-col v-if="isopen" cols="12" class="text-r pad0">
-                                                    <h4 class="media-heading text-primary">{{ setting.value }} {{ data3.price }}</h4>
+                                                    <!-- <h4 class="media-heading text-primary">{{ setting.value }} {{ data3.price }}</h4> -->
+                                                     <h4 class="media-heading text-primary dynamic-margin">{{ setting.value }} {{ data3.price || 0 }}</h4>
+
                                                     <b-button  v-ripple.400=" 'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="btn-icon rounded-circle add_to_cart"
                                                         :id=" 'food_add_' + data3.food_id + 'r'" :data-price=" data3.price"
                                                         @click=" addcart( data3.price, data3.item_tax, data3.name, data3.food_id, data3.is_veg,  data3.add_ons, data3.food_quantity, data3.image) ">
@@ -231,23 +233,23 @@
                             </tr> -->
                             
                            <tr id="cgst_bill">
-    <td>
-        {{ $t("CGST") }}
-    </td>
-    <td>
-        {{ setting.value }}
-        {{ (ctax / 2) | price_format_final }}
-    </td>
-</tr>
-<tr id="sgst_bill">
-    <td>
-        {{ $t("SGST") }}
-    </td>
-    <td>
-        {{ setting.value }}
-        {{ (ctax / 2) | price_format_final }}
-    </td>
-</tr>
+                                <td>
+                                    {{ $t("CGST") }}
+                                </td>
+                                <td>
+                                    {{ setting.value }}
+                                    {{ (ctax / 2) | price_format_final }}
+                                </td>
+                            </tr>
+                            <tr id="sgst_bill">
+                                <td>
+                                    {{ $t("SGST") }}
+                                </td>
+                                <td>
+                                    {{ setting.value }}
+                                    {{ (ctax / 2) | price_format_final }}
+                                </td>
+                            </tr>
 
                             <!-- <tr id="tips_bill">
                                 <td>
@@ -2113,5 +2115,10 @@ export default {
 .tipsactive1{
   border-color: #ffbd00 !important;
   background-color: #ffbd00 !important;
+}
+@media screen and (min-width: 1536px) and (min-height: 864px) {
+  .dynamic-margin {
+    margin-top: 34px;
+  }
 }
 </style>

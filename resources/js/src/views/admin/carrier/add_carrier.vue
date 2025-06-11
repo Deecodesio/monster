@@ -66,7 +66,7 @@
         <b-col md="6">
           <b-form-group :label="$t('Carrier image')">
             <b-form-file v-model="carrier.image" placeholder="Choose a file or drop it here..."
-              drop-placeholder="Drop file here..." @change="onFileChange1" accept=".jpg, .png, .jpeg" />
+              drop-placeholder="Drop file here..." @change="4" accept=".jpg, .png, .jpeg" />
           </b-form-group>
           <b-form-group>
             <b-img :src="url1 ? url1 : carrier.image" rounded fluid id="categorys-img" alt="carrier photo"
@@ -179,7 +179,7 @@ export default {
         .finally(() => (this.loading = false));
     },
 
-    onFileChange1(e) {
+    4(e) {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);

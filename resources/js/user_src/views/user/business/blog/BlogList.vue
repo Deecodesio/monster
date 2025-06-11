@@ -38,7 +38,7 @@
           </div>
           <div class="featured-blog-image">
             <b-img
-              :src="featuredBlog.featured_image"
+              :src="'/blogs/'+featuredBlog.featured_image"
               fluid
               alt="Featured blog image"
               class="featured-img"
@@ -112,6 +112,7 @@ export default {
 
     const featuredBlog = computed(() =>
       blogs.value.length > 0 ? blogs.value[0] : null
+     
     );
     const regularBlogs = computed(() =>
       blogs.value.length > 1 ? blogs.value.slice(1) : []
@@ -122,7 +123,8 @@ export default {
         loading.value = true;
         error.value = null;
         const res = await axios.get(`/api/blogs?page=${page}&per_page=${perPage.value}`);
-        blogs.value = res.data.data || res.data;
+        console.log("askdjasdkjas",res.data.data.data);
+        blogs.value = res.data.data.data || res.data;
         totalRows.value = res.data.total || 0;
         currentPage.value = res.data.current_page || 1;
         perPage.value = res.data.per_page || 6;
@@ -131,6 +133,7 @@ export default {
         error.value = "Error loading blogs: " + err.message;
         loading.value = false;
       }
+       console.log("asdkjhgasdjashd",blogs.value[0]);
     };
 
     const handlePageChange = (page) => {

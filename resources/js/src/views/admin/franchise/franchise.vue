@@ -10,7 +10,7 @@
                                 :to="{ name: 'add_franchise' }"
                             >
                                 <i class="fa-solid fa-plus"></i>
-                                {{ $t("Add Franchies") }}
+                                {{ $t("Add Franchise") }}
                             </b-button>
                         </div>
                     </b-col>
@@ -96,17 +96,30 @@
                             </b-button>
                         </span>
 
+                           <!-- Column: Pin code -->
+            <span v-else-if="props.column.field === 'pin code'">
+              {{ props.row.pincode }}
+            </span>
+
+              <span v-else-if="props.column.field === 'mobile no'">
+              {{ props.row.phone_1 }}
+            </span>
+
+             <span v-else-if="props.column.field === 'mail id'">
+              {{ props.row.email_id }}
+            </span>
+
                         <!-- Column: Action -->
                         <span v-else-if="props.column.field === 'action'">
                             <!-- View Icon -->
-                            <feather-icon
+                            <!-- <feather-icon
                                 :id="`invoice-row-${props.row.id}-view-icon`"
                                 icon="EyeIcon"
                                 size="16"
                                 class="mx-1"
                                 cursor="pointer"
                                 @click="viewRow(props.row)"
-                            />
+                            /> -->
                             <b-tooltip
                                 placement="left"
                                 :title="$t('view')"
@@ -122,7 +135,7 @@
                                 cursor="pointer"
                                 @click="
                                     $router.push({
-                                        name: 'edit_Brand',
+                                        name: 'edit_franchise',
                                         params: { id: props.row.id },
                                     })
                                 "
@@ -288,28 +301,28 @@ export default {
                     label: this.$t("address"),
                     field: "address",
                 },
-                {
-                    label: this.$t("date"),
-                    field: "date",
-                },
+                // {
+                //     label: this.$t("date"),
+                //     field: "date",
+                // },
                 {
                     label: this.$t("taluk"),
                     field: "taluk",
                 },
                 {
-                    label: this.$t("district"),
+                    label: this.$t("District"),
                     field: "district",
                 },
                 {
-                    label: this.$t("pin code"),
+                    label: this.$t("Pin Code"),
                     field: "pin code",
                 },
                 {
-                    label: this.$t("mobile no"),
+                    label: this.$t("Mobile No"),
                     field: "mobile no",
                 },
                 {
-                    label: this.$t("mail id"),
+                    label: this.$t("Mail ID"),
                     field: "mail id",
                 },
                 {
@@ -354,14 +367,15 @@ export default {
         },
     },
     created() {
-        this.$http.get("/admin/brands_list").then((res) => {
-            this.rows = res.data;
+        
+        this.$http.get("/api/franchises").then((res) => {
+            this.rows = res.data.data;
             this.Loading = false;
         });
     },
     methods: {
         changedefault(id) {
-            this.$http.get("/admin/brand_status/" + id).then((res) => {
+            this.$http.get("/api/franchise_status/" + id).then((res) => {
                 if (res.data.message === "Status Active") {
                     this.$toast({
                         component: ToastificationContent,
@@ -394,7 +408,7 @@ export default {
         },
         deleteRow(row) {
             this.$http
-                .delete("/admin/brand/" + row.id)
+                .delete("/api/franchises/" + row.id)
                 .then((res) => {
                     this.$toast({
                         component: ToastificationContent,
@@ -405,8 +419,8 @@ export default {
                             variant: "success",
                         },
                     });
-                    this.$http.get("/admin/brands_list").then((res) => {
-                        this.rows = res.data;
+                    this.$http.get("/api/franchises").then((res) => {
+                        this.rows = res.data.data;
                     });
                 })
                 .catch((error) => {

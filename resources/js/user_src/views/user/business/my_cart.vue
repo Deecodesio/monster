@@ -163,7 +163,7 @@
                                             ">
                                             <b-media vertical-align="top">
                                                 <template #aside v-if="data.food_image">
-                                                    <b-img class="bor" :src="data.food_image" blank-color="#ccc"
+                                                    <b-img class="bor" :src="data.food_image" blank-color="#ccc" :key="data.food_image"
                                                         width="70" />
                                                 </template>
                                                 <h4 class="media-heading">
@@ -206,8 +206,8 @@
                                                                 ].currency
                                                             }}
                                                             {{
-                                                                (data.price +
-                                                                    data.addonsPrice)
+                                                                ((data.price +
+                                                                    data.addonsPrice) * data.quantity)
                                                                 | priceformat
                                                             }}
                                                         </h4>

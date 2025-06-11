@@ -1,7 +1,8 @@
 <template>
     <div>
-      <div class="mt-5 mx-3 py-6">
-        <top_banners /></div>
+        <div class="mt-5 mx-3 py-6">
+            <top_banners />
+        </div>
         <h4 class="text-center mb-4" style="font-size: x-large">
             Bulk Orders
         </h4>
@@ -96,15 +97,9 @@
 
                         <b-col md="6">
                             <b-form-group label="Product Category" label-for="business_category_id">
-                                <b-form-select
-                                    id="business_category_id"
-                                    v-model="form.business_category_id"
-                                    :options="categoryOptions"
-                                    :state="categoryState"
-                                    required
-                                    class="form-control"
-                                    @change="onCategoryChange"
-                                >
+                                <b-form-select id="business_category_id" v-model="form.business_category_id"
+                                    :options="categoryOptions" :state="categoryState" required class="form-control"
+                                    @change="onCategoryChange">
                                     <template #first>
                                         <option :value="null" disabled>Select a category</option>
                                     </template>
@@ -117,15 +112,9 @@
 
                         <b-col md="6">
                             <b-form-group label="Product" label-for="product_id">
-                                <b-form-select
-                                    id="product_id"
-                                    v-model="form.product_id"
-                                    :options="productOptions"
-                                    :state="productState"
-                                    :disabled="!form.business_category_id"
-                                    required
-                                    class="form-control"
-                                >
+                                <b-form-select id="product_id" v-model="form.product_id" :options="productOptions"
+                                    :state="productState" :disabled="!form.business_category_id" required
+                                    class="form-control">
                                     <template #first>
                                         <option :value="null" disabled>Select a product</option>
                                     </template>
@@ -202,40 +191,86 @@ export default {
             categoryOptions: [],
             productOptions: [],
             submitting: false,
-            loadingProducts: false
+            loadingProducts: false,
+              submitted: false
         }
     },
     computed: {
-        nameState() {
+        // nameState() {
+        //     return this.form.name ? true : false 
+        // },
+     
+
+        // emailState() {
+        //     if (!this.form.email_id) return false
+        //     const re = /^\S+@\S+\.\S+$/
+        //     return re.test(this.form.email_id)
+        // },
+      
+        // phone1State() {
+        //     return this.form.phone_1 ? true : false
+        // },
+        // addressState() {
+        //     return this.form.address ? true : false
+        // },
+        // stateState() {
+        //     return this.form.state ? true : false
+        // },
+        // districtState() {
+        //     return this.form.district ? true : false
+        // },
+        // talukState() {
+        //     return this.form.taluk ? true : false
+        // },
+        // pincodeState() {
+        //     return this.form.pincode ? true : false
+        // },
+        // categoryState() {
+        //     return this.form.business_category_id ? true : false
+        // },
+        // productState() {
+        //     return this.form.product_id ? true : false
+        // }
+         nameState() {
+            if (!this.submitted) return null
             return this.form.name ? true : false
         },
         emailState() {
+            if (!this.submitted) return null
             if (!this.form.email_id) return false
             const re = /^\S+@\S+\.\S+$/
             return re.test(this.form.email_id)
         },
         phone1State() {
+            if (!this.submitted) return null
             return this.form.phone_1 ? true : false
         },
         addressState() {
+            if (!this.submitted) return null
             return this.form.address ? true : false
         },
         stateState() {
+            if (!this.submitted) return null
             return this.form.state ? true : false
         },
         districtState() {
+            if (!this.submitted) return null
             return this.form.district ? true : false
         },
         talukState() {
+            if (!this.submitted) return null
             return this.form.taluk ? true : false
         },
         pincodeState() {
+            if (!this.submitted) return null
             return this.form.pincode ? true : false
         },
         categoryState() {
+            if (!this.submitted) return null
             return this.form.business_category_id ? true : false
         },
         productState() {
+            if (!this.submitted) return null
             return this.form.product_id ? true : false
         }
     },
@@ -285,6 +320,7 @@ export default {
             this.fetchProducts(categoryId);
         },
         async submitApplication() {
+            this.submitted = true;
             // Validate all required fields
             if (!this.nameState || !this.emailState || !this.phone1State ||
                 !this.addressState || !this.stateState || !this.districtState ||
@@ -346,7 +382,7 @@ export default {
     mounted() {
         this.fetchCategories();
     }
-}
+};
 </script>
 
 <style scoped>
@@ -397,5 +433,36 @@ export default {
     .text-center.mb-4 {
         font-size: 1.5rem;
     }
+}
+.b-form-input, 
+.b-form-textarea, 
+.b-form-select, 
+.form-control {
+  border: 1.5px solid #FF006B !important;  
+  border-radius: 6px !important;  
+  padding: 0.5rem 0.75rem !important;
+  box-shadow: none !important;  
+  background-color: #fff !important;  
+ font-size: 16px;
+ color: rgba(0, 0, 0, 0.780);
+  height:  auto; 
+}
+
+ 
+.b-form-textarea {
+  height: auto !important;
+}
+
+ 
+.b-form-select:disabled {
+  background-color: #f5f5f5 !important;
+}
+
+ 
+.b-form-input:focus, 
+.b-form-textarea:focus, 
+.b-form-select:focus {
+  border-color: #333 !important; 
+  box-shadow: none !important;
 }
 </style>

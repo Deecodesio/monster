@@ -223,7 +223,10 @@ Route::group(['namespace' => 'App\Http\Controllers\api'], function () {
 
     // Blog Routes
     Route::get('/blogs', 'BlogController@index');
+    Route::get('/getBlogs', 'BlogController@getBlogs');
+    Route::post('/blogs', 'BlogController@store');
     Route::get('/blogs/{slug}', 'BlogController@show');
+    Route::delete('/blogs/{id}', 'BlogController@destroy');
     Route::get('/blogs/category/{categoryId}', 'BlogController@byCategory');
 
     // Job Application Routes

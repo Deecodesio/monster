@@ -473,6 +473,7 @@ export default {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+
 }
 
 .banner-section {
@@ -485,6 +486,33 @@ export default {
     padding: 2rem;
     border-radius: 0.5rem;
     margin-top: 3rem;
+    margin-left: 120px;
+    margin-right: 120px;
     scroll-margin-top: 100px;
+}
+.b-form-input,
+.b-form-textarea,
+.b-form-select,
+.form-control {
+  border: 1.5px solid #FF006B !important;  
+  border-radius: 8px !important;     
+  padding: 10px 12px !important;     
+  font-size: 16px !important;         
+  background-color: #fff !important;  
+  box-shadow: none !important;    
+  color: rgba(0, 0, 0, 0.780) !important;    
+}
+
+/* On focus */
+.b-form-input:focus,
+.b-form-textarea:focus,
+.b-form-select:focus,
+.form-control:focus {
+    /* Change focus color if needed */
+  box-shadow: none !important;
+}
+.b-form-group .form-control {
+  max-width: 300px !important; /* Set your desired width */
+  width: 100%; /* Allows responsive shrinking if needed */
 }
 </style>
