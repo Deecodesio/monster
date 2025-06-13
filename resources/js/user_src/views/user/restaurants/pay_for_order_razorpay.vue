@@ -219,8 +219,17 @@ export default {
                 }, 2000);
             });
         },
-          show_success() {
-            this.show_payment_success = !this.show_payment_success
+        show_success() {
+            this.show_payment_success = !this.show_payment_success;
+        },
+        clear_cart() {
+            let cart = [];
+            localStorage.setItem("cart", JSON.stringify(cart));
+            this.$store.commit("deliware_cart/UPDATE_CART_ITEMS", cart);
+            this.$store.commit(
+                "deliware_cart/UPDATE_CART_ITEMS_COUNT",
+                cart.length
+            );
         },
     },
     created() {},

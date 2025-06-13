@@ -1,54 +1,63 @@
 <template>
-    <div
-        class="banner"
-        style="padding-right: 0% !important; padding-left: 0% !important"
-    >
-        <img :src="bannerImage" alt="Banner image" />
-    </div>
+  <div class="banner">
+    <img :src="bannerImage" alt="Banner image" />
+  </div>
 </template>
 
 <script>
 export default {
-    name: "Banner",
-    data() {
-        return {
-            bannerImage: "/Frame-25.png",
-        };
-    },
+  name: "Banner",
+  data() {
+    return {
+      bannerImage: "/Frame-25.png",
+    };
+  },
 };
 </script>
 
 <style scoped>
 .banner {
   width: 100%;
-  height: 365px;
   overflow: hidden;
   margin-bottom: 20px;
 }
 
+/* Default image styles */
 .banner img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
+  object-fit: cover;
 }
-/* Default: Desktop view (≥1024px) */
-.banner img {
+
+/* Desktop (≥1024px): Fixed height */
+@media (min-width: 1024px) {
+  .banner {
+    height: 365px;
+  }
+  .banner img {
     height: 100%;
+  }
 }
 
-/* Tablet view (≥768px and <1024px) */
+/* Tablet (≥768px and <1024px): Adjust height */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .banner img {
-        height: 100%;
-    }
+  .banner {
+    height: 280px;
+  }
+  .banner img {
+    height: 100%;
+  }
 }
 
-/* Mobile view (≤480px) */
-@media (max-width: 480px) {
-    .banner img {
-        height: 100%;
-    }
+/* Mobile (≤767px): Full width, auto height */
+@media (max-width: 767px) {
+  .banner {
+    height: auto;
+  }
+  .banner img {
+    width: 100%;
+    height: auto;
+  }
 }
-
 </style>

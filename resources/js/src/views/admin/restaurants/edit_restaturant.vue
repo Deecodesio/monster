@@ -1717,6 +1717,7 @@ export default {
     if (this.$route.params.id) {
       this.$http.get('/admin/edit_restaurant/' + this.$route.params.id)
         .then(res => {
+          // this.initMap();
           console.log(res)
           this.restaurants = res.data.data;
           this.restaurants.city = parseInt(this.restaurants.city);
@@ -2144,7 +2145,11 @@ export default {
     initTrHeight1() {
       this.trSetHeight1(null)
       this.$nextTick1(() => {
+        if (this.$refs.form1) {
         this.trSetHeight1(this.$refs.form1.scrollHeight)
+          } else {
+      console.warn('form1 ref is not available');
+    }
       })
     },
     open_citymodal() {
@@ -2796,7 +2801,9 @@ export default {
     initTrHeight() {
       this.trSetHeight(null)
       this.$nextTick(() => {
+        if (this.$refs.form) {
         this.trSetHeight(this.$refs.form.scrollHeight)
+        }
       })
     },
     add_plan_func() {

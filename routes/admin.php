@@ -237,6 +237,8 @@ Route::group(
         Route::get('/restaurant_view/{id}', 'RestaurantController@restaurant_view');
         Route::get('/get_currency', 'SettingController@get_currency');
 
+        Route::post('add_consumer', 'UserController@add_consumer');
+
         Route::get('/delete_category/{id}', 'RestaurantController@delete_category');
         Route::get('/delete_reason/{id}', 'RestaurantController@delete_reason');
         Route::get('/reason_status/{id}', 'RestaurantController@reason_status');

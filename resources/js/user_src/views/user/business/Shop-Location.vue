@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <div class="px-3" style="margin-top: 10rem">
+        <b-col cols="12">
+  
+        <div class="px-3" style="margin-top: 175px">
             <div class="store-name">Location: {{ $route.query.name }}</div>
             <div
                 class="store-grid"
@@ -28,7 +29,8 @@
         <div class="mt-5" style="padding-top: 0% ; padding-left: 0%">
             <Ourshops />
         </div>
-    </div>
+   
+    </b-col>
 </template>
 
 <script>

@@ -50,6 +50,33 @@
                                 </b-button>
                             </a>
                         </div>
+
+                        <div
+                            class="custom-search justify-content-start"
+                            style="margin-left: 1%"
+                        >
+                            <b-form-group>
+                                <div class="d-flex align-items-center">
+                                    <label class="mr-1">{{
+                                        $t("category")
+                                    }}</label>
+                                    <v-select
+                                        v-model="productFilter.category"
+                                        :options="bus_category"
+                                        label="category_name"
+                                        :reduce="(sel) => sel.id"
+                                        :placeholder="$t('Filter')"
+                                        :dir="
+                                            $store.state.appConfig.isRTL
+                                                ? 'rtl'
+                                                : 'ltr'
+                                        "
+                                        style="width: 200px"
+                                        @input="onChange($event)"
+                                    />
+                                </div>
+                            </b-form-group>
+                        </div>
                     </b-col>
 
                     <b-col md="4">
@@ -77,7 +104,7 @@
                 <vue-good-table
                     :columns="columns"
                     :line-numbers="true"
-                    :rows="rows"
+                    :rows="filteredRows"
                     :rtl="direction"
                     :search-options="{
                         enabled: true,
@@ -110,7 +137,9 @@
                             class="text-nowrap"
                         >
                             <span class="text-nowrap"
-                                >{{ setting.value }} {{ props.row.new_price }}</span                            >
+                                >{{ setting.value }}
+                                {{ props.row.new_price || 0 }}</span
+                            >
                         </div>
 
                         <div
@@ -172,7 +201,6 @@
                                 type="submit"
                                 variant="outline-success"
                                 class="mr-1"
-                                
                             >
                                 {{ $t("available") }}
                             </b-button>
@@ -185,7 +213,6 @@
                                 type="submit"
                                 variant="outline-warning"
                                 class="mr-1"
-                                
                             >
                                 {{ $t("sold") }} {{ $t("out") }}
                                 {{ $t("today") }}
@@ -411,6 +438,7 @@ import {
     BTooltip,
 } from "bootstrap-vue";
 import { VueGoodTable } from "vue-good-table";
+import vSelect from "vue-select";
 import store from "@@/store/index";
 
 import ToastificationContent from "@@core/components/toastification/ToastificationContent.vue";
@@ -435,31 +463,38 @@ export default {
         BImg,
         BMedia,
         BFormFile,
+        vSelect
     },
 
     created() {
         this.user_info.id = localStorage.id;
-        this.$http.post("/store/product_list/"+ localStorage.id).then((res) => {
-            this.rows = res.data.data;
-            console.log("rows");
-            console.log(this.rows);
-            console.log(res.data.business);
-            this.downlodPath = res.data.download_path;
-            this.layout = res.data.business;
-            this.Loading = false;
+        this.$http
+            .post("/store/product_list/" + localStorage.id)
+            .then((res) => {
+                this.rows = res.data.data;
+                console.log("rows");
+                console.log(this.rows);
+                console.log(res.data.business);
+                this.downlodPath = res.data.download_path;
+                this.layout = res.data.business;
+                this.Loading = false;
 
-            if (this.layout == 2) {
-                // this.$set(this.columns[3], "hidden", true);
+                if (this.layout == 2) {
+                    // this.$set(this.columns[3], "hidden", true);
 
-                this.menu_col = true;
-                // this.cate_col = false;
-                // this.featured_col = true;
-            } else {
-                this.$set(this.columns[3], "hidden", true);
-                this.menu_col = false;
-                // this.cate_col = true;
-                // this.featured_col = false;
-            }
+                    this.menu_col = true;
+                    // this.cate_col = false;
+                    // this.featured_col = true;
+                } else {
+                    this.$set(this.columns[3], "hidden", true);
+                    this.menu_col = false;
+                    // this.cate_col = true;
+                    // this.featured_col = false;
+                }
+            });
+
+        this.$http.get("/admin/business_category_lists").then((res) => {
+            this.bus_category = res.data;
         });
 
         this.$http.get("/store/get_currency").then((res) => {
@@ -468,6 +503,12 @@ export default {
     },
     data() {
         return {
+            productFilter: {
+                category: null,
+                state: null,
+                district: null,
+            },
+            bus_category: [],
             publicPath: process.env.BASE_URL,
             pageLength: 10,
             dir: false,
@@ -498,11 +539,11 @@ export default {
                 //     field: "category_name",
                 //     hidden: this.cate_col,
                 // },
-                 {
+                {
                     label: this.$t("tax") + " " + this.$t("in") + "%",
                     field: "taxs",
                 },
-               
+
                 {
                     label: this.$t("price"),
                     field: "prices",
@@ -560,6 +601,17 @@ export default {
             // eslint-disable-next-line vue/no-side-effects-in-computed-properties
             this.dir = false;
             return this.dir;
+        },
+        filteredRows() {
+            if (!this.productFilter.category) {
+                return this.rows;
+            }
+            console.log(this.productFilter.category);
+            console.log(this.rows);
+            return this.rows.filter(
+                (row) =>
+                    row.business_category_id === this.productFilter.category
+            );
         },
     },
 
@@ -659,7 +711,8 @@ export default {
 
                         this.user_info.id = localStorage.id;
                         this.$http
-                            .post("/store/product_list", this.user_info)
+                            // .post("/store/product_list", this.user_info)
+                              .post("/store/product_list/" + localStorage.id)
                             .then((res) => {
                                 this.rows = res.data.data;
                                 //   console.log(this.rows);

@@ -1,38 +1,38 @@
 <template>
 
     <div class="pt-1" v-if="!isempty">
-       <div class="subcat_main_div">
+        <div class="subcat_main_div">
             <div class="subcat_slider">
-              <div class="mt-5 mb-3 text-center">
- <!-- <div v-if="title == 'Top Selling Products'">
+                <div class="mt-5 mb-3 text-center">
+                    <!-- <div v-if="title == 'Top Selling Products'">
                     <h2 style="text-align: center">{{ title }}</h2>
                     <div class="hrLine"></div>
                 </div> -->
 
 
 
-                <div class="text-center" style="margin-top: 80px; margin-bottom: 0px;">
-                    <h2>{{ $t(" Product Categories")}}</h2>
-                    <hr class="mx-auto">
-                </div>
+                    <div class="text-center" style="margin-top: 80px; margin-bottom: 0px;">
+                        <h2>{{ $t(" Product Categories") }}</h2>
+                        <hr class="mx-auto">
+                    </div>
                     <!-- Navigation Buttons (Now Outside Swiper) -->
-                <div class="container swiper-container-wrapper swiper-wrapper swiper-button-disabled swiper-container-rtl subcat_slider">
-                    <div id="swiper-button-prev" class="swiper-button-prev"></div>
-                    <swiper class="swiper-multiple rounded swiper-shadow text-center" :options="swiperOptions"
-                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
-                        <swiper-slide v-for="(data, index) in rows2" :key="index">
-                            <div class="cat-card-main" @click="gotor(data.id, data.text)">
-                                <b-img class="fl" :src="data.img" :alt="data.text" />
-                                <div class="swiper-text pt-md-1 pt-sm-50">
-                                    <div class="main_Cat_name">
-                                        <b>{{ data.text }}</b>
-                                    </div>
-                                </div>
-                            </div>
-                        </swiper-slide>
-                    </swiper>
-                    <div id="swiper-button-next" class="swiper-button-next"></div>
-                </div>
+                     <div class="swiper-category-wrapper">
+            <div id="swiper-button-prev" class="swiper-button-prev"></div>
+
+            <swiper ref="mySwiper" class="swiper-multiple rounded text-center" :options="swiperOptions"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
+                <swiper-slide v-for="(data, index) in rows2" :key="index">
+                    <div class="cat-img-text" @click="gotor(data.id, data.text)">
+                        <b-img class="cat-img" :src="data.img" :alt="data.text" />
+                        <div class="main_Cat_name">
+                            <b>{{ data.text }}</b>
+                        </div>
+                    </div>
+                </swiper-slide>
+            </swiper>
+
+            <div id="swiper-button-next" class="swiper-button-next"></div>
+        </div>
                 </div>
 
                 <!-- Swiper Wrapper -->
@@ -129,23 +129,21 @@ export default {
             isopen: 1,
             cat_products: [],
 
-            swiperOptions: {
-  breakpoints: {
-    320: { slidesPerView: 2, slidesPerGroup: 1, spaceBetween: 10 },
-    768: { slidesPerView: 3, slidesPerGroup: 1, spaceBetween: 20 },
-    1024: { slidesPerView: 4, slidesPerGroup: 2, spaceBetween: 30 },
-    1440: { slidesPerView: 4, slidesPerGroup: 2, spaceBetween: 70 },
-  },
-  slidesPerView: 4,
-  slidesPerGroup: 2, // 👈 Move 2 slides per click
-  spaceBetween: 20,
-  loop: false,
-  navigation: {
-    nextEl: "#swiper-button-next",
-    prevEl: "#swiper-button-prev",
-  },
-  watchOverflow: true,
-},
+           swiperOptions: {
+                breakpoints: {
+                    0: { slidesPerView: 2, spaceBetween: 4 },
+                    480: { slidesPerView: 3, spaceBetween: 6 },
+                    768: { slidesPerView: 4, spaceBetween: 8 },
+                    992: { slidesPerView: 5, spaceBetween: 10 },
+                    1200: { slidesPerView: 5, spaceBetween: 12 },
+                },
+                navigation: {
+                    nextEl: "#swiper-button-next",
+                    prevEl: "#swiper-button-prev",
+                },
+                loop: false,
+                watchOverflow: true,
+            },
 
             sub_categories: [],
             title3: '',
@@ -165,7 +163,7 @@ export default {
         gotor(id, name) {
             this.selected_subcat = id
             this.is_clicked = true
-            this.cat_products=[];
+            this.cat_products = [];
             this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + id + '/' + this.business_id)
                 .then(res => {
                     this.cat_products = res.data.cat_products
@@ -207,7 +205,7 @@ export default {
             if (this.$route.name == "sub_cat_list") {
                 const productSlug = this.$route.params.slug
                 const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
-                this.cat_products=[];
+                this.cat_products = [];
                 this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id)
                     .then(res => {
                         this.cat_products = res.data.cat_products
@@ -238,14 +236,14 @@ export default {
             } else {
                 const productSlug = this.$route.params.slug
                 const productId = productSlug.substring(productSlug.lastIndexOf('-') + 1)
-                this.cat_products=[];
+                this.cat_products = [];
                 this.$http.get('/sub_category_products/' + this.lat + '/' + this.lng + '/' + productId + '/' + this.business_id)
                     .then(res => {
                         this.cat_products = res.data.cat_products
                         this.title = res.data.title
                         this.loadcart()
 
-                         store.commit('deliware_cart/UPDATE_FOOTER', true)
+                        store.commit('deliware_cart/UPDATE_FOOTER', true)
 
 
                     })
@@ -280,125 +278,136 @@ export default {
 }
 </script>
 <style scoped>
-.subcat_slider{
-    width:100%;
+.subcat_slider {
+    width: 100%;
 }
+
 .hrLine {
     max-width: 75px;
-    margin: 10px auto;
-    border: 2px solid #ffce00;
+    margin: 5px auto 15px;
+    border: 3px solid #ffce00;
     border-radius: 5px;
     background-color: #ffce00;
 }
 
-
-
-
-.pt-5{
-  padding-top: 0rem !important;
-}
-.cat-card-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-  padding: 10px;
-  margin-left: 40px;
-
+.swiper-category-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
 }
 
-.fl {
- width: 250px; height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-left: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
+.swiper-multiple {
+    width: 100% !important;
 }
 
-.fl:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-
-
-.main_Cat_name {
-  margin-top: 8px;
-  font-weight: 600;
-  font-size: 18px;
-  color: black;
-  text-align: center;
-}
-.swiper-slide {
-  width: 200px !important;
-  display: flex;
-  justify-content: center;
-}
 .swiper-button-next,
 .swiper-button-prev {
+    width: 32px;
+    height: 32px;
+    /* background-color: white; */
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    top: 50%;
 
-  width: 30px;
-  height: 30px;
+    position: absolute;
+}
 
-  border-radius: 50%;
-
-  z-index: 10;
-}
-.swiper-button-next{
-    margin-right: 25px;
-}
-.swiper-button-prev{
-    margin-left: 25px;
-}
 .swiper-button-next::after,
 .swiper-button-prev::after {
-  font-size: 18px;
-  font-weight: bold;
-}
-.swiper-category-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  position: relative;
-
+    font-size: 18px;
+    font-weight: bold;
+    color: #e6007e;
 }
 
-
-.swiper-category-wrapper .swiper-button-prev,
-.swiper-category-wrapper .swiper-button-next {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  z-index: 10;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+.swiper-button-prev {
+    left: 5px;
+    padding-top: 13px;
+    border: none !important;
+}
+.swiper-button-prev{
+    opacity: 1 !important;
+}
+.swiper-button-next{
+    opacity: 1 !important;
+}
+.swiper-button-next {
+    right: 5px;
+    padding-top: 13px;
 }
 
-.swiper-category-wrapper .swiper-button-prev::after,
-.swiper-category-wrapper .swiper-button-next::after {
-  font-size: 18px;
-
-  /* color: #e91e63; */
+.cat-img {
+  width: 100%;
+  aspect-ratio: 4 / 2; /* Wider rectangle */
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 
-.swiper-button-prev.swiper-button-disabled,
-.swiper-button-next.swiper-button-disabled {
-  opacity: 1 !important;
-  pointer-events: auto !important;
+
+.cat-img-text {
+  width: 100%;
+  max-width: 280px; /* Increased from 220px */
+  margin: auto;
+  text-align: center;
 }
 
-.swiper-button-prev,
-.swiper-container-rtl .swiper-button-next{
-    border: none !important;}
+.cat-img-text:hover .cat-img {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
 
+.main_Cat_name {
+    margin-top: 7px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #222;
+    text-align: center;
+    line-height: 1.2;
+}
 
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .cat-img-text {
+        max-width: 160px;
+    }
+
+    .main_Cat_name {
+        font-size: 14px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .cat-img-text {
+        max-width: 120px;
+    }
+
+    .main_Cat_name {
+        font-size: 13px;
+    }
+}
 
 </style>
 <style lang="scss">

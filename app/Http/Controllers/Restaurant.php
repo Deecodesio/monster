@@ -239,7 +239,7 @@ class Restaurant extends Controller
     //     return $row->$field ?? null;
     // }
 
-     private function getFoodField(int $id, $field)
+    private function getFoodField(int $id, $field)
     {
         // If the requested field is NOT 'price', proceed as usual
         if ($field !== 'price') {
@@ -450,7 +450,9 @@ class Restaurant extends Controller
         foreach ($restaurants as $restaurant) {
             $geofenceRadius = $restaurant->GeofenceRadius;
 
+
             $distance = vincentyGreatCircleDistance($lat, $lng, $restaurant->lat, $restaurant->lng);
+            $distance = $distance * 1000;
 
             if ($distance <= $geofenceRadius) {
                 $availableRestIDs[] = [
@@ -464,7 +466,12 @@ class Restaurant extends Controller
 
         array_multisort($price, SORT_ASC, $availableRestIDs);
 
-        $rt[] = $availableRestIDs[0]['id'];
+        if (!empty($availableRestIDs) && isset($availableRestIDs[0]['id'])) {
+            $rt[] = $availableRestIDs[0]['id'];
+        } else {
+            $rt[] =[];
+        }
+        // $rt[] = $availableRestIDs[0]['id'];
         return $rt;
     }
     public static function nearDistance_business($lat, $lng, $id)

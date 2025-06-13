@@ -54,7 +54,7 @@
                                     <b-col cols="6" lg="6" class="text-r" style="padding-left: 0px;">
                                         <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="flat-primary"
                                             class="btn-icon add_to_cart" :id="'food_add_' + data2.food_id + 'r'"
-                                            :data-price=data2.price @click="check_product(data2)"
+                                            :data-price=data2.price @click="check_product(data2, isopen)"
                                             v-if="data2.menu_available === 1">
                                             <div class="add_cart_btn">
                                                 {{ $t("Add to Cart") }}
@@ -69,7 +69,7 @@
                                                 <input type="text" class="in-num" value="1" readonly=""
                                                     :id="'food_qty_' + data2.food_id + 'r'">
                                                 <span class="plus" :id="'food_plus_' + data2.food_id"
-                                                    @click="check_product(data2)"></span>
+                                                    @click="check_product(data2, isopen)"></span>
                                             </div>
                                         </div>
                                     </b-col>
@@ -144,10 +144,10 @@ export default {
         ...addCustomizedProduct,
         ...single_restaurant,
         ...loadcart,
-        check_product(data) {
+        check_product(data, isopen) {
             let selected = {}
             if (!data.food_quantity.length && !data.add_ons.length && !data.groups.length) {
-                this.open_plus(data)
+                this.open_plus(data, isopen)
                 return
             } else {
                 this.modalOpen = !this.modalOpen;

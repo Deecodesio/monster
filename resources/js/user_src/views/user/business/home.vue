@@ -88,6 +88,10 @@ export default {
         };
     },
     created() {
+        var lat = localStorage.getItem("latitude");
+        var lng = localStorage.getItem("longitude");
+        console.log("Latitude: " + lat);
+        console.log("Longitude: " + lng);
         this.get_products();
         this.get_settings();
     },
@@ -147,6 +151,15 @@ export default {
                     this.featured = res.data.featured;
                     this.recent = res.data.recent;
                     this.isopen = res.data.restaurant_details.is_open;
+                    if (res.data.restaurant_details.length == 0) {
+                        const cart = [];
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        store.commit("deliware_cart/UPDATE_CART_ITEMS", cart);
+                        store.commit(
+                            "deliware_cart/UPDATE_CART_ITEMS_COUNT",
+                            0
+                        );
+                    }
                     this.get_pages();
                     store.commit("deliware_cart/UPDATE_FOOTER", true);
                 });

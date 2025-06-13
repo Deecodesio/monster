@@ -13,7 +13,7 @@
         <!-- Career content -->
         <div v-else>
             <!-- Top summary card (like list view) -->
-            <div class="main_wrap" >
+            <div class="main_wrap">
                 <b-card-body class="custom-card h-100 job-card mb-4">
                     <!-- <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mt-2 mb-2 mb-0">{{ job.job_name }}</h4>
@@ -47,9 +47,9 @@
                         <b-icon icon="geo-alt-fill" class="mr-2"></b-icon>
                         <span>{{ job.location_name }}</span>
                     </div>
-                    <p class="clamp-text-2">
-                        {{ job.job_details }}
-                    </p>
+                   <p class="clamp-text">
+              {{ getExcerpt(job.job_details) }}
+            </p>
                     <!-- <b-button style="width: 22rem" variant="primary" :to="{
                         name: 'career-detail',
                         params: { id: job.id },
@@ -133,8 +133,11 @@
                         <b-form-group>
                             <b-row class="align-items-center mb-3">
                                 <b-col md="3">
-                                    <label for="name" class="form-label-custom">Full Name</label>
+                                    <label for="name" class="form-label-custom">
+                                        Name <span class="text-danger">*</span>
+                                    </label>
                                 </b-col>
+
                                 <b-col md="6">
                                     <b-form-input id="name" v-model="form.name" :state="nameState" required
                                         class="custom-input" />
@@ -145,7 +148,8 @@
 
                             <b-row class="align-items-center mb-3">
                                 <b-col md="3">
-                                    <label for="email" class="form-label-custom">Email</label>
+                                    <label for="email" class="form-label-custom">Email ID<span
+                                            class="text-danger">*</span></label>
                                 </b-col>
                                 <b-col md="6">
                                     <b-form-input id="email" v-model="form.email" type="email" :state="emailState"
@@ -157,7 +161,8 @@
 
                             <b-row class="align-items-center mb-3">
                                 <b-col md="3">
-                                    <label for="contact_number" class="form-label-custom">Contact Number</label>
+                                    <label for="contact_number" class="form-label-custom">Contact Number <span
+                                            class="text-danger">*</span></label>
                                 </b-col>
                                 <b-col md="6">
                                     <b-form-input id="contact_number" v-model="form.contact_number"
@@ -167,25 +172,54 @@
                                 </b-col>
                             </b-row>
 
-                            <b-row class="align-items-center mb-3">
+                            <!-- <b-row class="align-items-center mb-3">
                                 <b-col md="3">
-                                    <label for="resume" class="form-label-custom">Resume (PDF only, max 5MB)</label>
+                                    <label for="resume" class="form-label-custom">Attach Resume <span
+                                            class="text-danger">*</span></label>
                                 </b-col>
                                 <b-col md="6">
                                     <b-form-file id="resume" v-model="form.resume" :state="resumeState" accept=".pdf"
                                         placeholder="Choose a file or drop it here..."
-                                        drop-placeholder="Drop file here..." required class="custom-input" />
+                                        drop-placeholder="Drop file here..." required />
                                     <b-form-invalid-feedback v-if="!resumeState">Please upload a PDF file (max
                                         5MB)</b-form-invalid-feedback>
+                                </b-col>
+                            </b-row> -->
+                            <b-row class="align-items-center mb-3">
+                                <b-col md="3">
+                                    <label for="resume" class="form-label-custom"
+                                        style="padding-bottom: 65px !important;">
+                                        Attach Resume <span class="text-danger">*</span>
+                                    </label>
+                                </b-col>
+                                <b-col md="6">
+
+                                    <input id="resume" ref="fileInput" type="file" accept=".pdf"
+                                        @change="handleFileChange" style="display: none" />
+
+                                    <div class="custom-file-wrapper" @click="triggerFileInput">
+                                        <input type="text" :value="fileName" placeholder="No file chosen" readonly />
+                                        <button type="button">Browse</button>
+
+                                    </div>
+                                    <div class="text-right mt-3">
+                                        <b-button type="submit" class="btn-black" :disabled="submitting">
+                                            <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                            Submit
+                                        </b-button>
+                                    </div>
+
+
+
+                                    <!-- <div v-if="!resumeState" class="invalid-feedback d-block">
+                                        Please upload a PDF file (max 5MB)
+                                    </div> -->
                                 </b-col>
                             </b-row>
 
                             <b-row class="justify-content-end">
                                 <b-col md="6" class="text-right">
-                                    <b-button type="submit" class="btn-black" :disabled="submitting">
-                                        <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
-                                        Submit
-                                    </b-button>
+
                                 </b-col>
                             </b-row>
 
@@ -248,12 +282,17 @@ export default {
         BCol,
         BAlert,
     },
+
+
     setup(props) {
         const job = ref({});
         const loading = ref(true);
         const error = ref(null);
         const submitting = ref(false);
         const showSuccessAlert = ref(false);
+        const fileName = ref("");
+
+
 
         const form = ref({
             name: "",
@@ -292,7 +331,15 @@ export default {
                 loading.value = false;
             }
         };
+        const getExcerpt = (html) => {
+            // Create a temporary element to strip HTML tags
+            const tempElement = document.createElement("div");
+            tempElement.innerHTML = html;
+            const text = tempElement.textContent || tempElement.innerText || "";
 
+            // Return first 150 characters as excerpt
+            return text.length > 150 ? text.substring(0, 150) + "..." : text;
+        };
         const submitApplication = async () => {
             if (
                 !nameState.value ||
@@ -340,6 +387,20 @@ export default {
         };
 
         onMounted(fetchJob);
+        const triggerFileInput = () => {
+            document.getElementById("resume").click();
+        };
+        const handleFileChange = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                form.value.resume = file;
+                fileName.value = file.name;
+            } else {
+                form.value.resume = null;
+                fileName.value = "";
+            }
+        };
+
 
         return {
             job,
@@ -354,6 +415,10 @@ export default {
             submitting,
             submitApplication,
             showSuccessAlert,
+            handleFileChange,
+            fileName,
+            triggerFileInput,
+            getExcerpt,
         };
     },
 };
@@ -368,6 +433,8 @@ export default {
 
 .career-detail {
     padding: 2rem;
+    margin-left: 80px !important;
+    margin-right: 80px !important;
 }
 
 .job-title {
@@ -457,15 +524,45 @@ export default {
 .custom-input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
+    border: 1px solid #FF006B !important;
+     border-radius: 0px !important;
     box-shadow: none;
 }
 
 .form-label-custom {
-    font-size: 14px;
+    font-size: 14px;    
     font-weight: 600;
     color: #5f6368;
 }
 
+.custom-file-wrapper {
+    display: flex;
+    border: 1px solid #FF006B !important;
+    border-radius: 1px;
+    overflow: hidden;
+    width: 100%;
+    cursor: pointer;
+}
+
+.custom-file-wrapper input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.custom-file-wrapper button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.invalid-feedback {
+    font-size: 0.875rem;
+    color: #dc3545;
+}
 </style>

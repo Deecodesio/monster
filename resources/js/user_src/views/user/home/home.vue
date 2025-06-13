@@ -61,7 +61,7 @@ export default {
         more,
         morerestaurant,
     },
-    mounted() {
+    mounted() {       
         // this.initMap()
         this.showmodal()
 

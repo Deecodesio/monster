@@ -1810,12 +1810,16 @@
 
                         <div
                             class="d-flex flex-column flex-sm-row pt-1"
-                            v-if="product.menu_available == 1 && isopen == 1"
+                            v-if="product.menu_available == 1"
                         >
-                            <b-button
-                                v-if="
+                        <!-- v-if="product.menu_available == 1 && isopen == 1" -->
+                         <!-- v-if="
                                     product.menu_available === 1 &&
                                     cart_status == 1
+                                " -->
+                            <b-button
+                                v-if="
+                                    product.menu_available === 1
                                 "
                                 v-ripple.400="'rgba(113, 102, 240, 0.15)'"
                                 variant="primary"
@@ -1828,7 +1832,7 @@
                                     product.name
                                 "
                                 :data-price="product.price"
-                                @click="check_cart(selected)"
+                                @click="check_cart(selected, isopen)"
                             >
                                 <b-img
                                     src="/monster/plate-white.svg"
@@ -1848,8 +1852,7 @@
                                     product.name
                                 "
                                 v-if="
-                                    product.menu_available === 1 &&
-                                    cart_status == 1
+                                    product.menu_available === 1 
                                 "
                             >
                                 <div class="num-in">
@@ -1899,7 +1902,7 @@
                                             '_' +
                                             product.name
                                         "
-                                        @click="open_plus(selected)"
+                                        @click="open_plus(selected, isopen)"
                                     ></span>
                                 </div>
                             </div>
@@ -2307,7 +2310,7 @@ export default {
                             this.img_to_show.push(obj);
                         }
                     }
-                    console.log(this.img_to_show);
+                    console.log("imag",this.img_to_show);
                     if (
                         this.product.food_quantity &&
                         this.product.food_quantity.length
@@ -2322,32 +2325,35 @@ export default {
                             }
                         }
                     }
+                    this.isLoading = false;
                     this.product.isInCart = false;
                     this.selected.id = this.product.food_id;
                     this.selected.isveg = this.product.is_veg;
-                    this.selected.taxperc = parseFloat(this.product.item_tax);
-                    this.selected.price = parseFloat(this.product.price);
+                    this.selected.taxperc = parseFloat(this.product.item_tax || 0);
+                    this.selected.price = parseFloat(this.product.price || 0);
                     this.selected.add_ons = this.product.add_ons;
                     this.selected.food_quantity = this.product.food_quantity;
                     this.selected.image = this.product.image;
                     this.selected.name = this.product.name;
                     this.selected.groups = this.product.groups;
-                    this.selected.restaurant = res.data.restaurant.id;
-                    this.selected.restaurant_name = res.data.restaurant.name;
+                    this.selected.restaurant =res.data.restaurant? res.data.restaurant.id:'';
+                    this.selected.restaurant_name =res.data.restaurant? res.data.restaurant.name:'';
                     this.selected.restaurant_address =
-                        res.data.restaurant.address;
-                    this.selected.restaurant_image = res.data.restaurant.logo;
-                    this.selected.packaging_charge =
-                        res.data.restaurant.packaging_charge;
+                       res.data.restaurant? res.data.restaurant.address:'';
+                    this.selected.restaurant_image =res.data.restaurant? res.data.restaurant.logo:'';
+                    this.selected.packaging_charge = res.data.restaurant?
+                        res.data.restaurant.packaging_charge:'';
                     // this.checkproductincart(this.product)
-                    this.isLoading = false;
+                   
                     this.specs = res.data.specs;
                     this.faq = res.data.faq;
                     this.table = res.data.table;
                     this.cart_status = res.data.cart_status;
+                    console.log("asdkjashsa", this.isLoading);
                     // this.single_restaurant()
                     store.commit("deliware_cart/UPDATE_FOOTER", true);
                 });
+                console.log("asdkjashsa 21432", this.isLoading);
         },
         check_size(data, adds, group, size) {
             for (var i = 0; i < size.length; i++) {

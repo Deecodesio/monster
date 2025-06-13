@@ -388,4 +388,47 @@ class UserController extends BaseController
 		$response_Array = json_encode(['plan' => $plan, 'status' => true, 'message' => $message]);
 		return $response_Array;
 	}
+
+	    public function add_consumer(Request $request)
+    {
+        $checkm = DB::table('users')->where('email', $request->email)->first();
+        $checkp = DB::table('users')->where('phone', $request->phone)->first();
+
+
+        if ($checkp) {
+            $message = "Phone Number Already Exists";
+            $status = false;
+            $response_Array = json_encode(['message' => $message, 'status' => $status]);
+            return $response_Array;
+        }
+        if ($checkm) {
+            $message = "Mail Id Already Exists";
+            $status = false;
+            $response_Array = json_encode(['message' => $message, 'status' => $status]);
+            return $response_Array;
+        }
+
+        $new_user = [
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'authToken' => '',
+            'device_type' => 'web',
+            'password' => '',
+            'device_token' => '',
+            'facebook_id' => '',
+            'name' => $request->name,
+            'profile_image' => '',
+            'login_type' => 1,
+            'referral_code' => '',
+			'wallet_amount' => $request->wallet_amount,
+        ];
+
+        DB::table('users')->insert($new_user);
+        $user = DB::table('users')->where('email', $request->email)->first();
+
+        $message = "Customer Added";
+        $status = true;
+        $response_Array = json_encode(['message' => $message, 'status' => $status, 'data' => $user]);
+        return $response_Array;
+    }
 }

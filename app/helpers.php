@@ -1041,9 +1041,10 @@ function secondLanguage_user($name, $second)
 }
 function get_image($each_food, $restaurant_id)
 {
-
+    if($restaurant_id){
     $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
+    }
     $cloudflare = DB::table('settings')->where('key_word', 'cloudflare')->first();
     $url = "";
     $acc_hash = "";
@@ -1069,7 +1070,7 @@ function get_image($each_food, $restaurant_id)
             }
         } else {
             $image[0] = BASE_URL  . "fork.svg";
-            if ($business_id->layout_id == 2) {
+            if (($business_id->layout_id??'') == 2) {
                 $image[0] = BASE_URL  . "no-storeprod.jpg";
             } else {
                 $image[0] = BASE_URL  . "fork.svg";
@@ -1294,10 +1295,13 @@ function updateMenuName_web($obj)
 function featured($restaurant_id)
 {
     $is_veg = 0;
-    $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
-    $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
-
-    $city_id = $rest_id->city;
+    $city_id = '';
+    if ($restaurant_id) {
+        $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
+        $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
+         $city_id = $rest_id->city;
+    }
+   
 
     // Step 1: Build pricing subquery with correct district filter
     $pricingSubquery = DB::table('food_list_pricing_district')
@@ -1385,15 +1389,15 @@ function featured($restaurant_id)
         $food_list[$key]->add_ons = []; // get_addons($each_food, $restaurant_id);
         $food_list[$key]->groups = []; // get_groups($each_food, $restaurant_id);
         $food_list[$key]->food_quantity = []; // get_food_quantity($each_food, $restaurant_id);
-        $food_list[$key]->restaurant = $rest_id->id;
-        $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
-        $food_list[$key]->restaurant_address = $rest_id->address;
-        $food_list[$key]->restaurant_image = $rest_id->image;
-        $food_list[$key]->restaurant_packaging_charge = $rest_id->packaging_charge;
+        $food_list[$key]->restaurant = $rest_id->id ??'';
+        $food_list[$key]->restaurant_name = $rest_id->restaurant_name??'';
+        $food_list[$key]->restaurant_address = $rest_id->address??'';
+        $food_list[$key]->restaurant_image = $rest_id->image??'';
+        $food_list[$key]->restaurant_packaging_charge = $rest_id->packaging_charge??'';
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
 
-        $food_list[$key]->cart_status = $rest_id->cart;
+        $food_list[$key]->cart_status = $rest_id->cart??0;
 
 
         $each_food->slug = strtolower(str_replace(' ', '-', $each_food->name) . '-' . $food_list[$key]->id);
@@ -1404,7 +1408,7 @@ function featured($restaurant_id)
         // }
     }
 
-    if ($business_id->layout_id == 2) {
+    if (($business_id->layout_id??'') == 2) {
 
         foreach ($food_list as $key => $each_menu) {
 
@@ -1436,10 +1440,12 @@ function featured($restaurant_id)
 function recent($restaurant_id)
 {
     $is_veg = 0;
+     $city_id = '';
+    if ($restaurant_id) {
     $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
-
     $city_id = $rest_id->city;
+    }
 
     // Step 1: Build pricing subquery with correct district filter
     $pricingSubquery = DB::table('food_list_pricing_district')
@@ -1527,14 +1533,14 @@ function recent($restaurant_id)
         $food_list[$key]->add_ons = []; // get_addons($each_food, $restaurant_id);
         $food_list[$key]->groups = []; // get_groups($each_food, $restaurant_id);
         $food_list[$key]->food_quantity = []; // get_food_quantity($each_food, $restaurant_id);
-        $food_list[$key]->restaurant = $rest_id->id;
-        $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
-        $food_list[$key]->restaurant_address = $rest_id->address;
-        $food_list[$key]->restaurant_image = $rest_id->image;
+        $food_list[$key]->restaurant = $rest_id->id??'';
+        $food_list[$key]->restaurant_name = $rest_id->restaurant_name??'';
+        $food_list[$key]->restaurant_address = $rest_id->address??'';
+        $food_list[$key]->restaurant_image = $rest_id->image??'';
 
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
-        $food_list[$key]->cart_status = $rest_id->cart;
+        $food_list[$key]->cart_status = $rest_id->cart??0;
 
         $each_food->slug = strtolower(str_replace(' ', '-', $each_food->name) . '-' . $food_list[$key]->id);
 
@@ -1544,7 +1550,7 @@ function recent($restaurant_id)
         $each_food->disc_value = "0";
         // }
     }
-    if ($business_id->layout_id == 2) {
+    if (($business_id->layout_id??'') == 2) {
         foreach ($food_list as $key => $each_menu) {
             if ($food_list[$key]->out_of_stock == 1) {
                 $food_list[$key]->menu_available = 0;
@@ -1655,8 +1661,8 @@ function menu_availability($food_list)
 }
 function product_details($id, $res)
 {
-    $city_id = $res->city;
-    $res_id = $res->id;
+    $city_id = $res->city??'';
+    $res_id = $res->id??'';
     $pricingSubquery = DB::table('food_list_pricing_district')
         ->join('food_list_pricing', 'food_list_pricing.id', '=', 'food_list_pricing_district.product_pricing_id')
         ->where('food_list_pricing_district.district_id', $city_id) // ✅ Correct district filtering
@@ -1840,11 +1846,14 @@ function cat_products($restaurant_id, $cat_id)
 function get_subcat_products($res_id, $id)
 {
     $is_veg = 0;
+     $city_id = '';
+    if ($res_id) {
     $rest_id = DB::table('restaurants')->where('id', $res_id)->first();
     $restaurant_id = $rest_id->id;
     $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
 
     $city_id = $rest_id->city;
+    }
 
     // Step 1: Build pricing subquery with correct district filter
     $pricingSubquery = DB::table('food_list_pricing_district')
@@ -1915,18 +1924,18 @@ function get_subcat_products($res_id, $id)
     // $rest_details = DB::table('restaurants')->where('id', $restaurant_id)->first();
 
     foreach ($food_list as $key => $each_food) {
-        $each_food->image = get_image($each_food, $restaurant_id);
+        $each_food->image = get_image($each_food, ($restaurant_id??''));
         $food_list[$key]->add_ons = []; // get_addons($each_food, $restaurant_id);
         $food_list[$key]->groups = []; // get_groups($each_food, $restaurant_id);
         $food_list[$key]->food_quantity = []; // get_food_quantity($each_food, $restaurant_id);
-        $food_list[$key]->restaurant = $rest_id->id;
-        $food_list[$key]->restaurant_name = $rest_id->restaurant_name;
-        $food_list[$key]->restaurant_address = $rest_id->address;
-        $food_list[$key]->restaurant_image = $rest_id->image;
-        $food_list[$key]->restaurant_packaging_charge = $rest_id->packaging_charge;
+        $food_list[$key]->restaurant = $rest_id->id??'';
+        $food_list[$key]->restaurant_name = $rest_id->restaurant_name??'';
+        $food_list[$key]->restaurant_address = $rest_id->address??'';
+        $food_list[$key]->restaurant_image = $rest_id->image??'';
+        $food_list[$key]->restaurant_packaging_charge = $rest_id->packaging_charge??'';
         $food_list[$key]->id = $food_list[$key]->food_id;
         $food_list[$key]->isveg = $food_list[$key]->is_veg;
-        $food_list[$key]->cart_status = $rest_id->cart;
+        $food_list[$key]->cart_status = $rest_id->cart??0;
         $each_food->slug = strtolower(str_replace(' ', '-', $each_food->name) . '-' . $food_list[$key]->id);
         $food_list[$key]->menu_available = menu_availability($each_food);
     }

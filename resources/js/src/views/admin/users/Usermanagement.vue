@@ -7,7 +7,6 @@
  </div>
      </div> -->
 
-      <div>
         <b-card>
 
           <!-- input search -->
@@ -20,15 +19,21 @@
             </b-form-group>
           </div> -->
           <!-- Top bar with search on left and Add button on right -->
-          <div class="d-flex justify-content-between align-items-center mb-1">
-
-
-          <b-button variant="primary" @click="$router.push({ name: 'add-consumer' })">
-  <span style="font-size: 1.5em;">+</span> Add Consumer
-</b-button>
-
-
-
+             <b-row style="margin-bottom: 1rem;">
+             <b-col md="8" style="display: flex">
+                        <div class="custom-search justify-content-start">
+                            <b-button
+                                variant="primary"
+                                :to="{ name: 'add-consumer' }"
+                            >
+                                <i class="fa-solid fa-plus"></i>{{ $t("add") }}
+                                {{ $t("consumer") }}
+                            </b-button>
+                        </div>
+          </b-col>
+            <b-col md="4">
+                        <!-- input search -->
+                        <div class="custom-search d-flex justify-content-end">
             <b-form-group class="mb-0">
               <div class="d-flex align-items-center">
                 <label class="mr-1">{{ $t('message.seachLabel') }}</label>
@@ -36,8 +41,20 @@
                   class="d-inline-block" />
               </div>
             </b-form-group>
+            </div>
+            </b-col>  
+          </b-row>
+          <!-- <div class="d-flex justify-content-between align-items-center mb-1">
 
-          </div>
+
+          <b-button variant="primary" @click="$router.push({ name: 'add-consumer' })">
+  <span style="font-size: 1.5em;">+</span> Add Consumer
+</b-button>
+
+
+        
+
+          </div> -->
 
           <!-- table -->
           <vue-good-table :columns="columns" :line-numbers="true" :rows="rows" :rtl="direction" :search-options="{
@@ -52,8 +69,10 @@
               <!-- Column: Name -->
               <div v-if="props.column.field === 'amounts'" class="text-nowrap">
 
-                <span class="text-nowrap" v-if="(props.row.amount == null)">{{ setting.value }} 0</span>
-                <span class="text-nowrap" v-else>{{ setting.value }} {{ props.row.amount }}</span>
+                <!-- <span class="text-nowrap" v-if="(props.row.amount == null)">{{ setting.value }} 0</span> -->
+                <span class="text-nowrap" v-if="(props.row.wallet_amount == null)">{{ setting.value }} 0</span>
+                <!-- <span class="text-nowrap" v-else>{{ setting.value }} {{ props.row.amount }}</span> -->
+                <span class="text-nowrap" v-else>{{ setting.value }} {{ props.row.wallet_amount }}</span>
               </div>
 
               <div v-if="props.column.field === 'order_id'" class="text-nowrap">
@@ -147,7 +166,6 @@
 
 
         </b-card>
-      </div>
     </b-col>
 
 

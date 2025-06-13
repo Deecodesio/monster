@@ -50,6 +50,40 @@
                                 </b-button>
                             </a>
                         </div>
+
+                        
+                                            <div
+                            class="custom-search justify-content-start"
+                            style="margin-left: 1%"
+                        >
+                           <b-form-group>
+                                <div class="d-flex align-items-center">
+                                    <label class="mr-1">{{
+                                        $t("category")
+                                    }}</label>
+                                                <v-select
+                                                    v-model="
+                                                        productFilter.category
+                                                    "
+                                                    :options="bus_category"
+                                                    label="category_name"
+                                                    :reduce="(sel) => sel.id"
+                                                    :placeholder="
+                                                        $t('Filter')
+                                                    "
+                                                    :dir="
+                                                        $store.state.appConfig
+                                                            .isRTL
+                                                            ? 'rtl'
+                                                            : 'ltr'
+                                                    "
+                                                    style="width: 200px;"
+                                                    @input="onChange($event)"
+                                                />
+                                                </div>  
+                                               </b-form-group>
+                    </div>
+                                       
                     </b-col>
 
                     <b-col md="4">
@@ -77,7 +111,7 @@
                 <vue-good-table
                     :columns="columns"
                     :line-numbers="true"
-                    :rows="rows"
+                    :rows="filteredRows"
                     :rtl="direction"
                     :search-options="{
                         enabled: true,
@@ -421,7 +455,7 @@ import {
 } from "bootstrap-vue";
 import { VueGoodTable } from "vue-good-table";
 import store from "@@/store/index";
-
+import vSelect from "vue-select";
 import ToastificationContent from "@@core/components/toastification/ToastificationContent.vue";
 
 export default {
@@ -444,6 +478,7 @@ export default {
         BImg,
         BMedia,
         BFormFile,
+        vSelect
     },
 
     created() {
@@ -470,6 +505,12 @@ export default {
                 // this.featured_col = false;
             }
         });
+        
+           this.$http
+            .get("/admin/business_category_lists")
+            .then((res) => {
+                this.bus_category = res.data;
+            });
 
         this.$http.get("/store/get_currency").then((res) => {
             this.setting = res.data;
@@ -477,6 +518,13 @@ export default {
     },
     data() {
         return {
+             productFilter: 
+                {
+                    category: null,
+                    state: null,
+                    district: null,
+                },
+                bus_category: [],
             publicPath: process.env.BASE_URL,
             pageLength: 10,
             dir: false,
@@ -570,8 +618,19 @@ export default {
             this.dir = false;
             return this.dir;
         },
-    },
 
+         filteredRows() {
+    if (!this.productFilter.category) {
+      return this.rows;
+    }
+    console.log(this.productFilter.category);
+    console.log(this.rows);
+    return this.rows.filter(
+      row => row.business_category_id === this.productFilter.category
+    );
+  }
+    },
+    
     methods: {
         resetModal() {},
         changefeatured(id) {
@@ -668,8 +727,9 @@ export default {
 
                         this.user_info.id = localStorage.id;
                         this.$http
-                            .post("/store/product_list", this.user_info)
-                            .then((res) => {
+                            // .post("/store/product_list", this.user_info)                       
+                            // .then((res) => {
+                             this.$http.post("/admin/product_list", this.user_info).then((res) => {
                                 this.rows = res.data.data;
                                 //   console.log(this.rows);
                             });

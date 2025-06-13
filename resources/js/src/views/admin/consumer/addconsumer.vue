@@ -1,166 +1,205 @@
 <template>
-  <div class="box">
-  
-    <div v-if="showToast" class="toast-success">
-      <i class="fa fa-check-circle"></i>
-      Added Sucessfully
-      <span class="close-btn" @click="showToast = false">&times;</span>
-    </div>
+    <b-card>
+        <b-form @submit.prevent="addBulkOrder">
+            <b-row>
+                <b-col md="6">
+                    <b-form-group :label="$t('name')">
+                        <b-form-input
+                            id="name"
+                            :placeholder="$t('name')"
+                            v-model="consumer.name"
+                            :required="!consumer.name"
+                        />
+                    </b-form-group>
+                </b-col>
+                 <b-col md="6">
+                    <b-form-group :label="$t('phone')">
+                        <b-form-input
+                            id="phone"
+                            type="tel"
+                            :placeholder="$t('phone')"
+                            v-model="consumer.phone"
+                            :required="!consumer.phone"
+                        />
+                    </b-form-group>
+                </b-col>
+            </b-row>
 
-     
-    <form @submit.prevent="submitForm">
-      <div class="form-grid">
-        <!-- Left Column -->
-        <div class="column">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" v-model="form.name" required />
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" v-model="form.email" required />
-          </div>
-          <div class="form-group">
-            <label>Wallet Balance</label>
-            <input type="number" class="form-control" v-model="form.walletBalance" />
-          </div>
-        </div>
+            <b-row>
+                <b-col md="6">
+                    <b-form-group :label="$t('email')">
+                        <b-form-input
+                            id="email"
+                            type="email"
+                            :placeholder="$t('email')"
+                            v-model="consumer.email"
+                            :required="!consumer.email"
+                        />
+                    </b-form-group>
+                </b-col>
+                 <b-col md="6">
+                    <b-form-group :label="$t('Wallet Balance')">
+                        <b-form-input
+                            id="wallet_balance"
+                            type="number"
+                            :placeholder="$t('Wallet Balance')"
+                            v-model="consumer.wallet_amount"
+                            :required="!consumer.wallet_amount"
+                        />
+                    </b-form-group>
+                </b-col>
+            </b-row>
 
-        <!-- Right Column -->
-        <div class="column">
-          <div class="form-group">
-            <label>Phone</label>
-            <input type="text" class="form-control" v-model="form.phone" />
-          </div>
-          <div class="form-group">
-            <label>Created At</label>
-            <input type="date" class="form-control" v-model="form.createdAt" />
-          </div>
-        </div>
-      </div>
-
-      <button class="save-btn" type="submit">Save</button>
-    </form>
-  </div>
+            <b-row>
+                <!-- submit and reset -->
+                <b-col>
+                    <b-button
+                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                        type="submit"
+                        variant="primary"
+                        class="mr-1"
+                        :disabled="loading"
+                    >
+                        <b-spinner small v-if="loading"></b-spinner>
+                        {{ loading ? $t("saving") : $t("save") }}
+                    </b-button>
+                    <b-button
+                        variant="outline-secondary"
+                        @click="$router.go(-1)"
+                    >
+                        {{ $t("cancel") }}
+                    </b-button>
+                </b-col>
+            </b-row>
+               </b-form>
+    </b-card>
 </template>
 
 <script>
+import BCardCode from "@core/components/b-card-code";
+import { BSpinner } from "bootstrap-vue";
+import {
+    BRow,
+    BCol,
+    BFormGroup,
+    BFormInput,
+    BFormCheckbox,
+    BForm,
+    BTooltip,
+    BButton,
+    BFormSelect,
+    BCardText,
+    BCard,
+    BTabs,
+    BTab,
+} from "bootstrap-vue";
+import Ripple from "vue-ripple-directive";
+import vSelect from "vue-select";
+import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
+
 export default {
-  name: "AddConsumer",
-  data() {
-    return {
-      form: {
-        name: '',
-        phone: '',
-        email: '',
-        createdAt: '',
-        walletBalance: ''
-      },
-      showToast: false  
-    };
-  },
-  methods: {
-    submitForm() {
-      console.log("Form Submitted:", this.form);
+    components: {
+        BCardCode,
+        BRow,
+        BCol,
+        BFormGroup,
+        BFormInput,
+        BFormCheckbox,
+        BForm,
+        BButton,
+        BFormSelect,
+        BCardText,
+        BCard,
+        vSelect,
+        BTooltip,
+        BTabs,
+        BTab,
+        BSpinner,
+    },
+    directives: {
+        Ripple,
+    },
+    data() {
+        return {
+            loading: false,
+            consumer: {
+                name: "",
+                email_id: "",
+                phone: "",
+                wallet_balance: 0,
+            },
+        };
+    },
+    methods: {
+        addBulkOrder() {            
+            // Set loading state
+            this.loading = true;
 
-       
-      this.showToast = true;
+            let user_info = new FormData();
+            user_info.append("id", this.consumer.id || "");
+            user_info.append(
+                "name",
+                this.consumer.name ? this.consumer.name : ""
+            );       
+            user_info.append(
+                "phone",
+                this.consumer.phone ? this.consumer.phone : ""
+            );
+            user_info.append(
+                "email",
+                this.consumer.email ? this.consumer.email : ""
+            );
+            user_info.append(
+                "wallet_amount",
+                this.consumer.wallet_amount ? this.consumer.wallet_amount : ""
+            );
 
-      setTimeout(() => {
-        this.showToast = false;
-      }, 3000);
-    }
-  }
+            console.log("user_info data to be sent:", user_info);
+
+            // Make the API call
+            this.$http
+                .post("/admin/add_consumer", user_info)
+                .then((response) => {
+
+                    console.log("Response from API:", response);
+                    if (response.data.status == true) {
+                        this.$router.push({ name: "user_management" });
+                        this.popToast(response, "CheckIcon", "success");
+                    } else {
+                        this.popToast(response, "AlertTriangleIcon", "danger");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    this.popToast(
+                        {
+                            data: {
+                                message: "Failed to save. Please try again.",
+                            },
+                        },
+                        "AlertTriangleIcon",
+                        "danger"
+                    );
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+
+        
+        popToast(response, icon, variant) {
+            this.$toast({
+                component: ToastificationContent,
+                position: "bottom-right",
+                props: {
+                    title: this.$t(response.data.message),
+                    icon: icon,
+                    variant: variant,
+                },
+            });
+        },
+    },
+    created() {
+    },
 };
 </script>
-
-<style scoped>
- .toast-success {
-  width: 315px;
-  height: 55px;
-  position: fixed;
-  top: 20px;
-  right:15px;
-  transform: translateX(calc(100% + 30px));  
-  background-color: #ffffff;
-  color: #34a853;
-  padding: 12px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  z-index: 1000;
-  animation: slideIn 0.5s forwards;
-}
-
-@keyframes slideIn {
-  to {
-    transform: translateX(0);
-  }
-}
-
-.toast-success i {
-  font-size: 18px;
-}
-
-.close-btn {
-  margin-left: auto;
-  cursor: pointer;
-  font-size: 18px;
-  color: #888;
-}
-
-/* Existing Styles */
-.box {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: auto;
-  margin: 0 auto;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.form-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  margin-bottom: 6px;
-  font-size: 13px;
-  color: #333;
-  font-weight: 500;
-}
-
-.form-control {
-  border: 1px solid #E01764;
-  border-radius: 4px;
-  padding: 6px 10px;
-  font-size: 14px;
-}
-
-.save-btn {
-  margin-top: 20px;
-  background-color: #E01764;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-}
-</style>

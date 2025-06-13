@@ -134,6 +134,9 @@ export default {
     created() {
         var lat = localStorage.getItem('latitude');
         var lng = localStorage.getItem('longitude');
+        
+     
+
         this.$http.get('/get_address/' + lat + '/' + lng)
             .then(res => {
                 this.address = res.data.data
@@ -166,6 +169,7 @@ export default {
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
+                console.log("Welcome Buddy",place);
                 var address = '';
                 if (place.address_components) {
                     address = [
@@ -176,6 +180,9 @@ export default {
                 }
                 localStorage.setItem('latitude', place.geometry.location.lat())
                 localStorage.setItem('longitude', place.geometry.location.lng())
+
+                console.log("Latitude: " + place.geometry.location.lat());
+                console.log("Longitude: " + place.geometry.location.lng());
                 var geocoder;
                 geocoder = new google.maps.Geocoder();
                 var latlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
@@ -246,11 +253,13 @@ export default {
                 function (results, status) {
                     if (results[0]) {
                         var add = results[0].formatted_address;
+                          console.log("add: " + add)   
                         localStorage.setItem('address', add)
                     } else {
                         alert("address not found");
                     }
-                }
+                },
+            
             );
             this.$refs['my-modal'].hide()
             location.reload()

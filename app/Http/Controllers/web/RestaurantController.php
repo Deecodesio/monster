@@ -4566,62 +4566,66 @@ class RestaurantController extends BaseController
         $nearbyRestaurantIDs = Restaurant::nearDistance_business_rest($source_lat, $source_lng, $business_id);
         $restaurants = $this->restaurants;
         $data = $restaurants::where('id', $nearbyRestaurantIDs[0])->first();
-        $is_open = restaurant_is_open($data->id);
-        $rating_statistics = get_rating_statistics($nearbyRestaurantIDs[0]);
-        $delivery_charge_limits = DB::table('delivery_charge_limits')->select('Minimum', 'Maximum', 'Value', 'Type')
-            ->where('restaurant_id', $data->id)->get()->toArray();
-        $tax1 = DB::table('settings')->where('key_word', 'tax_inclusive')->first();
-        $tax = $tax1->value;
-        $restaurant_list = array(
-            'id'            => $data->id,
-            'name' =>  $this->secondLanguage_user($data->restaurant_name, $data->restaurant_secondary_name),
-            'phone' => $data->phone,
-            'email' => $data->email,
-            'delivery_type'          => json_decode($data->delivery_type),
-            'address'       => $data->address,
-            'lat'     => $data->lat,
-            'lng'     => $data->lng,
-            'discount'      => $data->discount,
-            'rating'        => (float) $rating_statistics['rating_percent'],
-            'is_open'       => $is_open,
-            'travel_time'   => $data->estimated_delivery_time,
-            'opening_time_1' => $data->opening_time_1,
-            'closing_time_1' => $data->closing_time_1,
-            'opening_second_time_1' => $data->opening_second_time_1,
-            'closing_second_time_1' => $data->closing_second_time_1,
-            'opening_time_2' => $data->opening_time_2,
-            'closing_time_2' => $data->closing_time_2,
-            'opening_second_time_2' => $data->opening_second_time_2,
-            'closing_second_time_2' => $data->closing_second_time_2,
-            'opening_time_3' => $data->opening_time_3,
-            'closing_time_3' => $data->closing_time_3,
-            'opening_second_time_3' => $data->opening_second_time_3,
-            'closing_second_time_3' => $data->closing_second_time_3,
-            'opening_time_4' => $data->opening_time_4,
-            'closing_time_4' => $data->closing_time_4,
-            'opening_second_time_4' => $data->opening_second_time_4,
-            'closing_second_time_4' => $data->closing_second_time_4,
-            'opening_time_5' => $data->opening_time_5,
-            'closing_time_5' => $data->closing_time_5,
-            'opening_second_time_5' => $data->opening_second_time_5,
-            'closing_second_time_5' => $data->closing_second_time_5,
-            'opening_time_6' => $data->opening_time_6,
-            'closing_time_6' => $data->closing_time_6,
-            'opening_second_time_6' => $data->opening_second_time_6,
-            'closing_second_time_6' => $data->closing_second_time_6,
-            'opening_time_7' => $data->opening_time_7,
-            'closing_time_7' => $data->closing_time_7,
-            'opening_second_time_7' => $data->opening_second_time_7,
-            'closing_second_time_7' => $data->closing_second_time_7,
-            'delivery_charge_limits' => json_encode($delivery_charge_limits),
-            'packaging_charge' => $data->packaging_charge,
-            'DeliveryChargeBasedOn' => $data->DeliveryChargeBasedOn,
-            'offer_discount' => $data->offer_discount,
-            'delivery_charge_type' => $data->delivery_charge_type ? $data->delivery_charge_type : 1,
-            'tax' => $tax,
+        if ($data) {
+            $is_open = restaurant_is_open($data->id);
+            $rating_statistics = get_rating_statistics($nearbyRestaurantIDs[0]);
+            $delivery_charge_limits = DB::table('delivery_charge_limits')->select('Minimum', 'Maximum', 'Value', 'Type')
+                ->where('restaurant_id', $data->id)->get()->toArray();
+            $tax1 = DB::table('settings')->where('key_word', 'tax_inclusive')->first();
+            $tax = $tax1->value;
+            $restaurant_list = array(
+                'id'            => $data->id,
+                'name' =>  $this->secondLanguage_user($data->restaurant_name, $data->restaurant_secondary_name),
+                'phone' => $data->phone,
+                'email' => $data->email,
+                'delivery_type'          => json_decode($data->delivery_type),
+                'address'       => $data->address,
+                'lat'     => $data->lat,
+                'lng'     => $data->lng,
+                'discount'      => $data->discount,
+                'rating'        => (float) $rating_statistics['rating_percent'],
+                'is_open'       => $is_open,
+                'travel_time'   => $data->estimated_delivery_time,
+                'opening_time_1' => $data->opening_time_1,
+                'closing_time_1' => $data->closing_time_1,
+                'opening_second_time_1' => $data->opening_second_time_1,
+                'closing_second_time_1' => $data->closing_second_time_1,
+                'opening_time_2' => $data->opening_time_2,
+                'closing_time_2' => $data->closing_time_2,
+                'opening_second_time_2' => $data->opening_second_time_2,
+                'closing_second_time_2' => $data->closing_second_time_2,
+                'opening_time_3' => $data->opening_time_3,
+                'closing_time_3' => $data->closing_time_3,
+                'opening_second_time_3' => $data->opening_second_time_3,
+                'closing_second_time_3' => $data->closing_second_time_3,
+                'opening_time_4' => $data->opening_time_4,
+                'closing_time_4' => $data->closing_time_4,
+                'opening_second_time_4' => $data->opening_second_time_4,
+                'closing_second_time_4' => $data->closing_second_time_4,
+                'opening_time_5' => $data->opening_time_5,
+                'closing_time_5' => $data->closing_time_5,
+                'opening_second_time_5' => $data->opening_second_time_5,
+                'closing_second_time_5' => $data->closing_second_time_5,
+                'opening_time_6' => $data->opening_time_6,
+                'closing_time_6' => $data->closing_time_6,
+                'opening_second_time_6' => $data->opening_second_time_6,
+                'closing_second_time_6' => $data->closing_second_time_6,
+                'opening_time_7' => $data->opening_time_7,
+                'closing_time_7' => $data->closing_time_7,
+                'opening_second_time_7' => $data->opening_second_time_7,
+                'closing_second_time_7' => $data->closing_second_time_7,
+                'delivery_charge_limits' => json_encode($delivery_charge_limits),
+                'packaging_charge' => $data->packaging_charge,
+                'DeliveryChargeBasedOn' => $data->DeliveryChargeBasedOn,
+                'offer_discount' => $data->offer_discount,
+                'delivery_charge_type' => $data->delivery_charge_type ? $data->delivery_charge_type : 1,
+                'tax' => $tax,
 
 
-        );
+            );
+        } else {
+            $restaurant_list = [];
+        }
         $featured = featured($nearbyRestaurantIDs[0]);
         $recent = recent($nearbyRestaurantIDs[0]);
         // $recent = [];
@@ -4659,23 +4663,23 @@ class RestaurantController extends BaseController
         $product_id = $request->id;
         $product = product_details($product_id, $data);
         // $restaurant = $product->restaurant_id;
-        $restaurant = $data->id;
+        $restaurant = $data->id??'';
         $rest_details = DB::table('restaurants')->where('id', $restaurant)->first();
         $specs = DB::table('product_specification')->where('product_id', $product_id)->get();
         $faq = DB::table('product_faq')->where('product_id', $product_id)->get();
         $tables = DB::table('table_type')->where('product_id', $product_id)->get();
 
         $product_banner = DB::table('offers_banner')
-			->leftjoin('restaurants', 'restaurants.id', '=', 'offers_banner.restaurant_id')
-			->leftjoin('add_city', 'add_city.id', '=', 'offers_banner.city_id')
-			->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.banner_type as banner_type', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id')
-			->where('offers_banner.banner_type', 2)
-			->where('offers_banner.category', $category_id)
-			->get();
+            ->leftjoin('restaurants', 'restaurants.id', '=', 'offers_banner.restaurant_id')
+            ->leftjoin('add_city', 'add_city.id', '=', 'offers_banner.city_id')
+            ->select('restaurants.restaurant_name as restaurant_name', 'add_city.city as city_name', 'offers_banner.image as banner_image', 'offers_banner.position as banner_position', 'offers_banner.status as banner_status', 'offers_banner.banner_type as banner_type', 'offers_banner.is_suffle as banner_suffle', 'offers_banner.id as banner_id')
+            ->where('offers_banner.banner_type', 2)
+            ->where('offers_banner.category', $category_id)
+            ->get();
 
-		foreach ($product_banner as $d) {
-			$d->banner_image = BASE_URL . UPLOADS_PATH . $d->banner_image;
-		}
+        foreach ($product_banner as $d) {
+            $d->banner_image = BASE_URL . UPLOADS_PATH . $d->banner_image;
+        }
 
         $table = [];
         foreach ($tables as $td) {
@@ -4700,7 +4704,7 @@ class RestaurantController extends BaseController
             'specs' => $specs,
             'faq' => $faq,
             'table' => $table,
-            'cart_status' => $rest_details->cart
+            'cart_status' => $rest_details->cart??0
 
         ];
         return response()->json($response_array, 200);

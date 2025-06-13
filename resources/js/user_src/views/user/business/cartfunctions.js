@@ -23,7 +23,7 @@ export default {
                 this.rows = res.data.restaurants;
             });
     },
-    addCustomizedProduct(selected) {       
+    addCustomizedProduct(selected) {
         localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
         if (Array.isArray(selected.food_image)) {
             var food_image_a = selected.food_image[0];
@@ -36,7 +36,7 @@ export default {
             restaurant_name = selected.restaurant_name,
             restaurant_address = selected.restaurant_address,
             restaurant_image = selected.restaurant_image,
-           packaging_charge= selected.packaging_charge,         
+            packaging_charge = selected.packaging_charge,
             taxperc = selected.taxperc,
             name = selected.name,
             food_image = food_image_a,
@@ -571,7 +571,8 @@ export default {
                                     restaurant_name: restaurant_name,
                                     restaurant_address: restaurant_address,
                                     restaurant_image: restaurant_image,
-                                    restaurant_packaging_charge: packaging_charge,
+                                    restaurant_packaging_charge:
+                                        packaging_charge,
                                     sizePrice: selectedSizePrice,
                                     taxperc: taxperc,
                                     food_image: food_image,
@@ -651,7 +652,8 @@ export default {
                                     restaurant_name: restaurant_name,
                                     restaurant_address: restaurant_address,
                                     restaurant_image: restaurant_image,
-                                    restaurant_packaging_charge: packaging_charge,
+                                    restaurant_packaging_charge:
+                                        packaging_charge,
                                     sizePrice: selectedSizePrice,
                                     taxperc: taxperc,
                                     food_image: food_image,
@@ -748,182 +750,197 @@ export default {
         });
     },
     async loadcart() {
-          setTimeout(async () =>  {
-        localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
-        let cart = JSON.parse(localStorage.getItem("cart"));
-        var lat = localStorage.getItem("latitude");
-        var lng = localStorage.getItem("longitude");
-        // if (localStorage.getItem('webuserData')) {
-        //   this.$http.get('/get_checkout_details/' + cart[0].restaurant + '/' + lat + '/' + lng + '/' + this.userData.id)
-        //     .then(res => {
-        //       localStorage.setItem('DISTANCE', res.data.distance);
-        //     })
-        // }
-        var tips = 0;
-        let wallet = localStorage.getItem("WALLET");
-        let total_price = 0;
-        let total_item = 0;
-        let tot_tax = 0;
-        let is_tax = localStorage.getItem("IS_TAX_INCLUSIVE");
-        let tot_amt = 0;
-        let item_amount_total = 0;
-        let restaurant_packaging_charge = 0;
-        let packaging_charge = 0;
-        if (packaging_charge == 0) {
-            packaging_charge =cart.length !== 0?(cart[0].restaurant_packaging_charge || 0):0;
-            //  JSON.parse(localStorage.getItem("RES_PACK_CHARGE"));
-        }
-        if (cart.length === 0) {
-        } else {
-            let result = Object.values(
-                cart.reduce((a, { id, quantity }) => {
-                    let key = `${id}_${quantity}`;
-                    a[key] = a[key] || { id, quantity, count: 0 };
-                    a[key].count++;
-                    return a;
-                }, {})
-            );
-            var resArr = [];
-            cart.filter(function (item) {
-                var i = resArr.findIndex((x) => x.id == item.id);
-                if (i <= -1) {
-                    resArr.push(item);
-                }
-                return null;
-            });
-            for (var i = 0; i < resArr.length; i++) {
-                var qq = 0;
-                var rr = 0;
-                for (var j = 0; j < result.length; j++) {
-                    if (result[j].id == resArr[i].id) {
-                        qq = qq + result[j].quantity;
-                        rr = rr + result[j].count;
-                    }
-                }
-                var elms3 = document.querySelectorAll(
-                    '[id="food_qty_' + resArr[i].id + 'r"]'
-                );
-                for (var k = 0; k < elms3.length; k++) {
-                    if (qq > rr) {
-                        elms3[k].value = qq;
-                    } else {
-                        elms3[k].value = rr;
-                    }
-                }
+        setTimeout(async () => {
+            localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
+            let cart = JSON.parse(localStorage.getItem("cart"));
+            var lat = localStorage.getItem("latitude");
+            var lng = localStorage.getItem("longitude");
+            // if (localStorage.getItem('webuserData')) {
+            //   this.$http.get('/get_checkout_details/' + cart[0].restaurant + '/' + lat + '/' + lng + '/' + this.userData.id)
+            //     .then(res => {
+            //       localStorage.setItem('DISTANCE', res.data.distance);
+            //     })
+            // }
+            var tips = 0;
+            let wallet = localStorage.getItem("WALLET");
+            let total_price = 0;
+            let total_item = 0;
+            let tot_tax = 0;
+            let is_tax = localStorage.getItem("IS_TAX_INCLUSIVE");
+            let tot_amt = 0;
+            let item_amount_total = 0;
+            let restaurant_packaging_charge = 0;
+            let packaging_charge = 0;
+            if (packaging_charge == 0) {
+                packaging_charge =
+                    cart.length !== 0
+                        ? cart[0].restaurant_packaging_charge || 0
+                        : 0;
+                //  JSON.parse(localStorage.getItem("RES_PACK_CHARGE"));
             }
-          
-            cart.forEach(function (item, i) {
-                if (
-                    document.querySelectorAll(
-                        '[id="food_control_' + item.id + 'r"]'
-                    )
-                ) {
-                    var elms = document.querySelectorAll(
-                        '[id="food_control_' + item.id + 'r"]'
+            if (cart.length === 0) {
+            } else {
+                let result = Object.values(
+                    cart.reduce((a, { id, quantity }) => {
+                        let key = `${id}_${quantity}`;
+                        a[key] = a[key] || { id, quantity, count: 0 };
+                        a[key].count++;
+                        return a;
+                    }, {})
+                );
+                var resArr = [];
+                cart.filter(function (item) {
+                    var i = resArr.findIndex((x) => x.id == item.id);
+                    if (i <= -1) {
+                        resArr.push(item);
+                    }
+                    return null;
+                });
+                for (var i = 0; i < resArr.length; i++) {
+                    var qq = 0;
+                    var rr = 0;
+                    for (var j = 0; j < result.length; j++) {
+                        if (result[j].id == resArr[i].id) {
+                            qq = qq + result[j].quantity;
+                            rr = rr + result[j].count;
+                        }
+                    }
+                    var elms3 = document.querySelectorAll(
+                        '[id="food_qty_' + resArr[i].id + 'r"]'
                     );
-                    for (var i = 0; i < elms.length; i++) {
-                        elms[i].style.display = "block";
-                    }
-                    var elms2 = document.querySelectorAll(
-                        '[id="food_add_' + item.id + 'r"]'
-                    );
-                    for (var i = 0; i < elms2.length; i++) {
-                        elms2[i].style.display = "none";
-                    }
-
-                    // Existing below was command Reference ************
-                    var elms3 = document.querySelectorAll('[id="food_qty_' + item.id+'r"]');
-                    for(var i = 0; i < elms3.length; i++) {
-                      elms3[i].value=item.quantity;
-                    }
-                    // Existing below was command Reference ************
-                    if (document.getElementById("card" + item.id)) {
-                        var element = document.getElementById("card" + item.id);
-                        element.classList.add("incart");
+                    for (var k = 0; k < elms3.length; k++) {
+                        if (qq > rr) {
+                            elms3[k].value = qq;
+                        } else {
+                            elms3[k].value = rr;
+                        }
                     }
                 }
-                total_price += parseFloat(
-                    (item.quantity * (item.price + item.addonsPrice)).toFixed(2)
-                );
-                total_item++;
-                let thisAmount = parseFloat(
-                    ((item.price + item.addonsPrice) * item.quantity).toFixed(2)
-                );
-                tot_tax += parseFloat((thisAmount / 100) * (item.taxperc || 0));
-                localStorage.setItem("tot_tax", tot_tax);
 
-                // if (is_tax == 0) {
-                //     tot_amt = total_price + tot_tax;
-                // } else {
+                cart.forEach(function (item, i) {
+                    if (
+                        document.querySelectorAll(
+                            '[id="food_control_' + item.id + 'r"]'
+                        )
+                    ) {
+                        var elms = document.querySelectorAll(
+                            '[id="food_control_' + item.id + 'r"]'
+                        );
+                        for (var i = 0; i < elms.length; i++) {
+                            elms[i].style.display = "block";
+                        }
+                        var elms2 = document.querySelectorAll(
+                            '[id="food_add_' + item.id + 'r"]'
+                        );
+                        for (var i = 0; i < elms2.length; i++) {
+                            elms2[i].style.display = "none";
+                        }
+
+                        // Existing below was command Reference ************
+                        var elms3 = document.querySelectorAll(
+                            '[id="food_qty_' + item.id + 'r"]'
+                        );
+                        for (var i = 0; i < elms3.length; i++) {
+                            elms3[i].value = item.quantity;
+                        }
+                        // Existing below was command Reference ************
+                        if (document.getElementById("card" + item.id)) {
+                            var element = document.getElementById(
+                                "card" + item.id
+                            );
+                            element.classList.add("incart");
+                        }
+                    }
+                    total_price += parseFloat(
+                        (
+                            item.quantity *
+                            (item.price + item.addonsPrice)
+                        ).toFixed(2)
+                    );
+                    total_item++;
+                    let thisAmount = parseFloat(
+                        (
+                            (item.price + item.addonsPrice) *
+                            item.quantity
+                        ).toFixed(2)
+                    );
+                    tot_tax += parseFloat(
+                        (thisAmount / 100) * (item.taxperc || 0)
+                    );
+                    localStorage.setItem("tot_tax", tot_tax);
+
+                    // if (is_tax == 0) {
+                    //     tot_amt = total_price + tot_tax;
+                    // } else {
                     tot_amt = total_price;
-                // }
-                item_amount_total += thisAmount;
-            });
-          
-            restaurant_packaging_charge = parseFloat(
-                (item_amount_total / 100) * packaging_charge
-            );
-            var dc = 1;
-            if (dc == 1) {
-                var delivery_charge_calc = await this.calc_delivery_charge(
-                    tot_amt,
-                    cart[0].restaurant
+                    // }
+                    item_amount_total += thisAmount;
+                });
+
+                restaurant_packaging_charge = parseFloat(
+                    (item_amount_total / 100) * packaging_charge
                 );
-                console.log("st 1");
-            } else {
-                var delivery_charge_calc = 0;
-                var tips = 0;
+                var dc = 1;
+                if (dc == 1) {
+                    var delivery_charge_calc = await this.calc_delivery_charge(
+                        tot_amt,
+                        cart[0].restaurant
+                    );
+                    console.log("st 1");
+                } else {
+                    var delivery_charge_calc = 0;
+                    var tips = 0;
+                }
+                var offer_discount = 0;
+                var offer_code = 0;
+                if (localStorage.getItem("discount_value")) {
+                    offer_discount = parseFloat(
+                        localStorage.getItem("discount_value")
+                    );
+                    offer_code = localStorage.getItem("coupon");
+                } else {
+                    offer_discount = 0;
+                    offer_code = "";
+                }
+                total_price =
+                    tot_amt === 0
+                        ? tot_amt
+                        : (
+                              tot_amt -
+                              parseFloat(offer_discount) +
+                              tot_tax +
+                              restaurant_packaging_charge +
+                              delivery_charge_calc
+                          ).toFixed(2);
+                localStorage.setItem("tot_amt", total_price);
+                // var bill = {'item_total':tot_amt,'packaging_charge':restaurant_packaging_charge,'delivery_charge':delivery_charge_calc,'discount':0,'bill':total_price};
+                if (total_price < parseFloat(wallet)) {
+                    wallet = total_price;
+                    total_price = 0;
+                } else {
+                    total_price = total_price - wallet;
+                }
+                var bill = {
+                    item_total: tot_amt,
+                    packaging_charge: restaurant_packaging_charge,
+                    delivery_charge: delivery_charge_calc,
+                    discount: offer_discount,
+                    bill: total_price,
+                    tips: tips,
+                    dc: dc,
+                    tax: tot_tax,
+                    offer_code: offer_code,
+                    wallet: wallet,
+                };
+                localStorage.setItem("bill", bill);
+                store.commit("deliware_cart/UPDATE_CART_TOTAL", bill);
+                this.value = !this.value;
+                // this.loadcoupon()
             }
-            var offer_discount = 0;
-            var offer_code = 0;
-            if (localStorage.getItem("discount_value")) {
-                offer_discount = parseFloat(
-                    localStorage.getItem("discount_value")
-                );
-                offer_code = localStorage.getItem("coupon");
-            } else {
-                offer_discount = 0;
-                offer_code = "";
-            }
-            total_price =
-                tot_amt === 0
-                    ? tot_amt
-                    : (
-                          tot_amt -
-                          parseFloat(offer_discount) +
-                          tot_tax+
-                          restaurant_packaging_charge +
-                          delivery_charge_calc
-                      ).toFixed(2);
-            localStorage.setItem("tot_amt", total_price);
-            // var bill = {'item_total':tot_amt,'packaging_charge':restaurant_packaging_charge,'delivery_charge':delivery_charge_calc,'discount':0,'bill':total_price};
-            if (total_price < parseFloat(wallet)) {
-                wallet = total_price;
-                total_price = 0;
-            } else {
-                total_price = total_price - wallet;
-            }
-            var bill = {
-                item_total: tot_amt,
-                packaging_charge: restaurant_packaging_charge,
-                delivery_charge: delivery_charge_calc,
-                discount: offer_discount,
-                bill: total_price,
-                tips: tips,
-                dc: dc,
-                tax: tot_tax,
-                offer_code: offer_code,
-                wallet: wallet,
-            };
-            localStorage.setItem("bill", bill);
-            store.commit("deliware_cart/UPDATE_CART_TOTAL", bill);
-            this.value = !this.value;
-            // this.loadcoupon()             
-        }
-         }, 300);
+        }, 300);
     },
-    open_plus(data) {
-          console.log("Res Data", data);
+    open_plus(data, isopen) {
+        console.log("Res Data", data);
         let selected = {};
         if (
             !data.food_quantity.length &&
@@ -936,7 +953,7 @@ export default {
             selected.restaurant_name = data.restaurant_name;
             selected.restaurant_address = data.restaurant_address;
             selected.restaurant_image = data.restaurant_image;
-            selected.packaging_charge = data.restaurant_packaging_charge;            
+            selected.packaging_charge = data.restaurant_packaging_charge;
             // selected.taxperc = parseFloat(data.taxperc);
             selected.taxperc = parseFloat(data.item_tax);
             selected.price = parseFloat(data.price);
@@ -945,7 +962,7 @@ export default {
             selected.food_image = data.image[0];
             selected.name = data.name;
             selected.groups = data.groups;
-            this.check_cart(selected);
+            this.check_cart(selected, isopen);
             return;
         }
         var s_fq = "";
@@ -985,7 +1002,7 @@ export default {
         selected.restaurant_name = data.restaurant_name;
         selected.restaurant_address = data.restaurant_address;
         selected.restaurant_image = data.restaurant_image;
-        selected.packaging_charge = data.restaurant_packaging_charge;          
+        selected.packaging_charge = data.restaurant_packaging_charge;
         // selected.taxperc = parseFloat(data.taxperc);
         selected.taxperc = parseFloat(data.item_tax);
         selected.price = parseFloat(data.price);
@@ -994,13 +1011,41 @@ export default {
         selected.food_image = data.image[0];
         selected.name = data.name;
         selected.groups = data.groups;
-        this.check_cart(selected);
+        this.check_cart(selected, isopen);
     },
-    check_cart(selected) {
+    check_cart(selected, isOpen) {
+        console.log("Res Data Full", selected);
         console.log("Res Data Name", selected.restaurant_name);
         console.log("Res Data", selected.restaurant);
-      
+
         localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
+
+        if (!selected.restaurant) {
+            return this.$swal({
+                title: "No Nearby Restaurant",
+                text: "You can't add items to the cart because there is no restaurant nearby.",
+                icon: "warning",
+                confirmButtonText: "OK",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                },
+                buttonsStyling: false,
+            });
+        }
+
+        if (selected.restaurant && isOpen == 0) {
+          return this.$swal({
+                title: "Restaurant Closed",
+                text: "Sorry, you can't add items right now. The restaurant is closed.",
+                icon: "warning",
+                confirmButtonText: "OK",
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                },
+                buttonsStyling: false,
+            });
+        }
+        console.log("Entered56");
 
         // *** ‘Add to Cart’ is not restaurant-based, so the conditions mentioned below have been removed. ***
 
