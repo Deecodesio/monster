@@ -249,6 +249,7 @@ export default {
         };
 
         onMounted(() => {
+          
             fetchJobs();
             fetchLocations();
         });

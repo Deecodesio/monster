@@ -300,7 +300,7 @@ export default {
 
             this.loadingProducts = true;
             try {
-                const response = await axios.get(`http://localhost:3000/product_list_by_category/${categoryId}`);
+                const response = await axios.get(`/product_list_by_category/${categoryId}`);
                 this.productOptions = response.data.data.map(product => ({
                     value: product.id,
                     text: product.name || product.text || product.title
@@ -334,7 +334,8 @@ export default {
 
             this.submitting = true;
             try {
-                const response = await axios.post("http://127.0.0.1:8000/api/bulk_enquiry", this.form);
+                
+                const response = await axios.post("/api/bulk_enquiry", this.form);
 
                 if (response.status === 200 || response.status === 201) {
                     this.$toast.success("Form submitted successfully!", {

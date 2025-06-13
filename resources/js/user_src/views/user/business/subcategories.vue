@@ -355,7 +355,7 @@ export default {
 
 .cat-img-text {
   width: 100%;
-  max-width: 280px; /* Increased from 220px */
+  max-width: 265px; /* Increased from 220px */
   margin: auto;
   text-align: center;
 }
