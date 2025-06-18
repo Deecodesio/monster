@@ -15,7 +15,7 @@
             <swiper ref="mySwiper" class="swiper-multiple rounded text-center" :options="swiperOptions"
                 :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
                 <swiper-slide v-for="(data, index) in rows2" :key="index">
-                    <div class="cat-img-text" @click="gotor(data.slug)">
+                    <div class="cat-img-text g-3" @click="gotor(data.slug)">
                         <b-img class="cat-img" :src="data.img" :alt="data.text" />
                         <div class="main_Cat_name">
                             <b>{{ data.text }}</b>
@@ -49,7 +49,7 @@ export default {
             isempty: false,
             swiperOptions: {
                 breakpoints: {
-                    0: { slidesPerView: 2, spaceBetween: 4 },
+                    0: { slidesPerView: 2, spaceBetween: 6 },
                     480: { slidesPerView: 3, spaceBetween: 6 },
                     768: { slidesPerView: 4, spaceBetween: 8 },
                     992: { slidesPerView: 5, spaceBetween: 10 },
@@ -183,13 +183,8 @@ export default {
     padding: 0;
     margin: 0;
 }
-
 /* Tablet */
 @media (max-width: 1024px) {
-    .cat-img-text {
-        max-width: 160px;
-    }
-
     .main_Cat_name {
         font-size: 14px;
     }
@@ -202,14 +197,11 @@ export default {
 
 /* Mobile */
 @media (max-width: 767px) {
-    .cat-img-text {
-        max-width: 120px;
-    }
-
     .main_Cat_name {
         font-size: 13px;
     }
 }
+
 </style>
 
 <style lang="scss">

@@ -217,8 +217,9 @@ Route::group(
 
         Route::post('/track_user_order', 'UserController@track_user_order');
 
-        Route::get('/{any}', function () {
-            return view('application');
-        })->where('any', '.*');
+        Route::get('/{any?}', 'ApplicationController@index')->where('any', '.*');
+        // Route::get('/{any}', function () {
+        //     return view('application');
+        // })->where('any', '.*');
     }
 );

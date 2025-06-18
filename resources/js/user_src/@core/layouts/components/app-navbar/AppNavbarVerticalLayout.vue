@@ -1,42 +1,47 @@
 <template>
-    <b-row>
-        <div class="d-flex justify-content-center align-items-center container-xs px-4" style="padding-left: 12.5rem !important;">
-            <!-- md="2" class="pt-1" -->
-            <b-col> 
-                <b-link class="navbar-brand " to="/">
-                    <span class="brand-logo">
-                        <b-img :src=rows_detail :alt=alt class="logo_image" />
-                    </span>
+  <div>
+    <!-- Mobile Only Header (≤576px) -->
+    <b-row class="d-flex d-sm-none px-3 py-2 align-items-center justify-content-between">
+      <!-- Left: Delivery to + Location -->
+      <b-col cols="6">
+        <!-- <div style="font-size: 14px; font-weight: 600;">Delivery To</div> -->
+        <useraddress />
+      </b-col>
 
-                </b-link>
-            </b-col>
-
-            <b-col md="2" class="pt-3">
-                <!-- <Locale /> -->
-                <useraddress />
-            </b-col>
-            <b-col md="4">
-                <search-bar />
-            </b-col>
-            <b-col md="4" class="pt-2 text-r" style="display: flex; flex-direction: row-reverse;margin-top: 10px !important; ">
-
-
-                <user-dropdown style="margin: 0px 20px 0px 20px;" />
-                <cart-dropdown />
-
-                <div>
-                    <!-- <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" @click="$router.push({ name: 'track_user_order' })"
-                     variant="outline-primary">
-                     <feather-icon icon="TruckIcon" class="mr-50 ico-color2" />
-                   {{ $t("Track Order") }}
-        </b-button> -->
-
-                </div>
-
-            </b-col>
-        </div>
+      <!-- Right: Login Button / User Dropdown -->
+      <b-col cols="6" class="text-right">
+        <user-dropdown />
+      </b-col>
     </b-row>
+
+    <!-- Full Layout for Larger Screens -->
+    <b-row class="d-none d-sm-flex">
+      <div class="d-flex justify-content-center align-items-center container px-4">
+        <b-col>
+          <b-link class="navbar-brand" to="/">
+            <span class="brand-logo">
+              <b-img :src="rows_detail" :alt="alt" class="logo_image" />
+            </span>
+          </b-link>
+        </b-col>
+
+        <b-col md="2" class="pt-3">
+          <useraddress />
+        </b-col>
+
+        <b-col md="4">
+          <search-bar />
+        </b-col>
+
+        <b-col md="4" class="pt-2 text-r" style="display: flex; flex-direction: row-reverse; margin-top: 10px !important;">
+          <user-dropdown style="margin: 0px 20px 0px 20px;" />
+          <cart-dropdown />
+        </b-col>
+      </div>
+    </b-row>
+  </div>
 </template>
+
 
 <script>
 import {
@@ -122,22 +127,52 @@ export default {
 </script>
 <style lang="scss" scoped>
 .logo_image {
-    // max-width: 180px !important;
-    max-width: 800px !important;
-    padding: 0% !important;
-    height:  60px !important;
+  max-width: 800px !important;
+  height: 60px !important;
+  padding: 0% !important;
+  margin-top: 1rem !important;
 
+  @media (max-width: 1200px) {
+    max-width: 600px !important;
+    height: 55px !important;
+  }
+
+  @media (max-width: 992px) {
+    max-width: 400px !important;
+    height: 50px !important;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 280px !important;
+    height: 45px !important;
+  }
+
+  @media (max-width: 576px) {
+    max-width: 200px !important;
+    height: 40px !important;
+  }
 }
-
+ .py-2 {
+    padding-bottom: 0.5rem !important;
+}
 .text-r {
-    text-align: right;
+  text-align: right;
+
+  @media (max-width: 576px) {
+    text-align: center;
+  }
 }
 
-// .nav-search{
-//   width: 600px;
-// }
 .pad-1 {
-    padding: 10px 20px !important;
+  padding: 10px 20px !important;
+
+  @media (max-width: 768px) {
+    padding: 8px 16px !important;
+  }
+
+  @media (max-width: 576px) {
+    padding: 6px 12px !important;
+  }
 }
- 
 </style>
+

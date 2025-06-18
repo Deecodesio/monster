@@ -1,39 +1,37 @@
 <template>
-  <b-row style="margin-top: 150px">
+    <b-row style="margin-top: 150px">
         <b-col cols="12">
-    <div class="franchise-list">
-        <!-- Loading state -->
-        <div v-if="loading" class="text-center">
-            <b-spinner label="Loading..."></b-spinner>
-        </div>
+            <div class="franchise-list">
+                <!-- Loading state -->
+                <div v-if="loading" class="text-center">
+                    <b-spinner label="Loading..."></b-spinner>
+                </div>
 
-        <!-- Error state -->
-        <div v-else-if="error" class="alert alert-danger">
-            {{ error }}
-        </div>
+                <!-- Error state -->
+                <div v-else-if="error" class="alert alert-danger">
+                    {{ error }}
+                </div>
 
-        <!-- Franchise content -->
-        <div v-else>
-            <!-- Banner Section -->
-            <div class="banner-section mb-5">
-                <b-card no-body class="text-center">
-                    <b-card-body class="py-2">
-                        <h1 class="display-4 mb-2">
-                            Become a Franchise Partner
-                        </h1>
-                        <p class="lead mb-2">
-                            Join our growing network of successful franchise
-                            partners across the country
-                        </p>
-                        <b-button variant="primary" size="lg" href="#apply-form"
-                            >Apply Now</b-button
-                        >
-                    </b-card-body>
-                </b-card>
-            </div>
+                <!-- Franchise content -->
+                <div v-else>
+                    <!-- Banner Section -->
+                    <div class="banner-section mb-5" style="min-width: 300px;">
+                        <b-card no-body class="text-center" style="min-width: 300px;">
+                            <b-card-body class="py-2">
+                                <h1 class="display-4 mb-2">
+                                    Become a Franchise Partner
+                                </h1>
+                                <p class="lead mb-2">
+                                    Join our growing network of successful franchise
+                                    partners across the country
+                                </p>
+                                <b-button variant="primary" size="lg" href="#apply-form">Apply Now</b-button>
+                            </b-card-body>
+                        </b-card>
+                    </div>
 
-            <!-- Benefits Section -->
-            <!-- <h3 class="mb-4">WHY PARTNER WITH US</h3>
+                    <!-- Benefits Section -->
+                    <!-- <h3 class="mb-4">WHY PARTNER WITH US</h3>
       <b-row class="mb-5">
         <b-col md="4" class="mb-4">
           <b-card class="h-100 text-center">
@@ -58,240 +56,299 @@
         </b-col>
       </b-row> -->
 
-            <!-- Apply Form Section -->
-            <div id="apply-form" class="apply-form mt-5">
-                <h3 class="mb-4">APPLY FOR FRANCHISE</h3>
-                <b-alert
-                    v-model="showSuccessAlert"
-                    variant="success"
-                    dismissible
-                    style="padding: 5px !important"
-                >
-                    Your franchise application has been submitted successfully!
-                    We will contact you soon.
-                </b-alert>
+                    <!-- Apply Form Section -->
+                    <!-- <div id="apply-form" class="apply-form mt-5" style="background-color: white !important;">
+                        <div style="margin-right: auto; margin-left: auto; text-align: center;">
+                            <h3 class="mb-4">APPLY FOR FRANCHISE</h3>
+                        </div>
 
-                <b-form @submit.prevent="submitApplication">
-                    <b-card>
-                        <b-row>
-                            <b-col md="6">
-                                <b-form-group
-                                    label="Full Name"
-                                    label-for="name"
-                                >
-                                    <b-form-input
-                                        id="name"
-                                        v-model="form.name"
-                                        :state="nameState"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback v-if="!nameState">
-                                        Name is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
 
-                            <b-col md="6">
-                                <b-form-group
-                                    label="Email"
-                                    label-for="email_id"
-                                >
-                                    <b-form-input
-                                        id="email_id"
-                                        v-model="form.email_id"
-                                        type="email"
-                                        :state="emailState"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback v-if="!emailState">
-                                        Please enter a valid email
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                        <b-alert v-model="showSuccessAlert" variant="success" dismissible
+                            style="padding: 5px !important">
+                            Your franchise application has been submitted successfully!
+                            We will contact you soon.
+                        </b-alert>
 
-                            <b-col md="6">
-                                <b-form-group
-                                    label="Primary Phone Number"
-                                    label-for="phone_1"
-                                >
-                                    <b-form-input
-                                        id="phone_1"
-                                        v-model="form.phone_1"
-                                        :state="phone1State"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback
-                                        v-if="!phone1State"
-                                    >
-                                        Phone number is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                        <b-form @submit.prevent="submitApplication">
+                            <b-card>
+                                <b-row>
+                                    <b-col md="6">
+                                        <b-form-group label="Full Name" label-for="name" label-cols-sm="12">
+                                            <b-form-input id="name" v-model="form.name" :state="nameState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!nameState">
+                                                Name is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="6">
-                                <b-form-group
-                                    label="Alternative Phone Number (Optional)"
-                                    label-for="phone_2"
-                                >
-                                    <b-form-input
-                                        id="phone_2"
-                                        v-model="form.phone_2"
-                                    ></b-form-input>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="Email" label-for="email_id" label-cols-sm="12">
+                                            <b-form-input id="email_id" v-model="form.email_id" type="email"
+                                                :state="emailState" required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!emailState">
+                                                Please enter a valid email
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="12">
-                                <b-form-group
-                                    label="Address"
-                                    label-for="address"
-                                >
-                                    <b-form-textarea
-                                        id="address"
-                                        v-model="form.address"
-                                        rows="3"
-                                        :state="addressState"
-                                        required
-                                    ></b-form-textarea>
-                                    <b-form-invalid-feedback
-                                        v-if="!addressState"
-                                    >
-                                        Address is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="Primary Phone Number" label-for="phone_1" label-cols-sm="12">
+                                            <b-form-input id="phone_1" v-model="form.phone_1" :state="phone1State"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!phone1State">
+                                                Phone number is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="6">
-                                <b-form-group label="State" label-for="state">
-                                    <b-form-input
-                                        id="state"
-                                        v-model="form.state"
-                                        :state="stateState"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback v-if="!stateState">
-                                        State is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="Alternative Phone Number (Optional)" label-for="phone_2" label-cols-sm="12">
+                                            <b-form-input id="phone_2" v-model="form.phone_2"></b-form-input>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="6">
-                                <b-form-group
-                                    label="District"
-                                    label-for="district"
-                                >
-                                    <b-form-input
-                                        id="district"
-                                        v-model="form.district"
-                                        :state="districtState"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback
-                                        v-if="!districtState"
-                                    >
-                                        District is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="12">
+                                        <b-form-group label="Address" label-for="address" label-cols-sm="12">
+                                            <b-form-textarea id="address" v-model="form.address" rows="2" class="compact-textarea"
+                                                :state="addressState" required></b-form-textarea>
+                                            <b-form-invalid-feedback v-if="!addressState">
+                                                Address is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="6">
-                                <b-form-group label="Taluk" label-for="taluk">
-                                    <b-form-input
-                                        id="taluk"
-                                        v-model="form.taluk"
-                                        :state="talukState"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback v-if="!talukState">
-                                        Taluk is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="State" label-for="state" label-cols-sm="12">
+                                            <b-form-input id="state" v-model="form.state" :state="stateState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!stateState">
+                                                State is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="6">
-                                <b-form-group
-                                    label="Pincode"
-                                    label-for="pincode"
-                                >
-                                    <b-form-input
-                                        id="pincode"
-                                        v-model="form.pincode"
-                                        :state="pincodeState"
-                                        required
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback
-                                        v-if="!pincodeState"
-                                    >
-                                        Pincode is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="District" label-for="district" label-cols-sm="12">
+                                            <b-form-input id="district" v-model="form.district" :state="districtState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!districtState">
+                                                District is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="12">
-                                <b-form-group
-                                    label="Proposed Shop Location Plan"
-                                    label-for="shop_location_plan"
-                                >
-                                    <b-form-textarea
-                                        id="shop_location_plan"
-                                        v-model="form.shop_location_plan"
-                                        rows="3"
-                                        :state="shopLocationState"
-                                        required
-                                    ></b-form-textarea>
-                                    <b-form-invalid-feedback
-                                        v-if="!shopLocationState"
-                                    >
-                                        Shop location plan is required
-                                    </b-form-invalid-feedback>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="Taluk" label-for="taluk" label-cols-sm="12">
+                                            <b-form-input id="taluk" v-model="form.taluk" :state="talukState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!talukState">
+                                                Taluk is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col md="12">
-                                <b-form-group
-                                    label="Additional Message (Optional)"
-                                    label-for="message"
-                                >
-                                    <b-form-textarea
-                                        id="message"
-                                        v-model="form.message"
-                                        rows="3"
-                                    ></b-form-textarea>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col md="6">
+                                        <b-form-group label="Pincode" label-for="pincode" label-cols-sm="12">
+                                            <b-form-input id="pincode" v-model="form.pincode" :state="pincodeState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!pincodeState">
+                                                Pincode is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col cols="12" class="mt-3">
-                                <b-button
-                                    type="submit"
-                                    variant="primary"
-                                    :disabled="submitting"
-                                >
-                                    <b-spinner
-                                        small
-                                        v-if="submitting"
-                                        class="mr-1"
-                                    ></b-spinner>
-                                    {{
-                                        submitting
-                                            ? "Submitting..."
-                                            : "Submit Application"
-                                    }}
-                                </b-button>
-                            </b-col>
-                        </b-row>
-                    </b-card>
-                </b-form>
+                                    <b-col md="12">
+                                        <b-form-group label="Proposed Shop Location Plan"
+                                            label-for="shop_location_plan">
+                                            <b-form-textarea id="shop_location_plan" v-model="form.shop_location_plan"
+                                                rows="3" :state="shopLocationState" required></b-form-textarea>
+                                            <b-form-invalid-feedback v-if="!shopLocationState">
+                                                Shop location plan is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="12"> 
+                                        <b-form-group label="Additional Message (Optional)" label-for="message" class="compact-textarea">
+                                            <b-form-textarea id="message" v-model="form.message"
+                                                rows="2"></b-form-textarea>
+                                        </b-form-group>
+                                    </b-col>
+
+                                     <b-row cols="12" class="mt-3" >
+                                        <b-button type="submit" variant="primary" :disabled="submitting" style=" font-size: 22px !important;margin-top: 65PX !important; ">
+                                            <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                            {{
+                                                submitting
+                                                    ? "Submitting..."
+                                                    : "Submit Application"
+                                            }}
+                                        </b-button>
+                                    </b-row> 
+                                    
+                                </b-row>
+                            </b-card>
+                        </b-form>
+                    </div> -->
+                    <div id="apply-form" class="apply-form mt-5"
+                        style="  width: 100%;  max-width: 900px;   min-width: 300px;margin: 0 auto; ">
+                        <div style="margin-right: auto; margin-left: auto; text-align: center;">
+                            <h3 class="mb-4">APPLY FOR FRANCHISE</h3>
+                        </div>
+
+
+                        <b-alert v-model="showSuccessAlert" variant="success" dismissible
+                            style="padding: 5px !important">
+                            Your franchise application has been submitted successfully!
+                            We will contact you soon.
+                        </b-alert>
+
+                        <b-form @submit.prevent="submitApplication" style=" width: 100%;      margin: 0 auto; ">
+                            <b-card style="width: 100%; margin: 0 auto;">
+                                <b-row>
+                                    <b-col md="6">
+                                        <b-form-group label="Full Name" label-for="name" label-cols-sm="12">
+                                            <b-form-input id="name" v-model="form.name" :state="nameState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!nameState">
+                                                Name is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="Email" label-for="email_id" label-cols-sm="12">
+                                            <b-form-input id="email_id" v-model="form.email_id" type="email"
+                                                :state="emailState" required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!emailState">
+                                                Please enter a valid email
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="Primary Phone Number" label-for="phone_1"
+                                            label-cols-sm="12">
+                                            <b-form-input id="phone_1" v-model="form.phone_1" :state="phone1State"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!phone1State">
+                                                Phone number is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="Alternative Phone Number (Optional)" label-for="phone_2"
+                                            label-cols-sm="12">
+                                            <b-form-input id="phone_2" v-model="form.phone_2"></b-form-input>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="12">
+                                        <b-form-group label="Address" label-for="address" label-cols-sm="12">
+                                            <b-form-textarea id="address" v-model="form.address" rows="2"
+                                                class="compact-textarea" :state="addressState"
+                                                required></b-form-textarea>
+                                            <b-form-invalid-feedback v-if="!addressState">
+                                                Address is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="State" label-for="state" label-cols-sm="12">
+                                            <b-form-input id="state" v-model="form.state" :state="stateState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!stateState">
+                                                State is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="District" label-for="district" label-cols-sm="12">
+                                            <b-form-input id="district" v-model="form.district" :state="districtState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!districtState">
+                                                District is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="Taluk" label-for="taluk" label-cols-sm="12">
+                                            <b-form-input id="taluk" v-model="form.taluk" :state="talukState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!talukState">
+                                                Taluk is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-group label="Pincode" label-for="pincode" label-cols-sm="12">
+                                            <b-form-input id="pincode" v-model="form.pincode" :state="pincodeState"
+                                                required></b-form-input>
+                                            <b-form-invalid-feedback v-if="!pincodeState">
+                                                Pincode is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="12">
+                                        <b-form-group label="Proposed Shop Location Plan" label-cols-sm="12"
+                                            label-for="shop_location_plan">
+                                            <b-form-textarea id="shop_location_plan" v-model="form.shop_location_plan"
+                                                rows="2" :state="shopLocationState" required
+                                                class="compact-textarea"></b-form-textarea>
+                                            <b-form-invalid-feedback v-if="!shopLocationState">
+                                                Shop location plan is required
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="12">
+                                        <b-form-group label="Additional Message (Optional)" label-for="message"
+                                            label-cols-sm="12">
+                                            <b-form-textarea id="message" v-model="form.message" rows="2"
+                                                class="compact-textarea"></b-form-textarea>
+                                        </b-form-group>
+                                    </b-col>
+
+
+
+                                </b-row>
+                                <!-- <b-row cols="12" class="mt-3 justify-content-center" >
+                                        <b-button type="submit" variant="primary" :disabled="submitting" style=" font-size: 22px !important;margin-top: 40PX !important; ">
+                                            <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                            {{
+                                                submitting
+                                                    ? "Submitting..."
+                                                    : "Submit Application"
+                                            }}
+                                        </b-button>
+                                    </b-row>  -->
+                                <b-row cols="12" class=" justify-content-center" style="margin-top: 10px !important;">
+                                    <b-button type="submit" variant="primary" :disabled="submitting"  
+                                        style="width: fit-content !important; height: fit-content !important;">
+                                        <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                        {{ submitting ? "Submitting..." : "Submit Application" }}
+                                    </b-button>
+                                </b-row>
+                            </b-card>
+
+                        </b-form>
+
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-       <!-- Shop Location Div -->
-    <div
-        class="container-fluid"
-        style="margin-top: 50px; padding-right: 0; padding-left: 0"
-    >
-        <Ourshops />
-    </div>
-    </b-col>
-        </b-row>
+            <!-- Shop Location Div -->
+            <div class="container-fluid" style="margin-top: 50px; padding-right: 0; padding-left: 0">
+                <Ourshops />
+            </div>
+        </b-col>
+    </b-row>
 </template>
 
 <script>
@@ -482,25 +539,24 @@ export default {
 }
 
 .apply-form {
-    background-color: #f8f9fa;
+    background-color: transparent !important;
     padding: 2rem;
     border-radius: 0.5rem;
     margin-top: 3rem;
-    margin-left: 120px;
-    margin-right: 120px;
     scroll-margin-top: 100px;
 }
+
 .b-form-input,
 .b-form-textarea,
 .b-form-select,
 .form-control {
-  border: 1.5px solid #FF006B !important;  
-  border-radius: 8px !important;     
-  padding: 10px 12px !important;     
-  font-size: 16px !important;         
-  background-color: #fff !important;  
-  box-shadow: none !important;    
-  color: rgba(0, 0, 0, 0.780) !important;    
+    border: 1.5px solid #FF006B !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    font-size: 16px !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    color: rgba(0, 0, 0, 0.780) !important;
 }
 
 /* On focus */
@@ -509,10 +565,20 @@ export default {
 .b-form-select:focus,
 .form-control:focus {
     /* Change focus color if needed */
-  box-shadow: none !important;
+    box-shadow: none !important;
 }
+
 .b-form-group .form-control {
-  max-width: 300px !important; /* Set your desired width */
-  width: 100%; /* Allows responsive shrinking if needed */
+    max-width: 300px !important;
+    /* Set your desired width */
+    width: 100%;
+    /* Allows responsive shrinking if needed */
+}
+
+.compact-textarea {
+
+    padding: 4px 8px !important;
+    font-size: 14px;
+    resize: none;
 }
 </style>

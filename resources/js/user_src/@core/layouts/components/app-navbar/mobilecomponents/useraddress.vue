@@ -6,8 +6,8 @@
     <b-row @click="showModal" class="location ">
       <b-col cols="12" style="margin-top:10px;">
         <h4>Delivering To</h4>
-        <p id="demo" class="wrap" style="font-size: 10px; float:left;width: 130px;">{{ address }}</p><b-img
-          src="/dropdown.svg" fluid alt="Scan" style="width:10px; opacity: .5;  float:left;" width="10" height="16" />
+        <p id="demo" class="wrap" style="font-size: 10px; float:left;width: 130px;     font-weight: 900 !important ;">{{ address }}</p><b-img
+          src="/dropdown.svg" fluid alt="Scan" style="width:10px; opacity: .5;  float:left;" width="10" height="16"  />
       </b-col>
       <b-modal class="text-r" id="modal-address" title="Login" ok-only ok-title="Login" cancel-title="Close" hide-footer
         hide-header size="lg" centered ref="my-modal" aria-label="Get address from user">
@@ -336,6 +336,7 @@ p {
     cursor: pointer;
     z-index: 10;
     opacity: 1;
+
   }
 
   .text-r {
@@ -347,6 +348,7 @@ p {
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;
+  font-weight: 900 !important;
 }
 </style>
 <style lang="scss">
@@ -366,5 +368,6 @@ p {
 
 .location {
   cursor: pointer;
+
 }
 </style>

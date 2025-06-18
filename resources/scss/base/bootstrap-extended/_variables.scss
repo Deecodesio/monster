@@ -107,7 +107,7 @@ $line-height-lg: 1.25 !default;
 $line-height-sm: 1 !default;
 
 $border-width: 1px !default;
-$border-color: #ebe9f1 !default;
+$border-color: #FF006B !default; //#ebe9f1 !default;
 $border-radius: 0.357rem !default;
 $border-radius-lg: 0.6rem !default;
 $border-radius-sm: 0.25rem !default;
@@ -197,7 +197,7 @@ $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, bo
     box-shadow 0.15s ease-in-out, background 0s, border 0s !default;
 
 // Forms
-$custom-control-border-color: #FF006B; // #d8d6de;
+$custom-control-border-color: #FF006B !default; // #d8d6de;
 $label-margin-bottom: 0.2857rem !default;
 
 $input-padding-y: 0.438rem !default;

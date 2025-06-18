@@ -179,13 +179,24 @@
                        <input type="hidden" id="latitude" name="latitude" :value=address.lat>
                        <input type="hidden" id="longitude" name="longitude" :value=address.lng>
                        
-                       <b-row>
+                       <!-- <b-row>
                        <label class="btn btn-outline-primary tiplabel tiphide tiphide f-size-0"  type="button" style="margin-right: 20px; margin-left: 10px; padding: 10px; "  > <input type="radio" class="checktips" hidden name="addresstype" value="1" checked>{{$t("Home")}}</label>
 
                        <label class="btn btn-outline-primary tiplabel tiphide  f-size-0"  type="button" style="margin-right: 20px; margin-left: 10px; padding: 10px; "  > <input type="radio" class="checktips" hidden name="addresstype" value="2">{{$t("Work")}}</label>
 
                        <label class="btn btn-outline-primary tiplabel tiphide  f-size-0"  type="button" style="margin-right: 20px; margin-left: 10px; padding: 10px; "  > <input type="radio" class="checktips" hidden name="addresstype" value="3">{{$t("Others")}}</label>
-                       </b-row>
+                       </b-row> -->
+                         <div class="demo-inline-spacing">
+                                    <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'
+                                        " :variant="addressType.value == address.type
+                                            ? 'primary'
+                                            : 'outline-primary'
+                                            " v-for="(
+addressType, index
+                                        ) in addressTypes" :key="index" @click="selecttype(addressType.value)">
+                                        {{ addressType.label }}
+                                    </b-button>
+                                </div>
                    <b-col md="12"  class="pad0 pt-1">
                      
                            <b-button
@@ -258,10 +269,19 @@ import {
     data() {
       return {
         address:{},
+        addressTypes: [
+                { value: 1, label: "Home" },
+                { value: 2, label: "Work" },
+                { value: 3, label: "Others" },
+            ],
         localOptions: JSON.parse(JSON.stringify(this.socialData)),
       }
     },
     methods: {
+      
+            selecttype(addr_type) {
+                this.address.type = addr_type;
+            },
       edit_address(id){
         this.$http.get('/get_uaddress/'+id)
           .then(res => {
@@ -377,16 +397,17 @@ import {
         if (success) {
         
 
-          var dc = document.querySelector('input[name="addresstype"]:checked').value;
+          // var dc = document.querySelector('input[name="addresstype"]:checked').value;
           var sc = document.getElementById('selectedadd').value
           this.rows = sc
           var latitude = document.getElementById('latitude').value;
           var longitude = document.getElementById('longitude').value;
         let city = new FormData(); 
         city.append('address', sc);
+        city.append('name', this.address.name);
         city.append('lat', latitude);
         city.append('lng', longitude);
-        city.append('type', dc);
+        city.append('type', this.address.type);
         city.append('landmark', this.address.landmark);
         city.append('flat_no', this.address.flat_no);
       

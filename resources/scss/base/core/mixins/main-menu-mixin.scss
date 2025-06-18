@@ -42,7 +42,7 @@
       width: $arrow-font-size;
       display: inline-block;
       position: absolute;
-      right: 20px;
+      right: 15px; // *** Existing value is 20px ***
       top: 14px;
       transform: rotate(0deg);
       transition: all 0.2s ease-out;
@@ -177,7 +177,7 @@
 
     > li {
       > a {
-        margin: 0 15px;
+        margin: 0 0px; // Side Menu Margin ** Existing margin is 0 15px **
         .label {
           margin-top: 4px;
           margin-right: 5px;

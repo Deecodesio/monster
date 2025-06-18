@@ -239,44 +239,85 @@ class UserController extends BaseController
 
             // $user_id = $request->header('authId');
             // $address = $request->address;
+            $name = $request->name;
             $lat = $request->lat;
             $lng = $request->lng;
             $type = $request->type;
             $flat_no = $request->flat_no;
             $landmark = $request->landmark;
+            $id = $request->id ?? null;
             $delivery_address = $this->deliveryaddress;
 
-            // $check_for_default_address = $delivery_address::where('user_id', $user_id)->where('is_default', 1)->get();
-            $update = DB::table('delivery_address')->where('user_id', $user_id)->where('is_default', 1)->update([
-                'is_default' => 0
-            ]);
-            // if (count($check_for_default_address) != 0) {
-            //     $is_default = 0;
-            // } else {
-            //     $is_default = 1;
-            // }
             $originalText = $request->address;
             $convertedText = mb_convert_encoding($originalText, 'HTML-ENTITIES', 'UTF-8');
-            // $decodedText = html_entity_decode($convertedText);
-            //    dd($decodedText);
             $address = $convertedText;
-            $insert_data = array();
+            $status = false; // ✅ Default
+            $message = "Something went wrong"; // ✅ Default
 
-            $insert_data[] = array(
-                'user_id' => $user_id,
-                'address' => $address,
-                'lat' => $lat,
-                'lng' => $lng,
-                'type' => $type,
-                'flat_no' => $flat_no,
-                'landmark' => $landmark,
-                'is_default' => 1,
-            );
+            if (is_numeric($id) && $id > 0) {
+                $update_data = [
+                    'name' => $name,
+                    'address' => $address,
+                    'lat' => $lat,
+                    'lng' => $lng,
+                    'type' => $type,
+                    'flat_no' => $flat_no,
+                    'landmark' => $landmark,
+                ];
 
-            $id = $delivery_address::insert($insert_data);
-            $data = $delivery_address::where('user_id', $user_id)->orderBy('id', 'desc')->first();
-            $message = "Address added Successfully";
-            $status = true;
+                $updated = $delivery_address::where('id', $id)->where('user_id', $user_id)->update($update_data);
+
+                if ($updated) {
+                    $status = true;
+                    $message = "Address updated successfully";
+                    $data = $delivery_address::find($id); // Get updated address
+                } else {
+                    $message = "Failed to update address or no changes made";
+                }
+            } else {
+
+                // $check_for_default_address = $delivery_address::where('user_id', $user_id)->where('is_default', 1)->get();
+                $update = DB::table('delivery_address')->where('user_id', $user_id)->where('is_default', 1)->update([
+                    'is_default' => 0
+                ]);
+                // if (count($check_for_default_address) != 0) {
+                //     $is_default = 0;
+                // } else {
+                //     $is_default = 1;
+                // }
+
+                // $decodedText = html_entity_decode($convertedText);
+                //    dd($decodedText);
+
+                // $insert_data = array();
+
+                $insert_data = [
+                    'name' => $name,
+                    'user_id' => $user_id,
+                    'address' => $address,
+                    'lat' => $lat,
+                    'lng' => $lng,
+                    'type' => $type,
+                    'flat_no' => $flat_no,
+                    'landmark' => $landmark,
+                    'is_default' => 1,
+                ];
+
+                // $id = $delivery_address::insert($insert_data);
+                $inserted = $delivery_address::insert($insert_data);
+
+                if ($inserted) {
+                    $status = true;
+                    $message = "Address added successfully";
+                    $data = $inserted;
+                } else {
+                    $message = "Failed to add address";
+                }
+            }
+
+            // $data = $delivery_address::where('user_id', $user_id)->orderBy('id', 'desc')->first();
+            // $message = "Address added Successfully";
+            // $status = true;
             $response_Array = json_encode(['message' => $message, 'status' => $status]);
             return $response_Array;
         }
@@ -1188,7 +1229,8 @@ class UserController extends BaseController
         $user = Users::find($session_user_id);
         $user->name = $request->has('name') ? $request->name : $user->name;
         $user->phone = $request->has('phone') ? $request->phone : $user->phone;
-        if ($request->profile_image) {
+        // if ($request->profile_image) {
+        if ($request->hasFile('profile_image')) {
             if ($user->profile_image != "") {
                 $custom::delete_image($user->profile_image);
             }
@@ -3334,14 +3376,33 @@ class UserController extends BaseController
 
             if (!empty($restaurant_detail)) {
 
+                $imageFile = $restaurant_detail->image;
+                $default = BASE_URL . RESTAURANT_UPLOADS_PATH . 'no_image.png';
+
+                if (!empty($imageFile)) {
+                    $path1 = public_path('restaurant_uploads/') . $imageFile;
+                    $path2 = public_path('restaurant_uploads/' . $restaurant_detail->id . '/Logo/' . $imageFile);
+
+
+                    if (File::exists($path1)) {
+                        $restaurantImage = BASE_URL . RESTAURANT_UPLOADS_PATH . $imageFile;
+                    } elseif (File::exists($path2)) {
+                        $restaurantImage = BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/Logo/' . $imageFile;
+                    } else {
+                        $restaurantImage = $default;
+                    }
+                } else {
+                    $restaurantImage = $default;
+                }
+
                 $order_list[] = array(
                     'request_id' => $key->id,
                     'order_id' => $key->order_id,
                     'status' => $key->status,
                     'restaurant_id' => $restaurant_detail->id,
                     'restaurant_name' => $this->secondLanguage_user($restaurant_detail->restaurant_name, $restaurant_detail->restaurant_secondary_name),
-                    'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_detail->image),
-
+                    // 'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_detail->image),
+                    'restaurant_image' => $restaurantImage,
                     // 'restaurant_image' => BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->image,
                     'ordered_on' => $key->ordered_time,
                     'bill_amount' => $key->bill_amount,
@@ -3488,13 +3549,32 @@ class UserController extends BaseController
 
             if (!empty($restaurant_detail)) {
 
+                $imageFile = $restaurant_detail->image;
+                $default = BASE_URL . RESTAURANT_UPLOADS_PATH . 'no_image.png';
+
+                if (!empty($imageFile)) {
+                    $path1 = public_path('restaurant_uploads/') . $imageFile;
+                    $path2 = public_path('restaurant_uploads/' . $restaurant_detail->id . '/Logo/' . $imageFile);
+
+
+                    if (File::exists($path1)) {
+                        $restaurantImage = BASE_URL . RESTAURANT_UPLOADS_PATH . $imageFile;
+                    } elseif (File::exists($path2)) {
+                        $restaurantImage = BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/Logo/' . $imageFile;
+                    } else {
+                        $restaurantImage = $default;
+                    }
+                } else {
+                    $restaurantImage = $default;
+                }
+
                 $order_list[] = array(
                     'request_id' => $key->id,
                     'order_id' => $key->order_id,
                     'restaurant_id' => $restaurant_detail->id,
                     'restaurant_name' => $this->secondLanguage_user($restaurant_detail->restaurant_name, $restaurant_detail->restaurant_secondary_name),
-                    'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_detail->image),
-
+                    // 'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_detail->image),
+                    'restaurant_image' => $restaurantImage,
                     // 'restaurant_image' => BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->image,
                     'ordered_on' => $key->ordered_time,
                     'bill_amount' => $key->bill_amount,
@@ -4206,6 +4286,7 @@ class UserController extends BaseController
         $validator = Validator::make(
             $request->all(),
             array(
+                'name' => 'required',
                 'address' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
@@ -4221,6 +4302,7 @@ class UserController extends BaseController
             return redirect()->back()->withError($error_messages);
         } else {
 
+            $name = $request->name;
             $address = $request->address;
             $lat = $request->lat;
             $lng = $request->lng;
@@ -4230,6 +4312,7 @@ class UserController extends BaseController
             $delivery_address = $this->deliveryaddress;
             $restaurant_update = $delivery_address::findOrFail($request->address_id);
 
+            $restaurant_update->name = $name;
             $restaurant_update->address = $address;
             $restaurant_update->lat = $lat;
             $restaurant_update->lng = $lng;

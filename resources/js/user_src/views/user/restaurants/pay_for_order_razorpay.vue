@@ -1,9 +1,26 @@
 <template>
-    <div class="container" style="margin-top: 155px">
+    <div style="margin-top: 155px">
+       <div
+                v-if="is_loading"
+                class="mt-1 text-center d-flex flex-column align-items-center"
+            >
+                <lottie-player
+                    src="/animations/loading.json"
+                    background="#FFFDFD"
+                    speed="1"
+                    style="width: 300px; height: 500px"
+                    loop
+                    autoplay
+                ></lottie-player>
+            </div>
+            <!-- </div> -->
+    <div class="container">
         <b-row>
-            <b-col cols="12" lg="4"></b-col>
             <b-col cols="12" lg="4">
-                <b-card>
+              
+            </b-col>
+            <b-col cols="12" lg="4">
+                <b-card v-if="!is_loading">
                     <p class="f-size-2 text-center pb-1">Payment Gateway</p>
                     <table width="100%" style="margin-bottom: 40px">
                         <tr>
@@ -74,6 +91,7 @@
             <b-col cols="4" lg="4"></b-col>
         </b-row>
     </div>
+    </div>
 </template>
 
 <script>
@@ -115,7 +133,7 @@ export default {
     data() {
         return {
             option: {},
-
+            is_loading: false,
             rows: {},
             loading: false,
             show_payment_success: false,
@@ -148,6 +166,7 @@ export default {
             this.$refs.paymentRef.submit();
         },
         makePayment: function (ev) {
+            this.is_loading = true;
             ev.preventDefault();
             this.$http
                 .get("/pay_for_razor/" + this.$route.params.id)
@@ -191,14 +210,14 @@ export default {
 
                         //  callback_method: "POST",
                     });
-                    rzp1.open();
+                    rzp1.open();                    
                 })
                 .catch((err) => {
                     console.log("ERR", err);
                 });
         },
 
-        razorpay(response) {
+        razorpay(response) {            
             let data = new FormData();
             data.append("razorpay_payment_id", response.razorpay_payment_id);
             data.append("razorpay_order_id", response.razorpay_order_id);
@@ -216,7 +235,9 @@ export default {
                         name: "trackorder",
                         params: { id: res.data.order_id },
                     });
+                    this.is_loading = false;
                 }, 2000);
+                 
             });
         },
         show_success() {

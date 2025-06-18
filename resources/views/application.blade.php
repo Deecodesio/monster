@@ -22,7 +22,7 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC94I1a0fpavbX8gaXU6GPSAabEbP2as2s&libraries=places"
       async defer
     ></script> --}}
-  <script src="https://maps.googleapis.com/maps/api/js?key={{$google_key}}&libraries=geometry,places,drawing,places&callback=Function.prototype" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key={{$google_key}}&libraries=geometry,places,drawing,places" async defer></script>
 </head>
 
 <body>

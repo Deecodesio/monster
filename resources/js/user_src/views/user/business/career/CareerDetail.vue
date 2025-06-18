@@ -1,5 +1,5 @@
 <template>
-    <div class="career-detail" style="margin-top: 150px;  ">
+    <div class="career-detail container" style="margin-top: 150px;   ">
         <!-- Loading state -->
         <div v-if="loading" class="text-center">
             <b-spinner label="Loading..."></b-spinner>
@@ -433,8 +433,7 @@ export default {
 
 .career-detail {
     padding: 2rem;
-    margin-left: 80px !important;
-    margin-right: 80px !important;
+   
 }
 
 .job-title {

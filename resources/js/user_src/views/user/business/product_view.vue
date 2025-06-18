@@ -1,4 +1,5 @@
 <template>
+    <div class="card-container">
     <div style="margin-top: 50px">
         <div
             v-if="isLoading"
@@ -1852,7 +1853,7 @@
                                     product.name
                                 "
                                 v-if="
-                                    product.menu_available === 1 
+                                    product.menu_available === 1
                                 "
                             >
                                 <div class="num-in">
@@ -1944,7 +1945,7 @@
                                 >
                                     <div
                                         class="img-wrapper"
-                                        style="width: 100%; height: fit-content"
+                                        style="width: 550px; height: fit-content"
                                     >
                                         <img
                                             class="top_ban_img"
@@ -1980,7 +1981,7 @@
                 <h2
                     style="
                         text-align: center;
-                        margin-top: 15px;
+                        margin-top: 25px;
                         margin-bottom: 10px;
                     "
                 >
@@ -1996,6 +1997,7 @@
                 v-if="featured.length"
             />
         </div>
+    </div>
     </div>
 </template>
 <script>
@@ -2154,7 +2156,7 @@ export default {
                     return sum + item.price * item.quantity;
                 }, 0)
                 .toFixed(2);
-                
+
         },
     },
     filters: {
@@ -2344,7 +2346,7 @@ export default {
                     this.selected.packaging_charge = res.data.restaurant?
                         res.data.restaurant.packaging_charge:'';
                     // this.checkproductincart(this.product)
-                   
+
                     this.specs = res.data.specs;
                     this.faq = res.data.faq;
                     this.table = res.data.table;
@@ -2370,10 +2372,10 @@ export default {
 @import "~@resources/scss/base/pages/app-ecommerce-details.scss";
 @import "~@resources/scss/base/bootstrap-extended/_variables.scss";
 
+/* === ORIGINAL STYLES (unchanged) === */
 .circleBase {
     border-radius: 50%;
     cursor: pointer;
-    /* remove if you don't care about IE8 */
 }
 
 .type1 {
@@ -2393,8 +2395,8 @@ input[type="radio"] {
 }
 
 .img-fluid {
-    width: 580px !important;
-    height: 358px !important;
+    width: 550px !important;
+    height: 300px !important;
     margin-right: 22rem !important;
     object-fit: cover;
     border-radius: 8px;
@@ -2406,7 +2408,7 @@ input[type="radio"] {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 580px !important;
+    width: 550px !important;
 }
 
 .custom-add-btn {
@@ -2421,7 +2423,6 @@ input[type="radio"] {
 .custom-add-btn:focus,
 .custom-add-btn:active {
     background-color: #e6006b !important;
-    /* Slightly darker pink */
     border-color: #e6006b !important;
     box-shadow: none !important;
 }
@@ -2447,10 +2448,6 @@ input[type="radio"] {
     border-radius: 2px !important;
 }
 
-/* .rounded3 {
-    cursor: pointer;
-} */
-
 .pt-6 {
     padding-top: 0px !important;
 }
@@ -2463,15 +2460,73 @@ input[type="radio"] {
 }
 
 .img-wrapper {
-    height: 280px;
+    // height: 280px;
     border-radius: 22px;
 }
 
 .top_ban_img {
     width: 100%;
     height: 100%;
-    /* object-fit: cover; */
     border-radius: 22px;
     display: block;
 }
+
+/* === RESPONSIVE LAYOUT BELOW (new, added only) === */
+/* Responsive horizontal scroll for card container */
+@media (max-width: 576px) {
+
+  .card-container > .card {
+    flex: 0 0 auto; /* Prevent shrinking, keep fixed width */
+  }
+}
+@media (max-width: 992px) {
+    .img-fluid {
+        width: 550px !important;
+        height: auto !important;
+        margin-right: 0 !important;
+    }
+
+    .text-collapsed {
+        width: 100% !important;
+    }
+
+    .img-wrapper {
+        height: auto !important;
+    }
+
+    .top_ban_img {
+        height: auto !important;
+    }
+
+    .container {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-add-btn {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .img-fluid {
+        width: 550px !important;
+        height: auto !important;
+        margin-right: 0 !important;
+    }
+
+    .text-collapsed {
+        width: 100% !important;
+        -webkit-line-clamp: 3;
+    }
+
+    .img-wrapper {
+        height: auto !important;
+    }
+
+    .top_ban_img {
+        height: auto !important;
+    }
+}
+
 </style>

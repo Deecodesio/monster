@@ -537,7 +537,7 @@
                                         </app-collapse>
                                     </b-form-group>
                                 </b-col>
-                                <b-col md="12" v-if="tabIndex === 0">
+                                <!-- <b-col md="12" v-if="tabIndex === 0">
                                     <b-form-group
                                         :label="$t('Simple Attributes')"
                                     >
@@ -587,7 +587,7 @@
                                             </div>
                                         </draggable>
                                     </b-form-group>
-                                </b-col>
+                                </b-col> -->
                             </b-col>
 
                             <!-- <b-col lg="12" md="12" sm="12">
@@ -857,7 +857,7 @@
                             </b-col> -->
                         </b-row>
                     </b-col>
-                    <b-col lg="4" md="12" sm="12">
+                    <!-- <b-col lg="4" md="12" sm="12">
                         <h4>{{ $t("Choices & Attributes") }}</h4>
                         <div class="mb-3">
                             <b-tabs align="left" v-model="tabIndex">
@@ -1151,7 +1151,7 @@
                                 </b-button>
                             </b-col>
                         </b-row>
-                    </b-col>
+                    </b-col> -->
 
                     <b-col cols="12">
                         <div
@@ -1345,7 +1345,7 @@
                         </b-col>
                     </b-col>
 
-                    <b-col cols="12">
+                    <!-- <b-col cols="12">
                         <hr />
                         <b-card>
                             <b-col md="12">
@@ -1552,8 +1552,8 @@
                                 </b-form-group>
                             </b-col>
                         </b-card>
-                    </b-col>
-                    <b-col cols="12">
+                    </b-col> -->
+                    <!-- <b-col cols="12">
                         <hr />
                         <b-card>
                             <b-form-group :label="$t('FAQ')">
@@ -1653,7 +1653,7 @@
                                 </div>
                             </b-form-group>
                         </b-card>
-                    </b-col>
+                    </b-col> -->
                     <b-col class="mt-1">
                         <b-button
                             v-ripple.400="'rgba(255, 255, 255, 0.15)'"

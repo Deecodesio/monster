@@ -1,6 +1,6 @@
 <template>
     <div
-        class="main-menu menu-fixed menu-accordion menu-shadow"
+        class=" container main-menu menu-fixed menu-accordion menu-shadow"
         :class="[
             {
                 expanded:

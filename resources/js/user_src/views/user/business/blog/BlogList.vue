@@ -1,10 +1,11 @@
 <template>
-       <div style="margin-top: 150px">
-         <h6 class="mb-3 mt-2 mx-3" style="font-size: 1.2rem; margin-left: 44px; ">
-                <span class="text-muted">Home ></span>
-                <span class="fw-bold">Blog</span>
-            </h6>
-  <!-- <div class="blog-list-root"> -->
+  <div style="margin-top: 150px">
+  <div  class="container">
+    <h6 class="mb-3 mt-2 mx-3" style="font-size: 1.2rem; margin-left: 44px; ">
+      <span class="text-muted">Home ></span>
+      <span class="fw-bold">Blog</span>
+    </h6>
+    <!-- <div class="blog-list-root"> -->
 
     <!-- Main Heading -->
     <h1 class="main-heading" style="font-weight: bolder;">Blog</h1>
@@ -28,69 +29,43 @@
             <small class="text-muted">{{ formatDate(featuredBlog.published_at) }}</small>
             <h3 class="featured-title">{{ featuredBlog.title }}</h3>
             <p class="featured-excerpt">{{ featuredBlog.excerpt }}</p>
-            <b-button
-              variant="danger"
-              class="read-more-btn"
-              :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }"
-            >
+            <b-button variant="danger" class="read-more-btn"
+              :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
               Read more →
             </b-button>
           </div>
           <div class="featured-blog-image">
-            <b-img
-              :src="'/blogs/'+featuredBlog.featured_image"
-              fluid
-              alt="Featured blog image"
-              class="featured-img"
-            />
+            <b-img :src="'/blogs/' + featuredBlog.featured_image" fluid alt="Featured blog image" class="featured-img" />
           </div>
         </div>
       </div>
+    </div>
+    <!-- Blog Grid -->
+    <div class="row blog-grid">
+      <div v-for="blog in regularBlogs" :key="blog.id" class="col-md-6 mb-4">
+        <router-link :to="{ name: 'blog-detail', params: { slug: blog.slug } }" class="card h-100 blog-card-link">
+          <div class="card-body d-flex flex-column">
+            <b-img :src="blog.featured_image" fluid alt="Blog image" class="blog-img mb-3" />
+            <small class="text-muted">{{ formatDate(blog.published_at) }}</small>
+            <h4 class="blog-title mt-2 mb-2">{{ blog.title }}</h4>
+            <p class="blog-excerpt">{{ blog.excerpt }}</p>
+          </div>
+        </router-link>
       </div>
-      <!-- Blog Grid -->
-      <div class="row blog-grid">
-        <div
-          v-for="blog in regularBlogs"
-          :key="blog.id"
-          class="col-md-6 mb-4"
-        >
-          <router-link
-            :to="{ name: 'blog-detail', params: { slug: blog.slug } }"
-            class="card h-100 blog-card-link"
-          >
-            <div class="card-body d-flex flex-column">
-              <b-img
-                :src="blog.featured_image"
-                fluid
-                alt="Blog image"
-                class="blog-img mb-3"
-              />
-              <small class="text-muted">{{ formatDate(blog.published_at) }}</small>
-              <h4 class="blog-title mt-2 mb-2">{{ blog.title }}</h4>
-              <p class="blog-excerpt">{{ blog.excerpt }}</p>
-            </div>
-          </router-link>
-        </div>
-      </div>
+    </div>
 
-      <!-- Pagination -->
-      <div class="d-flex justify-content-center mt-4">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          @change="handlePageChange"
-          class="custom-pagination"
-        />
-      </div>
-      <div
-            class="container-fluid"
-            style="margin-top: 50px; padding-right: 0; padding-left: 0"
-        >
-            <Ourshops />
-        </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+      <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
+        class="custom-pagination" />
+    </div>
+   
     <!-- </div> -->
   </div>
+   <div class="container-fluid" style="margin-top: 50px; padding-right: 0; padding-left: 0">
+      <Ourshops />
+    </div>
+    </div>
 </template>
 
 <script>
@@ -101,7 +76,7 @@ import Ourshops from '../ourshops.vue';
 
 export default {
   name: "BlogList",
-  components: { BImg, BButton, BSpinner, BPagination,Ourshops },
+  components: { BImg, BButton, BSpinner, BPagination, Ourshops },
   setup() {
     const blogs = ref([]);
     const loading = ref(true);
@@ -112,7 +87,7 @@ export default {
 
     const featuredBlog = computed(() =>
       blogs.value.length > 0 ? blogs.value[0] : null
-     
+
     );
     const regularBlogs = computed(() =>
       blogs.value.length > 1 ? blogs.value.slice(1) : []
@@ -123,7 +98,7 @@ export default {
         loading.value = true;
         error.value = null;
         const res = await axios.get(`/api/blogs?page=${page}&per_page=${perPage.value}`);
-        console.log("askdjasdkjas",res.data.data.data);
+        console.log("askdjasdkjas", res.data.data.data);
         blogs.value = res.data.data.data || res.data;
         totalRows.value = res.data.total || 0;
         currentPage.value = res.data.current_page || 1;
@@ -133,7 +108,7 @@ export default {
         error.value = "Error loading blogs: " + err.message;
         loading.value = false;
       }
-       console.log("asdkjhgasdjashd",blogs.value[0]);
+      console.log("asdkjhgasdjashd", blogs.value[0]);
     };
 
     const handlePageChange = (page) => {
@@ -210,6 +185,7 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
+
 .featured-blog-image {
   flex: 1 1 0;
   max-width: 50%;
@@ -219,25 +195,29 @@ export default {
   /* background: #f7f7fa; */
   padding: 34px 34px 34px 0;
 }
+
 .featured-img {
   width: 100%;
   height: 37rem;
   object-fit: cover;
   border-radius: 12px;
   background: #f0f0f0;
-  box-shadow: 0 1px 10px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.04);
 }
+
 .featured-title {
   font-size: 1.22rem;
   font-weight: 600;
   margin-bottom: 14px;
 }
+
 .featured-excerpt {
   font-size: 1rem;
   color: #555;
   line-height: 1.6;
   margin-bottom: 18px;
 }
+
 .read-more-btn {
   font-size: 1.5rem;
   padding: 8px 28px;
@@ -246,8 +226,8 @@ export default {
   margin-top: 2px;
   background: #d9534f !important;
   border: none;
-  width:15rem;
-   margin-top: auto;
+  width: 15rem;
+  margin-top: auto;
 }
 
 .blog-grid {
@@ -265,28 +245,33 @@ export default {
   min-height: 320px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .blog-card-link:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 24px rgba(217, 83, 79, 0.08);
 }
+
 .card-body {
   padding: 18px 20px 22px 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-    overflow: hidden;
+  overflow: hidden;
 }
+
 .blog-img {
   width: 100%;
   height: 37rem;
   object-fit: cover;
   border-radius: 8px;
-    aspect-ratio: 4/3;
+  aspect-ratio: 4/3;
 }
+
 .blog-title {
   font-size: 1.1rem;
   font-weight: bold;
 }
+
 .blog-excerpt {
   font-size: 0.98rem;
   color: #666;
@@ -294,19 +279,27 @@ export default {
 }
 
 /* Pagination (UI) */
-.custom-pagination >>> .page-item .page-link {
+.custom-pagination>>>.page-item .page-link {
   border: none;
   color: #d9534f;
   background: none;
-  font-weight: 500;
-  font-size: 1.09rem;
+  font-weight: 600;
+  font-size: 20px;
   border-radius: 4px;
   margin: 0 2px;
   padding: 2px 10px;
+  border-radius: 6px;
+  /* margin: 0 4px;         */
+  padding: 8px 20px;
 }
-.custom-pagination >>> .page-item.active .page-link {
+
+.custom-pagination>>>.page-item.active .page-link {
   background: #d9534f;
   color: #fff;
+}
+
+.custom-pagination>>>.page-item .page-link .arrow {
+  font-size: 25px !important;
 }
 
 /* Responsive */
@@ -321,19 +314,23 @@ export default {
     width: 100%;
     margin: 0;
   }
+
   .featured-blog-row {
     flex-direction: column;
   }
+
   .featured-blog-content,
   .featured-blog-image {
     max-width: 100%;
     padding: 20px 14px !important;
   }
+
   .featured-img {
     height: 160px;
     border-radius: 8px;
-      aspect-ratio: 4/3;
+    aspect-ratio: 4/3;
   }
+
   .blog-img {
     height: 100px;
   }

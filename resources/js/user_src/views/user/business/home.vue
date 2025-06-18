@@ -17,7 +17,7 @@
                 ></lottie-player>
             </div>
             <!-- Loaded Components -->
-            <div class="mx-5 py-5" v-if="!is_loading">
+            <div class="container" v-if="!is_loading">
                 <component
                     v-for="component in componentOrder"
                     :is="component.name"

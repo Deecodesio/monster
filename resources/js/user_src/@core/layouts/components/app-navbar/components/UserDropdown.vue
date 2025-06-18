@@ -4,13 +4,13 @@
 
     <b-button v-if="!loggedin" v-ripple.400="'rgba(113, 102, 240, 0.15)'" @click="show_login()"
       variant="outline-primary">
-      <feather-icon icon="UserIcon" class="mr-50 ico-color2" />
+      <feather-icon icon="UserIcon" class="mr-50 " />
       {{ $t("Login") }}
 
     </b-button>
     <b-button v-if="this.$route.name == 'master'" v-ripple.400="'rgba(113, 102, 240, 0.15)'" @click="signupmodal()"
       variant="outline-primary">
-      <feather-icon icon="UserIcon" class="mr-50 ico-color2" />
+      <feather-icon icon="UserIcon" class="mr-50 " />
       {{ $t("Sign up") }}
 
     </b-button>

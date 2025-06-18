@@ -137,7 +137,7 @@ html {
     position: relative !important;
 }
 .img-wrapper {
-    height: 280px;
+    /* height: 280px; */
     border-radius: 22px;
 }
 

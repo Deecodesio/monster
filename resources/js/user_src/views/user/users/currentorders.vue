@@ -29,8 +29,8 @@
                           :src="data.restaurant_image"
                           blank-color="#ccc"
                           width="100"
-                        
                         />
+                        
                       </template>
                     <b-col>
                       <h4 class="media-heading">

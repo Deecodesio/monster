@@ -4906,7 +4906,13 @@ class RestaurantController extends BaseController
 
     public function allCityList()
     {
-        $city_list = DB::table('add_city')->where('status', 1)->get();
+        // $city_list = DB::table('add_city')->where('status', 1)->get();
+         $city_list = DB::table('add_city')
+        ->join('restaurants', 'add_city.id', '=', 'restaurants.city')
+        ->where('add_city.status', 1)
+        ->select('add_city.*')
+        ->distinct()
+        ->get();
 
         return response()->json($city_list);
     }

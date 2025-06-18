@@ -157,7 +157,7 @@ export default {
     padding: 0.438rem 1rem;
     background-color: #fff;
     background-clip: padding-box;
-    border: 3px solid #26323870 !important;
+    // border: 3px solid #26323870 !important;
     border-radius: 8px;
     -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;

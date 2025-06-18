@@ -1,6 +1,6 @@
 <template>
     <!-- Main Content -->
-    <b-row style="margin-top: 150px; margin-bottom:182px">
+     <div> <b-row style="margin-top: 150px; margin-bottom:182px; margin-left: 10px; margin-right: 10px;">
         <b-col cols="12">
             <div class="main-address-container">
                 <div class="address-container">
@@ -74,7 +74,7 @@
                                             ? 'primary'
                                             : 'outline-primary'
                                             " v-for="(
-addressType, index
+                                addressType, index
                                         ) in addressTypes" :key="index" @click="selecttype(addressType.value)">
                                         {{ addressType.label }}
                                     </b-button>
@@ -190,6 +190,8 @@ addressType, index
             </div>
         </b-col>
     </b-row>
+</div>
+
 </template>
 
 <script>
@@ -363,30 +365,205 @@ export default {
             };
             this.lat = addressData.lat;
             this.lng = addressData.lng;
-                this.rows = addressData.address;
-            this.$nextTick(() => {
             this.rows = addressData.address;
 
-            // Safely set hidden inputs
-            const latitudeInput = document.getElementById('latitude');
-            const longitudeInput = document.getElementById('longitude');
-            const selectedAddInput = document.getElementById('selectedadd');
-
-            if (latitudeInput) latitudeInput.value = addressData.lat;
-            if (longitudeInput) longitudeInput.value = addressData.lng;
-            if (selectedAddInput) selectedAddInput.value = addressData.address;
-
-                this.$nextTick(() => {
-            // Show modal first
             this.$refs['my-modal'].show();
+
+             var timer = setInterval(function () {
+                if (document.getElementById("gmap")) {
+                    document.getElementById("selectedadd").value =
+                        localStorage.getItem("address");
+                    const element = document.getElementById("gmap");
+                    const mapoptions = {
+                        zoom: 18,
+                        disableDefaultUI: true,
+                        styles: [
+                            {
+                                featureType: "administrative",
+                                elementType: "geometry",
+                                stylers: [
+                                    {
+                                        visibility: "off",
+                                    },
+                                ],
+                            },
+                            {
+                                featureType: "poi",
+                                stylers: [
+                                    {
+                                        visibility: "off",
+                                    },
+                                ],
+                            },
+
+                            {
+                                featureType: "road",
+                                elementType: "labels.icon",
+                                stylers: [
+                                    {
+                                        visibility: "off",
+                                    },
+                                ],
+                            },
+                            {
+                                featureType: "transit",
+                                stylers: [
+                                    {
+                                        visibility: "off",
+                                    },
+                                ],
+                            },
+                        ],
+                        center: new google.maps.LatLng(
+                            localStorage.getItem("latitude"),
+                            localStorage.getItem("longitude")
+                        ),
+                    };
+                    const map = new google.maps.Map(element, mapoptions);
+
+                    var lati = document.getElementById("latitude").value;
+                    var long = document.getElementById("longitude").value;
+
+                    var myLatlng = new google.maps.LatLng(
+                        Number(lati),
+                        Number(long)
+                    );
+                    var geocoder = new google.maps.Geocoder();
+
+                    var input = document.getElementById("searchMapInput");
+
+                    var autocomplete = new google.maps.places.Autocomplete(
+                        input
+                    );
+                    autocomplete.bindTo("bounds", map);
+                    var infowindow = new google.maps.InfoWindow();
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        draggable: true,
+                    });
+                    autocomplete.addListener("place_changed", function () {
+                        var place = autocomplete.getPlace();
+                        var address = "";
+                        if (place.address_components) {
+                            address = [
+                                (place.address_components[0] &&
+                                    place.address_components[0].short_name) ||
+                                "",
+                                (place.address_components[1] &&
+                                    place.address_components[1].short_name) ||
+                                "",
+                                (place.address_components[2] &&
+                                    place.address_components[2].short_name) ||
+                                "",
+                            ].join(" ");
+                        }
+
+                        infowindow.setContent(
+                            "<div><strong>" +
+                            place.name +
+                            "</strong><br>" +
+                            address
+                        );
+                        infowindow.open(map, marker);
+                        var geocoder = new google.maps.Geocoder();
+
+                        var latlng = new google.maps.LatLng(
+                            place.geometry.location.lat(),
+                            place.geometry.location.lng()
+                        );
+                        geocoder.geocode(
+                            {
+                                latLng: latlng,
+                            },
+                            function (results, status) {
+                                if (results[0]) {
+                                    var add = results[0].formatted_address;
+                                    document.getElementById(
+                                        "selectedadd"
+                                    ).value = results[0].formatted_address;
+                                    document.getElementById("latitude").value =
+                                        place.geometry.location.lat();
+                                    document.getElementById("longitude").value =
+                                        place.geometry.location.lng();
+                                } else {
+                                    alert("address not found");
+                                }
+                            }
+                        );
+                    });
+                    google.maps.event.addListener(
+                        marker,
+                        "dragend",
+                        function (marker) {
+                            var latLng = marker.latLng;
+                            var currentLatitude = latLng.lat();
+                            var currentLongitude = latLng.lng();
+
+                            geocoder.geocode(
+                                {
+                                    latLng: latLng,
+                                },
+                                function (results, status) {
+                                    if (
+                                        status == google.maps.GeocoderStatus.OK
+                                    ) {
+                                        if (results[0]) {
+                                            document.getElementById(
+                                                "searchMapInput"
+                                            ).value =
+                                                results[0].formatted_address;
+                                            document.getElementById(
+                                                "selectedadd"
+                                            ).value =
+                                                results[0].formatted_address;
+
+                                            document.getElementById(
+                                                "latitude"
+                                            ).value = currentLatitude;
+                                            document.getElementById(
+                                                "longitude"
+                                            ).value = currentLongitude;
+                                            infowindow.setContent(
+                                                "<div>" +
+                                                results[0]
+                                                    .formatted_address +
+                                                "<br>"
+                                            );
+                                            infowindow.open(map, marker);
+                                        }
+                                    }
+                                }
+                            );
+                        }
+                    );
+                    clearInterval(timer);
+                }
+            }, 1000);
+
+            // this.$nextTick(() => {
+            // this.rows = addressData.address;
+
+            // Safely set hidden inputs
+            // const latitudeInput = document.getElementById('latitude');
+            // const longitudeInput = document.getElementById('longitude');
+            // const selectedAddInput = document.getElementById('selectedadd');
+
+            // if (latitudeInput) latitudeInput.value = addressData.lat;
+            // if (longitudeInput) longitudeInput.value = addressData.lng;
+            // if (selectedAddInput) selectedAddInput.value = addressData.address;
+
+                // this.$nextTick(() => {
+            // Show modal first
+            // this.$refs['my-modal'].show();
             
             // Initialize map after slight delay
-            setTimeout(() => {
-                this.initMapForEdit(addressData.lat, addressData.lng, addressData.address);
-            }, 300);
-        });
+            // setTimeout(() => {
+            //     this.initMapForEdit(addressData.lat, addressData.lng, addressData.address);
+            // }, 300);
+        // });
     
-        });
+        // });
 
         try {
             if (!addressData) throw new Error('No address data provided');
@@ -453,6 +630,8 @@ export default {
                         var longitude = document.getElementById("longitude").value;
                         let city = new FormData();
                         city.append("address", sc);
+                        city.append("id", this.address.id ? this.address.id : null);
+                        city.append("name", this.address.name);
                         city.append("lat", latitude);
                         city.append("lng", longitude);
                         city.append("type", this.address.type);
@@ -460,13 +639,14 @@ export default {
                         city.append("flat_no", this.address.flat_no);
                         city.append("user_id", user.id);
 
-                        let apiUrl = "/add_delivery_address";
-                        let method = "post";
-                        if (this.isEditing && this.address.id) {
-                            apiUrl = `/update_delivery_address/${this.address.id}`;
-                            method = "post"; // or "put" depending on your API
-                            formData.append("_method", "PUT"); // if using Laravel
-                        }
+                        // let apiUrl = "/add_delivery_address";
+                        // let method = "post";
+                        console.log("Address Data:", this.isEditing, this.address.id);
+                        // if (this.isEditing && this.address.id) {
+                        //     apiUrl = `/update_delivery_address/${this.address.id}`;
+                        //     method = "post"; // or "put" depending on your API
+                        //     formData.append("_method", "PUT"); // if using Laravel
+                        // }
 
                         this.$http
                             .post("/add_delivery_address", city)
@@ -719,7 +899,7 @@ export default {
 .main-address-container {
     background-color: #ffffff;
     /* height: 694px; */
-    width: 1200px;
+    max-width:1200px;
     margin: 0 auto;
     border: 2px solid #e5e7eb;
     border-radius: 25px;

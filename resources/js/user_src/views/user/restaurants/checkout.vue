@@ -480,6 +480,7 @@ export default {
         async placeOrder(pay_type) {
             try {
                 this.isloading = true;
+                console.log("Placing order with payment type:", this.isloading);
                 const userData = JSON.parse(localStorage.getItem("webuserData"));
                 let bill, items, bookingDetails = {}, RestaurantID, tax, tips, DeliveryMethod;
 
@@ -554,6 +555,7 @@ export default {
                 });
             } finally {
                 this.isloading = false;
+                 console.log("Placing order with payment type end:", this.isloading);
             }
         },
 

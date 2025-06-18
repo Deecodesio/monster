@@ -46,6 +46,7 @@
                         $t("The products that you will order will appear here")
                     }}
                 </p>
+                <br />
             </div>
             <div class="text-l" v-if="cart.length">
                 <div class="cart-container">

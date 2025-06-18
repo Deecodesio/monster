@@ -1,147 +1,161 @@
 <template>
     <div>
-        <div class="mt-5 mx-3 py-6">
-            <top_banners />
-        </div>
-        <h4 class="text-center mb-4" style="font-size: x-large">
-            Bulk Orders
-        </h4>
-        <div id="apply-form" class="apply-form mt-5">
-            <b-form @submit.prevent="submitApplication">
-                <b-card>
-                    <b-row>
-                        <b-col md="6">
-                            <b-form-group label="Full Name" label-for="name">
-                                <b-form-input id="name" v-model="form.name" :state="nameState" required></b-form-input>
-                                <b-form-invalid-feedback v-if="!nameState">
-                                    Name is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+        <div class="container">
+            <div class="mt-5 mx-3 py-6">
+                <top_banners />
+            </div>
+            <h4 class="text-center mb-4" style="font-size: x-large">
+                Bulk Orders
+            </h4>
+            <div id="apply-form" class="apply-form mt-5" style="background-color:  transparent !important;box-shadow: none !important;margin:none !important;max-width: 900px;min-width: 300px;">
+                <b-form @submit.prevent="submitApplication">
+                    <b-card>
+                        <b-row>
+                            <b-col md="6">
+                                <b-form-group label="Full Name" label-for="name"  label-cols-sm="12">
+                                    <b-form-input id="name" v-model="form.name" :state="nameState"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!nameState">
+                                        Name is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Email" label-for="email_id">
-                                <b-form-input id="email_id" v-model="form.email_id" type="email" :state="emailState"
-                                    required></b-form-input>
-                                <b-form-invalid-feedback v-if="!emailState">
-                                    Please enter a valid email
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Email" label-for="email_id"   label-cols-sm="12">
+                                    <b-form-input id="email_id" v-model="form.email_id" type="email" :state="emailState"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!emailState">
+                                        Please enter a valid email
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Primary Phone Number" label-for="phone_1">
-                                <b-form-input id="phone_1" v-model="form.phone_1" :state="phone1State"
-                                    required></b-form-input>
-                                <b-form-invalid-feedback v-if="!phone1State">
-                                    Phone number is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Primary Phone Number" label-for="phone_1"  label-cols-sm="12">
+                                    <b-form-input id="phone_1" v-model="form.phone_1" :state="phone1State"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!phone1State">
+                                        Phone number is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Alternative Phone Number (Optional)" label-for="phone_2">
-                                <b-form-input id="phone_2" v-model="form.phone_2"></b-form-input>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Alternative Phone Number (Optional)" label-for="phone_2"  label-cols-sm="12">
+                                    <b-form-input id="phone_2" v-model="form.phone_2"></b-form-input>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="12">
+                            <!-- <b-col md="12">
                             <b-form-group label="Address" label-for="address">
-                                <b-form-textarea id="address" v-model="form.address" rows="3" :state="addressState"
+                                <b-form-textarea id="address" v-model="form.address" rows="1" :state="addressState"
                                     required></b-form-textarea>
                                 <b-form-invalid-feedback v-if="!addressState">
                                     Address is required
                                 </b-form-invalid-feedback>
                             </b-form-group>
-                        </b-col>
+                        </b-col> -->
+                            <b-col md="12">
+                                <b-form-group label="Address" label-for="address" label-cols-sm="12">
+                                    <b-form-textarea id="address" v-model="form.address" rows="2" :state="addressState"
+                                        required class="compact-textarea"></b-form-textarea>
+                                    <b-form-invalid-feedback v-if="!addressState">
+                                        Address is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="State" label-for="state">
-                                <b-form-input id="state" v-model="form.state" :state="stateState"
-                                    required></b-form-input>
-                                <b-form-invalid-feedback v-if="!stateState">
-                                    State is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="District" label-for="district">
-                                <b-form-input id="district" v-model="form.district" :state="districtState"
-                                    required></b-form-input>
-                                <b-form-invalid-feedback v-if="!districtState">
-                                    District is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="State" label-for="state" label-cols-sm="12">
+                                    <b-form-input id="state" v-model="form.state" :state="stateState"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!stateState">
+                                        State is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Taluk" label-for="taluk">
-                                <b-form-input id="taluk" v-model="form.taluk" :state="talukState"
-                                    required></b-form-input>
-                                <b-form-invalid-feedback v-if="!talukState">
-                                    Taluk is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="District" label-for="district" label-cols-sm="12">
+                                    <b-form-input id="district" v-model="form.district" :state="districtState"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!districtState">
+                                        District is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Pincode" label-for="pincode">
-                                <b-form-input id="pincode" v-model="form.pincode" :state="pincodeState"
-                                    required></b-form-input>
-                                <b-form-invalid-feedback v-if="!pincodeState">
-                                    Pincode is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Taluk" label-for="taluk" label-cols-sm="12">
+                                    <b-form-input id="taluk" v-model="form.taluk" :state="talukState"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!talukState">
+                                        Taluk is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Product Category" label-for="business_category_id">
-                                <b-form-select id="business_category_id" v-model="form.business_category_id"
-                                    :options="categoryOptions" :state="categoryState" required class="form-control"
-                                    @change="onCategoryChange">
-                                    <template #first>
-                                        <option :value="null" disabled>Select a category</option>
-                                    </template>
-                                </b-form-select>
-                                <b-form-invalid-feedback v-if="!form.business_category_id">
-                                    Product Category is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Pincode" label-for="pincode" label-cols-sm="12">
+                                    <b-form-input id="pincode" v-model="form.pincode" :state="pincodeState"
+                                        required></b-form-input>
+                                    <b-form-invalid-feedback v-if="!pincodeState">
+                                        Pincode is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="6">
-                            <b-form-group label="Product" label-for="product_id">
-                                <b-form-select id="product_id" v-model="form.product_id" :options="productOptions"
-                                    :state="productState" :disabled="!form.business_category_id" required
-                                    class="form-control">
-                                    <template #first>
-                                        <option :value="null" disabled>Select a product</option>
-                                    </template>
-                                </b-form-select>
-                                <b-form-invalid-feedback v-if="!form.product_id">
-                                    Product is required
-                                </b-form-invalid-feedback>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Product Category" label-for="business_category_id" label-cols-sm="12">
+                                    <b-form-select id="business_category_id" v-model="form.business_category_id"
+                                        :options="categoryOptions" :state="categoryState" required class="form-control"
+                                        @change="onCategoryChange">
+                                        <template #first>
+                                            <option :value="null" disabled>Select a category</option>
+                                        </template>
+                                    </b-form-select>
+                                    <b-form-invalid-feedback v-if="!form.business_category_id">
+                                        Product Category is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col md="12">
-                            <b-form-group label="Additional Message (Optional)" label-for="message">
-                                <b-form-textarea id="message" v-model="form.message" rows="3"></b-form-textarea>
-                            </b-form-group>
-                        </b-col>
+                            <b-col md="6">
+                                <b-form-group label="Product" label-for="product_id" label-cols-sm="12">
+                                    <b-form-select id="product_id" v-model="form.product_id" :options="productOptions"
+                                        :state="productState" :disabled="!form.business_category_id" required
+                                        class="form-control">
+                                        <template #first>
+                                            <option :value="null" disabled>Select a product</option>
+                                        </template>
+                                    </b-form-select>
+                                    <b-form-invalid-feedback v-if="!form.product_id">
+                                        Product is required
+                                    </b-form-invalid-feedback>
+                                </b-form-group>
+                            </b-col>
 
-                        <b-col cols="12" class="mt-3">
-                            <b-button type="submit" variant="primary" :disabled="submitting">
-                                <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
-                                {{ submitting ? 'Submitting...' : 'Submit Application' }}
-                            </b-button>
-                        </b-col>
-                    </b-row>
-                </b-card>
-            </b-form>
+                            <b-col md="12">
+                                <b-form-group label="Additional Message (Optional)" label-for="message" label-cols-sm="12">
+                                    <b-form-textarea id="message" v-model="form.message" rows="2" class="compact-textarea"></b-form-textarea>
+                                </b-form-group>
+                            </b-col>
+
+                            <b-row cols="12" class="mt-3" style="margin-left: auto;margin-right: auto; font-size: 22px !important; ">
+                                <b-button type="submit" variant="primary" :disabled="submitting">
+                                    <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                    {{ submitting ? 'Submitting...' : 'Submit Application' }}
+                                </b-button>
+                            </b-row>
+                        </b-row>
+                    </b-card>
+                </b-form>
+            </div>
+
         </div>
-        <div class="container-fluid" style="padding-top: 3rem; padding-left: 0">
+        <div class="container-fluid" style="padding-top: 3rem; padding-right: 0; padding-left: 0">
             <Ourshops />
         </div>
     </div>
@@ -192,21 +206,21 @@ export default {
             productOptions: [],
             submitting: false,
             loadingProducts: false,
-              submitted: false
+            submitted: false
         }
     },
     computed: {
         // nameState() {
         //     return this.form.name ? true : false 
         // },
-     
+
 
         // emailState() {
         //     if (!this.form.email_id) return false
         //     const re = /^\S+@\S+\.\S+$/
         //     return re.test(this.form.email_id)
         // },
-      
+
         // phone1State() {
         //     return this.form.phone_1 ? true : false
         // },
@@ -231,7 +245,7 @@ export default {
         // productState() {
         //     return this.form.product_id ? true : false
         // }
-         nameState() {
+        nameState() {
             if (!this.submitted) return null
             return this.form.name ? true : false
         },
@@ -334,7 +348,7 @@ export default {
 
             this.submitting = true;
             try {
-                
+
                 const response = await axios.post("/api/bulk_enquiry", this.form);
 
                 if (response.status === 200 || response.status === 201) {
@@ -435,35 +449,42 @@ export default {
         font-size: 1.5rem;
     }
 }
-.b-form-input, 
-.b-form-textarea, 
-.b-form-select, 
+
+.b-form-input,
+.b-form-textarea,
+.b-form-select,
 .form-control {
-  border: 1.5px solid #FF006B !important;  
-  border-radius: 6px !important;  
-  padding: 0.5rem 0.75rem !important;
-  box-shadow: none !important;  
-  background-color: #fff !important;  
- font-size: 16px;
- color: rgba(0, 0, 0, 0.780);
-  height:  auto; 
+    border: 1.5px solid #FF006B !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 0.75rem !important;
+    box-shadow: none !important;
+    background-color: #fff !important;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.780);
+    height: auto;
 }
 
- 
+
 .b-form-textarea {
-  height: auto !important;
+    height: auto !important;
 }
 
- 
+
 .b-form-select:disabled {
-  background-color: #f5f5f5 !important;
+    background-color: #ff0000 !important;
 }
 
- 
-.b-form-input:focus, 
-.b-form-textarea:focus, 
+
+.b-form-input:focus,
+.b-form-textarea:focus,
 .b-form-select:focus {
-  border-color: #333 !important; 
-  box-shadow: none !important;
+    border-color: #333 !important;
+    box-shadow: none !important;
 }
+.compact-textarea {
+  
+  padding: 4px 8px !important;
+  font-size: 14px !important;
+  resize: none !important;  
+} 
 </style>
