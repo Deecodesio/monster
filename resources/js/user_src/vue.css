@@ -851,7 +851,7 @@ html, body {
 
 
 .p10 {
-    padding: 10px;
+    padding: 5px;
 }
 
 .add_cart_btn {
@@ -862,7 +862,7 @@ html, body {
 
 .subcat_main_div {
     background: #FF81B61A;
-    height: 50vh;
+    /* height: 50vh; */
     justify-content: center;
     display: flex;
     align-items: center;

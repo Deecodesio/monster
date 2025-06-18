@@ -67,7 +67,7 @@
                                     {{ data2.label }}
                                 </b-card-text>
 
-                                <b-row class="pt-0">
+                                <b-row class="pt-0 featured-row-sm d-flex align-items-center">
                                     <b-col cols="6">
                                         <span
                                             class="media-heading text-primary strike"
@@ -331,6 +331,36 @@ export default {
     object-fit: cover;
 }
 
+@media (max-width: 470px) {
+  .featured-row-sm {
 
+    display: flex !important;
+    align-items: center;
+  }
+
+  .featured-row-sm .add_cart_btn {
+    font-size: 0.99rem !important;
+    padding: 4px 8px !important;
+  }
+  .featured-row-sm .num-block {
+    font-size: 0.99rem !important;
+  }
+  .featured-row-sm .b-col {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+  .sprice {
+    text-align: left !important;
+        margin-left: 0px !important;
+
+}
+ .skin-2 .num-in {
+    background: #E01764;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    width: 100%;
+
+}
+}
 
 </style>
