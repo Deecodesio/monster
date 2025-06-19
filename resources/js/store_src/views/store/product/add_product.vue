@@ -1932,7 +1932,7 @@ export default {
 
 .featured {
     border-style: solid !important;
-    border-color: $primary !important;
+    // border-color: $primary !important;
     border-width: thick !important;
 }
 </style>

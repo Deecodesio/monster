@@ -1,6 +1,7 @@
 .b-form-file {
   .custom-file-label {
     height: 100% !important;
+    border: 1px solid $primary !important;
   }
   // Small
   &.b-custom-control-sm {

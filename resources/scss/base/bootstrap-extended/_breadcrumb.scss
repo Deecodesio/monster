@@ -74,3 +74,13 @@
     }
   }
 }
+ .breadcrumb {
+  .breadcrumb-item,
+  .breadcrumb-item a {
+    color: $breadcrumb-color !important;
+  }
+
+  .breadcrumb-item.active {
+    color: $breadcrumb-active-color !important;
+  }
+}
