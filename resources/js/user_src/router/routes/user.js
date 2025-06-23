@@ -158,13 +158,15 @@ export default [
 
 
   },
-  {
-    path: "/contact",
-    name: "contact",
-    component: () => import("@@@/views/user/users/contact.vue"),
-
-
+  
+ {
+    path: '/contact',
+    name: 'contact',
+    component: () => import("@@@/views/user/users/contact.vue"), 
   },
+
+
+
   {
     path: "/faq",
     name: "faq",
@@ -315,12 +317,12 @@ export default [
 
   },
 
-{
-  path: '/careers/:id',
-  name: 'career-detail',
-  component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
-  props: true,
-},
+  {
+    path: '/careers/:id',
+    name: 'career-detail',
+    component: () => import('@@@/views/user/business/career/CareerDetail.vue'),
+    props: true,
+  },
   // Franchise route
   {
     path: '/franchise',

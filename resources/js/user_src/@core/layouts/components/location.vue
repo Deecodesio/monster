@@ -4,18 +4,18 @@
             <h2 class="white_text">{{ $t("Quick Links") }}</h2>
 
             <b-nav-item :to="{ name: 'about_us' }" class="white_text">
-            <!-- <b-nav-item class="white_text"> -->
+                <!-- <b-nav-item class="white_text"> -->
                 <span class="white_text"> {{ $t("About Us") }}</span>
             </b-nav-item>
 
             <!-- <b-nav-item :to="{ name: 'faq' }" class="white_text">
                 <span class="white_text">{{ $t("FAQs") }} </span>
             </b-nav-item> -->
-            <!-- <b-nav-item :to="{ name: 'contact' }" class="white_text">
-                <span class="white_text">
-                    {{ $t("Contact") }}
-                </span>
-            </b-nav-item> -->
+            <!-- contact -->
+   
+            <b-nav-item :to="{ name: 'contact' }" class="white_text">
+                <span class="white_text">{{ $t("contacts") }} </span>
+            </b-nav-item>
 
             <!-- <b-nav-item @click="redirect(2)" class="white_text"> -->
             <!-- <b-nav-item :to="{ name: 'careers' }" class="white_text"> -->
@@ -26,7 +26,7 @@
             </b-nav-item>
 
             <!-- <b-nav-item @click="redirect(3)" class="white_text"> -->
-                   <b-nav-item :to="{ name: 'franchise' }" class="white_text">
+            <b-nav-item :to="{ name: 'franchise' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Franchise") }}
                 </span>
@@ -35,7 +35,6 @@
                 <span class="white_text">
                     {{ $t("Bulk Orders") }}
                 </span>
-
             </b-nav-item>
             <!-- <b-nav-item  @click="redirect(1)" class="white_text"> -->
             <b-nav-item :to="{ name: 'blogs' }" class="white_text">
