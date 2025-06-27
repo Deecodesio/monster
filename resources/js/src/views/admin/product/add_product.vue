@@ -35,6 +35,44 @@
                         <b-row>
                             <b-col lg="6" md="12" sm="12">
                                 <b-row>
+                                     <b-col md="12">
+                                        <validation-provider
+                                            name="Category"
+                                            rules="required"
+                                            :custom-messages="{
+                                                required:
+                                                    'Category is required',
+                                            }"
+                                            v-slot="{ errors }"
+                                        >
+                                            <b-form-group
+                                                :label="$t('category')"
+                                                :state="errors.length === 0"
+                                                :invalid-feedback="errors[0]"
+                                            >
+                                                <v-select
+                                                    v-model="
+                                                        product.business_category
+                                                    "
+                                                    :options="bus_category"
+                                                    label="category_name"
+                                                    :reduce="(sel) => sel.id"
+                                                    :placeholder="
+                                                        $t('select') +
+                                                        ' ' +
+                                                        $t('category')
+                                                    "
+                                                    :dir="
+                                                        $store.state.appConfig
+                                                            .isRTL
+                                                            ? 'rtl'
+                                                            : 'ltr'
+                                                    "
+                                                    @input="onChange($event)"
+                                                />
+                                            </b-form-group>
+                                        </validation-provider>
+                                    </b-col>
                                     <b-col
                                         md="12"
                                         id="primary"
@@ -136,44 +174,7 @@
                                             </validation-provider>
                                         </b-form-group>
                                     </b-col> -->
-                                    <b-col md="6">
-                                        <validation-provider
-                                            name="Category"
-                                            rules="required"
-                                            :custom-messages="{
-                                                required:
-                                                    'Category is required',
-                                            }"
-                                            v-slot="{ errors }"
-                                        >
-                                            <b-form-group
-                                                :label="$t('category')"
-                                                :state="errors.length === 0"
-                                                :invalid-feedback="errors[0]"
-                                            >
-                                                <v-select
-                                                    v-model="
-                                                        product.business_category
-                                                    "
-                                                    :options="bus_category"
-                                                    label="category_name"
-                                                    :reduce="(sel) => sel.id"
-                                                    :placeholder="
-                                                        $t('select') +
-                                                        ' ' +
-                                                        $t('category')
-                                                    "
-                                                    :dir="
-                                                        $store.state.appConfig
-                                                            .isRTL
-                                                            ? 'rtl'
-                                                            : 'ltr'
-                                                    "
-                                                    @input="onChange($event)"
-                                                />
-                                            </b-form-group>
-                                        </validation-provider>
-                                    </b-col>
+                                   
                                     <!-- <b-col md="6" id="subcategory_list" v-if="layout_id != 1">
                                         <b-form-group :label="$t('subcategory')">
                                             <v-select v-model="product.category" :options="this.category"
@@ -1185,10 +1186,10 @@
                                                 </validation-provider>
                                             </b-form-group>
 
-                                            <b-form-group :label="$t('Label')">
+                                            <b-form-group :label="$t('Weight / Litre')">
                                                 <b-form-input
                                                     :id="'label' + index"
-                                                    :placeholder="$t('Label')"
+                                                    :placeholder="$t('Wt / Ltr')"
                                                     v-model="product.label"
                                                     type="text"
                                                 />

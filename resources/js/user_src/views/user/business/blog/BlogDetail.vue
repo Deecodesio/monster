@@ -12,16 +12,16 @@
             </div>
 
             <!-- Blog content -->
-            <div v-else>
+            <div v-else style="max-width: 1050px;min-width: 400px;margin-left: auto;margin-right: auto;">
                 <b-card no-body>
                     <div class="featured-image-container mt-3">
                         <b-img :src="blog.featured_image" fluid class="featured-image" alt="Blog featured image" />
                     </div>
                     <b-card-body>
-                        <h1 class="blog-title mb-3">{{ blog.title }}</h1>
+                        <h1 class="blog-title mb-1">{{ blog.title }}</h1>
                         <div class="blog-meta mb-4">
-                            <small class="text-muted">
-                                <b-icon icon="calendar" class="mr-1"></b-icon>
+                            <small class="text-muted" style="font-weight: 700; color: black;">
+                                <!-- <b-icon icon="calendar" class="mr-1" ></b-icon> -->
                                 Published on {{ formatDate(blog.published_at) }}
                             </small>
                             <small v-if="blog.category" class="text-muted ml-3">
@@ -137,6 +137,8 @@ export default {
 .blog-title {
     font-size: 2.5rem;
     font-weight: 700;
+    color: black;
+
 }
 
 .blog-meta {

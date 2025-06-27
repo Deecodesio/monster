@@ -1,6 +1,6 @@
 <template>
     <div style="padding-right: 0% !important; padding-left: 0% !important">
-        <div class="shope-container mb-5 text-center" v-if="shopList.length">
+        <div class="shope-container  text-center" v-if="shopList.length">
             <h3 class="shope-title mx-3">Our Shops</h3>
             <div class="shop-grid">
                 <div
@@ -98,8 +98,8 @@ export default {
     border-radius: 20px;
     padding: 0 30px;
     text-align: center;
-    font-weight: 500;
-    color: #263238;
+    font-weight: bold;
+    color:black;
     white-space: nowrap;
     display: inline-block;
 }

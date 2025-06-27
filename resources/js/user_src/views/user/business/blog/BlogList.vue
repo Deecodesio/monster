@@ -1,14 +1,16 @@
 <template>
   <div style="margin-top: 150px">
   <div  class="container">
-    <h6 class="mb-3 mt-2 mx-3" style="font-size: 1.2rem; margin-left: 44px; ">
-      <span class="text-muted">Home ></span>
-      <span class="fw-bold">Blog</span>
-    </h6>
+    <h6 class="mb-3 mt-2 mx-3" >
+  <span class=" text-primary" style="font-size: 16px; font-weight: 600;">Home &gt;</span>
+  <span class=" text-muted" style="font-size: 16px; font-weight: 600;"> Blog</span>
+</h6>
+
+
     <!-- <div class="blog-list-root"> -->
 
     <!-- Main Heading -->
-    <h1 class="main-heading" style="font-weight: bolder;">Blog</h1>
+    <h1 class="main-heading" style="font-weight: bolder;margin-left: 36px !important;">Blog</h1>
 
     <!-- Loading -->
     <div v-if="loading" class="text-center py-5">
@@ -26,8 +28,9 @@
       <div v-if="featuredBlog" class="featured-blog-card">
         <div class="featured-blog-row">
           <div class="featured-blog-content">
-            <small class="text-muted">{{ formatDate(featuredBlog.published_at) }}</small>
+         
             <h3 class="featured-title">{{ featuredBlog.title }}</h3>
+               <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{ formatDate(featuredBlog.published_at) }}</small>
             <p class="featured-excerpt">{{ featuredBlog.excerpt }}</p>
             <b-button variant="danger" class="read-more-btn"
               :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
@@ -155,7 +158,7 @@ export default {
   font-weight: 700;
   margin-bottom: 30px;
   margin-left: 44px;
-  margin-top: 38px;
+ 
 }
 
 .featured-blog-card {
@@ -198,7 +201,7 @@ export default {
 
 .featured-img {
   width: 100%;
-  height: 37rem;
+  height:  250px;
   object-fit: cover;
   border-radius: 12px;
   background: #f0f0f0;
@@ -219,8 +222,9 @@ export default {
 }
 
 .read-more-btn {
+  height: 40px;
   font-size: 1.5rem;
-  padding: 8px 28px;
+  /* padding: 8px 28px; */
   border-radius: 799px;
   font-weight: 600;
   margin-top: 2px;

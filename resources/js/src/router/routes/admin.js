@@ -444,13 +444,13 @@ export default [
         name: "driver_list",
         component: () => import("@/views/admin/driver/driver_list.vue"),
         meta: {
-            pageTitle: "Driver List",
+            pageTitle: "Delivery partner",
             breadcrumb: [
                 {
-                    text: "Driver List",
+                    text: "Delivery partner",
                 },
                 {
-                    text: "Driver",
+                    text: "Delivery partner",
                     active: true,
                 },
             ],
@@ -463,13 +463,13 @@ export default [
         name: "view_driver",
         component: () => import("@/views/admin/driver/view_driver.vue"),
         meta: {
-            pageTitle: "View Driver",
+            pageTitle: "View Delivery partner",
             breadcrumb: [
                 {
-                    text: "View Driver",
+                    text: "View Delivery partner",
                 },
                 {
-                    text: "Driver",
+                    text: "Delivery partner",
                     active: true,
                 },
             ],
@@ -482,13 +482,13 @@ export default [
         name: "new_driver_list",
         component: () => import("@/views/admin/driver/new_driver_list.vue"),
         meta: {
-            pageTitle: "New Driver List",
+            pageTitle: "New Delivery partner",
             breadcrumb: [
                 {
-                    text: "Driver List",
+                    text: "Delivery partner",
                 },
                 {
-                    text: "New Driver",
+                    text: "New Delivery partner",
                     active: true,
                 },
             ],
@@ -1451,13 +1451,13 @@ export default [
         name: "add-driver",
         component: () => import("@/views/admin/driver/add_driver.vue"),
         meta: {
-            pageTitle: "Add Driver",
+            pageTitle: "Add Delivery partner",
             breadcrumb: [
                 {
-                    text: "Driver",
+                    text: "Delivery partner",
                 },
                 {
-                    text: "Add Driver",
+                    text: "Add Delivery partner",
                     active: true,
                 },
             ],
@@ -1470,13 +1470,13 @@ export default [
         name: "edit-driver",
         component: () => import("@/views/admin/driver/edit_driver.vue"),
         meta: {
-            pageTitle: "Edit Driver",
+            pageTitle: "Edit Delivery partner",
             breadcrumb: [
                 {
-                    text: "Driver",
+                    text: "Delivery partner",
                 },
                 {
-                    text: "Edit Driver",
+                    text: "Edit Delivery partner",
                     active: true,
                 },
             ],

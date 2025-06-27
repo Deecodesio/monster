@@ -246,9 +246,11 @@
                     responsive 
                     :items="food_details" 
                     :fields="[
-                        { key: 'Name', label: 'NAME', thStyle: { color: 'black', background: '#FF81B633', fontWeight: '400', fontSize: '16px' },tdClass: ' px-2' },
-                         { key: 'quantity', label: 'QUANTITY', thStyle: { color: 'black', background: '#FF81B633', fontWeight: '400', fontSize: '16px' }, tdClass: ' px-5' },
-                        { key: 'price', label: 'PRICE', thStyle: { color: 'black', background: '#FF81B633', fontWeight: '400', fontSize: '16px' }, tdClass: ' px-4' },
+                        { key: 'Name', label: 'NAME', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' },tdClass: ' px-2' },
+                         { key: 'quantity', label: 'QUANTITY', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-5' },
+                         { key: 'gst', label: 'GST', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-5' },
+                         { key: 'igst', label: 'IGST', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-5' },
+                        { key: 'price', label: 'PRICE', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-4' },
                     ]">
                     
                     <template #cell(taskDescription)="data" >

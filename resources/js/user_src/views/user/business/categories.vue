@@ -50,10 +50,10 @@ export default {
             swiperOptions: {
                 breakpoints: {
                     0: { slidesPerView: 2, spaceBetween: 6 },
-                    480: { slidesPerView: 3, spaceBetween: 6 },
-                    768: { slidesPerView: 4, spaceBetween: 8 },
-                    992: { slidesPerView: 5, spaceBetween: 10 },
-                    1200: { slidesPerView: 5, spaceBetween: 12 },
+                    480: { slidesPerView: 2, spaceBetween: 6 },
+                    768: { slidesPerView: 2, spaceBetween: 8 },
+                    992: { slidesPerView: 3, spaceBetween: 10 },
+                    1200: { slidesPerView: 4, spaceBetween: 12 },
                 },
                 navigation: {
                     nextEl: "#swiper-button-next",
@@ -146,7 +146,7 @@ export default {
 
 .cat-img {
   width: 100%;
-  aspect-ratio: 4 / 2; /* Wider rectangle */
+  aspect-ratio: 5 / 3; /* Wider rectangle */
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);

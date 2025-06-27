@@ -7,19 +7,19 @@ export default [
         icon: "TruckIcon",
         children: [
             {
-                title: "Driver List",
+                title: "Delivery partner",
                 route: "driver_list",
                 resource: "driver-view",
                 action: "read",
             },
             {
-                title: "Pending Driver List",
+                title: "Pending Delivery partner",
                 route: "new_driver_list",
                 resource: "driver-view",
                 action: "read",
             },
             {
-                title: "Add Driver",
+                title: "Add Delivery partner",
                 route: "add-driver",
                 resource: "driver-edit",
                 action: "read",

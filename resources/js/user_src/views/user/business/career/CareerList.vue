@@ -15,7 +15,7 @@
       <!-- Search -->
       <div class="mb-5 " style="margin-top: 150px">
         <b-card-body class="custom-card ">
-          <h3 class="mb-2">SEARCH FOR JOBS</h3>
+          <!-- <h3 class="mb-2">SEARCH FOR JOBS</h3> -->
           <b-row>
             <b-col cols="12" md="5">
               <b-form-group>
@@ -71,10 +71,11 @@
            class="custom-pagination"
         ></b-pagination>ஃ
       </div> -->
-      <div class="d-flex justify-content-center mt-5 mega-pagination-container">
-        <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
-          class="mega-pagination"></b-pagination>
-      </div>
+      <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+      <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
+        class="custom-pagination" />
+    </div>
 
     </div>
   </div>
@@ -349,5 +350,26 @@ export default {
   border: none !important;
   color: #c33c3c !important;
 }
+.custom-pagination>>>.page-item .page-link {
+  border: none;
+  color: #d9534f;
+  background: none;
+  font-weight: 600;
+  font-size: 20px;
+  border-radius: 4px;
+  margin: 0 2px;
+  padding: 2px 10px;
+  border-radius: 6px;
+  /* margin: 0 4px;         */
+  padding: 8px 20px;
+}
 
+.custom-pagination>>>.page-item.active .page-link {
+  background: #d9534f;
+  color: #fff;
+}
+
+.custom-pagination>>>.page-item .page-link .arrow {
+  font-size: 25px !important;
+}
 </style>

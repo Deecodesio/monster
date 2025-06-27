@@ -95,12 +95,26 @@
 
       </b-row>
       <!-- submit and reset -->
-      <b-col>
+       <br />
+            <b-row>
+                <b-col md="6"> </b-col>
+                <b-col md="6">
+                    <b-button
+                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                        type="submit"
+                        variant="primary"
+                        class="mr-1"
+                    >
+                        Save
+                    </b-button>
+                </b-col>
+            </b-row>
+      <!-- <b-col>
         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
           Save
         </b-button>
 
-      </b-col>
+      </b-col> -->
 
     </b-form>
 

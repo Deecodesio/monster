@@ -9,7 +9,13 @@
         <h4 class="pb-2">Contact Us</h4>
         <b-row>
           <!-- Left: Form -->
-          <b-col cols="12" lg="8" class="pb-2">
+         <b-col cols="12" lg="4">
+            <div v-if="rows.length > 0 && rows[0].contact" v-html="rows[0].contact"></div>
+            <div v-else class="text-muted text-center">Loading contact info or no data available.</div>
+          </b-col>
+
+          <!-- Right: Info Block -->
+           <b-col cols="12" lg="8" class="pb-2">
             <ValidationObserver ref="simpleRules">
               <b-form @submit.prevent="validationForm">
                 <b-row>
@@ -83,18 +89,12 @@
                   </b-col>
 
                   <!-- Submit Button -->
-                  <b-col cols="12" class="pt-1">
+                  <b-col cols="12" class="pt-1  ">
                     <b-button variant="primary" type="submit">Submit</b-button>
                   </b-col>
                 </b-row>
               </b-form>
             </ValidationObserver>
-          </b-col>
-
-          <!-- Right: Info Block -->
-          <b-col cols="12" lg="4">
-            <div v-if="rows.length > 0 && rows[0].contact" v-html="rows[0].contact"></div>
-            <div v-else class="text-muted text-center">Loading contact info or no data available.</div>
           </b-col>
         </b-row>
       </b-card>

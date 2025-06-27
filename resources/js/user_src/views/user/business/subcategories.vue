@@ -1,5 +1,9 @@
 <template>
 
+
+
+
+
     <div class="pt-1" v-if="!isempty">
         <div class="subcat_main_div">
             <div class="subcat_slider">
@@ -11,28 +15,30 @@
 
 
 
-                    <div class="text-center" style="margin-top: 80px; margin-bottom: 0px;">
+                    <div class="text-center" style="margin-top: 80px; margin-bottom: 0px;     padding-bottom: 2rem;">
                         <h2>{{ $t(" Product Categories") }}</h2>
                         <hr class="mx-auto">
                     </div>
                     <!-- Navigation Buttons (Now Outside Swiper) -->
-                     <div class="swiper-category-wrapper">
-            <div id="swiper-button-prev" class="swiper-button-prev"></div>
+                    <div class="container">
+                        <div class="swiper-category-wrapper">
+                            <div id="swiper-button-prev" class="swiper-button-prev"></div>
 
-            <swiper ref="mySwiper" class="swiper-multiple rounded text-center" :options="swiperOptions"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
-                <swiper-slide v-for="(data, index) in rows2" :key="index">
-                    <div class="cat-img-text" @click="gotor(data.id, data.text)">
-                        <b-img class="cat-img" :src="data.img" :alt="data.text" />
-                        <div class="main_Cat_name">
-                            <b>{{ data.text }}</b>
+                            <swiper ref="mySwiper" class="swiper-multiple rounded text-center" :options="swiperOptions"
+                                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
+                                <swiper-slide v-for="(data, index) in rows2" :key="index">
+                                    <div class="cat-img-text" @click="gotor(data.id, data.text)">
+                                        <b-img class="cat-img" :src="data.img" :alt="data.text" />
+                                        <div class="main_Cat_name">
+                                            <b>{{ data.text }}</b>
+                                        </div>
+                                    </div>
+                                </swiper-slide>
+                            </swiper>
+
+                            <div id="swiper-button-next" class="swiper-button-next"></div>
                         </div>
                     </div>
-                </swiper-slide>
-            </swiper>
-
-            <div id="swiper-button-next" class="swiper-button-next"></div>
-        </div>
                 </div>
 
                 <!-- Swiper Wrapper -->
@@ -129,13 +135,13 @@ export default {
             isopen: 1,
             cat_products: [],
 
-           swiperOptions: {
+            swiperOptions: {
                 breakpoints: {
                     0: { slidesPerView: 2, spaceBetween: 4 },
-                    480: { slidesPerView: 3, spaceBetween: 6 },
-                    768: { slidesPerView: 4, spaceBetween: 8 },
-                    992: { slidesPerView: 5, spaceBetween: 10 },
-                    1200: { slidesPerView: 5, spaceBetween: 12 },
+                    480: { slidesPerView: 2, spaceBetween: 6 },
+                    768: { slidesPerView: 3, spaceBetween: 8 },
+                    992: { slidesPerView: 3, spaceBetween: 10 },
+                    1200: { slidesPerView: 4, spaceBetween: 18 },
                 },
                 navigation: {
                     nextEl: "#swiper-button-next",
@@ -331,33 +337,38 @@ export default {
     padding-top: 13px;
     border: none !important;
 }
-.swiper-button-prev{
+
+.swiper-button-prev {
     opacity: 1 !important;
 }
-.swiper-button-next{
+
+.swiper-button-next {
     opacity: 1 !important;
 }
+
 .swiper-button-next {
     right: 5px;
     padding-top: 13px;
 }
 
 .cat-img {
-  width: 100%;
-  aspect-ratio: 4 / 2; /* Wider rectangle */
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    aspect-ratio: 4 / 2;
+    /* Wider rectangle */
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 
 
 .cat-img-text {
-  width: 100%;
-  max-width: 265px; /* Increased from 220px */
-  margin: auto;
-  text-align: center;
+    width: 100%;
+    max-width: 265px;
+    /* Increased from 220px */
+    margin: auto;
+    text-align: center;
 }
 
 .cat-img-text:hover .cat-img {
@@ -408,7 +419,6 @@ export default {
         font-size: 13px;
     }
 }
-
 </style>
 <style lang="scss">
 @import '~@resources/scss/vue/libs/swiper.scss';

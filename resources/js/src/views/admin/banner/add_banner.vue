@@ -55,8 +55,21 @@
                                     variant="primary"
                                     class="mr-1"
                                 >
+                                <!-- <b-button
+                                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                                    variant="primary"
+                                    class="mr-1"
+                                    @click="$refs.fileInput.click()"
+                                > -->
                                     Choose a file
                                 </b-button>
+                                <!-- <input
+                                    ref="fileInput"
+                                    type="file"
+                                    class="d-none"
+                                    @change="onFileChange2"
+                                    accept=".jpg, .png, .jpeg"
+                                /> -->
                             </b-form-group>
                         </b-col>
                         <b-col md="9">
@@ -397,12 +410,18 @@ export default {
             var img_size = e.target.files[0].size;
             if (img_size < 20676814) {
                 const reader = new FileReader();
-                reader.readAsDataURL(file);
+                   reader.readAsDataURL(file);   
                 reader.onload = () => {
+                    // Newly Added Data
+                    // this.url1 = reader.result;
+                    // this.banner.image = reader.result;
+                    // this.banner.existing = 2;
+                    // this.tabIndex = 0;
+                    // Newly Added Data
                     this.imgSrc = reader.result;
                     this.change();
-                };
-
+                };            
+              
                 document.getElementById("crop_js").style.display = "block";
                 document.getElementById("crop_btn").style.display = "block";
                 document.getElementById("rotate_btn").style.display = "block";

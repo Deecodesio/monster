@@ -4,7 +4,14 @@
       <b-card>
 
         <!-- input search -->
-        <div class="custom-search d-flex justify-content-end">
+        <!-- <div class="custom-search d-flex justify-content-end"> -->
+           <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+            <b-button variant="primary" :to="{ name: 'create_staff' }">
+              <i class="fa-solid fa-plus"></i>
+              {{ $t("Add Roles") }}
+            </b-button>
+          </div>
           <b-form-group>
             <div class="d-flex align-items-center">
               <label class="mr-1">{{ $t('message.seachLabel') }}</label>

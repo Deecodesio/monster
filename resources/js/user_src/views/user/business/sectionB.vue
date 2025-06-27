@@ -19,7 +19,7 @@ export default {
 .banner {
   width: 100%;
   overflow: hidden;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 /* Default image styles */

@@ -4,23 +4,34 @@
       <b-card>
 
         <!-- input search -->
-        <div class="custom-search d-flex justify-content-end">
-          <b-form-group>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <!-- Left: Add Roles Button -->
+          <div>
+            <b-button variant="primary" :to="{ name: 'create_role' }">
+              <i class="fa-solid fa-plus"></i>
+              {{ $t("Add Roles") }}
+            </b-button>
+          </div>
+
+          <!-- Right: Search Input -->
+          <b-form-group class="mb-0">
             <div class="d-flex align-items-center">
-              <label class="mr-1">{{ $t('message.seachLabel') }}</label>
-              <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text" class="d-inline-block" />
+              <label class="mr-2 mb-0">{{ $t('message.seachLabel') }}</label>
+              <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text"
+                class="d-inline-block" />
             </div>
           </b-form-group>
         </div>
+
 
         <!-- table -->
         <vue-good-table :columns="columns" :line-numbers="true" :rows="rows" :rtl="direction" :search-options="{
           enabled: true,
           externalQuery: searchTerm
         }" :pagination-options="{
-  enabled: true,
-  perPage: pageLength
-}">
+                    enabled: true,
+                    perPage: pageLength
+                  }">
           <template slot="table-row" slot-scope="props">
 
             <!-- Column: Name -->
@@ -82,13 +93,12 @@
               <feather-icon :id="`invoice-row-${props.row.id}-preview-icon`" icon="EditIcon" size="16" class="mx-1"
                 cursor="pointer" @click="$router.push({ name: 'edit_privilege', params: { id: props.row.id } })" />
               <b-tooltip :title="($t('edit') + ' ' + $t('privilege'))"
-                :target="`invoice-row-${props.row.id}-preview-icon`" placement="left"/>
+                :target="`invoice-row-${props.row.id}-preview-icon`" placement="left" />
 
-                <feather-icon :id="`invoice-row-delete-${props.row.id}-preview-icon`" icon="Trash2Icon" size="16" class="mx-1"
-                cursor="pointer" @click="showMsgBoxTwo(props.row.id,props.row.role_name)"  />
-              <b-tooltip 
-              placement="left"
-              :title="$t('delete') + ' ' + $t('role')" :target="`invoice-row-delete-${props.row.id}-preview-icon`" />
+              <feather-icon :id="`invoice-row-delete-${props.row.id}-preview-icon`" icon="Trash2Icon" size="16"
+                class="mx-1" cursor="pointer" @click="showMsgBoxTwo(props.row.id, props.row.role_name)" />
+              <b-tooltip placement="left" :title="$t('delete') + ' ' + $t('role')"
+                :target="`invoice-row-delete-${props.row.id}-preview-icon`" />
             </span>
 
             <!-- Column: Common -->
@@ -191,7 +201,7 @@ export default {
       ],
       rows: [],
       searchTerm: '',
-      role:{},
+      role: {},
     }
   },
   computed: {
@@ -249,7 +259,7 @@ export default {
           if (value == true) {
             this.$http.post('/admin/delete_role', this.role)
               .then(res => {
-                    
+
                 if (res.data.status == true) {
                   this.$toast({
                     component: ToastificationContent,
@@ -263,10 +273,10 @@ export default {
                   // var ud = JSON.parse(localStorage.getItem('userData'))
 
                   this.$http.get('/admin/roles')
-                  .then(res => {
-                    this.rows = res.data;
-                    this.Loading = false;
-                  })
+                    .then(res => {
+                      this.rows = res.data;
+                      this.Loading = false;
+                    })
                 }
 
 
@@ -290,6 +300,6 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import '~@resources/scss/vue/libs/vue-good-table.scss';
 </style>

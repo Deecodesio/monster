@@ -1,12 +1,12 @@
 <template>
   <b-nav-item-dropdown right toggle-class="d-flex align-items-center dropdown-user-link" class="dropdown-user">
     <template #button-content>
-      <div class="d-sm-flex d-none user-nav">
+      <!-- <div class="d-sm-flex d-none user-nav">
         <p class="user-name font-weight-bolder mb-0">
           {{ store_userData.fullName || store_userData.username }}
         </p>
         <input type="hidden" id="hidden" :value="store_userData.id">
-      </div>
+      </div> -->
       <b-avatar size="40" :src="store_userData.avatar" variant="light-primary" badge class="badge-minimal"
         badge-variant="success">
         <feather-icon v-if="!store_userData.fullName" icon="UserIcon" size="22" />

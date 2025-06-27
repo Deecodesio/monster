@@ -2409,6 +2409,7 @@ input[type="radio"] {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 550px !important;
+    font-weight: bold;
 }
 
 .custom-add-btn {

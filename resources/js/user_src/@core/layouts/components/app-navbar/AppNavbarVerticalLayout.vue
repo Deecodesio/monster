@@ -128,9 +128,9 @@ export default {
 <style lang="scss" scoped>
 .logo_image {
   max-width: 800px !important;
-  height: 60px !important;
+  height: 50px !important;
   padding: 0% !important;
-  margin-top: 1rem !important;
+  margin-top: 1.5rem !important;
 
   @media (max-width: 1200px) {
     max-width: 600px !important;

@@ -1,6 +1,6 @@
 <template>
     <b-row @click="showModal" class="location ">
-        <b-col cols="12" style="padding-bottom:22px !important;">
+        <b-col cols="12">
             <h5 class="size"><b>{{ $t("DeliveringTo") }}</b></h5>
             <p id="demo" class="wrap" style="font-size: 14px; float:left;   font-weight: 900 !important;  width:auto;max-width:175px;margin-right:10px !important;">
                 <feather-icon

@@ -586,7 +586,7 @@ small,
 }
 
 .blockquote-footer::before {
-  content: "— ";
+  content: "\2014\A0";
 }
 
 .img-fluid {
@@ -41330,7 +41330,7 @@ input[type=color].form-control:disabled {
 }
 
 .b-skeleton::before {
-  content: " ";
+  content: "\A0";
 }
 
 .b-skeleton-text {

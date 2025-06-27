@@ -15,6 +15,7 @@
                 >
                     <div class="store-name mt-4">{{ city.name }}</div>
                     <div class="store-address">{{ city.address }}</div>
+                    <div class="store-phone">{{ city.phone }}</div>
                     <div
                         :id="`gmap-${city.id}`"
                         style="
@@ -163,7 +164,13 @@ export default {
     margin-top: 12px;
     margin-bottom: 12px;
 }
-
+.store-phone{
+     font-size: 16px;
+    color: #000000;
+    font-weight: 400;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
 .map-img {
     width: 100%;
     max-width: 400px;

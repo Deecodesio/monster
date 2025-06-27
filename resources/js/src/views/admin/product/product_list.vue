@@ -350,7 +350,7 @@
                                 </span>
                                 <b-form-select
                                     v-model="pageLength"
-                                    :options="['10', '50', '100']"
+                                    :options="['25', '50', '100']"
                                     class="mx-1"
                                     @input="
                                         (value) =>
@@ -526,7 +526,7 @@ export default {
                 },
                 bus_category: [],
             publicPath: process.env.BASE_URL,
-            pageLength: 10,
+            pageLength: 25,
             dir: false,
             downlodPath: "",
             user_info: {},

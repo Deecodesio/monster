@@ -33,7 +33,7 @@
             <!-- Shop Location Div -->
             <div
                 class="container-fluid"
-                style="margin-top: 50px; padding-right: 0; padding-left: 0"
+                style="padding-right: 0; padding-left: 0"
             >
                 <Ourshops />
             </div>

@@ -8,16 +8,23 @@
         </div>
 
         <div class="w-100" style="background-color: #ff81b633">
+
             <div class="container">
+
+
                 <div class="row d-flex">
                     <div class="col-md-6 col-sm-12  d-flex">
-                        <div id="apply-form" class="apply-form mt-5" style="
+                       
+                        <div id="apply-form" class="apply-form mt-1" style="
                                 background-color: transparent !important;
                                 box-shadow: none !important;
                                 margin: none !important;
                                 max-width: 900px;
                                 min-width: 300px;
                             ">
+                             <div class="text-center my-4">
+                            <p class="h2 fw-bold text-primary">Opportunity Awaits</p>
+                        </div>
                             <b-form @submit.prevent="submitApplication">
                                 <b-card>
                                     <b-row>
@@ -119,7 +126,7 @@
                                             </b-form-group>
                                         </b-col>
 
-                                        <b-col md="6">
+                                        <!-- <b-col md="6">
                                             <b-form-group label="Product Category" label-for="business_category_id"
                                                 label-cols-sm="12">
                                                 <b-form-select id="business_category_id" v-model="form.business_category_id
@@ -137,9 +144,9 @@
                                                     Product Category is required
                                                 </b-form-invalid-feedback>
                                             </b-form-group>
-                                        </b-col>
+                                        </b-col> -->
 
-                                        <b-col md="6">
+                                        <!-- <b-col md="6">
                                             <b-form-group label="Product" label-for="product_id" label-cols-sm="12">
                                                 <b-form-select id="product_id" v-model="form.product_id"
                                                     :options="productOptions" :state="productState" :disabled="!form.business_category_id
@@ -154,7 +161,7 @@
                                                     Product is required
                                                 </b-form-invalid-feedback>
                                             </b-form-group>
-                                        </b-col>
+                                        </b-col> -->
 
                                         <b-col md="12">
                                             <b-form-group label="Additional Message (Optional)" label-for="message"
@@ -183,18 +190,18 @@
                             </b-form>
                         </div>
                     </div>
-                    <div class="franchise-box" style="
-    /* background-color: #ffe6f0; */
-    padding: 30px;
-    border-radius: 10px;
-    font-family: Arial, sans-serif;
-    color: #000;
-    max-width: 500px;
-    margin: auto;
-    font-size: 15px;
-    line-height: 1.8;
-    margin-bottom: 14rem;
-  ">
+                                    <div class="franchise-box" style="
+                    /* background-color: #ffe6f0; */
+                    padding: 30px;
+                    border-radius: 10px;
+                    font-family: Arial, sans-serif;
+                    color: #000;
+                    max-width: 500px;
+                    margin: auto;
+                    font-size: 15px;
+                    line-height: 1.8;
+                    margin-bottom: 14rem;
+                ">
                         <h2 style="margin-top: 0; margin-bottom: 10px; color: #000; font-size: 22px;">
                             Form For the Franchise Setup
                         </h2>
@@ -230,11 +237,11 @@
                 </div>
             </div>
         </div>
-        <div class="container py-4">
+        <div class=" py-4">
             <div class="row gx-4 gy-4">
 
                 <div class="my-5">
-                    <b-card class="p-4 shadow-sm">
+                    <b-card class="p-4 ">
                         <div class="row align-items-center">
                             <!-- Left Column: Text -->
                             <div class="col-md-7">
@@ -265,23 +272,24 @@
                             <!-- Right Column: Image -->
                             <div class="col-md-5 text-center">
 
-                                <b-link> <img :src="`/product_image/${imageName}`" alt="Product Image" class="img-fluid" ></b-link>
+                                <b-link> <img :src="`/product_image/${imageName}`" alt="Product Image" class="img-fluid"
+                                        style="width:50rem; height: 20rem; object-fit: cover;"></b-link>
                             </div>
                         </div>
                     </b-card>
                 </div>
             </div>
         </div>
-       <div class="bg-franchise text-white text-center py-5">
-    <div class="container">
-        <h5 class="mb-3 font-weight-bold text-white">For Franchise – Connect With Us</h5>
-        <p class="mb-4 px-3 font-weight-bold text-white">
-            Featuring half of the chicken, it is immensely juicy & tender and doesn't dry out when cooked.
-            Specially designed for lip-smacking biryanis, the flavor of the meat...
-        </p>
-        <b-button variant="light" class="px-4 py-2 font-weight-bold">Submit</b-button>
-    </div>
-</div>
+        <div class="bg-franchise text-white text-center py-5">
+            <div class="container">
+                <h5 class="mb-3 font-weight-bold text-white">For Franchise – Connect With Us</h5>
+                <p class="mb-4 px-3 font-weight-bold text-white">
+                    Featuring half of the chicken, it is immensely juicy & tender and doesn't dry out when cooked.
+                    Specially designed for lip-smacking biryanis, the flavor of the meat...
+                </p>
+                <b-button variant="light" class="px-4 py-2 font-weight-bold">Submit</b-button>
+            </div>
+        </div>
         <div class="container-fluid" style="padding-top: 3rem; padding-right: 0; padding-left: 0">
             <Ourshops />
         </div>
@@ -328,7 +336,7 @@ export default {
     },
     data() {
         return {
-             imageName: '7s6x.png',
+            imageName: '7s6x.png',
             form: {
                 name: "",
                 email_id: "",
