@@ -9,7 +9,7 @@
             <div>
             <b-button variant="primary" :to="{ name: 'create_staff' }">
               <i class="fa-solid fa-plus"></i>
-              {{ $t("Add Roles") }}
+              {{ $t("Add Employee") }}
             </b-button>
           </div>
           <b-form-group>

@@ -139,6 +139,7 @@ class OrderController extends BaseController
 		} else {
 			$food_list = DB::table('request_detail')->where('request_id', $request_id)
 				->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
+				->join('requests', 'requests.id', '=', 'request_detail.request_id')
 				->get();
 			$rt_food = [];
 			foreach ($food_list as $fl) {
@@ -146,7 +147,8 @@ class OrderController extends BaseController
 					'Name' => $fl->name,
 					'description' => $fl->description,
 					'quantity' => $fl->quantity,
-					'price' => $fl->food_quantity_price
+					'price' => $fl->food_quantity_price,
+					'tax' => $fl->tax
 				];
 			}
 		}

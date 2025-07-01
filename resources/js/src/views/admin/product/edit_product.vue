@@ -304,16 +304,31 @@
                                             />
                                         </div>
                                     </b-form-group>
-                                    <b-button
+                                    <!-- <b-button
                                         v-ripple.400="
                                             'rgba(255, 255, 255, 0.15)'
                                         "
                                         v-b-modal.modal-xl
                                         variant="primary"
                                         class="mr-1"
+                                    > -->
+                                    <b-button
+                                        v-ripple.400="
+                                            'rgba(255, 255, 255, 0.15)'
+                                        "
+                                        @click="$refs.fileInput.click()"
+                                        variant="primary"
+                                        class="mr-1"
                                     >
                                         {{ $t(" Choose a file") }}
                                     </b-button>
+                                    <input
+                                        ref="fileInput"
+                                        type="file"
+                                        class="d-none"
+                                        @change="onFileChange2"
+                                        accept=".jpg, .png, .jpeg"
+                                    />
                                 </b-col>
                                 <b-col
                                     md="12"
@@ -1313,7 +1328,7 @@
                                                     >
                                                         <b-form-checkbox
                                                             :value="dis.id"
-                                                            variant="primary" 
+                                                            variant="primary"
                                                             v-model="
                                                                 product.district
                                                             "
@@ -2979,8 +2994,15 @@ export default {
             var img_size = e.target.files[0].size;
             const reader = new FileReader();
             reader.readAsDataURL(file);
+            var ind = this.productImage.length;
             reader.onload = () => {
                 this.imgSrc = reader.result;
+                // Newly Added Data
+                this.url1.push(reader.result);
+                this.productImage.push(reader.result);                
+                this.productExisting[ind] = 2;
+                this.tabIndex = 0;
+                // Newly Added Data
                 this.change();
             };
             document.getElementById("crop_js").style.display = "block";

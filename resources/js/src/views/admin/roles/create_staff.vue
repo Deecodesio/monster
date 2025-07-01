@@ -55,7 +55,7 @@
         <b-col md="6">
           <b-form-group :label="$t('email') + '*'">
 
-            <b-form-input id="email" v-model="banner.email" type="email" placeholder="john.doe@email.com" />
+            <b-form-input id="email" v-model="banner.email" type="email" placeholder="Email*" />
 
 
           </b-form-group>

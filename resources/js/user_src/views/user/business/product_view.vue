@@ -1833,7 +1833,7 @@
                                     product.name
                                 "
                                 :data-price="product.price"
-                                @click="check_cart(selected, isopen)"
+                                @click="open_plus(selected, isopen)"
                             >
                                 <b-img
                                     src="/monster/plate-white.svg"

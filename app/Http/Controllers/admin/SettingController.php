@@ -813,17 +813,45 @@ class SettingController extends BaseController
     }
     public function show_admin()
     {
-        $admin = $this->admin_role->join('roles', 'roles.id', '=', 'admin_role.role_id')
-            ->leftjoin('restaurants', 'restaurants.id', '=', 'admin_role.restaurant_id')->select('admin_role.*', 'roles.*', 'restaurant_name', 'admin_role.id as admin_id')->get();
+        // $admin = $this->admin_role->join('roles', 'roles.id', '=', 'admin_role.role_id')
+        //     ->leftjoin('restaurants', 'restaurants.id', '=', 'admin_role.restaurant_id')->select('admin_role.*', 'roles.*', 'restaurant_name', 'admin_role.id as admin_id')->get();
 
-        // $admin1 = $this->admin_role->join('roles', 'roles.id', '=', 'admin_role.role_id')
-        //     ->select('admin_role.*', 'roles.*')->where('restaurant_id', 0)->get();
-        foreach ($admin as $a) {
+        $admins = $this->admin_role
+            ->join('roles', 'roles.id', '=', 'admin_role.role_id')
+            ->select('admin_role.*', 'roles.*', 'admin_role.id as admin_id')
+            ->get();
+
+        $admins->transform(function ($a) {
+            // Decode restaurant_id
+            $restaurantIds = json_decode($a->restaurant_id, true);
+            $restaurantId = is_array($restaurantIds) ? ($restaurantIds[0] ?? null) : $a->restaurant_id;
+
+            // Get restaurant names
+            $restaurant = DB::table('restaurants')
+                ->where('id', $restaurantId)
+                ->select('restaurant_name', 'restaurant_secondary_name')
+                ->first();
+
+            // Attach restaurant names (may be null if not found)
+            $a->restaurant_name = $restaurant->restaurant_name ?? null;
+            $a->restaurant_secondary_name = $restaurant->restaurant_secondary_name ?? null;
+
+            // Apply secondLanguage fallback logic
             $a->name = $this->secondLanguage($a->name, $a->second_name);
             $a->restaurant_name = $this->secondLanguage($a->restaurant_name, $a->restaurant_secondary_name);
             $a->role_name = $this->secondLanguage($a->role_name, $a->second_role_name);
-        }
-        return response()->json($admin);
+
+            return $a;
+        });
+
+        // // $admin1 = $this->admin_role->join('roles', 'roles.id', '=', 'admin_role.role_id')
+        // //     ->select('admin_role.*', 'roles.*')->where('restaurant_id', 0)->get();
+        // foreach ($admin as $a) {
+        //     $a->name = $this->secondLanguage($a->name, $a->second_name);
+        //     $a->restaurant_name = $this->secondLanguage($a->restaurant_name, $a->restaurant_secondary_name);
+        //     $a->role_name = $this->secondLanguage($a->role_name, $a->second_role_name);
+        // }
+        return response()->json($admins);
     }
     public function role_type(Request $request, $id)
     {

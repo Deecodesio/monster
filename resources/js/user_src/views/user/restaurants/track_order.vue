@@ -215,7 +215,7 @@
 
                                                 <p class="card-text mb-25">
                                                     +{{ req_details.contact_country_calling_code }}{{
-                                                    req_details.contact }}
+                                                        req_details.contact }}
                                                 </p>
                                                 <p class="card-text mb-0">
                                                     {{
@@ -241,84 +241,82 @@
                                                 {{ data.item.description }}
                                             </b-card-text>
                                         </template>
-                                    </b-table-lite> -->
-                                                        <b-table-lite 
-                    responsive 
-                    :items="food_details" 
-                    :fields="[
-                        { key: 'Name', label: 'NAME', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' },tdClass: ' px-2' },
-                         { key: 'quantity', label: 'QUANTITY', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-5' },
-                         { key: 'gst', label: 'GST', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-5' },
-                         { key: 'igst', label: 'IGST', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-5' },
-                        { key: 'price', label: 'PRICE', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: ' px-4' },
-                    ]">
-                    
-                    <template #cell(taskDescription)="data" >
-                        <b-card-text class="font-weight-bold mb-25 ">
-                        {{ data.item.Name }}
-                        </b-card-text>
-                    </template>
-                    </b-table-lite>
+</b-table-lite> -->
+                                    <b-table-lite responsive :items="processedFoodDetails" :fields="[
+                                        { key: 'Name', label: 'NAME', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: 'px-2' },
+                                        { key: 'quantity', label: 'QUANTITY', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: 'px-5' },
+                                        { key: 'cgst', label: 'CGST', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: 'px-5' },
+                                        { key: 'sgst', label: 'SGST', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: 'px-5' },
+                                        { key: 'price', label: 'PRICE', thStyle: { color: 'black', background: '#FF81B633', fontWeight: 'bold', fontSize: '16px' }, tdClass: 'px-4' },
+                                    ]" />
 
-                               <!-- Invoice Description: Total -->
-                                    <b-card-body class="invoice-padding pb-0" >
-                                        
-                                                <!-- <b-col cols="12" md="6" class="mt-md-0 mt-3" order="2" order-md="1">
+                                    <!-- Optional: Custom slot for Name -->
+                                    <template #cell(Name)="data">
+                                        <b-card-text class="font-weight-bold mb-25">
+                                            {{ data.item.Name }}
+                                        </b-card-text>
+                                    </template>
+
+
+                                    <!-- Invoice Description: Total -->
+                                    <b-card-body class="invoice-padding pb-0">
+
+                                        <!-- <b-col cols="12" md="6" class="mt-md-0 mt-3" order="2" order-md="1">
                                                     <b-card-text class="mb-0">
                                                         <span class="font-weight-bold"></span>
                                                         <span class="ml-75"></span>
                                                     </b-card-text>
                                                 </b-col> -->
 
-                                            <!-- Col: Total -->
-                                 
-                                                <div class="invoice-total-wrapper">
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title"  >
-                                                            <!-- {{
+                                        <!-- Col: Total -->
+
+                                        <div class="invoice-total-wrapper">
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    <!-- {{
                                                                 $t(
                                                                     "Order Summary"
                                                                 )
                                                             }} -->
-                                                            {{
-                                                                $t(
-                                                                    "Item Total"
-                                                                )
-                                                            }}
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{
-                                                                req_details.item_total
-                                                            }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            {{
-                                                                $t(
-                                                                    "Packing Charge"
-                                                                )
-                                                            }}
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{
-                                                                req_details.restaurant_packaging_charge }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            {{
-                                                                $t(
-                                                                    "Delivery Fee"
-                                                                )
-                                                            }}
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{
-                                                                req_details.delivery_charge }}
-                                                        </p>
-                                                    </div>
-                                                    <!-- <div class="invoice-total-item">
+                                                    {{
+                                                        $t(
+                                                            "Item Total"
+                                                        )
+                                                    }}
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{
+                                                        req_details.item_total
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    {{
+                                                        $t(
+                                                            "Packing Charge"
+                                                        )
+                                                    }}
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{
+                                                        req_details.restaurant_packaging_charge }}
+                                                </p>
+                                            </div>
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    {{
+                                                        $t(
+                                                            "Delivery Fee"
+                                                        )
+                                                    }}
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{
+                                                        req_details.delivery_charge }}
+                                                </p>
+                                            </div>
+                                            <!-- <div class="invoice-total-item">
                                                         <p class="invoice-total-title">
                                                             {{ $t("Tax") }}
                                                         </p>
@@ -327,73 +325,74 @@
                                                             }}
                                                         </p>
                                                     </div> -->
-                                                       <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            CGST
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{ req_details.rtax /2
-                                                            }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            SGST
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{ req_details.rtax /2
-                                                            }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            {{ $t("Tips") }}
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{ req_details.tips
-                                                            }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            {{
-                                                                $t(
-                                                                    "Total Discount"
-                                                                )
-                                                            }}:
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{
-                                                                req_details.offer_discount }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title">
-                                                            {{
-                                                                $t(
-                                                                    "Wallet"
-                                                                )
-                                                            }}
-                                                             <!-- (-): -->
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{
-                                                                req_details.wallet_amounts }}
-                                                        </p>
-                                                    </div>
-                                                    <!-- <hr class="my-50 hrcolor" / > -->
-                                                    <div class="invoice-total-item">
-                                                        <p class="invoice-total-title" style="font-weight: 600 !important; font-size: 16px !important;">
-                                                            {{ $t("Total") }}
-                                                        </p>
-                                                        <p class="invoice-total-amount">
-                                                            {{ $store.state['defaults'].currency }} {{
-                                                                req_details.bill_amount
-                                                            }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            
+                                            <!-- <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    CGST
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{ req_details.rtax / 2
+                                                    }}
+                                                </p>
+                                            </div> -->
+                                            <!-- <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    SGST
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{ req_details.rtax / 2
+                                                    }}
+                                                </p>
+                                            </div> -->
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    {{ $t("Tips") }}
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{ req_details.tips
+                                                    }}
+                                                </p>
+                                            </div>
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    {{
+                                                        $t(
+                                                            "Total Discount"
+                                                        )
+                                                    }}:
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{
+                                                        req_details.offer_discount }}
+                                                </p>
+                                            </div>
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title">
+                                                    {{
+                                                        $t(
+                                                            "Wallet"
+                                                        )
+                                                    }}
+                                                    <!-- (-): -->
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{
+                                                        req_details.wallet_amounts }}
+                                                </p>
+                                            </div>
+                                            <!-- <hr class="my-50 hrcolor" / > -->
+                                            <div class="invoice-total-item">
+                                                <p class="invoice-total-title"
+                                                    style="font-weight: 600 !important; font-size: 16px !important;">
+                                                    {{ $t("Total") }}
+                                                </p>
+                                                <p class="invoice-total-amount">
+                                                    {{ $store.state['defaults'].currency }} {{
+                                                        req_details.bill_amount
+                                                    }}
+                                                </p>
+                                            </div>
+                                        </div>
+
                                     </b-card-body>
                                 </b-card>
                             </b-col>
@@ -462,35 +461,31 @@ export default {
             cancell_status: {},
         };
     },
-    filters: {
-        price_format_final: function (price) {
-            let number = price,
-                decimals = 2,
-                dec_point = ".",
-                thousands_sep = "";
-            number = (number + "").replace(/[^0-9+\-Ee.]/g, "");
-            var n = !isFinite(+number) ? 0 : +number,
-                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                sep =
-                    typeof thousands_sep === "undefined" ? "," : thousands_sep,
-                dec = typeof dec_point === "undefined" ? "." : dec_point,
-                s = "",
-                toFixedFix = function (n, prec) {
-                    var k = Math.pow(10, prec);
-                    return "" + Math.round(n * k) / k;
-                };
-            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-            s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
-            if (s[0].length > 3) {
-                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-            }
-            if ((s[1] || "").length < prec) {
-                s[1] = s[1] || "";
-                s[1] += new Array(prec - s[1].length + 1).join("0");
-            }
-            return s.join(dec);
-        },
-    },
+  methods: {
+  priceFormatFinal(price) {
+    let number = price, decimals = 2, dec_point = ".", thousands_sep = ",";
+    number = (number + "").replace(/[^0-9+\-Ee.]/g, "");
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = typeof thousands_sep === "undefined" ? "," : thousands_sep,
+        dec = typeof dec_point === "undefined" ? "." : dec_point,
+        s = "",
+        toFixedFix = function (n, prec) {
+          var k = Math.pow(10, prec);
+          return "" + Math.round(n * k) / k;
+        };
+    s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
+    if (s[0].length > 3) {
+      s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || "").length < prec) {
+      s[1] = s[1] || "";
+      s[1] += new Array(prec - s[1].length + 1).join("0");
+    }
+    return s.join(dec);
+  }
+},
+
     mounted() {
         this.track_order();
     },
@@ -602,7 +597,32 @@ export default {
                 });
         },
     },
+    computed: {
+        processedFoodDetails() {
+            return (this.food_details || []).map(item => ({
+                ...item,
+                cgst: (item.tax / 2).toFixed(2),
+                sgst: (item.tax / 2).toFixed(2),
+            }));
+        }
+    },
+  totals() {
+    return this.processedFoodDetails.reduce(
+      (sum, item) => ({
+        quantity: sum.quantity + Number(item.quantity || 0),
+        cgst: sum.cgst + Number(item.cgst || 0),
+        sgst: sum.sgst + Number(item.sgst || 0),
+        price: sum.price + Number(item.price || 0)
+      }),
+      { quantity: 0, cgst: 0, sgst: 0, price: 0 }
+    );
+  }
+
+
+
+
 };
+
 </script>
 
 <style lang="scss">
@@ -711,8 +731,9 @@ export default {
 .pt-11 {
     padding-top: 6rem !important;
 }
-.invoice-total-item{
-    width:  360px !important ;
+
+.invoice-total-item {
+    width: 360px !important;
 
 }
 </style>

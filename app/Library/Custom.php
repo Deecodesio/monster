@@ -41,7 +41,7 @@ class Custom
         return $imageName;
     }
 
-      public static function upload_image_blogs($request, $param)
+    public static function upload_image_blogs($request, $param)
     {
 
         if (!$request->file($param)) {
@@ -154,9 +154,10 @@ class Custom
 
         if ($request->existing == 2) {
             $image1 = $request->$param; // your base64 encoded
-            $image = str_replace('data:image/png;base64,', '', $image1);
-            $image2 = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image1);
+            // $image2 = str_replace(' ', '+', $image);
             $image_parts = explode(";base64,", $image1);
+            $image2 = str_replace(' ', '+', $image_parts[1]);
             $image_type_aux = explode("image/", $image_parts[0]);
 
             $image_type = $image_type_aux[1];
@@ -355,9 +356,10 @@ class Custom
         $allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
         if ($request->existing == 2) {
             $image1 = $request->$param; // your base64 encoded
-            $image = str_replace('data:image/png;base64,', '', $image1);
-            $image2 = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image1);
+            // $image2 = str_replace(' ', '+', $image);
             $image_parts = explode(";base64,", $image1);
+            $image2 = str_replace(' ', '+', $image_parts[1]);
             $image_type_aux = explode("image/", $image_parts[0]);
 
             $image_type = $image_type_aux[1];
@@ -581,9 +583,10 @@ class Custom
         } else {
             $image1 = $request->$param; // your base64 encoded
 
-            $image = str_replace('data:image/png;base64,', '', $image1);
-            $image2 = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image1);
+            // $image2 = str_replace(' ', '+', $image);
             $image_parts = explode(";base64,", $image1);
+             $image2 = str_replace(' ', '+', $image_parts[1]);
             $image_type_aux = explode("image/", $image_parts[0]);
 
             $image_type = $image_type_aux[1];
@@ -642,10 +645,11 @@ class Custom
             $request->file('image')->move($path, $imageName);
         } else {
             $image1 = $request->$param; // your base64 encoded
-            $image = str_replace('data:image/png;base64,', '', $image1);
-            $image2 = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image1);
+            // $image2 = str_replace(' ', '+', $image);
 
             $image_parts = explode(";base64,", $image1);
+             $image2 = str_replace(' ', '+', $image_parts[1]);
             $image_type_aux = explode("image/", $image_parts[0]);
 
             $image_type = $image_type_aux[1];
@@ -688,9 +692,10 @@ class Custom
         $imageName = '';
         if ($request->existing[$request->featured_image] == 2) {
             $image1 = $image_to_upload;
-            $image = str_replace('data:image/png;base64,', '', $image1);
-            $image2 = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image1);
+            // $image2 = str_replace(' ', '+', $image);
             $image_parts = explode(";base64,", $image1);
+            $image2 = str_replace(' ', '+', $image_parts[1]);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $imageName = '';
@@ -745,9 +750,10 @@ class Custom
         $imageName = '';
         if ($request->existing[$id] == 2) {
             $image1 = $image_to_upload;
-            $image = str_replace('data:image/png;base64,', '', $image1);
-            $image2 = str_replace(' ', '+', $image);
+            // $image = str_replace('data:image/png;base64,', '', $image1);
+            // $image2 = str_replace(' ', '+', $image);
             $image_parts = explode(";base64,", $image1);
+            $image2 = str_replace(' ', '+', $image_parts[1]);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $imageName = '';
@@ -985,14 +991,14 @@ class Custom
             $image_org = str_replace('data:image/jpg;base64,', '', $image1);
         } elseif ($extension == "jpeg") {
             $image_org = str_replace('data:image/jpeg;base64,', '', $image1);
-        }  else {
+        } else {
             $image_org = str_replace('data:image/png;base64,', '', $image1);
         }
 
         $image2 = str_replace(' ', '+', $image_org);
         $image_parts = explode(";base64,", $image1);
         $image_type_aux = explode("image/", $image_parts[0]);
-        if ($extension == "jpg" || $extension == "jpeg" || $extension == "png" ) {
+        if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
             $filename = pathinfo($request->Banner_name, PATHINFO_FILENAME);
 
             $imageName = $filename . self::random_string(4) . '.' . $extension;
@@ -1024,14 +1030,14 @@ class Custom
             $image_org = str_replace('data:image/jpg;base64,', '', $image1);
         } elseif ($extension == "jpeg") {
             $image_org = str_replace('data:image/jpeg;base64,', '', $image1);
-        }  else {
+        } else {
             $image_org = str_replace('data:image/png;base64,', '', $image1);
         }
 
         $image2 = str_replace(' ', '+', $image_org);
         $image_parts = explode(";base64,", $image1);
         $image_type_aux = explode("image/", $image_parts[0]);
-        if ($extension == "jpg" || $extension == "jpeg" || $extension == "png" ) {
+        if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
             $filename = pathinfo($req, PATHINFO_FILENAME);
 
             $imageName = $filename . self::random_string(4) . '.' . $extension;
@@ -1050,6 +1056,5 @@ class Custom
         }
 
         return $image_url = "uploads/License/" . $imageName;
-
     }
 }

@@ -203,6 +203,7 @@ Route::group(['namespace' => 'App\Http\Controllers\api'], function () {
 
     // Basic CareerJobController CRUD operations
     Route::get('career-jobs/', 'CareerJobController@index'); // GET /api/career-jobs
+    Route::get('career-jobs-location/', 'CareerJobController@index'); // GET /api/career-jobs
     Route::post('career-jobs/', 'CareerJobController@store'); // POST /api/career-jobs
     Route::get('career-jobs/{id}', 'CareerJobController@show'); // GET /api/career-jobs/{id}
     Route::get('career-job-status/{id}', 'CareerJobController@job_status'); // GET /api/career-jobs/{id}

@@ -49,27 +49,27 @@
                         <!-- Choose a File -->
                         <b-col md="3">
                             <b-form-group :label="$t('banner_image')">
-                                <b-button
+                                <!-- <b-button
                                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                                     v-b-modal.modal-xl
                                     variant="primary"
                                     class="mr-1"
-                                >
-                                <!-- <b-button
+                                > -->
+                                <b-button
                                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                                     variant="primary"
                                     class="mr-1"
                                     @click="$refs.fileInput.click()"
-                                > -->
+                                >
                                     Choose a file
                                 </b-button>
-                                <!-- <input
+                                <input
                                     ref="fileInput"
                                     type="file"
                                     class="d-none"
                                     @change="onFileChange2"
                                     accept=".jpg, .png, .jpeg"
-                                /> -->
+                                />
                             </b-form-group>
                         </b-col>
                         <b-col md="9">
@@ -413,10 +413,10 @@ export default {
                    reader.readAsDataURL(file);   
                 reader.onload = () => {
                     // Newly Added Data
-                    // this.url1 = reader.result;
-                    // this.banner.image = reader.result;
-                    // this.banner.existing = 2;
-                    // this.tabIndex = 0;
+                    this.url1 = reader.result;
+                    this.banner.image = reader.result;
+                    this.banner.existing = 2;
+                    this.tabIndex = 0;
                     // Newly Added Data
                     this.imgSrc = reader.result;
                     this.change();

@@ -126,7 +126,7 @@
                         </b-row>
                     </b-form>
                 </div> -->
-                <div class="mt-5">
+                <div class="mt-5" style="max-width: 850px;min-width:300px;">
                     <p class="mb-4" style="color: black; font-size: 28px; font-weight: 600;">Apply Online</p>
 
                     <b-form @submit.prevent="submitApplication">

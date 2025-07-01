@@ -8,10 +8,14 @@
           <tab-content :title="$t('Store') + ' ' + $t('details')" :before-change="restaurant">
             <validation-observer ref="accountRules" tag="form">
               <b-row>
-                <input id="banner_image" hidden="hidden" ref="onFileChange" type="text" class="d-none"
+                <!-- <input id="banner_image" hidden="hidden" ref="onFileChange" type="text" class="d-none"
                   v-b-modal.modal-xl />
                 <input id="logo_image" hidden="hidden" ref="onFileChange1" type="text" class="d-none"
-                  v-b-modal.modal-xl1 />
+                  v-b-modal.modal-xl1 /> -->
+                   <input id="banner_image" hidden="hidden" ref="onFileChange" type="file" class="d-none" @change="onFileChange"
+                 />
+                <input id="logo_image" hidden="hidden" ref="onFileChange1" type="file" class="d-none" @change="onFileChange1"
+                  />
                 <b-col md="12">
                   <div id="user-profile">
                     <b-card id="cover_img" class="profile-header mb-2"
@@ -2808,6 +2812,10 @@ export default {
       reader.onload = () => {
         var d = reader.result;
         this.url = d;
+        this.restaurants.banner =d;
+          this.restaurants.existing = 2;
+      this.tabIndex = 0;
+
         document.getElementById('cover_img').src = reader.result;
         document.getElementById('Banner1').value = this.url;
       };
@@ -2823,6 +2831,10 @@ export default {
       reader.onload = () => {
         // alert(reader.result);
         this.url1 = reader.result;
+         this.restaurants.image =reader.result;
+        this.restaurants.existing1 = 2;
+      this.tabIndex = 0;
+        
         document.getElementById('profile').src = reader.result;
         document.getElementById('Image1').value = this.url1;
       };

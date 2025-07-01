@@ -1,375 +1,318 @@
 <template>
-  <div class="career-list container">
-    <!-- Loading -->
-    <div v-if="loading" class="text-center">
-      <b-spinner label="Loading..."></b-spinner>
-    </div>
+    <div class="career-list container">
+        <!-- Loading -->
+        <div v-if="loading" class="text-center">
+            <b-spinner label="Loading..."></b-spinner>
+        </div>
 
-    <!-- Error -->
-    <div v-else-if="error" class="alert alert-danger">
-      {{ error }}
-    </div>
+        <!-- Error -->
+        <div v-else-if="error" class="alert alert-danger">
+            {{ error }}
+        </div>
 
-    <!-- Main Content -->
-    <div v-else>
-      <!-- Search -->
-      <div class="mb-5 " style="margin-top: 150px">
-        <b-card-body class="custom-card ">
-          <!-- <h3 class="mb-2">SEARCH FOR JOBS</h3> -->
-          <b-row>
-            <b-col cols="12" md="5">
-              <b-form-group>
-                <b-form-input v-model="searchQuery" placeholder="Search job"
-                  class="mb-3 custom-select-border"></b-form-input>
-              </b-form-group>
-            </b-col>
-            <b-col cols="12" md="5">
-              <b-form-group>
-                <b-form-select v-model="selectedLocation" :options="locationOptions"
-                  class="mb-3 custom-select-border" />
-              </b-form-group>
-            </b-col>
-            <b-col cols="12" md="2">
-              <div class="text-center">
-                <b-button style="width: 100%" variant="primary" @click="searchJobs">SEARCH JOBS</b-button>
-              </div>
-            </b-col>
-          </b-row>
-        </b-card-body>
-      </div>
-
-      <!-- Job Grid -->
-      <b-row>
-        <b-col v-for="job in jobs" :key="job.id" cols="12" sm="12" md="12" lg="12" class="mb-3">
-          <b-card class="h-100 job-card  custom-card-1">
-            <div class="d-flex justify-content-between align-items-center">
-              <h4 class="mt-2 mb-2 mb-0">{{ job.job_name }}</h4>
-              <small class="text-muted">{{ formatDate(job.created_at) }}</small>
+        <!-- Main Content -->
+        <div v-else>
+            <!-- Search -->
+            <div class="mb-5 " style="margin-top: 150px">
+                <b-card-body class="custom-card ">
+                    <b-row>
+                        <b-col cols="12" md="5" style="margin-top: 22px;">
+                            <b-form-group>
+                                <b-form-select v-model="selectedLocation" :options="locationOptions"
+                                    class="mb-3 custom-select-border">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                        <b-col cols="12" md="2" style="margin-top: 22px;">
+                            <div class="text-center">
+                                <b-button style="width: 100%" variant="primary" @click="searchJobs">SEARCH
+                                    JOBS</b-button>
+                            </div>
+                        </b-col>
+                    </b-row>
+                </b-card-body>
             </div>
-            <div class="d-flex align-items-center">
-              <b-icon icon="geo-alt-fill" class="mr-2"></b-icon>
-              <span>{{ job.location_name }}</span>
+
+            <!-- Job Details View -->
+            <div v-if="selectedJobDetails">
+                <b-card class="mb-4">
+                    <b-button variant="light" class="pink-button" @click="backToList">
+                        &larr; Back to Job List
+                    </b-button>
+
+                    <h3 class="mb-3">{{ selectedJobDetails.job_name }}</h3>
+                    <p><strong>Location:</strong> {{ selectedJobDetails.location_name }}</p>
+                    <p><strong>Posted On:</strong> {{ formatDate(selectedJobDetails.created_at) }}</p>
+                    <div v-if="selectedJobDetails.job_details">
+                        <strong>Description:</strong>
+                        <div v-html="selectedJobDetails.job_details"></div>
+                    </div>
+                </b-card>
             </div>
-            <p class="clamp-text">
-              {{ getExcerpt(job.job_details) }}
-            </p>
-            <b-button style="width: fit-content;" variant="primary" :to="{ name: 'career-detail', params: { id: job.id } }"
-              class="mt-auto">
-              View Details
-            </b-button>
-          </b-card>
-        </b-col>
-      </b-row>
 
-      <!-- Pagination -->
-      <!-- <div class="d-flex justify-content-center mt-5">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          @change="handlePageChange"
-           class="custom-pagination"
-        ></b-pagination>ஃ
-      </div> -->
-      <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-      <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
-        class="custom-pagination" />
-    </div>
+            <!-- Job Table or No Result -->
+            <b-row v-else-if="showJobs && selectedLocation">
+                <b-col v-if="jobs.length === 0" cols="12" class="text-center">
+                    <h5 class="pink-text mb-0">No jobs available in this location.</h5>
+                </b-col>
+                <b-col v-else cols="12">
+                    <b-table :items="jobs" :fields="fields" bordered striped responsive>
+                        <template #cell(job_name)="data">
+                            <span @click="goToCareerDetails(data.item)" style="cursor: pointer;  ">
+                                <strong>{{ data.item.job_name }}</strong>
+                            </span>
+                        </template>
+                        <template #cell(location_name)="data">
+                            {{ data.item.location_name }}
+                        </template>
+                        <template #cell(created_at)="data">
+                            {{ formatDate(data.item.created_at) }}
+                        </template>
+                    </b-table>
+                </b-col>
+            </b-row>
 
+            <!-- Pagination -->
+            <div v-if="showJobs && selectedLocation && jobs.length && !selectedJobDetails"
+                class="d-flex justify-content-center mt-4">
+                <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"
+                    @change="handlePageChange" class="custom-pagination" />
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import { ref, computed, onMounted } from "@vue/composition-api";
+import { ref, onMounted } from "@vue/composition-api";
 import {
-  BImg,
-  BRow,
-  BCol,
-  BCard,
-  BCardBody,
-  BButton,
-  BSpinner,
-  BPagination,
-  BFormInput,
-  BFormSelect,
-  BFormGroup,
-  BIcon,
-} from "bootstrap-vue";
-import axios from "axios";
-
-export default {
-  name: "CareerList",
-  components: {
     BRow,
     BCol,
     BCard,
     BCardBody,
-    BImg,
     BButton,
     BSpinner,
     BPagination,
-    BFormInput,
     BFormSelect,
     BFormGroup,
+    BTable,
     BIcon,
-  },
-  setup() {
-    const jobs = ref([]);
-    const loading = ref(true);
-    const error = ref(null);
-    const currentPage = ref(1);
-    const perPage = ref(10);
-    const totalRows = ref(0);
-    const searchQuery = ref("");
-    const selectedLocation = ref(null);
-    const locationOptions = ref([{ value: null, text: "Select location" }]);
+} from "bootstrap-vue";
+import axios from "axios";
 
-    // Remove the featuredJob computed property
-
-    // Update regularJobs to show all jobs instead of skipping the first one
-    const regularJobs = computed(() => jobs.value);
-
-    const fetchJobs = async (page = 1) => {
-      try {
-        loading.value = true;
-        const response = await axios.get(
-          `/api/career-jobs?page=${page}`
-        );
-
-        console.log("response");
-        console.log(response.data.data);
-        // Handle pagination data
-        if (response.data.data) {
-          console.log("response1");
-          jobs.value = response.data.data;
-          totalRows.value = response.data.total;
-          currentPage.value = response.data.current_page;
-          perPage.value = response.data.per_page;
-        } else {
-          console.log("response2");
-
-          jobs.value = response.data.data;
+export default {
+    name: "CareerList",
+    components: {
+        BRow,
+        BCol,
+        BCard,
+        BCardBody,
+        BButton,
+        BSpinner,
+        BPagination,
+        BFormSelect,
+        BFormGroup,
+        BTable,
+        BIcon,
+    },
+    methods: {
+        async goToCareerDetails(job) {
+            // Fetch job details from API and show in-page
+            this.loading = true;
+            try {
+                const response = await axios.get(`/api/career-jobs/${job.id}`);
+                this.selectedJobDetails = response.data.data || response.data;
+            } catch (err) {
+                this.error = "Error loading job details: " + err.message;
+            } finally {
+                this.loading = false;
+            }
+        },
+        backToList() {
+            this.selectedJobDetails = null;
         }
+    },
 
-        loading.value = false;
-      } catch (err) {
-        error.value = "Error loading jobs: " + err.message;
-        loading.value = false;
-        console.error("Error fetching jobs:", err);
-      }
-    };
+    setup(_, { root }) {
+        const jobs = ref([]);
+        const loading = ref(false);
+        const error = ref(null);
+        const currentPage = ref(1);
+        const perPage = ref(10);
+        const totalRows = ref(0);
+        const selectedLocation = ref("");
+        const locationOptions = ref([{ value: "", text: "Select location", disabled: true }]);
+        const showJobs = ref(false);
+        const selectedJobDetails = ref(null);
 
-    const fetchLocations = async () => {
-      try {
-        // const response = await axios.get('/locations')
-        // const locations = response.data.map(location => ({
-        //   value: location.id,
-        //   text: location.name
-        // }))
-        const response = await axios.get("/restaurant_cities");
-        const locations = response.data.map((location) => ({
-          value: location.id,
-          text: location.city,
-        }));
-        locationOptions.value = [
-          { value: null, text: "Select location" },
-          ...locations,
+        const fields = [
+            { key: "job_name", label: "Job Title" },
+            { key: "location_name", label: "Location" },
+            { key: "created_at", label: "Posted On" },
         ];
-      } catch (err) {
-        console.error("Error fetching locations:", err);
-      }
-    };
 
-    const searchJobs = async () => {
-      try {
-        loading.value = true;
-        let url = "/career-jobs?";
+        const fetchJobs = async (page = 1) => {
+            try {
+                loading.value = true;
+                const response = await axios.get(`/api/career-jobs?page=${page}`);
+                jobs.value = response.data.data || [];
+                totalRows.value = response.data.total;
+                currentPage.value = response.data.current_page;
+                perPage.value = response.data.per_page;
+                loading.value = false;
+            } catch (err) {
+                error.value = "Error loading jobs: " + err.message;
+                loading.value = false;
+            }
+        };
 
-        if (searchQuery.value) {
-          url += `search=${searchQuery.value}&`;
-        }
+        const fetchLocations = async () => {
+            try {
+                const response = await axios.get("/restaurant_cities");
+                locationOptions.value = [
+                    { value: "", text: "Select location", disabled: false },
+                    ...response.data.map((location) => ({
+                        value: location.id,
+                        text: location.city,
+                    })),
+                ];
+            } catch (err) {
+                console.error("Error fetching locations:", err);
+            }
+        };
 
-        if (selectedLocation.value) {
-          url += `location_id=${selectedLocation.value}&`;
-        }
+        const searchJobs = async (page = 1) => {
+            showJobs.value = false;
+            selectedJobDetails.value = null;
+            if (!selectedLocation.value) {
+                jobs.value = [];
+                totalRows.value = 0;
+                return;
+            }
+            try {
+                loading.value = true;
+                let url = `/api/career-jobs?page=${page}`;
+                if (selectedLocation.value) {
+                    url += `&location_id=${selectedLocation.value}`;
+                }
+                const response = await axios.get(url);
+                jobs.value = response.data.data || [];
+                totalRows.value = response.data.total || 0;
+                currentPage.value = response.data.current_page || 1;
+                perPage.value = response.data.per_page || 10;
+                loading.value = false;
+                showJobs.value = true;
+            } catch (err) {
+                error.value = "Error searching jobs: " + err.message;
+                loading.value = false;
+                showJobs.value = true;
+            }
+        };
 
-        const response = await axios.get(url);
+        const handlePageChange = (page) => {
+            searchJobs(page);
+        };
 
-        if (response.data.data) {
-          jobs.value = response.data.data;
-          totalRows.value = response.data.total;
-          currentPage.value = response.data.current_page;
-          perPage.value = response.data.per_page;
-        } else {
-          jobs.value = response.data;
-        }
+        const formatDate = (date) => {
+            const options = { year: "numeric", month: "long", day: "numeric" };
+            return new Date(date).toLocaleDateString(undefined, options);
+        };
 
-        loading.value = false;
-      } catch (err) {
-        error.value = "Error searching jobs: " + err.message;
-        loading.value = false;
-        console.error("Error searching jobs:", err);
-      }
-    };
+        onMounted(async () => {
+            await fetchLocations();
+            loading.value = false;
+        });
 
-    const handlePageChange = (page) => {
-      fetchJobs(page);
-    };
-
-    const formatDate = (date) => {
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      return new Date(date).toLocaleDateString(undefined, options);
-    };
-
-    const getExcerpt = (html) => {
-      // Create a temporary element to strip HTML tags
-      const tempElement = document.createElement("div");
-      tempElement.innerHTML = html;
-      const text = tempElement.textContent || tempElement.innerText || "";
-
-      // Return first 150 characters as excerpt
-      return text.length > 150 ? text.substring(0, 150) + "..." : text;
-    };
-
-    onMounted(() => {
-
-      fetchJobs();
-      fetchLocations();
-    });
-
-    return {
-      jobs,
-      loading,
-      error,
-      formatDate,
-      getExcerpt,
-      // Remove featuredJob from return statement
-      regularJobs,
-      currentPage,
-      totalRows,
-      perPage,
-      handlePageChange,
-      searchQuery,
-      selectedLocation,
-      locationOptions,
-      searchJobs,
-    };
-  },
+        // Expose selectedJobDetails for template
+        return {
+            jobs,
+            loading,
+            error,
+            currentPage,
+            totalRows,
+            perPage,
+            selectedLocation,
+            locationOptions,
+            searchJobs,
+            handlePageChange,
+            formatDate,
+            fields,
+            showJobs,
+            selectedJobDetails,
+        };
+    },
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .custom-select-border {
-  border: 1.5px solid #FF006B !important;
-  box-shadow: none;
-  border-radius: 8px;
+    border: 1.5px solid #FF006B !important;
+    box-shadow: none;
+    border-radius: 8px;
 }
 
 .custom-card {
-  border: 1.5px solid #afafaf70 !important;
-  border-radius: 24px;
-  height: 10rem;
+    border: 1.5px solid #afafaf70 !important;
+    border-radius: 24px;
+    height: 10rem;
 }
 
-.custom-card-1 {
-  border: 1.5px solid #afafaf70 !important;
-  border-radius: 24px;
-  height: 10rem;
+.custom-select-border option[disabled] {
+    color: #999;
+    font-style: italic;
 }
+.pink-button {
+  background-color: #ff006b!important;
+  color: white !important;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 20px;
 
-
-@media (max-width: 765px) {
-  .custom-card {
-    height: 24rem;
+  &:hover {
+    background-color: #e64382 !important;
   }
 }
 
-@media (max-width: 575.98px) {
-  .custom-card {
-    height: 23rem;
 
-  }
+.pink-border {
+    border: 2px solid #ff4f93 !important;
+    border-radius: 24px;
+    background-color: #fff0f5;
+}
+
+.pink-text {
+    color: #ff006b !important;
 }
 
 .career-list {
-  padding: 2rem;
+    padding: 2rem;
 }
 
 .job-card {
-  transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  }
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 }
 
-.clamp-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
- 
- 
- .mega-pagination .page-item {
-  margin: 0 10px !important;
-
-}
-
-.mega-pagination .page-link {
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 8px !important;
-  border: none !important;
-  background-color: transparent !important;
-  color: #c33c3c !important;
-  font-size: 22px !important;
-  font-weight: bold !important;
-  display: flex   !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.mega-pagination .page-item.active .page-link {
-  background-color: #c33c3c !important;
-  color: #ffffff !important;
-}
-
-.mega-pagination .page-item:first-child .page-link,
-.mega-pagination .page-item:last-child .page-link,
-.mega-pagination .page-link[aria-label*="Previous"],
-.mega-pagination .page-link[aria-label*="Next"] {
-  font-size: 26px !important;
-  padding: 0 !important;
-  background-color: transparent !important;
-  border: none !important;
-  color: #c33c3c !important;
-}
 .custom-pagination>>>.page-item .page-link {
-  border: none;
-  color: #d9534f;
-  background: none;
-  font-weight: 600;
-  font-size: 20px;
-  border-radius: 4px;
-  margin: 0 2px;
-  padding: 2px 10px;
-  border-radius: 6px;
-  /* margin: 0 4px;         */
-  padding: 8px 20px;
+    border: none;
+    color: #d9534f;
+    background: none;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 6px;
+    padding: 8px 20px;
 }
 
 .custom-pagination>>>.page-item.active .page-link {
-  background: #d9534f;
-  color: #fff;
+    background: #d9534f;
+    color: #fff;
 }
 
 .custom-pagination>>>.page-item .page-link .arrow {
-  font-size: 25px !important;
+    font-size: 25px !important;
 }
 </style>

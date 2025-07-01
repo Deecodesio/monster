@@ -42,7 +42,7 @@
                         <p class="mb-2">
                            
 
-                           {{ data.food_name }} x {{ data.food_quantity }} ={{ data.individual_price }}
+                           {{ data.food_name }} x {{ data.food_quantity }} ={{ data.individual_price }} 
                            <span class="float-right text-secondary">{{$store.state['defaults'].currency}} {{ data.item_price | price_format_final }}</span>
                         </p>
                         </div>
