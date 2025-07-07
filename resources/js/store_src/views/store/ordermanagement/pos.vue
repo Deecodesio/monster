@@ -2,8 +2,8 @@
     <div>
         <b-row>
             <b-col lg="2" md="2" cols="12">
-                <div class="text-r side sticky-top3 dsp">
-                    <div @click="scrollMeTo(0, 0)" id="0">All</div>
+                <div class="text-r side sticky-top3 dsp text-black" style="color: black;">
+                    <div @click="scrollMeTo(0, 0)" id="0" >All</div>
                     <div
                         v-for="(data2, index) in rows_detail2"
                         :key="index"
@@ -33,15 +33,16 @@
                       
                     </b-row>
                 </div>
-                <div class="ecommerce-searchbar mt-1" v-if="!isLoading">
+                <div class="ecommerce-searchbar mt-1 text-black" v-if="!isLoading" style="color: black;">
                     <b-row>
                         <b-col
                             cols="12"
                             v-for="(data2, index2) in rows_detail"
                             :key="index2"
                             id="products"
+                            style="color: black;"
                         >
-                            <h3>{{ data2.menu_name }}</h3>
+                            <h3 >{{ data2.menu_name }}</h3>
                             <div :id="data2.menu_name">
                                 <b-row>
                                     <b-col  xxl="4"   lg="6"  md="12"  cols="12"  class="col-xxl-4"  v-for="(data3, index3) in data2.items" :key="index3">
@@ -1950,6 +1951,7 @@ export default {
     padding: 0px 12px 0px 0px;
     line-height: 3;
     cursor: pointer;
+    color: black;
 }
 .s-border {
     border-right: 2px solid #e6e6e6;

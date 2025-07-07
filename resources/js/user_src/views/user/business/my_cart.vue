@@ -79,7 +79,7 @@
                                         style="width:50px;height:50px;object-fit:cover;" />
                                 </td>
                                 <!-- product name -->
-                                <td>{{ data.name }}</td>
+                                <td style="font-weight: 700 !important;">{{ data.name }}</td>
                                 <!-- product price -->
                                 <td>{{ data.price }}</td>
                                 <!-- CGST Column -->
@@ -152,11 +152,11 @@
                         </div>
                     </div>
                     <div class="cart-summary-actions">
-                        <b-button class="cart-checkout-btn" v-ripple.400="'#FF006B'" block variant="primary"
+                        <b-button class="cart-checkout-btn" v-ripple.400="'#FF006B'" variant="primary"
                             @click="checkout()" v-if="isdefault && is_deliverable">
                             {{ $t('Proceed to Checkout') }}
                         </b-button>
-                        <b-button class="cart-checkout-btn" v-ripple.400="'rgba(255, 255, 255, 0.15)'" block
+                        <b-button class="cart-checkout-btn" v-ripple.400="'rgba(255, 255, 255, 0.15)'" 
                             variant="primary" v-if="!isdefault && is_deliverable" @click="checklogin()">
                             Select Address
                         </b-button>
@@ -2024,6 +2024,7 @@ export default {
 
 .cart-table {
     width: 100%;
+    color: #000000;
     border-collapse: collapse;
     margin-bottom: 18px;
     font-family: Quicksand, sans-serif;
@@ -2035,13 +2036,15 @@ export default {
     border: 1px solid #bdbdbd;
     padding: 8px 6px;
     text-align: center;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .cart-table th {
-    background: #e1b2d6;
-    color: #222;
-    font-weight: 700;
+    /* background: #e1b2d6; */
+    /* color: #222; */
+    background:#FF006B; 
+    color: #fff;
+    font-weight: 900 !important;
 }
 
 .cart-table td {
@@ -2050,18 +2053,22 @@ export default {
 
 .qty-btn {
     background: #fff;
-    border: 1px solid #bdbdbd;
+    /* border: 1px solid #bdbdbd; */
+    border: 1px solid #FF006B;
     border-radius: 4px;
     width: 28px;
     height: 28px;
     font-size: 18px;
-    color: #333;
+    /* color: #333; */
+    color: #000;
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .qty-btn:hover {
-    background: #e1b2d6;
+    /* background: #e1b2d6; */
+    background: #FF006B;
+    color: #fff; 
 }
 
 .cart-summary-table {
@@ -2080,17 +2087,18 @@ export default {
   margin-left: 1rem;
   min-width: 150px;
   text-align: right;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 
 .cart-summary-total {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 18px;
-    color: #222;
+    color: #000;
 }
 
 .cart-summary-actions {
+    width: 100%;
     margin-top: 18px;
     display: flex;
     gap: 12px;
@@ -2099,6 +2107,7 @@ export default {
 
 .cart-checkout-btn {
     min-width: 220px;
+    width: 33.3%;
     height: 44px;
     font-size: 17px;
     font-weight: 700;

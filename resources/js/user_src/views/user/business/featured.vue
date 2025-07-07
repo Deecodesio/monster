@@ -13,7 +13,7 @@
 
                 <!-- Responsive gap row -->
                  <b-container fluid>
-                <b-row class="g-3 gy-4 mb-2">
+                <b-row class="mb-2">
                     <b-col
                         cols="6"
                         md="4"

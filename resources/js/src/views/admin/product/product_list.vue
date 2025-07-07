@@ -491,6 +491,8 @@ export default {
             this.downlodPath = res.data.download_path;
             this.layout = res.data.business;
             this.Loading = false;
+            data.append("created_by", localStorage.admin_id);
+
 
             if (this.layout == 2) {
                 // this.$set(this.columns[3], "hidden", true);
@@ -579,6 +581,10 @@ export default {
                 {
                     label: this.$t("Featured"),
                     field: "featured",
+                },
+                {
+                        label: this.$t("created") + " " + this.$t("by"),
+                        field: "created_by",
                 },
 
                 {

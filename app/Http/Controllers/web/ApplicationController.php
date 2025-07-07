@@ -74,11 +74,11 @@ class ApplicationController extends BaseController
             $product_details = DB::table('food_list')->where('id', $page_id)->first();
 
             $category = DB::table('business_category')->where('id', $product_details->business_category_id)->first();
-            $subcategory = DB::table('category')->where('id', $product_details->category_id)->first();
+            // $subcategory = DB::table('category')->where('id', $product_details->category_id)->first();
 
             $category_name = $category->category_name;
 
-            $sub_category_name = $subcategory->category_name;
+            // $sub_category_name = $subcategory->category_name;
 
 
 
@@ -89,15 +89,15 @@ class ApplicationController extends BaseController
             }
 
             $cat_slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id);
-            $sub_cat_slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id . '-' . $subcategory->id);
+            // $sub_cat_slug =  strtolower(str_replace(' ', '-', $category->category_name) . '-' . $category->id . '-' . $subcategory->id);
             $schema = [
                 'name' => $product_details->name,
                 'url' => request()->url(),
                 'image' => $image,
                 'cat_name' => $category_name,
                 'cat_url' => BASE_URL . "categories/" . $cat_slug,
-                'sub_category_name' => $sub_category_name,
-                'subcat_url' => BASE_URL . "sub_categories/" . $sub_cat_slug
+                // 'sub_category_name' => $sub_category_name,
+                // 'subcat_url' => BASE_URL . "sub_categories/" . $sub_cat_slug
 
 
             ];

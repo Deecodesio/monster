@@ -83,7 +83,7 @@ $spacers: map-merge((0: 0,
 //
 // Settings for the `<body>` element.
 $body-bg: #f8f8f8 !default;
-$body-color: #6e6b7b !default;
+$body-color: #000000 !default; // #6e6b7b !default;
 
 // Links
 //
@@ -141,7 +141,7 @@ $h4-font-size: $font-size-base * 1.286 !default;
 $h5-font-size: $font-size-base * 1.07 !default;
 
 $headings-font-family: inherit !default;
-$headings-color: #5e5873 !default;
+$headings-color: #000000 !default; // #5e5873 !default;
 
 $display1-weight: $font-weight-normal !default;
 $display2-weight: $font-weight-normal !default;
@@ -153,7 +153,7 @@ $lead-font-weight: $font-weight-normal !default;
 
 $small-font-size: 0.986rem !default; // 0.857rem !default;
 
-$text-muted: #b9b9c3 !default;
+$text-muted: #000000 !default; // #b9b9c3 !default;
 $hr-border-color: $border-color !default;
 
 $blockquote-small-color: $text-muted !default;

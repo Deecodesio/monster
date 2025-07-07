@@ -1,5 +1,8 @@
 <template>
     <div class="career-list container">
+        <div class="mt-5 mx-3 py-6">
+                <top_banners />
+            </div>
         <!-- Loading -->
         <div v-if="loading" class="text-center">
             <b-spinner label="Loading..."></b-spinner>
@@ -13,7 +16,7 @@
         <!-- Main Content -->
         <div v-else>
             <!-- Search -->
-            <div class="mb-5 " style="margin-top: 150px">
+            <div class="mb-5 " style="margin-top: 50px">
                 <b-card-body class="custom-card ">
                     <b-row>
                         <b-col cols="12" md="5" style="margin-top: 22px;">
@@ -39,10 +42,10 @@
                     <b-button variant="light" class="pink-button" @click="backToList">
                         &larr; Back to Job List
                     </b-button>
-
-                    <h3 class="mb-3">{{ selectedJobDetails.job_name }}</h3>
-                    <p><strong>Location:</strong> {{ selectedJobDetails.location_name }}</p>
-                    <p><strong>Posted On:</strong> {{ formatDate(selectedJobDetails.created_at) }}</p>
+                    <br />
+                    <h3 class="mb-3" style="margin-top: 3rem;">{{ selectedJobDetails.job_name }}</h3>
+                    <p><strong>Location: {{ selectedJobDetails.location_name }} </strong></p>
+                    <p><strong>Posted On: {{ formatDate(selectedJobDetails.created_at) }} </strong></p>
                     <div v-if="selectedJobDetails.job_details">
                         <strong>Description:</strong>
                         <div v-html="selectedJobDetails.job_details"></div>
@@ -56,7 +59,7 @@
                     <h5 class="pink-text mb-0">No jobs available in this location.</h5>
                 </b-col>
                 <b-col v-else cols="12">
-                    <b-table :items="jobs" :fields="fields" bordered striped responsive>
+                    <b-table :items="jobs" :fields="fields" bordered striped responsive thead-class="custom-table-header">
                         <template #cell(job_name)="data">
                             <span @click="goToCareerDetails(data.item)" style="cursor: pointer;  ">
                                 <strong>{{ data.item.job_name }}</strong>
@@ -66,7 +69,7 @@
                             {{ data.item.location_name }}
                         </template>
                         <template #cell(created_at)="data">
-                            {{ formatDate(data.item.created_at) }}
+                            <strong>{{ formatDate(data.item.created_at) }}</strong>
                         </template>
                     </b-table>
                 </b-col>
@@ -84,6 +87,7 @@
 
 <script>
 import { ref, onMounted } from "@vue/composition-api";
+import Top_banners from "../top_banners.vue";
 import {
     BRow,
     BCol,
@@ -102,6 +106,7 @@ import axios from "axios";
 export default {
     name: "CareerList",
     components: {
+        Top_banners,
         BRow,
         BCol,
         BCard,
@@ -244,6 +249,14 @@ export default {
 </script>
 
 <style lang="scss">
+.custom-table-header,
+.custom-table-header th {
+    background-color: #ff006b !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-size: 1.15rem !important;
+}
+
 .custom-select-border {
     border: 1.5px solid #FF006B !important;
     box-shadow: none;

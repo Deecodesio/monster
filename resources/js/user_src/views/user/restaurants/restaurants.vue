@@ -257,6 +257,10 @@ export default {
           field: 'status',
          
         },
+        {
+          label:'created by',
+          field: 'created_by',
+        },
         
         {
           label: 'Action',
@@ -296,6 +300,8 @@ export default {
     },
   },
   created() {
+    data.append("created_by", localStorage.admin_id);
+
    if(localStorage.getItem('role') != 1){
       this.$router.push({ name: "misc-not-authorized" })
     }

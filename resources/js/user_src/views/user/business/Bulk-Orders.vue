@@ -20,6 +20,9 @@
                                 max-width: 900px;
                                 min-width: 300px;
                             ">
+                             <div class="text-center my-4">
+                            <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Bulk Order Enquiry</p>
+                        </div>
                             <b-form @submit.prevent="submitApplication">
                                 <b-card>
                                     <b-row>
@@ -198,7 +201,7 @@
     margin-bottom: 14rem;
   ">
                         <h2 style="margin-top: 0; margin-bottom: 10px; color: #000; font-size: 22px;">
-                            Form For the Franchise Setup
+                            Form For the Bulk Order Enquiry
                         </h2>
 
                         <h3 style="margin-top: 0; margin-bottom: 20px; color: #ff006b; font-size: 18px; ">

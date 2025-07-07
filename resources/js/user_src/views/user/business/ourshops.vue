@@ -92,11 +92,14 @@ export default {
 
 .shop-box {
     background-color: white;
-    height: 50px;
-    line-height: 50px;
+    /* height: 50px; */
+    height: 40px;
+    /* line-height: 50px; */
+    line-height: 40px;
     font-size: 15px;
     border-radius: 20px;
-    padding: 0 30px;
+    /* padding: 0 30px; */
+    padding: 0 20px;
     text-align: center;
     font-weight: bold;
     color:black;
