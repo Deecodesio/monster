@@ -77,7 +77,7 @@ Route::group(
 
     Route::get('/accept_request/{id}', 'OrderController@accept_request');
     Route::get('/cancell_resons', 'OrderController@cancell_reson');
-    Route::get('/cancel_request_reson/{order_id}/{reason}', 'OrderController@cancel_request_with_reason');
+    Route::get('/cancel_request_reson/{order_id}/{reason}/{created_by}', 'OrderController@cancel_request_with_reason');
 
     Route::post('/add_to_product', 'RestaurantController@add_to_product');
     Route::get('edit_product_list/{product_id}/{res_id}', 'RestaurantController@edit_product_list');

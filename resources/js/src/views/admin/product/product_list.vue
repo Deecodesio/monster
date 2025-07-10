@@ -491,8 +491,6 @@ export default {
             this.downlodPath = res.data.download_path;
             this.layout = res.data.business;
             this.Loading = false;
-            data.append("created_by", localStorage.admin_id);
-
 
             if (this.layout == 2) {
                 // this.$set(this.columns[3], "hidden", true);
@@ -547,11 +545,11 @@ export default {
                     label: this.$t("Business Category"),
                     field: "business_name",
                 },
-                {
-                    label: this.$t("menu") + " " + this.$t("name"),
-                    field: "menu_name",
-                    hidden: this.menu_col,
-                },
+                // {
+                //     label: this.$t("menu") + " " + this.$t("name"),
+                //     field: "menu_name",
+                //     hidden: this.menu_col,
+                // },
                 // {
                 //     label: this.$t("category"),
                 //     field: "category_name",
@@ -584,7 +582,7 @@ export default {
                 },
                 {
                         label: this.$t("created") + " " + this.$t("by"),
-                        field: "created_by",
+                        field: "role_name",
                 },
 
                 {

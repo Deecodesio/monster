@@ -3608,24 +3608,28 @@ class RestaurantController extends BaseController
         $request_data = DB::table('requests')->where('id', $request->Order_id)->first();
         $restaurant_id = $request_data->restaurant_id;
 
-        $data = file_get_contents(FIREBASE_URL . "/available_providers/.json");
+        // $data = file_get_contents(FIREBASE_URL . "/available_providers/.json");
 
 
-        $data = json_decode($data);
+        // $data = json_decode($data);
 
-        if ($data == NULL || $data == "") {
-            return '';
-        }
+        
+
+        // if ($data == NULL || $data == "") {
+        //     return '';
+        // }
+
+                    // print_r($data);
         $driver = [];
         $returnData = '<option>Select</option>';
 
-        foreach ($data as $driver_key => $each_driver) {
+        // foreach ($data as $driver_key => $each_driver) {
 
-            if ($each_driver != null) {
+            // if ($each_driver != null) {
 
                 if ($business->layout_id == 3) {
                     $this_driver = DB::table('delivery_partners')
-                        ->where('delivery_partners.id', $driver_key)
+                        // ->where('delivery_partners.id', $driver_key)
                         //  ->whereJsonContains('restaurants.carrier_type', $request_data->carrier)
                         //  ->whereJsonContains('delivery_partner_details.services', $business->layout_id)
                         ->join('delivery_partner_details', 'delivery_partner_details.delivery_partners_id', '=', 'delivery_partners.id')
@@ -3636,7 +3640,7 @@ class RestaurantController extends BaseController
 
                             if ($d == $business->layout_id) {
                                 $this_driver = DB::table('delivery_partners')
-                                    ->where('delivery_partners.id', $driver_key)
+                                    // ->where('delivery_partners.id', $driver_key)
                                     ->where('vehicle.carrier_type', $request_data->carrier)
                                     ->join('delivery_partner_details', 'delivery_partner_details.delivery_partners_id', '=', 'delivery_partners.id')
                                     ->join('vehicle', 'vehicle.id', '=', 'delivery_partner_details.vehicle_name')
@@ -3647,7 +3651,7 @@ class RestaurantController extends BaseController
                                     foreach (json_decode($restaurant1->carrier_type) as $d1) {
                                         if ($d1 == $this_driver->carrier_type) {
                                             $this_driver = DB::table('delivery_partners')
-                                                ->where('delivery_partners.id', $driver_key)
+                                                // ->where('delivery_partners.id', $driver_key)
                                                 ->join('delivery_partner_details', 'delivery_partner_details.delivery_partners_id', '=', 'delivery_partners.id')
                                                 ->select('delivery_partners.*', 'delivery_partners.id as driver_id',  'delivery_partner_details.*')
                                                 ->first();
@@ -3667,57 +3671,71 @@ class RestaurantController extends BaseController
                     } else {
                         $this_driver = [];
                     }
+                   
                 } else {
                     // $driver = DB::table('delivery_partners')->where('id', $driver_id)->first();
-
+                    
                     $this_driver = DB::table('delivery_partners')
-                        ->where('delivery_partners.id', $driver_key)
+                        // ->where('delivery_partners.id', $driver_key)
                         //  ->whereIn('delivery_partner_details.services', array($business->layout_id))
+                        ->join('restaurants', 'restaurants.id', '=', 'delivery_partners.restaurant_id')
                         ->join('delivery_partner_details', 'delivery_partner_details.delivery_partners_id', '=', 'delivery_partners.id')
                         ->select('delivery_partners.*', 'delivery_partners.id as driver_id', 'delivery_partner_details.*')
-                        ->first();
-                    if ($this_driver) {
-                        if (json_decode($this_driver->services) != null) {
-                            foreach (json_decode($this_driver->services) as $d) {
+                        ->get();
 
-                                if ($d == $business->layout_id) {
-                                    $this_driver = DB::table('delivery_partners')
-                                        ->where('delivery_partners.id', $driver_key)
-                                        //  ->whereIn('delivery_partner_details.services', array($business->layout_id))
-                                        ->join('delivery_partner_details', 'delivery_partner_details.delivery_partners_id', '=', 'delivery_partners.id')
-                                        ->select('delivery_partners.*', 'delivery_partners.id as driver_id',  'delivery_partner_details.*')
-                                        ->first();
-                                    break;
-                                } else {
+                      
+                    // if ($this_driver) {
+                        // if (json_decode($this_driver->services) != null) {
+                            // foreach (json_decode($this_driver->services) as $d) {
 
-                                    $this_driver = [];
-                                }
-                            }
-                        }
-                    } else {
+                                // if ($d == $business->layout_id) {
+                                    // $this_driver = DB::table('delivery_partners')
+                                    //     ->where('delivery_partners.id', $driver_key)
+                                    //     //  ->whereIn('delivery_partner_details.services', array($business->layout_id))
+                                    //     ->join('delivery_partner_details', 'delivery_partner_details.delivery_partners_id', '=', 'delivery_partners.id')
+                                    //     ->select('delivery_partners.*', 'delivery_partners.id as driver_id',  'delivery_partner_details.*')
+                                    //     ->first();
+                                    // break;
+                                // } else {
 
-                        $this_driver = [];
-                    }
+                                //     $this_driver = [];
+                                // }
+                        //     }
+                        // }
+                    // } else {
+                        // $this_driver = [];
+                    // }
                 }
-                if (!$this_driver) {
-                    continue;
-                }
+                // if (!$this_driver) {
+                //     continue;
+                // }
 
-                if ($this_driver->restaurant_id != null && $this_driver->restaurant_id != $admin_id) {
-                    continue;
-                }
+                // if ($this_driver->restaurant_id != null && $this_driver->restaurant_id != $admin_id) {
+                //     continue;
+                // }
 
-                $distance = vincentyGreatCircleDistance($each_driver->lat, $each_driver->lng, $restaurant->lat, $restaurant->lng);
-                if ($distance > 0 && $distance <= DEFAULT_RADIUS) {
-                    $driver[] = [
-                        'name' => $this_driver->name . ' - ' . $distance,
-                        'distance' =>  $distance,
-                        'id' => $this_driver->driver_id,
-                    ];
-                }
+
+                // $distance = vincentyGreatCircleDistance($each_driver->lat, $each_driver->lng, $restaurant->lat, $restaurant->lng);
+                // $distance = $distance * 1000;
+                
+                // if ($distance > 0 && $distance <= DEFAULT_RADIUS) {
+                    // $driver[] = [
+                    //     'name' => $this_driver->name . ' - ' . $distance,
+                    //     'distance' =>  $distance,
+                    //     'id' => $this_driver->driver_id,
+                    // ];
+                
+                // }
+            // }
+
+            if ($this_driver) {
+                foreach ($this_driver as $driver_data) {
+    $driver[] = [
+        'name' => $driver_data->name,
+        'id' => $driver_data->driver_id,
+    ];
+}
             }
-
-
 
             // $this_driver = DB::table('delivery_partners')->where('id', $driver_key)->first();
 
@@ -3731,7 +3749,7 @@ class RestaurantController extends BaseController
             // $this_driver->$distance = $distance;
             // }
             // $returnData .= '<option value="' . $this_driver->id . '">' . ucfirst($this_driver->name) . ' ~ ' . $distance . ' km</option>';
-        }
+        // }
 
 
         // $response_Array = json_encode(['data'=>$this_driver,'distance'=>$distance]);

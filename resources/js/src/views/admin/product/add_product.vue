@@ -2790,6 +2790,7 @@ export default {
                         JSON.stringify(this.tables)
                     );
                     product1.append("faq", JSON.stringify(this.items_faq));
+                    product1.append("created_by", localStorage.admin_id);
                     // product1.append("bprice", this.product.bprice);
 
                     // product1.append("initial_price", this.product.initial_price);

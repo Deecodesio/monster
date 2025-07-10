@@ -421,6 +421,10 @@ export default {
                     field: "rating",
                 },
                 {
+                    label: this.$t("created") + " " + this.$t("by"),
+                    field: "role_name",
+                },
+                {
                     label: this.$t("status"),
                     field: "status",
                 },

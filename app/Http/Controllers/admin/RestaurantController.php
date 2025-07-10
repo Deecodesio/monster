@@ -32,7 +32,8 @@ class RestaurantController extends BaseController
         if ($ad) {
             $data = DB::table('restaurants')
                 ->join('business_type', 'business_type.id', '=', 'restaurants.business_type')
-                ->select('restaurants.*', 'business_type.name as business_name',)
+                ->leftJoin('roles', 'roles.id', '=', 'restaurants.created_by') 
+                ->select('restaurants.*', 'business_type.name as business_name','roles.role_name',)
                 ->orderBy('id', 'desc')->get();
         } else {
             $datas =  array_map('intval', json_decode($ad2->restaurant_id));
@@ -43,12 +44,14 @@ class RestaurantController extends BaseController
                 $data = DB::table('restaurants')
                     ->whereIn('restaurants.id', $datas)
                     ->join('business_type', 'business_type.id', '=', 'restaurants.business_type')
-                    ->select('restaurants.*', 'business_type.name as business_name',)
+                     ->leftJoin('roles', 'roles.id', '=', 'restaurants.created_by') 
+                    ->select('restaurants.*', 'business_type.name as business_name','roles.role_name',)
                     ->orderBy('id', 'desc')->get();
             } else {
                 $data = DB::table('restaurants')
                     ->join('business_type', 'business_type.id', '=', 'restaurants.business_type')
-                    ->select('restaurants.*', 'business_type.name as business_name',)
+                    ->leftJoin('roles', 'roles.id', '=', 'restaurants.created_by') 
+                    ->select('restaurants.*', 'business_type.name as business_name','roles.role_name',)
                     ->orderBy('id', 'desc')->get();
             }
         }
@@ -1507,6 +1510,7 @@ class RestaurantController extends BaseController
             // $decodedText = html_entity_decode($convertedText);
             //    dd($decodedText);
             $restaurants->address = $convertedText;
+            $restaurants->created_by = $request->created_by;
 
             $restaurants->save();
 
@@ -3329,11 +3333,13 @@ class RestaurantController extends BaseController
         $data = DB::table('food_list')
             ->leftJoin('menu', 'menu.id', '=', 'food_list.menu_id')
             ->leftJoin('business_category', 'business_category.id', '=', 'food_list.business_category_id')
+            ->leftJoin('roles', 'roles.id', '=', 'food_list.created_by') 
             ->select(
                 'food_list.id as food_id',
                 'business_category.category_name as business_name',
                 'food_list.*',
                 'menu.*',
+                'roles.role_name',
                 'food_list.status as f_status',
                 'food_list.out_of_stock as stock_status'
             )
@@ -3363,6 +3369,7 @@ class RestaurantController extends BaseController
             'status' => 'required',
             'packaging_charge' => 'required',
             'product' => 'required',
+            'created_by' => 'required',
         ]);
 
         $toggle_status = (int) $request->toggle_status ?? 0;
@@ -3449,6 +3456,7 @@ class RestaurantController extends BaseController
             $foodlist->is_veg = $food_type;
             $foodlist->status = $status;
             $foodlist->is_secondary = $toggle_status;
+            // $foodlist->created_by = $request->created_by;
 
             $request->existing = json_decode($request->existing, true);
             if (count(json_decode($request->image)) > 0) {
@@ -3711,6 +3719,7 @@ class RestaurantController extends BaseController
             $this->foodlist->packaging_charge = $packaging_charge;
             $this->foodlist->is_veg = $food_type;
             $this->foodlist->status = $status;
+            $this->foodlist->created_by = $request->created_by;
             $request->existing = json_decode($request->existing);
             if (count(json_decode($request->image)) > 0) {
 

@@ -663,7 +663,7 @@ export default {
     Assign_add() {
       var order_id = this.user_info.order_id;
       var reason = this.user_info.reson;
-      this.$http.get('/store/cancel_request_reson/' + order_id + '/' + reason)
+      this.$http.get('/store/cancel_request_reson/' + order_id + '/' + reason + '/' + localStorage.admin_id)
         .then(response => {
           if (response.data.status == true) {
             this.$toast({
@@ -733,7 +733,7 @@ export default {
         })
     },
     Assign(id) {
-      this.$http.get('/store/accept_request/' + id)
+      this.$http.get('/store/accept_request/' + id+'/'+ localStorage.admin_id)
         .then(response => {
           if (response.data.status == true) {
             this.$toast({

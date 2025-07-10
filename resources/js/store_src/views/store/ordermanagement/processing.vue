@@ -138,10 +138,10 @@
                 type="submit" variant="outline-success" class="mr-1" @click="setpop(props.row.id)">
                 {{ $t('assign') }} {{ $t('manually') }}
               </b-button>
-              <b-button v-if="props.row.status == 1 && props.row.delivery_type == 1" type="submit"
+              <!-- <b-button v-if="props.row.status == 1 && props.row.delivery_type == 1" type="submit"
                 variant="outline-primary" class="mr-1" @click="Assign(props.row.id)">
                 {{ $t('assign') }}
-              </b-button>
+              </b-button> -->
               <b-button v-if="props.row.status == 1 && props.row.delivery_type == 1" type="submit"
                 variant="outline-danger" class="mr-1" @click="Cancel(props.row.id)">
                 {{ $t('cancel') }}
