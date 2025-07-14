@@ -1,4 +1,5 @@
 <template>
+
   <div style="margin-top: 150px">
   <div  class="container">
     <h6 class="mb-3 mt-2 mx-3" >
@@ -10,7 +11,7 @@
     <!-- <div class="blog-list-root"> -->
 
     <!-- Main Heading -->
-    <h1 class="main-heading" style="font-weight: bolder;margin-left: 36px !important;">Blog</h1>
+    <!-- <h1 class="main-heading" style="font-weight: bolder;margin-left: 36px !important;">Blog</h1> -->
 
     <!-- Loading -->
     <div v-if="loading" class="text-center py-5">
@@ -28,10 +29,10 @@
       <div v-if="featuredBlog" class="featured-blog-card">
         <div class="featured-blog-row">
           <div class="featured-blog-content">
-         
+
             <h3 class="featured-title">{{ featuredBlog.title }}</h3>
                <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{ formatDate(featuredBlog.published_at) }}</small>
-            <p class="featured-excerpt">{{ featuredBlog.excerpt }}</p>
+            <p class="featured-excerpt" style="color: black !important; font-weight:bolder;">{{ featuredBlog.excerpt }}</p>
             <b-button variant="danger" class="read-more-btn"
               :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
               Read more →
@@ -62,7 +63,7 @@
       <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
         class="custom-pagination" />
     </div>
-   
+
     <!-- </div> -->
   </div>
    <div class="container-fluid" style="margin-top: 50px; padding-right: 0; padding-left: 0">
@@ -158,7 +159,7 @@ export default {
   font-weight: 700;
   margin-bottom: 30px;
   margin-left: 44px;
- 
+
 }
 
 .featured-blog-card {
@@ -210,7 +211,7 @@ export default {
 
 .featured-title {
   font-size: 1.22rem;
-  font-weight: 600;
+  font-weight: bolder;
   margin-bottom: 14px;
 }
 

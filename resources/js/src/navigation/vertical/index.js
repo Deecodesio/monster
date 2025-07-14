@@ -40,6 +40,7 @@ export default [
     ...city,
     ...restaurants,
     ...usermanagement,
+    ...reports,
     ...vehicle,
     ...roles,
     ...others,

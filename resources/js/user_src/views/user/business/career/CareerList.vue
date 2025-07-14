@@ -19,7 +19,14 @@
             <div class="mb-5 " style="margin-top: 50px">
                 <b-card-body class="custom-card ">
                     <b-row>
-                        <b-col cols="12" md="5" style="margin-top: 22px;">
+                        <b-col cols="12" md="4" style="margin-top: 22px;">
+                             <b-form-group>
+                                <b-form-select v-model="selectedCategory" :options="categoryOptions"
+                                    class="mb-3 custom-select-border">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                          <b-col cols="12" md="4" style="margin-top: 22px;">
                             <b-form-group>
                                 <b-form-select v-model="selectedLocation" :options="locationOptions"
                                     class="mb-3 custom-select-border">
@@ -54,7 +61,7 @@
             </div>
 
             <!-- Job Table or No Result -->
-            <b-row v-else-if="showJobs && selectedLocation">
+            <b-row v-else-if="showJobs && (selectedLocation || selectedCategory)">
                 <b-col v-if="jobs.length === 0" cols="12" class="text-center">
                     <h5 class="pink-text mb-0">No jobs available in this location.</h5>
                 </b-col>
@@ -66,7 +73,7 @@
                             </span>
                         </template>
                         <template #cell(location_name)="data">
-                            {{ data.item.location_name }}
+                            {{ data.item.city.city || 'N/A' }}
                         </template>
                         <template #cell(created_at)="data">
                             <strong>{{ formatDate(data.item.created_at) }}</strong>
@@ -76,7 +83,7 @@
             </b-row>
 
             <!-- Pagination -->
-            <div v-if="showJobs && selectedLocation && jobs.length && !selectedJobDetails"
+            <div v-if="showJobs && selectedLocation && selectedCategory && jobs.length && !selectedJobDetails"
                 class="d-flex justify-content-center mt-4">
                 <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"
                     @change="handlePageChange" class="custom-pagination" />
@@ -145,7 +152,9 @@ export default {
         const perPage = ref(10);
         const totalRows = ref(0);
         const selectedLocation = ref("");
+        const selectedCategory = ref("");
         const locationOptions = ref([{ value: "", text: "Select location", disabled: true }]);
+        const categoryOptions = ref([{ value: "", text: "Select category", disabled: true }]);
         const showJobs = ref(false);
         const selectedJobDetails = ref(null);
 
@@ -185,10 +194,25 @@ export default {
             }
         };
 
+        const fetchCategories = async () => {
+             try {
+                const response = await axios.get("/api/career-job-categories");
+                categoryOptions.value = [
+                    { value: "", text: "Select category", disabled: false },
+                    ...response.data.data.map((category) => ({
+                        value: category.id,
+                        text: category.name,
+                    })),
+                ];
+            } catch (err) {
+                console.error("Error fetching categories:", err);
+            }
+        };
+
         const searchJobs = async (page = 1) => {
             showJobs.value = false;
             selectedJobDetails.value = null;
-            if (!selectedLocation.value) {
+            if (!selectedLocation.value && !selectedCategory.value) {
                 jobs.value = [];
                 totalRows.value = 0;
                 return;
@@ -196,8 +220,8 @@ export default {
             try {
                 loading.value = true;
                 let url = `/api/career-jobs?page=${page}`;
-                if (selectedLocation.value) {
-                    url += `&location_id=${selectedLocation.value}`;
+                if (selectedLocation.value || selectedCategory.value) {
+                    url += `&location_id=${selectedLocation.value}&category_id=${selectedCategory.value}`;
                 }
                 const response = await axios.get(url);
                 jobs.value = response.data.data || [];
@@ -224,6 +248,7 @@ export default {
 
         onMounted(async () => {
             await fetchLocations();
+            await fetchCategories();
             loading.value = false;
         });
 
@@ -237,6 +262,8 @@ export default {
             perPage,
             selectedLocation,
             locationOptions,
+            selectedCategory,
+            categoryOptions,
             searchJobs,
             handlePageChange,
             formatDate,

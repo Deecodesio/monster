@@ -18,6 +18,7 @@ class CareerJob extends Model
         'job_name',
         'job_details',
         'location_id',
+        'category_id',
         'state_id',
         'created_by',
         'status'
@@ -44,6 +45,11 @@ class CareerJob extends Model
         return $this->belongsTo(Roles::class, 'created_by', 'id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(CareerJobCategory::class, 'category_id', 'id');
+    }
+
     // Scopes for filtering
     public function scopeActive(Builder $query)
     {
@@ -68,6 +74,11 @@ class CareerJob extends Model
     public function scopeByCreator(Builder $query, $createdBy)
     {
         return $query->where('created_by', $createdBy);
+    }
+
+    public function scopeByCategory(Builder $query, $categoryId)
+    {
+        return $query->where('category_id', $categoryId);
     }
 
     public function scopeDateRange(Builder $query, $startDate = null, $endDate = null)

@@ -3,6 +3,20 @@
         <b-form @submit.prevent="addJobVacancy">
             <b-row>
                 <b-col md="6">
+                    <b-form-group :label="$t('Category')">
+                        <v-select
+                            id="category"
+                            v-model="job.category_id"
+                            :options="category_list"
+                            label="name"
+                            :reduce="(sel) => sel.id"
+                            :placeholder="$t('Select Category')"
+                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                            :required="!job.category_id"
+                            @input="onCategoryChange"
+                        />
+                    </b-form-group>
+
                     <b-form-group :label="$t('Job Name')">
                         <b-form-input
                             id="name"
@@ -132,6 +146,7 @@ export default {
         return {
             state_list: [],
             city_list: [],
+            category_list: [],
             options: [
                 { value: 1, text: this.$t("active") },
                 { value: 2, text: this.$t("inactive") },
@@ -140,6 +155,7 @@ export default {
                 job_name: "",
                 location_id: "",
                 state_id: "",
+                category_id: "",
                 status: "",
                 job_details: "",
             },
@@ -156,6 +172,12 @@ export default {
         this.$http.get("/admin/state_list").then((res) => {
             this.state_list = res.data;
             console.log(this.state_list);
+        });
+
+        this.$http.get("/api/career-job-categories").then((res) => {
+            this.category_list = res.data.data;
+            console.log("category_list");
+            console.log(this.category_list);
         });
 
         if (this.$route.params.id) {
@@ -186,6 +208,7 @@ export default {
             data.append("state_id", this.job.state_id);
             data.append("status", this.job.status);
             data.append("job_details", this.job.job_details);
+            data.append("category_id", this.job.category_id);
             data.append("created_by", 1);
 
             this.$http

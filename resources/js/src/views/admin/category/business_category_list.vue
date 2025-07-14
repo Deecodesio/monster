@@ -169,7 +169,7 @@
                                 <span class="text-nowrap"> Showing 1 to </span>
                                 <b-form-select
                                     v-model="pageLength"
-                                    :options="['10', '50', '100']"
+                                    :options="['50', '100']"
                                     class="mx-1"
                                     @input="
                                         (value) =>
@@ -274,7 +274,7 @@ export default {
     },
     data() {
         return {
-            pageLength: 10,
+            pageLength: 50,
             dir: false,
             Loading: true,
 

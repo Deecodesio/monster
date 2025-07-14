@@ -11,9 +11,14 @@
 
 <template>
   <div id="app" style="margin-top:80px;">
+     <!-- <div class="mt-5 mx-3 py-6 container"> -->
+     <div class="mt-5 py-6 container">
+                <top_banners />
+            </div>
     <!-- Section 1: Gurlean Delicious Food -->
     <section class="section-1">
-      <div class="container">        
+       <h1 style="display: flex !important; color: black !important; justify-content: center; margin-bottom: 30px;">Annapoorna Foods</h1>
+      <div class="container">       
         <div class="content-grid">
           <div class="text-content">
             <h1>Gurlean Delicious Food</h1>
@@ -22,14 +27,14 @@
             <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from one store to another, ordering online. We will not only top-quality products.</p> -->
           </div>
           <div class="image-placeholder">
-             <b-img src="/Res_2.jpg" fluid alt="Restaurant Interior" class="restaurant-image"/>           
+             <b-img src="/Res_2.jpg" fluid alt="Restaurant Interior" class="restaurant-image"/>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Section 2: Midnight vision -->
-    <section class="section-2">
+    <!-- <section class="section-2">
       <div class="container">
         <h1>Midnight vision</h1>
         <h2>Catering to your requirements</h2>
@@ -46,7 +51,7 @@
           <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from one store to another, ordering online. We will not only top-quality products.</p>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Section 3: Cocktails -->
     <!-- <section class="cocktail-section">
@@ -65,25 +70,25 @@
     </section> -->
 
     <!-- Section 4: Buffet -->
-    <section class="buffet-section">
-      <div class="container">        
+    <!-- <section class="buffet-section">
+      <div class="container">
         <div class="buffet-grid">
           <div class="text-content">
             <h1>Buffet delicious</h1>
             <h2>Goodness Without Borders</h2>
             <p>Our store is more than just another ordinary online retailer. We are not only top-quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p>
-            <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders. We will not only top-quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p>
-            <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p> -->
+            <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders. We will not only top-quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p> -->
+            <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p>
           </div>
           <div class="buffet-images">
             <div class="image-placeholder">
-               <b-img src="/Res_1.jpg" fluid alt="Restaurant View 1" class="buffet-image"/>             
+               <b-img src="/Res_1.jpg" fluid alt="Restaurant View 1" class="buffet-image"/>
             </div>
             <div class="image-placeholder">
                <b-img src="/Res_2.jpg" fluid alt="Restaurant View 2" class="buffet-image"/>
             </div>
             <div class="image-placeholder">
-              <b-img src="/Res_5.jpg" fluid alt="Restaurant View 3" class="buffet-image"/>            
+              <b-img src="/Res_5.jpg" fluid alt="Restaurant View 3" class="buffet-image"/>
             </div>
             <div class="image-placeholder">
               <b-img src="/Res_6.jpg" fluid alt="Restaurant View 4" class="buffet-image"/>
@@ -91,7 +96,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Newsletter -->
     <!-- <section class="newsletter">
@@ -99,9 +104,9 @@
         <h3>Keep up with the latest restaurant news and events.</h3>
         <p>Enter your e-mail and subscribe to our newsletter.</p>
         <form class="newsletter-form" @submit.prevent="subscribeNewsletter">
-          <input 
-            type="email" 
-            placeholder="Your email" 
+          <input
+            type="email"
+            placeholder="Your email"
             v-model="email"
             required
           >
@@ -124,10 +129,12 @@ import Ripple from 'vue-ripple-directive'
 import banner from './banner.vue'
 import store from '@@@/store'
 import Ourshops from '../business/ourshops.vue';
+import Top_banners from "../business/top_banners.vue";
 
 
 export default {
   components: {
+    Top_banners,
     BButton,
     BForm,
     BImg,
@@ -244,7 +251,7 @@ export default {
 
 /* Section 1: Gurlean Delicious Food */
 .section-1 {
-  padding: 60px 0;
+  padding: 30px 0;
   background: #f8f9fa;
 }
 
@@ -311,7 +318,7 @@ export default {
 /* Section 3: Cocktails */
 .cocktail-section {
   padding: 80px 0;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
               linear-gradient(135deg, #2c3e50, #34495e);
   background-size: cover;
   background-position: center;
@@ -441,31 +448,31 @@ export default {
   .content-grid, .buffet-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .image-grid, .buffet-images {
     grid-template-columns: 1fr;
   }
-  
+
   .newsletter-form {
     flex-direction: column;
   }
-  
+
   .section-1 h1, .section-2 h1, .cocktail-section h1, .buffet-section h1 {
     font-size: 2rem;
   }
-  
+
   .cocktail-section h2 {
     font-size: 1.8rem;
   }
-  
+
   .content-grid .image-placeholder {
     height: 250px;
   }
-  
+
   .image-grid .image-placeholder {
     height: 180px;
   }
-  
+
   .buffet-images .image-placeholder {
     height: 120px;
   }
@@ -475,15 +482,15 @@ export default {
   .container {
     padding: 0 15px;
   }
-  
+
   .section-1 h1, .section-2 h1, .cocktail-section h1, .buffet-section h1 {
     font-size: 1.8rem;
   }
-  
+
   .cocktail-section h2 {
     font-size: 1.5rem;
   }
-  
+
   .section-1 h2, .section-2 h2, .buffet-section h2 {
     font-size: 1.2rem;
   }

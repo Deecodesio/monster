@@ -213,7 +213,14 @@ Route::group(['namespace' => 'App\Http\Controllers\api'], function () {
     // Additional routes for CareerJobController
     Route::patch('career-jobs/{id}/toggle-status', 'CareerJobController@toggleStatus'); // PATCH /api/career-jobs/{id}/toggle-status
     Route::get('career-jobs/active/list', 'CareerJobController@getActiveJobs'); // GET /api/career-jobs/active/list
-    Route::get('career-jobs/statistics/overview', 'CareerJobController@getJobsStats'); // GET /api/career-jobs/statistics/overview
+    Route::get('career-jobs/statistics/overview', 'CareerJobController@getJobsStats'); // GET /api/career-jobs/statistics/
+
+    // Basic CareerJobCategoryController CRUD operations
+    Route::get('/career-job-categories', 'CareerJobCategoryController@index');
+    Route::post('/career-job-categories', 'CareerJobCategoryController@store');
+    Route::get('/career-job-categories/{id}', 'CareerJobCategoryController@show');
+    Route::delete('/career-job-categories/{id}', 'CareerJobCategoryController@destroy');
+    Route::get('/career-job-categories/{id}/jobs', 'CareerJobCategoryController@jobs');
 
     // Blog Category Routes
     Route::get('/blog-categories', 'BlogCategoryController@index');

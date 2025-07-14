@@ -6,7 +6,7 @@
                 <div class="subcat_slider">
                     <div class="mt-5 mb-3 text-center">
                         <div class=" container">
-                            
+
                         <div class="mt-5 mb-3 text-center">
                             <h2>{{ $t(" Product Categories") }}</h2>
                             <hr class="mx-auto" />
@@ -34,6 +34,7 @@
                 </div>
             </div>
 
+
             <div class="mt-1 text-center" style="
                     display: flex;
                     flex-direction: column;
@@ -50,9 +51,98 @@
                     }}
                 </p>
                 <br />
+
             </div>
+
             <div class="text-l" v-if="cart.length">
+
                 <div class="cart-table-wrapper">
+                    <div class="wrap-toggle">
+                                <div class="toggle-container">
+                                    <div :class="[
+                                        'toggle-option',
+                                        {
+                                            'toggle-active':
+                                                delivery_type === 1,
+                                        },
+                                    ]" @click="select_delivery_type(1)">
+                                        Delivery
+                                    </div>
+                                    <div :class="[
+                                        'toggle-option',
+                                        {
+                                            'toggle-active':
+                                                delivery_type === 2,
+                                        },
+                                    ]" @click="select_delivery_type(2)">
+                                        Takeaway
+                                    </div>
+                                </div>
+
+                                <!-- Will appear BELOW the toggle-container -->
+                                <div id="takeaway_address" style="
+                                        padding-top: 20px;
+                                        font-family: Quicksand;
+                                        font-weight: 400;
+                                        font-size: 14px;
+                                    " class="cart-bord" v-if="delivery_type == 2">
+                                    <p style="
+                                            font-family: Quicksand;
+                                            font-weight: 700;
+                                            font-size: 16px;
+                                            color: black;
+                                        ">
+                                        {{ $t("Take Away") }} {{ $t("From") }}
+                                    </p>
+                                    <p id="demo">
+                                        <feather-icon icon="MapPinIcon" size="16" class="ico-color2" />
+                                        {{ cart[0].restaurant_address }}
+                                    </p>
+                                </div>
+
+                                <div id="delivery_address" style="
+                                        padding-top: 20px;
+                                        font-family: Quicksand;
+                                    " class="cart-bord" v-if="delivery_type == 1">
+                                    <p style="
+                                            font-weight: 700;
+                                            font-size: 16px;
+                                            color: black;
+                                        ">
+                                        {{ $t("Delivering To") }}
+                                    </p>
+                                    <p id="demo" style="
+                                            font-family: Quicksand;
+                                            font-weight: 400;
+                                            font-size: 16px;
+                                            margin-bottom: 8px;
+                                        ">
+                                        <feather-icon icon="MapPinIcon" size="16" class="ico-color2" />
+                                        {{ rows }}
+                                    </p>
+                                    <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'
+                                        " variant="flat-primary" style="
+                                            padding: 0px;
+                                            font-family: Quicksand;
+                                            font-weight: 400;
+                                            font-size: 14px;
+                                        " @click="checklogin()">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                        <span class="f-size-0" style="
+                                                padding: 0px;
+                                                font-family: Quicksand;
+                                                font-weight: 400;
+                                                font-size: 14px;
+                                            ">{{ $t("Add") }} {{ $t("New") }}
+                                            {{ $t("Address") }}</span>
+                                    </b-button>
+
+                                    <!-- <b-sidebar id="sidebar-address" bg-variant="white" right backdrop shadow width="130%"
+                                ref="a_sidebar">
+                                <address_sidebar :prop="send_address" @clicked-show-detail="check" />
+                            </b-sidebar> -->
+                                </div>
+                            </div>
                     <table class="cart-table">
                         <thead>
                             <tr>
@@ -156,7 +246,7 @@
                             @click="checkout()" v-if="isdefault && is_deliverable">
                             {{ $t('Proceed to Checkout') }}
                         </b-button>
-                        <b-button class="cart-checkout-btn" v-ripple.400="'rgba(255, 255, 255, 0.15)'" 
+                        <b-button class="cart-checkout-btn" v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                             variant="primary" v-if="!isdefault && is_deliverable" @click="checklogin()">
                             Select Address
                         </b-button>
@@ -2042,7 +2132,7 @@ export default {
 .cart-table th {
     /* background: #e1b2d6; */
     /* color: #222; */
-    background:#FF006B; 
+    background:#FF006B;
     color: #fff;
     font-weight: 900 !important;
 }
@@ -2068,7 +2158,7 @@ export default {
 .qty-btn:hover {
     /* background: #e1b2d6; */
     background: #FF006B;
-    color: #fff; 
+    color: #fff;
 }
 
 .cart-summary-table {
@@ -2447,6 +2537,7 @@ export default {
         padding: 16px 8px 12px 8px;
     }
 }
+
 </style>
 
 <style lang="scss" scoped>

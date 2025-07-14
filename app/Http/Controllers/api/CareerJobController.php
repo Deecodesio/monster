@@ -17,7 +17,7 @@ class CareerJobController extends BaseController
     public function index(Request $request): JsonResponse
     {
         try {
-            $query = CareerJob::with(['city', 'state', 'creator']);
+            $query = CareerJob::with(['city', 'state', 'creator', 'category']);
 
             // Apply filters
             if ($request->has('location_id') && $request->location_id) {
@@ -30,6 +30,10 @@ class CareerJobController extends BaseController
 
             if ($request->has('created_by') && $request->created_by) {
                 $query->byCreator($request->created_by);
+            }
+
+            if ($request->has('category_id') && $request->category_id) {
+                $query->byCategory($request->category_id);
             }
 
             if ($request->has('status') && $request->status) {
@@ -58,7 +62,7 @@ class CareerJobController extends BaseController
 
             return response()->json([
                 'success' => true,
-                'message' => 'Career jobs retrieved successfully',
+                'message' => 'Careerss jobs retrieved successfully',
                 'data' => $jobs
             ]);
         } catch (\Exception $e) {
@@ -78,6 +82,7 @@ class CareerJobController extends BaseController
         try {
             $validator = $request->validate([
                 'id' => 'nullable|string',
+                'category_id' => 'nullable',
                 'job_name' => 'required|string|max:255',
                 'job_details' => 'required|string',
                 'location_id' => 'required|exists:add_city,id',

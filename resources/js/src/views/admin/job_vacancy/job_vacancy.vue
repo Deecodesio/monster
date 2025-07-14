@@ -142,7 +142,7 @@
                                 </span>
                                 <b-form-select
                                     v-model="pageLength"
-                                    :options="['10', '50', '100']"
+                                    :options="['50', '100']"
                                     class="mx-1"
                                     @input="
                                         (value) =>
@@ -248,7 +248,7 @@ export default {
     },
     data() {
         return {
-            pageLength: 10,
+            pageLength: 50,
             dir: false,
             Loading: true,
             codeColumnSearch,
@@ -256,6 +256,10 @@ export default {
                 {
                     label: this.$t("Job Name"),
                     field: "name",
+                },
+                {
+                    label: this.$t("Category"),
+                    field: "category.name",
                 },
                 {
                     label: this.$t("State"),

@@ -91,7 +91,7 @@
                   <span class="text-nowrap">
                     {{ $t('message.pagelength') }}
                   </span>
-                  <b-form-select v-model="pageLength" :options="['10', '50', '100']" class="mx-1"
+                  <b-form-select v-model="pageLength" :options="['50', '100']" class="mx-1"
                     @input="(value) => props.perPageChanged({ currentPerPage: value })" />
                   <span class="text-nowrap "> {{ $t('message.of') }} {{ props.total }} {{ $t('message.pageText2') }}
                   </span>
@@ -159,7 +159,7 @@
     },
     data() {
       return {
-        pageLength: 10,
+        pageLength: 50,
         dir: false,
         Loading: true,
      

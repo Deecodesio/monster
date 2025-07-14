@@ -2882,5 +2882,54 @@ export default [
             resource: 'user-create',
             action: 'create',
         },
-    }
+    },
+     {
+        path: "/admin/add_job_category",
+        name: "add_job_category",
+        component: () => import("@/views/admin/job_vacancy/add_job_category.vue"),
+        meta: {
+            pageTitle: "Add Job Category",
+            breadcrumb: [
+                { text: "Job Vacancy" },
+                { text: "Add Job Category", active: true },
+            ],
+            resource: "job-vacancy",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/edit_job_category",
+        name: "edit_job_category",
+        component: () => import("@/views/admin/job_vacancy/add_job_category.vue"),
+        meta: {
+            pageTitle: "Edit Job Category",
+            breadcrumb: [
+                { text: "Job Vacancy" },
+                { text: "Edit Job Category", active: true },
+            ],
+            resource: "job-vacancy",
+            action: "read",
+        },
+    },
+
+    {
+        path: "/admin/job_category",
+        name: "job_category",
+        component: () => import("@/views/admin/job_vacancy/job_category.vue"),
+        meta: {
+            pageTitle: "Job Category",
+            breadcrumb: [
+                {
+                    text: "Job Vacancy",
+                },
+                {
+                    text: "Job Category",
+                    active: true,
+                },
+            ],
+            resource: "job-vacancy",
+            action: "read",
+        },
+    },
 ];

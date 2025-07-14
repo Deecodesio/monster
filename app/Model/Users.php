@@ -32,4 +32,8 @@ class Users extends Model implements AuthenticatableContract, AuthorizableContra
     {
         // not supported
     }
+
+    public function deliveryAddresses() {
+    return $this->hasMany(DeliveryAddress::class, 'user_id');
+}
 }

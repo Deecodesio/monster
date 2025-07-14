@@ -1,7 +1,7 @@
 <template>
     <div class="pt-1" v-if="prop.length">
-        <b-row>
-            <b-col md="12">
+        <b-row  class="mx-0 px-0">
+            <b-col md="12" class="px-0">
                 <div v-if="title == 'Top Selling Products'">
                     <h2 class="text-center mt-5 mb-2">{{ title }}</h2>
                     <div class="hrLine" v-if="title != ''"></div>
@@ -12,13 +12,13 @@
                 </div>
 
                 <!-- Responsive gap row -->
-                 <b-container fluid>
-                <b-row class="mb-2">
+                 <b-container fluid class="tight-container">
+                <b-row class="g-3 gy-4 mb-2">
                     <b-col
-                        cols="6"
-                        md="4"
+                        cols="12"
+                        md="6"
                         lg="3"
-                        class="mb-3"
+                        class="mb-3 d-flex justify-content-center"
                         v-for="(data2, index2) in prop"
                         :key="index2"
                         id="products"
@@ -67,8 +67,8 @@
                                     {{ data2.label }}
                                 </b-card-text>
 
-                                <b-row class="pt-0 featured-row-sm d-flex align-items-center">
-                                    <b-col cols="6">
+                                <b-row class="pt-0 featured-row-sm d-flex ">
+                                    <b-col cols="6" style="justify-content: start;">
                                         <span
                                             class="media-heading text-primary strike"
                                             @click="open_image(data2, data2)"
@@ -92,7 +92,7 @@
                                         </span>
                                     </b-col>
 
-                                    <b-col cols="6" class="text-r pl-0">
+                                    <b-col cols="6" class="text-r pl-0" style="justify-content: end;">
                                         <b-button
                                             v-ripple.400="
                                                 'rgba(113, 102, 240, 0.15)'
@@ -177,6 +177,7 @@
                                         </div>
                                     </b-col>
                                 </b-row>
+
                             </div>
                         </div>
                     </b-col>
@@ -301,6 +302,10 @@ export default {
     padding-top: 10rem !important;
 }
 
+.tight-container {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
 .hrLine {
     max-width: 75px;
     margin-top: 5px;
@@ -327,11 +332,37 @@ export default {
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     width: 100%;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, #000000 100%);
+    background: linear-gradient(180deg, rgba(36, 18, 18, 0) 50%, #000000 100%);
     object-fit: cover;
 }
 
 @media (max-width: 470px) {
+
+.tight-container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .section-heading-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+
+  .hrLine, .hrLine1 {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #products {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+   .featured_card {
+    width: 100% !important;
+  }
+
   .featured-row-sm {
 
     display: flex !important;
@@ -346,8 +377,8 @@ export default {
     font-size: 0.99rem !important;
   }
   .featured-row-sm .b-col {
-    padding-left: 2px !important;
-    padding-right: 2px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
   }
   .sprice {
     text-align: left !important;
@@ -358,9 +389,9 @@ export default {
     background: #E01764;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    width: 100%;
+    width: 60%;
 
 }
-}
+ }
 
 </style>

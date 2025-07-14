@@ -16,12 +16,30 @@ export default [
         resource: "roles",
         action: "read",
     },
+    // {
+    //     title: "Job Vacancy",
+    //     icon: "ImageIcon",
+    //     route: "job_vacancy",
+    //     resource: "job-vacancy",
+    //     action: "read",
+    // },
     {
         title: "Job Vacancy",
         icon: "ImageIcon",
-        route: "job_vacancy",
-        resource: "job-vacancy",
-        action: "read",
+        children: [
+             {
+                title: "Job Vacancy",
+                route: "job_vacancy",
+                resource: "job-vacancy",
+                action: "read",
+            },
+            {
+                title: "Job Category",
+                route: "job_category",
+                resource: "job-category",
+                action: "read",
+            },           
+        ],
     },
     // {
     //     title: "Roles",

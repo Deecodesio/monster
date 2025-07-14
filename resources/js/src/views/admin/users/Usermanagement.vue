@@ -1,16 +1,15 @@
 <template>
-  <b-row>
-    <b-col cols="12">
-      <!-- <div v-if="loading" class="vgt-loading vgt-center-align">
+    <b-row>
+        <b-col cols="12">
+            <!-- <div v-if="loading" class="vgt-loading vgt-center-align">
       <div class="spinner-grow" role="status">
  <span class="sr-only">Loading...</span>
  </div>
      </div> -->
 
-        <b-card>
-
-          <!-- input search -->
-          <!-- <div class="custom-search d-flex justify-content-end">
+            <b-card>
+                <!-- input search -->
+                <!-- <div class="custom-search d-flex justify-content-end">
             <b-form-group>
               <div class="d-flex align-items-center">
                 <label class="mr-1">{{ $t('message.seachLabel') }}</label>
@@ -18,9 +17,9 @@
               </div>
             </b-form-group>
           </div> -->
-          <!-- Top bar with search on left and Add button on right -->
-             <b-row style="margin-bottom: 1rem;">
-             <b-col md="8" style="display: flex">
+                <!-- Top bar with search on left and Add button on right -->
+                <b-row style="margin-bottom: 1rem">
+                    <b-col md="8" style="display: flex">
                         <div class="custom-search justify-content-start">
                             <b-button
                                 variant="primary"
@@ -30,21 +29,27 @@
                                 {{ $t("consumer") }}
                             </b-button>
                         </div>
-          </b-col>
-            <b-col md="4">
+                    </b-col>
+                    <b-col md="4">
                         <!-- input search -->
                         <div class="custom-search d-flex justify-content-end">
-            <b-form-group class="mb-0">
-              <div class="d-flex align-items-center">
-                <label class="mr-1">{{ $t('message.seachLabel') }}</label>
-                <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text"
-                  class="d-inline-block" />
-              </div>
-            </b-form-group>
-            </div>
-            </b-col>  
-          </b-row>
-          <!-- <div class="d-flex justify-content-between align-items-center mb-1">
+                            <b-form-group class="mb-0">
+                                <div class="d-flex align-items-center">
+                                    <label class="mr-1">{{
+                                        $t("message.seachLabel")
+                                    }}</label>
+                                    <b-form-input
+                                        v-model="searchTerm"
+                                        :placeholder="$t('message.seachLabel')"
+                                        type="text"
+                                        class="d-inline-block"
+                                    />
+                                </div>
+                            </b-form-group>
+                        </div>
+                    </b-col>
+                </b-row>
+                <!-- <div class="d-flex justify-content-between align-items-center mb-1">
 
 
           <b-button variant="primary" @click="$router.push({ name: 'add-consumer' })">
@@ -56,149 +61,267 @@
 
           </div> -->
 
-          <!-- table -->
-          <vue-good-table :columns="columns" :line-numbers="true" :rows="rows" :rtl="direction" :search-options="{
-            enabled: true,
-            externalQuery: searchTerm
-          }" :pagination-options="{
-            enabled: true,
-            perPage: pageLength
-          }">
-            <template slot="table-row" slot-scope="props">
+                <!-- table -->
+                <vue-good-table
+                    :columns="columns"
+                    :line-numbers="true"
+                    :rows="rows"
+                    :rtl="direction"
+                    :search-options="{
+                        enabled: true,
+                        externalQuery: searchTerm,
+                    }"
+                    :pagination-options="{
+                        enabled: true,
+                        perPage: pageLength,
+                    }"
+                >
+                    <template slot="table-row" slot-scope="props">
+                        <!-- Column: Name -->
+                        <div
+                            v-if="props.column.field === 'amounts'"
+                            class="text-nowrap"
+                        >
+                            <!-- <span class="text-nowrap" v-if="(props.row.amount == null)">{{ setting.value }} 0</span> -->
+                            <span
+                                class="text-nowrap"
+                                v-if="props.row.wallet_amount == null"
+                                >{{ setting.value }} 0</span
+                            >
+                            <!-- <span class="text-nowrap" v-else>{{ setting.value }} {{ props.row.amount }}</span> -->
+                            <span class="text-nowrap" v-else
+                                >{{ setting.value }}
+                                {{ props.row.wallet_amount }}</span
+                            >
+                        </div>
 
-              <!-- Column: Name -->
-              <div v-if="props.column.field === 'amounts'" class="text-nowrap">
+                        <div
+                            v-if="props.column.field === 'order_id'"
+                            class="text-nowrap"
+                        >
+                            <span class="text-nowrap">{{
+                                props.row.order_id
+                            }}</span>
+                            <br />
+                            <span class="text-nowrap">
+                                <b-badge
+                                    :variant="statusVariant(props.row.status)"
+                                >
+                                    {{ props.row.status }}
+                                </b-badge></span
+                            >
+                        </div>
 
-                <!-- <span class="text-nowrap" v-if="(props.row.amount == null)">{{ setting.value }} 0</span> -->
-                <span class="text-nowrap" v-if="(props.row.wallet_amount == null)">{{ setting.value }} 0</span>
-                <!-- <span class="text-nowrap" v-else>{{ setting.value }} {{ props.row.amount }}</span> -->
-                <span class="text-nowrap" v-else>{{ setting.value }} {{ props.row.wallet_amount }}</span>
-              </div>
-
-              <div v-if="props.column.field === 'order_id'" class="text-nowrap">
-                <span class="text-nowrap">{{ props.row.order_id }}</span>
-                <br>
-                <span class="text-nowrap"> <b-badge :variant="statusVariant(props.row.status)">
-                    {{ props.row.status }}
-                  </b-badge></span>
-              </div>
-
-              <!-- Column: Status -->
-              <!-- <span v-else-if="props.column.field === 'status'">
+                        <!-- Column: Status -->
+                        <!-- <span v-else-if="props.column.field === 'status'">
           <b-badge :variant="statusVariant(props.row.status)">
             {{ props.row.status }}
           </b-badge>
         </span> -->
 
-              <span v-else-if="props.column.field === 'status'">
-                <span v-if="props.row.status === 1">
+                        <span v-else-if="props.column.field === 'status'">
+                            <span v-if="props.row.status === 1">
+                                <b-badge
+                                    :variant="statusVariant(props.row.status)"
+                                >
+                                    {{ $t("active") }}
+                                </b-badge>
+                            </span>
+                            <span v-else>
+                                <b-badge
+                                    :variant="statusVariant(props.row.status)"
+                                >
+                                    {{ $t("inactive") }}
+                                </b-badge>
+                            </span>
+                        </span>
 
-                  <b-badge :variant="statusVariant(props.row.status)">
-                    {{ $t('active') }}
-                  </b-badge>
+                        <span v-else-if="props.column.field === 'flat_no'">
+                            {{
+                                getPreferredFlatNo(props.row.delivery_addresses)
+                            }}
+                        </span>
+                        <span v-else-if="props.column.field === 'address'">
+                            {{
+                                getPreferredAddress(
+                                    props.row.delivery_addresses
+                                )
+                            }}
+                        </span>
+                        <!-- Column: Action -->
+                        <span v-else-if="props.column.field === 'action'">
+                            <b-button
+                                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                                variant="outline-warning"
+                                @click="verify(props.row.code_id)"
+                                v-if="
+                                    props.row.wall_status == 0 &&
+                                    props.row.topup_code !== ''
+                                "
+                            >
+                                {{ $t("verify") }} {{ $t("code") }}
+                            </b-button>
 
-                </span>
-                <span v-else>
+                            <b-button
+                                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                                variant="outline-success"
+                                @click="setpop(props.row.id)"
+                                v-else
+                            >
+                                {{ $t("add") }} {{ $t("wallet") }}
+                            </b-button>
+                            <b-button
+                                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                                variant="outline-success"
+                                @click="
+                                    $router.push({
+                                        name: 'user_detail',
+                                        params: { id: props.row.id },
+                                    })
+                                "
+                            >
+                                {{ $t("View") }} {{ $t("User") }}
+                            </b-button>
+                        </span>
 
-                  <b-badge :variant="statusVariant(props.row.status)">
-                    {{ $t('inactive') }}
-                  </b-badge>
-
-                </span>
-
-              </span>
-              <!-- Column: Action -->
-              <span v-else-if="props.column.field === 'action'">
-
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-warning"
-                  @click="verify(props.row.code_id)" v-if="props.row.wall_status == 0 && props.row.topup_code !== ''">
-                  {{ $t('verify') }} {{ $t('code') }}
-                </b-button>
-
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-success"
-                  @click="setpop(props.row.id)" v-else>
-                  {{ $t('add') }} {{ $t('wallet') }}
-                </b-button>
-                <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-success"
-                  @click="$router.push({ name: 'user_detail', params: { id: props.row.id } })">
-                  {{ $t('View') }} {{ $t('User') }}
-                </b-button>
-              </span>
-
-              <!-- Column: Common -->
-              <span v-else>
-                {{ props.formattedRow[props.column.field] }}
-              </span>
-            </template>
-
-            <!-- pagination -->
-            <template slot="pagination-bottom" slot-scope="props">
-              <div class="d-flex justify-content-between flex-wrap">
-                <div class="d-flex align-items-center mb-0 mt-1">
-                  <span class="text-nowrap">
-                    {{ $t('message.pagelength') }}
-                  </span>
-                  <b-form-select v-model="pageLength" :options="['10', '50', '100']" class="mx-1"
-                    @input="(value) => props.perPageChanged({ currentPerPage: value })" />
-                  <span class="text-nowrap "> {{ $t('message.of') }} {{ props.total }} {{ $t('message.pageText2') }}
-                  </span>
-                </div>
-                <div>
-                  <b-pagination :value="1" :total-rows="props.total" :per-page="pageLength" first-number last-number
-                    align="right" prev-class="prev-item" next-class="next-item" class="mt-1 mb-0"
-                    @input="(value) => props.pageChanged({ currentPage: value })">
-                    <template #prev-text>
-                      <feather-icon icon="ChevronLeftIcon" size="18" />
+                        <!-- Column: Common -->
+                        <span v-else>
+                            {{ props.formattedRow[props.column.field] }}
+                        </span>
                     </template>
-                    <template #next-text>
-                      <feather-icon icon="ChevronRightIcon" size="18" />
+
+                    <!-- pagination -->
+                    <template slot="pagination-bottom" slot-scope="props">
+                        <div class="d-flex justify-content-between flex-wrap">
+                            <div class="d-flex align-items-center mb-0 mt-1">
+                                <span class="text-nowrap">
+                                    {{ $t("message.pagelength") }}
+                                </span>
+                                <b-form-select
+                                    v-model="pageLength"
+                                    :options="['50', '100']"
+                                    class="mx-1"
+                                    @input="
+                                        (value) =>
+                                            props.perPageChanged({
+                                                currentPerPage: value,
+                                            })
+                                    "
+                                />
+                                <span class="text-nowrap">
+                                    {{ $t("message.of") }} {{ props.total }}
+                                    {{ $t("message.pageText2") }}
+                                </span>
+                            </div>
+                            <div>
+                                <b-pagination
+                                    :value="1"
+                                    :total-rows="props.total"
+                                    :per-page="pageLength"
+                                    first-number
+                                    last-number
+                                    align="right"
+                                    prev-class="prev-item"
+                                    next-class="next-item"
+                                    class="mt-1 mb-0"
+                                    @input="
+                                        (value) =>
+                                            props.pageChanged({
+                                                currentPage: value,
+                                            })
+                                    "
+                                >
+                                    <template #prev-text>
+                                        <feather-icon
+                                            icon="ChevronLeftIcon"
+                                            size="18"
+                                        />
+                                    </template>
+                                    <template #next-text>
+                                        <feather-icon
+                                            icon="ChevronRightIcon"
+                                            size="18"
+                                        />
+                                    </template>
+                                </b-pagination>
+                            </div>
+                        </div>
                     </template>
-                  </b-pagination>
-                </div>
-              </div>
-            </template>
-            <div slot="emptystate" style="text-align: center;" v-if="Loading">
-
-              <b-img src="/admin_loader.svg" fluid alt="Scan" />
-
-            </div>
-          </vue-good-table>
-
-
-        </b-card>
-    </b-col>
-
-
-    <b-modal ref="my-modal1" id="modal-wallet" ok-title="Submit" centered
-      :title="$t('enter') + ' ' + $t('the') + ' ' + $t('amount') + ' ' + $t('topup')" @show="resetModal"
-      @hidden="resetModal" @ok="add_wallet">
-
-      <form ref="form" @submit.prevent="add_wallet">
-        <b-form-group>
-          <b-form-input type="number" :placeholder="$t('amount')" v-model="Wallet.amount" />
-          <b-form-input id="modval1" type="number" v-model="Wallet.id" hidden="hidden" />
-        </b-form-group>
-
-        <b-col>
-
+                    <div
+                        slot="emptystate"
+                        style="text-align: center"
+                        v-if="Loading"
+                    >
+                        <b-img src="/admin_loader.svg" fluid alt="Scan" />
+                    </div>
+                </vue-good-table>
+            </b-card>
         </b-col>
 
-      </form>
-    </b-modal>
+        <b-modal
+            ref="my-modal1"
+            id="modal-wallet"
+            ok-title="Submit"
+            centered
+            :title="
+                $t('enter') +
+                ' ' +
+                $t('the') +
+                ' ' +
+                $t('amount') +
+                ' ' +
+                $t('topup')
+            "
+            @show="resetModal"
+            @hidden="resetModal"
+            @ok="add_wallet"
+        >
+            <form ref="form" @submit.prevent="add_wallet">
+                <b-form-group>
+                    <b-form-input
+                        type="number"
+                        :placeholder="$t('amount')"
+                        v-model="Wallet.amount"
+                    />
+                    <b-form-input
+                        id="modval1"
+                        type="number"
+                        v-model="Wallet.id"
+                        hidden="hidden"
+                    />
+                </b-form-group>
 
+                <b-col> </b-col>
+            </form>
+        </b-modal>
 
+        <b-modal
+            ref="my-modal"
+            id="modal-code"
+            ok-title="Submit"
+            centered
+            :title="$t('verify') + ' ' + $t('OTP')"
+            @show="resetModal1"
+            @hidden="resetModal1"
+            @ok="verify_otp"
+        >
+            <form ref="form" @submit.prevent="verify_otp">
+                <b-form-group>
+                    <b-form-input
+                        type="number"
+                        :placeholder="$t('OTP')"
+                        v-model="Wallet.otp"
+                    />
+                    <b-form-input
+                        id="code_id"
+                        type="number"
+                        v-model="Wallet.id"
+                        hidden="hidden"
+                    />
+                </b-form-group>
 
-    <b-modal ref="my-modal" id="modal-code" ok-title="Submit" centered :title="$t('verify') + ' ' + $t('OTP')"
-      @show="resetModal1" @hidden="resetModal1" @ok="verify_otp">
-
-      <form ref="form" @submit.prevent="verify_otp">
-        <b-form-group>
-          <b-form-input type="number" :placeholder="$t('OTP')" v-model="Wallet.otp" />
-          <b-form-input id="code_id" type="number" v-model="Wallet.id" hidden="hidden" />
-        </b-form-group>
-
-        <b-col>
-          <!-- <b-button
+                <b-col>
+                    <!-- <b-button
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             type="submit"
             variant="primary"
@@ -207,14 +330,10 @@
            Save
           </b-button>
           -->
-        </b-col>
-
-      </form>
-    </b-modal>
-
-
-
-  </b-row>
+                </b-col>
+            </form>
+        </b-modal>
+    </b-row>
 </template>
 
 <script>
@@ -256,7 +375,7 @@ export default {
   },
   data() {
     return {
-      pageLength: 10,
+      pageLength: 50,
       dir: false,
       setting: {},
       codeColumnSearch,
@@ -281,6 +400,16 @@ export default {
         {
           label: this.$t('login') + ' ' + this.$t('type'),
           field: 'device_type',
+
+        },
+         {
+          label: this.$t('Flat No'),
+          field: 'flat_no',
+
+        },
+         {
+          label: this.$t('address'),
+          field: 'address',
 
         },
         {
@@ -476,22 +605,47 @@ export default {
       this.$refs['my-modal'].show();
 
       this.Wallet.id = id;
+    },
+
+     getPreferredFlatNo(addresses) {
+    if (!Array.isArray(addresses) || addresses.length === 0) {
+      return '';
     }
 
+    // Try to find type 1 address first
+    const primary = addresses.find(addr => addr.type === 1);
+    if (primary) return primary.flat_no; // or primary.address, depending on your field
+
+    // Fallback: return first available address
+    return addresses[0].flat_no; // or whatever field you want
+  },
+
+     getPreferredAddress(addresses) {
+    if (!Array.isArray(addresses) || addresses.length === 0) {
+      return '';
+    }
+
+    // Try to find type 1 address first
+    const primary = addresses.find(addr => addr.type === 1);
+    if (primary) return primary.address;
+
+    // Fallback: return first available address
+    return addresses[0].address;
+  },
   }
 }
 </script>
 
 <style lang="scss">
 .b-button.btn-danger {
-  background-color: #E01764;
-  /* similar to your pinkish-red */
-  border-color:#E01764;
-  color: #fff;
-  font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+    background-color: #e01764;
+    /* similar to your pinkish-red */
+    border-color: #e01764;
+    color: #fff;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
 }
 
-@import '~@resources/scss/vue/libs/vue-good-table.scss';
+@import "~@resources/scss/vue/libs/vue-good-table.scss";
 </style>

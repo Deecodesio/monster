@@ -15,61 +15,28 @@
                     <p class="my-2">
                         Please confirm that you want to delete
                         <strong>{{
-                            selectedBrand ? selectedBrand.name : ""
+                            selectedCategory ? selectedCategory.name : ""
                         }}</strong>
-                        banner
+                        category
                     </p>
                 </b-modal>
 
-                <!-- <b-row>
-          <b-col md="6">
-            <div class="custom-search d-flex justify-content-start">
-              <b-button variant="primary" :to="{ name: 'add_bulk' }">
-                <i class="fa-solid fa-plus"></i> {{ $t('add bulk order') }}
-              </b-button>
-            </div> 
-          </b-col>
-          
-          <b-col md="6">
-        
-            <div class="custom-search d-flex justify-content-end">
-              <b-form-group>
-                <div class="d-flex align-items-center">
-                  <label class="mr-1">{{ $t('message.seachLabel') }}</label>
-                  <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text" class="d-inline-block" />
-                </div>
-              </b-form-group>
-            </div>
-           
-          </b-col>
-        </b-row> -->
                 <b-row style="margin-bottom: 10px !important">
-                    <!-- Left Section: Bulk Order + Export Buttons -->
                     <b-col md="6">
                         <div
                             class="d-flex justify-content-start align-items-center"
                         >
                             <b-button
                                 variant="primary"
-                                :to="{ name: 'add_blog' }"
+                                :to="{ name: 'add_job_category' }"
                                 class="mr-2"
                                 style="box-shadow: none !important"
                             >
                                 <i class="fa-solid fa-plus"></i>
-                                {{ $t("Add Blog") }}
+                                {{ $t("Add Job Category") }}
                             </b-button>
-
-                            <!-- <b-button variant="primary" class="mr-2" @click="exportPDF" style=" box-shadow: none !important;">
-                <i class="fa fa-download mr-1"></i> Export PDF
-              </b-button>
-
-              <b-button variant="primary" @click="exportExcel" style=" box-shadow: none !important;">
-                <i class="fa fa-download mr-1"></i> Export Excel
-              </b-button> -->
                         </div>
                     </b-col>
-
-                    <!-- Right Section: Search Input -->
                     <b-col md="6">
                         <div
                             class="d-flex justify-content-end align-items-center"
@@ -103,86 +70,30 @@
                     }"
                 >
                     <template slot="table-row" slot-scope="props">
-                        <!-- Column: Name -->
-                        <span v-if="props.column.field === 'blogName'">
-                            {{ props.row.title }}
+                        <span v-if="props.column.field === 'name'">
+                            {{ props.row.name }}
                         </span>
-
-                        <div
-                            v-if="props.column.field === 'blogImage'"
-                            class="text-nowrap"
-                        >
-                            <b-img
-                                :src= "'/blogs/' + props.row.featured_image"
-                                rounded
-                                fluid
-                                width="100%"
-                                height="50%"
-                                id="blog-img"
-                                alt="blog photo"
-                            />
-                        </div>
-
-                        <!-- Column: Date -->
-                        <span v-else-if="props.column.field === 'category'">
-                            {{
-                                props.row.category
-                                    ? props.row.category.name
-                                    : ""
-                            }}
+                        <span v-else-if="props.column.field === 'description'">
+                            {{ props.row.description }}
                         </span>
-
-                        <!-- Column: Product -->
-                        <span v-else-if="props.column.field === 'excerpt'">
-                            {{ props.row.excerpt }}
-                        </span>
-
-                        <span v-else-if="props.column.field === 'status'">
-                            <b-button
-                                v-if="props.row.status === 1"
-                                type="submit"
-                                variant="outline-success"
-                                class="mr-1"
-                                @click="changedefault(props.row.id)"
-                            >
-                                {{ $t("active") }}
-                            </b-button>
-                            <b-button
-                                v-if="props.row.status === 2"
-                                type="submit"
-                                variant="outline-warning"
-                                class="mr-1"
-                                @click="changedefault(props.row.id)"
-                            >
-                                {{ $t("inactive") }}
-                            </b-button>
-                        </span>
-
-                        <!-- Column: Action -->
-                        <!-- <span v-else-if="props.column.field === 'action'">
-              <feather-icon :id="`invoice-row-${props.row.id}-preview-icon`" icon="EditIcon" size="16" class="mx-1"
-                cursor="pointer" @click="$router.push({ name: 'edit_Brand', params: { id: props.row.id } })" />
-              <b-tooltip placement="left" :title="$t('edit_country')" :target="`invoice-row-${props.row.id}-preview-icon`" />
-            </span> -->
-
                         <span v-else-if="props.column.field === 'action'">
                             <!-- Edit Icon -->
                             <feather-icon
-                                :id="`invoice-row-${props.row.slug}-preview-icon`"
+                                :id="`invoice-row-${props.row.id}-preview-icon`"
                                 icon="EditIcon"
                                 size="16"
                                 class="mx-1"
                                 style="cursor: pointer"
                                 @click="
                                     $router.push({
-                                        name: 'edit_blog',
-                                        params: { id: props.row.slug },
+                                        name: 'edit_job_category',
+                                        params: { id: props.row.id },
                                     })
                                 "
                             />
                             <b-tooltip
                                 placement="left"
-                                :title="$t('Edit Blog')"
+                                :title="$t('Edit Category')"
                                 :target="`invoice-row-${props.row.id}-preview-icon`"
                             />
 
@@ -193,26 +104,20 @@
                                 size="16"
                                 class="mx-1 text-danger"
                                 style="cursor: pointer"
-                                @click="deleteBlog(props.row)"
+                                @click="deleteCategory(props.row)"
                             />
                             <b-tooltip
                                 placement="left"
                                 :target="`invoice-row-${props.row.id}-delete-icon`"
                             />
                         </span>
-
-                        <!-- Default case -->
-                        <span v-else>
-                            {{ props.formattedRow[props.column.field] }}
-                        </span>
                     </template>
 
-                    <!-- pagination -->
                     <template slot="pagination-bottom" slot-scope="props">
                         <div class="d-flex justify-content-between flex-wrap">
                             <div class="d-flex align-items-center mb-0 mt-1">
                                 <span class="text-nowrap">
-                                    {{ $t("message.pagelength") }}
+                                    {{ $t("message.description") }}
                                 </span>
                                 <b-form-select
                                     v-model="pageLength"
@@ -279,71 +184,46 @@
 </template>
 
 <script>
-import { BRow, BCol } from "bootstrap-vue";
-import BCardCode from "@core/components/b-card-code/BCardCode.vue";
 import {
-    BImg,
-    BMedia,
-    BAvatar,
-    BBadge,
-    BPagination,
-    BFormGroup,
-    BFormInput,
-    BFormSelect,
-    BDropdown,
-    BDropdownItem,
+    BRow,
+    BCol,
     BCard,
     BButton,
-    BTooltip,
+    BFormInput,
+    BFormSelect,
+    BPagination,
+    BImg,
 } from "bootstrap-vue";
 import { VueGoodTable } from "vue-good-table";
 import store from "@/store/index";
-import { codeColumnSearch } from "./code";
 import ToastificationContent from "@core/components/toastification/ToastificationContent.vue";
 
 export default {
     components: {
         BRow,
         BCol,
-        BCardCode,
+        BCard,
         VueGoodTable,
-        BAvatar,
-        BBadge,
-        BPagination,
-        BFormGroup,
+        BButton,
         BFormInput,
         BFormSelect,
-        BDropdown,
-        BDropdownItem,
-        BCard,
-        BButton,
-        BTooltip,
+        BPagination,
         BImg,
-        BMedia,
     },
     data() {
         return {
-            selectedBlog: null,
+            selectedCategory: null,
             pageLength: 50,
             dir: false,
             Loading: true,
-            codeColumnSearch,
             columns: [
                 {
-                    label: this.$t("Blog Name"),
-                    field: "blogName",
+                    label: this.$t("Job Category"),
+                    field: "name",
                 },
                 {
-                    label: this.$t("Blog Image"),
-                    field: "blogImage",
-                },
-                {
-                    label: this.$t("Category"),
-                    field: "category",
-                },
-                {
-                    label: this.$t("excerpt"),
-                    field: "excerpt",
+                    label: this.$t("Description"),
+                    field: "description",
                 },
                 {
                     label: this.$t("action"),
@@ -355,16 +235,6 @@ export default {
         };
     },
     computed: {
-        statusVariant() {
-            const statusColor = {
-                1: "light-success",
-                2: "light-warning",
-                3: "light-danger",
-                4: "light-warning",
-                5: "light-info",
-            };
-            return (status) => statusColor[status];
-        },
         direction() {
             if (store.state.appConfig.isRTL) {
                 this.dir = true;
@@ -375,66 +245,38 @@ export default {
         },
     },
     created() {
-        this.$http.get("/api/getBlogs").then((res) => {
-            this.rows = res.data.data;
-            this.Loading = false;
-        });
+        this.fetchCategories();
     },
     methods: {
-        deleteBlog(blog) {
-            this.selectedBlog = blog;
+        fetchCategories() {
+            this.$http.get("/api/career-job-categories").then((res) => {
+                this.rows = res.data.data;
+                this.Loading = false;
+            });
+        },
+        deleteCategory(category) {
+            this.selectedCategory = category;
             this.$refs.confirmDeleteModal.show();
         },
-
         confirmDelete() {
-            const id = this.selectedBlog.id;
+            const id = this.selectedCategory.id;
             this.$http
-                .delete(`/api/blogs/${id}`)
+                .delete(`/api/career-job-categories/${id}`)
                 .then(() => {
-                    this.$bvToast.toast("Blog deleted successfully", {
+                    this.$bvToast.toast("Category deleted successfully", {
                         title: "Success",
                         variant: "success",
                         solid: true,
                     });
-                    // Refresh blog list
-                    this.$http.get("/api/getBlogs").then((res) => {
-                        this.rows = res.data.data;
-                    });
+                    this.fetchCategories();
                 })
                 .catch(() => {
-                    this.$bvToast.toast("Failed to delete blog", {
+                    this.$bvToast.toast("Failed to delete category", {
                         title: "Error",
                         variant: "danger",
                         solid: true,
                     });
                 });
-        },
-
-        handleAction(row) {
-            console.log("Action clicked for row:", row);
-        },
-
-        changedefault(id) {
-            this.$http.get("/admin/brand_status/" + id).then((res) => {
-                this.$toast({
-                    component: ToastificationContent,
-                    position: "bottom-right",
-                    props: {
-                        title: this.$t(res.data.message),
-                        icon:
-                            res.data.message === "Status Active"
-                                ? "CheckIcon"
-                                : "HeartIcon",
-                        variant:
-                            res.data.message === "Status Active"
-                                ? "success"
-                                : "danger",
-                    },
-                });
-                this.$http.get("/admin/brands_list").then((res) => {
-                    this.rows = res.data;
-                });
-            });
         },
     },
 };

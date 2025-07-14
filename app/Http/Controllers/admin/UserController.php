@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use Validator;
 use Illuminate\Http\Request;
+use App\Model\Users;
 use App\Http\Controllers\api\BaseController;
 use DB;
 use Artisan;
@@ -23,7 +24,8 @@ class UserController extends BaseController
 		// ->Join('user_wallet_history','user_wallet_history.user_id','=','users.id')
 		// ->select('users.*','user_wallet_history.*')
 		// ->orderBy('users.id', 'desc')->get();
-		$data = DB::table('users')->leftjoin('user_wallet_history', 'user_wallet_history.user_id', '=', 'users.id')
+		$data =  Users::with(['deliveryAddresses']) //DB::table('users')
+		->leftjoin('user_wallet_history', 'user_wallet_history.user_id', '=', 'users.id')
 			->select('users.*', 'users.id as user_id', 'user_wallet_history.topup_code', 'user_wallet_history.status as wall_status', 'user_wallet_history.id as code_id', 'user_wallet_history.amount')
 			->orderBy('users.id', 'desc')->groupby('users.id')->get();
 		// dd($data);
