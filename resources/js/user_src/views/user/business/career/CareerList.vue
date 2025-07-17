@@ -22,14 +22,14 @@
                         <b-col cols="12" md="4" style="margin-top: 22px;">
                              <b-form-group>
                                 <b-form-select v-model="selectedCategory" :options="categoryOptions"
-                                    class="mb-3 custom-select-border">
+                                    class="mb-3 custom-select-border" style="margin-bottom: 0px !important;">
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
                           <b-col cols="12" md="4" style="margin-top: 22px;">
                             <b-form-group>
                                 <b-form-select v-model="selectedLocation" :options="locationOptions"
-                                    class="mb-3 custom-select-border">
+                                    class="mb-3 custom-select-border" style="margin-bottom: 0px !important;">
                                 </b-form-select>
                             </b-form-group>
                         </b-col>
@@ -293,7 +293,7 @@ export default {
 .custom-card {
     border: 1.5px solid #afafaf70 !important;
     border-radius: 24px;
-    height: 10rem;
+    height: max-content
 }
 
 .custom-select-border option[disabled] {

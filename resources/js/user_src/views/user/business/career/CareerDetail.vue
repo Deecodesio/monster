@@ -10,7 +10,8 @@
             {{ error }}
         </div>
 
-        <!-- Career content -->
+        <!-- Career content --> 
+         
         <div v-else>
             <!-- Top summary card (like list view) -->
             <div class="main_wrap">

@@ -12,7 +12,7 @@
             </div>
 
             <!-- Blog content -->
-            <div v-else style="max-width: 1050px;min-width: 400px;margin-left: auto;margin-right: auto;">
+            <div v-else style="max-width: 1050px;margin-left: auto;margin-right: auto;">
                 <b-card no-body>
                     <div class="featured-image-container mt-3">
                         <b-img :src="blog.featured_image" fluid class="featured-image" alt="Blog featured image" />

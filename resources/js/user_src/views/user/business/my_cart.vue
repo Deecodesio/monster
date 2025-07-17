@@ -722,10 +722,11 @@ export default {
                     .then((res) => {
                         this.send_address = res.data.data;
 
-                        store.commit(
+                        this.$store.commit(
                             "deliware_cart/setAddresses",
                             this.send_address
                         );
+                        // localStorage.setItem("address", this.rows);
                         this.goToAddressScreen();
 
                         // ✅ Log after data is received

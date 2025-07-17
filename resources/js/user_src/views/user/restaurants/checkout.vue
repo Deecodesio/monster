@@ -232,7 +232,7 @@
                             </b-row>
                         </b-card>
                     </b-card>
-                    <b-card class="" v-else>z
+                    <b-card class="" v-else>
                         <div class="checkout_map" id="checkout_map"></div>
                         <div class="checkout_slot_address_section mt-2">
                             <div class="checkout_slot_address_section_left">

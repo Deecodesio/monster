@@ -195,7 +195,7 @@
     font-family: Arial, sans-serif;
     color: #000;
     max-width: 500px;
-    margin: auto;
+    margin: auto 45px;
     font-size: 15px;
     line-height: 1.8;
     margin-bottom: 14rem;
