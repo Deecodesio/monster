@@ -1,3 +1,5 @@
+import { props } from "vue-prism-component";
+
 export default [
   {
     path: '/',
@@ -73,7 +75,7 @@ export default [
     path: "/checkout",
     name: "checkout",
     component: () => import("@@@/views/user/restaurants/checkout.vue"),
-
+    props:true
 
   },
 

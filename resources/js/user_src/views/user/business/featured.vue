@@ -1,6 +1,6 @@
 <template>
     <div class="pt-1" v-if="prop.length">
-        <b-row  class="mx-0 px-0">
+        <b-row class="mx-0 px-0">
             <b-col md="12" class="px-0">
                 <div v-if="title == 'Top Selling Products'">
                     <h2 class="text-center mt-5 mb-2">{{ title }}</h2>
@@ -12,177 +12,119 @@
                 </div>
 
                 <!-- Responsive gap row -->
-                 <b-container fluid class="tight-container">
-                <b-row class="g-3 gy-4 mb-2">
-                    <b-col
-                        cols="12"
-                        md="6"
-                        lg="3"
-                        class="mb-3 d-flex justify-content-center"
-                        v-for="(data2, index2) in prop"
-                        :key="index2"
-                        id="products"
-                    >
-                        <div
-                            class="featured_card"
-                            :class="{
+                <b-container fluid class="tight-container">
+                    <b-row class="g-3 gy-4 mb-2">
+                        <b-col cols="12" md="6" lg="3" class="mb-3 d-flex justify-content-center"
+                            v-for="(data2, index2) in prop" :key="index2" id="products">
+                            <div class="featured_card" :class="{
                                 'rounded3 pad0': data2.menu_available === 1,
                                 'rounded3 pad0 closed':
                                     data2.menu_available !== 1,
-                            }"
-                        >
-                            <b-img
-                                class="product_card_img"
-                                :src="data2.image[0]"
-                                blank-color="#ccc"
-                                style="height: 180px; width: 100%"
-                                @click="
-                                    goto_product(
-                                        data2.food_id,
-                                        data2.name,
-                                        data2.slug,
-                                        data2
-                                    )
-                                "
-                            />
+                            }">
+                                <b-img class="product_card_img" :src="data2.image[0]" blank-color="#ccc"
+                                    style="height: 180px; width: 100%" @click="
+                                        goto_product(
+                                            data2.food_id,
+                                            data2.name,
+                                            data2.slug,
+                                            data2
+                                        )
+                                        " />
 
-                            <div class="p10">
-                                <h4
-                                    class="media-heading pt-0"
-                                    @click="open_image(data2, data2)"
-                                    style="color: black; font-family: Poppins"
-                                >
-                                    {{ data2.name }}
-                                </h4>
+                                <div class="p10">
+                                    <h4 class="media-heading pt-0" @click="open_image(data2, data2)"
+                                        style="color: black; font-family: Poppins">
+                                        {{ data2.name }}
+                                    </h4>
 
-                                <b-card-text
-                                    class="mb-0 textp wrap"
-                                    @click="open_image(data2, data2)"
-                                    style="
-                                        color: black;
-                                        font-weight: 600;
-                                        font-family: Quicksand;
-                                    "
-                                >
-                                    {{ data2.label }}
-                                </b-card-text>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <b-card-text class="mb-0 textp wrap" @click="open_image(data2, data2)"
+                                            style="color: black; font-weight: 600; font-family: Quicksand; cursor: pointer;padding-top: 4px;">
+                                            {{ data2.label }}
+                                        </b-card-text>
 
-                                <b-row class="pt-0 featured-row-sm d-flex ">
-                                    <b-col cols="6" style="justify-content: start;">
-                                        <span
-                                            class="media-heading text-primary strike"
-                                            @click="open_image(data2, data2)"
-                                            v-if="data2.price < data2.bprice"
-                                        >
-                                            {{
-                                                $store.state["defaults"]
-                                                    .currency
-                                            }}
-                                            {{ data2.bprice | priceformat }}
-                                        </span>
-                                        <span
-                                            class="media-heading text-primary sprice"
-                                            @click="open_image(data2, data2)"
-                                        >
-                                            {{
-                                                $store.state["defaults"]
-                                                    .currency
-                                            }}
-                                            {{ data2.price | priceformat }}
-                                        </span>
-                                    </b-col>
+                                        <button
+                                            style="background-color:#FF006B; color: white; padding:auto; border: none; border-radius: 6px;height:22px; ">
+                                            Buy Now
+                                        </button>
+                                    </div>
 
-                                    <b-col cols="6" class="text-r pl-0" style="justify-content: end;">
-                                        <b-button
-                                            v-ripple.400="
-                                                'rgba(113, 102, 240, 0.15)'
-                                            "
-                                            variant="flat-primary"
-                                            class="btn-icon add_to_cart"
-                                            :id="
-                                                'food_add_' +
+
+                                    <b-row class="pt-0 featured-row-sm d-flex ">
+                                        <b-col cols="6" style="justify-content: start;">
+                                            <span class="media-heading text-primary strike"
+                                                @click="open_image(data2, data2)" v-if="data2.price < data2.bprice">
+                                                {{
+                                                    $store.state["defaults"]
+                                                        .currency
+                                                }}
+                                                {{ data2.bprice | priceformat }}
+                                            </span>
+                                            <span class="media-heading text-primary sprice"
+                                                @click="open_image(data2, data2)">
+                                                {{
+                                                    $store.state["defaults"]
+                                                        .currency
+                                                }}
+                                                {{ data2.price | priceformat }}
+                                            </span>
+                                        </b-col>
+
+                                        <b-col cols="6" class="text-r pl-0" style="justify-content: end;">
+                                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'
+                                                " variant="flat-primary" class="btn-icon add_to_cart" :id="'food_add_' +
+                                                    data2.food_id +
+                                                    'r'
+                                                    " :data-price="data2.price" @click="
+                                                        check_product(data2, isopen)
+                                                        " v-if="data2.menu_available === 1">
+                                                <div class="add_cart_btn">
+                                                    {{ $t("Add to Cart") }}
+                                                    <b-img src="/monster/plate.svg" class="add_cart_btn_img" />
+                                                </div>
+                                            </b-button>
+
+                                            <div class="num-block skin-2" :id="'food_control_' +
                                                 data2.food_id +
                                                 'r'
-                                            "
-                                            :data-price="data2.price"
-                                            @click="
-                                                check_product(data2, isopen)
-                                            "
-                                            v-if="data2.menu_available === 1"
-                                        >
-                                            <div class="add_cart_btn">
-                                                {{ $t("Add to Cart") }}
-                                                <b-img
-                                                    src="/monster/plate.svg"
-                                                    class="add_cart_btn_img"
-                                                />
-                                            </div>
-                                        </b-button>
-
-                                        <div
-                                            class="num-block skin-2"
-                                            :id="
-                                                'food_control_' +
-                                                data2.food_id +
-                                                'r'
-                                            "
-                                            style="display: none"
-                                            v-if="data2.menu_available === 1"
-                                        >
-                                            <div class="num-in">
-                                                <span
-                                                    class="minus dis"
-                                                    :id="
-                                                        'food_minus_' +
+                                                " style="display: none" v-if="data2.menu_available === 1">
+                                                <div class="num-in">
+                                                    <span class="minus dis" :id="'food_minus_' +
                                                         data2.food_id
-                                                    "
-                                                    @click="
-                                                        removefromcart(
-                                                            data2.price,
-                                                            data2.item_tax,
-                                                            data2.name,
-                                                            data2.food_id,
-                                                            data2.is_veg,
-                                                            data2.add_ons,
-                                                            data2.food_quantity,
-                                                            data2.image
-                                                        )
-                                                    "
-                                                ></span>
-                                                <input
-                                                    type="text"
-                                                    class="in-num"
-                                                    value="1"
-                                                    readonly
-                                                    :id="
-                                                        'food_qty_' +
+                                                        " @click="
+                                                            removefromcart(
+                                                                data2.price,
+                                                                data2.item_tax,
+                                                                data2.name,
+                                                                data2.food_id,
+                                                                data2.is_veg,
+                                                                data2.add_ons,
+                                                                data2.food_quantity,
+                                                                data2.image
+                                                            )
+                                                            "></span>
+                                                    <input type="text" class="in-num" value="1" readonly :id="'food_qty_' +
                                                         data2.food_id +
                                                         'r'
-                                                    "
-                                                />
-                                                <span
-                                                    class="plus"
-                                                    :id="
-                                                        'food_plus_' +
+                                                        " />
+                                                    <span class="plus" :id="'food_plus_' +
                                                         data2.food_id
-                                                    "
-                                                    @click="
-                                                        check_product(
-                                                            data2,
-                                                            isopen
-                                                        )
-                                                    "
-                                                ></span>
+                                                        " @click="
+                                                            check_product(
+                                                                data2,
+                                                                isopen
+                                                            )
+                                                            "></span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </b-col>
-                                </b-row>
+                                        </b-col>
+                                    </b-row>
 
+                                </div>
                             </div>
-                        </div>
-                    </b-col>
-                    <product_modal :value="modalOpen" :data="data" />
-                </b-row>
+                        </b-col>
+                        <product_modal :value="modalOpen" :data="data" />
+                    </b-row>
                 </b-container>
             </b-col>
         </b-row>
@@ -303,9 +245,10 @@ export default {
 }
 
 .tight-container {
-  padding-left: 6px !important;
-  padding-right: 6px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
 }
+
 .hrLine {
     max-width: 75px;
     margin-top: 5px;
@@ -338,60 +281,64 @@ export default {
 
 @media (max-width: 470px) {
 
-.tight-container {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
+    .tight-container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
 
-  .section-heading-mobile {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
+    .section-heading-mobile {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
 
 
-  .hrLine, .hrLine1 {
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
+    .hrLine,
+    .hrLine1 {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
 
-  #products {
-    padding-left: 14px !important;
-    padding-right: 14px !important;
-  }
+    #products {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
 
-   .featured_card {
-    width: 100% !important;
-  }
+    .featured_card {
+        width: 100% !important;
+    }
 
-  .featured-row-sm {
+    .featured-row-sm {
 
-    display: flex !important;
-    align-items: center;
-  }
+        display: flex !important;
+        align-items: center;
+    }
 
-  .featured-row-sm .add_cart_btn {
-    font-size: 0.99rem !important;
-    padding: 4px 8px !important;
-  }
-  .featured-row-sm .num-block {
-    font-size: 0.99rem !important;
-  }
-  .featured-row-sm .b-col {
-    padding-left: 5px !important;
-    padding-right: 5px !important;
-  }
-  .sprice {
-    text-align: left !important;
+    .featured-row-sm .add_cart_btn {
+        font-size: 0.99rem !important;
+        padding: 4px 8px !important;
+    }
+
+    .featured-row-sm .num-block {
+        font-size: 0.99rem !important;
+    }
+
+    .featured-row-sm .b-col {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    .sprice {
+        text-align: left !important;
         margin-left: 0px !important;
 
-}
- .skin-2 .num-in {
-    background: #E01764;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    width: 60%;
+    }
 
-}
- }
+    .skin-2 .num-in {
+        background: #E01764;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        width: 60%;
 
+    }
+}
 </style>

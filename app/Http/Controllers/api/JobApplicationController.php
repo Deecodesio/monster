@@ -90,7 +90,8 @@ class JobApplicationController extends BaseController
 
             // Check if the job is active
             $careerJob = CareerJob::findOrFail($request->career_job_id);
-            if ($careerJob->status !== 'active') {
+            // if ($careerJob->status !== 'active') {
+            if ($careerJob->status !== 1) {
                 return response()->json([
                     'success' => false,
                     'message' => 'This job is no longer accepting applications'

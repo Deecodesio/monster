@@ -1,16 +1,17 @@
 <template>
     <div>
         <b-row>
-            <b-col lg="2" md="2" cols="12">
+            <b-col lg="2" md="2" cols="12" style="background-color: white;box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);">
                 <div class="text-r side sticky-top3 dsp text-black" style="color: black;">
-                    <div @click="scrollMeTo(0, 0)" id="0" >All</div>
-                    <div
+                    <div @click="scrollMeTo(0, 0)" id="0" style="color: black !important;">All</div>
+                    <div 
                         v-for="(data2, index) in rows_detail2"
                         :key="index"
                         @click="scrollMeTo(data2.menu_id, rows[0].id)"
                         :id="data2.menu_name"
-                    >
+                    style="color: black !important;">
                         {{ data2.menu_name }}
+                        
                     </div>
                 </div>
             </b-col>

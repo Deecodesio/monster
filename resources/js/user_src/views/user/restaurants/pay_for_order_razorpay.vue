@@ -245,6 +245,7 @@ export default {
         },
         clear_cart() {
             let cart = [];
+            localStorage.setItem('delivery_type', null);
             localStorage.setItem("cart", JSON.stringify(cart));
             this.$store.commit("deliware_cart/UPDATE_CART_ITEMS", cart);
             this.$store.commit(

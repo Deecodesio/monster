@@ -14,9 +14,9 @@
             <!-- Blog content -->
             <div v-else style="max-width: 1050px;margin-left: auto;margin-right: auto;">
                 <b-card no-body>
-                    <div class="featured-image-container mt-3">
+                    <!-- <div class="featured-image-container mt-3">
                         <b-img :src="blog.featured_image" fluid class="featured-image" alt="Blog featured image" />
-                    </div>
+                    </div> -->
                     <b-card-body>
                         <h1 class="blog-title mb-1">{{ blog.title }}</h1>
                         <div class="blog-meta mb-4">

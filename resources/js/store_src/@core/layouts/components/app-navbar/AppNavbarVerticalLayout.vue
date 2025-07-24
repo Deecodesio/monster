@@ -21,7 +21,7 @@
 
             <!-- Center: Username -->
             <div class="d-flex justify-content-center flex-grow-1">
-                <p class="user-name font-weight-bolder mb-0" style="color: #ff006b; font-weight: 600; font-size: 25px;">
+                <p class="user-name font-weight-bolder mb-0" style="color: #ff006b; font-weight: 600; font-size: 30px;">
                     {{ store_userData.fullName || store_userData.username }}
                 </p>
             </div>

@@ -55,8 +55,9 @@
             <h6>Log in below or create a new {{ app_name }} account.</h6>
 
             <b-form-group>
-              <label for="email" class="mt-2">{{ $t("Email Id") }}</label>
-              <b-form-input id="email" type="email" placeholder="Email Address" class="form-control-lg"
+              <!-- <label for="email" class="mt-2">{{ $t("Email Id") }}</label> -->
+              <label for="email" class="mt-5">{{ $t("Email Id") }}/{{ $t("Phone Number") }}</label>
+              <b-form-input id="email" type="text" placeholder="Email Address / Phone Number" class="form-control-lg"
                 v-model="userEmail" />
             </b-form-group>
             <b-form-group>
@@ -267,10 +268,12 @@
                 <label for="phone1">{{ $t("Phone Number") }} </label>
 
                 <validation-provider #default="{ errors }" rules="required" name="Number">
-                  <label for="email">{{ $t("Phone Number") }} </label>
-                  <VuePhoneNumberInput id="phone1" no-example @update="updatePhoneNumber" v-model="signup_phone"
+                  <!-- <label for="email">{{ $t("Phone Number") }} </label> -->
+                  <!-- <VuePhoneNumberInput id="phone1" no-example @update="updatePhoneNumber" v-model="signup_phone"
                     :state="errors[0] ? false : (valid ? true : null)" :fetch-country=true>
-                  </VuePhoneNumberInput>
+                  </VuePhoneNumberInput> -->
+                  <b-form-input id="phone1" v-model="signup_phone" type="number" placeholder="Phone Number"
+                    class="form-control-lg" :state="errors.length > 0 ? false : null" required />
                   <!-- <b-form-input
             id="email"
             type="number"
@@ -715,7 +718,8 @@ export default {
           let city = new FormData();
           city.append('name', this.signup_name);
           city.append('email', this.signup_email);
-          city.append('phone', this.formattedNumber);
+          // city.append('phone', this.formattedNumber);
+          city.append('phone', this.signup_phone);
           city.append('password', this.signup_password);
 
           this.$http
@@ -725,6 +729,11 @@ export default {
 
 
                 if (response.data.status == true) {
+                  this.signup_name = '';
+                  this.signup_email = '';
+                  this.signup_phone = '';
+                  this.signup_password = '';
+                  this.passValue = '';
 
                   this.$toast({
                     component: ToastificationContent,

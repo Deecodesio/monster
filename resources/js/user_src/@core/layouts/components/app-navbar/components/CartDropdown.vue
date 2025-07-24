@@ -1,8 +1,11 @@
 <template>
-    <div class="card">
+    <div class="card"  :style="{
+    visibility: ['checkout', 'my_cart', 'delivery_address'].includes($route.name) ? 'hidden' : 'visible'
+  }">
         <!-- <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.sidebar-right @click="goToCart" -->
         <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" v-b-toggle.sidebar-right @click="goToCart"
-            variant="btn btn-gradient-primary btnpad" v-if="!['checkout', 'my_cart', 'delivery_address'].includes($route.name)">
+            variant="btn btn-gradient-primary btnpad">
+            <!-- variant="btn btn-gradient-primary btnpad" v-if="!['checkout', 'my_cart', 'delivery_address'].includes($route.name)"> -->
             <feather-icon icon="ShoppingCartIcon" class="mr-50 ico-color3" />
             <span class="align-middle" v-if="$store.state['deliware_cart'].cartItemsCount">{{
                 $store.state['deliware_cart'].cartItemsCount }}

@@ -186,7 +186,7 @@
             </span>
             <b-form-select
               v-model="pageLength"
-              :options="['10','50','100']"
+              :options="['50','100']"
               class="mx-1"
               @input="(value)=>props.perPageChanged({currentPerPage:value})"
             />
@@ -268,7 +268,7 @@ export default {
   data() {
     return {
       user_info:{},
-     pageLength: 10,
+     pageLength: 50,
      setting:{},
       dir: false,
       Loading:true,

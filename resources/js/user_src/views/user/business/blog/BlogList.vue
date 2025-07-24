@@ -1,75 +1,85 @@
 <template>
 
   <div style="margin-top: 150px">
-  <div  class="container">
-    <h6 class="mb-3 mt-2 mx-3" >
-  <span class=" text-primary" style="font-size: 16px; font-weight: 600;">Home &gt;</span>
-  <span class=" text-muted" style="font-size: 16px; font-weight: 600;"> Blog</span>
-</h6>
+    <div class="container">
+      <h6 class="mb-3 mt-2 mx-3">
+        <span class=" text-primary" style="font-size: 16px; font-weight: 600;">Home &gt;</span>
+        <span class=" text-muted" style="font-size: 16px; font-weight: 600;"> Blog</span>
+      </h6>
 
 
-    <!-- <div class="blog-list-root"> -->
+      <!-- <div class="blog-list-root"> -->
 
-    <!-- Main Heading -->
-    <!-- <h1 class="main-heading" style="font-weight: bolder;margin-left: 36px !important;">Blog</h1> -->
+      <!-- Main Heading -->
+      <!-- <h1 class="main-heading" style="font-weight: bolder;margin-left: 36px !important;">Blog</h1> -->
 
-    <!-- Loading -->
-    <div v-if="loading" class="text-center py-5">
-      <b-spinner label="Loading..."></b-spinner>
-    </div>
+      <!-- Loading -->
+      <div v-if="loading" class="text-center py-5">
+        <b-spinner label="Loading..."></b-spinner>
+      </div>
 
-    <!-- Error -->
-    <div v-else-if="error" class="alert alert-danger">
-      {{ error }}
-    </div>
+      <!-- Error -->
+      <div v-else-if="error" class="alert alert-danger">
+        {{ error }}
+      </div>
 
-    <!-- Blog Content -->
-    <div v-else>
-      <!-- Featured Blog -->
-      <div v-if="featuredBlog" class="featured-blog-card">
-        <div class="featured-blog-row">
-          <div class="featured-blog-content">
+      <!-- Blog Content -->
+      <div v-else>
+        <!-- Featured Blog -->
+        <div v-if="featuredBlog" class="featured-blog-card">
+          <div class="featured-blog-row">
+            <div class="featured-blog-content">
 
-            <h3 class="featured-title">{{ featuredBlog.title }}</h3>
-               <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{ formatDate(featuredBlog.published_at) }}</small>
-            <p class="featured-excerpt" style="color: black !important; font-weight:bolder;">{{ featuredBlog.excerpt }}</p>
-            <b-button variant="danger" class="read-more-btn"
-              :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
-              Read more →
-            </b-button>
-          </div>
-          <div class="featured-blog-image">
-            <b-img :src="'/blogs/' + featuredBlog.featured_image" fluid alt="Featured blog image" class="featured-img" />
+              <h3 class="featured-title">{{ featuredBlog.title }}</h3>
+              <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{
+                formatDate(featuredBlog.published_at) }}</small>
+              <p class="featured-excerpt" style="color: black !important; font-weight:bolder;">{{ featuredBlog.excerpt
+                }}</p>
+              <b-button variant="danger" class="read-more-btn"
+                :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
+                Read more →
+              </b-button>
+            </div>
+            <div class="featured-blog-image">
+              <b-img :src="'/blogs/' + featuredBlog.featured_image" fluid alt="Featured blog image"
+                class="featured-img" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Blog Grid -->
-    <div class="row blog-grid">
-      <div v-for="blog in regularBlogs" :key="blog.id" class="col-md-6 mb-4">
-        <router-link :to="{ name: 'blog-detail', params: { slug: blog.slug } }" class="card h-100 blog-card-link">
-          <div class="card-body d-flex flex-column">
-            <b-img :src="blog.featured_image" fluid alt="Blog image" class="blog-img mb-3" />
-            <small class="text-muted">{{ formatDate(blog.published_at) }}</small>
-            <h4 class="blog-title mt-2 mb-2">{{ blog.title }}</h4>
-            <p class="blog-excerpt">{{ blog.excerpt }}</p>
-          </div>
-        </router-link>
+      <!-- Blog Grid -->
+      <div class="row blog-grid">
+        <div v-for="blog in regularBlogs" :key="blog.id" class="col-md-6 mb-4">
+          <!-- <router-link :to="{ name: 'blog-detail', params: { slug: blog.slug } }" class="card h-100 blog-card-link"> -->
+            <div class="card h-100 blog-card-link">
+            <div class="card-body flex-column">
+              <b-img :src="'/blogs/' + blog.featured_image" fluid alt="Blog image" class="blog-img mb-3" />
+              <h4 class="blog-title mt-2 mb-2">{{ blog.title }}</h4>
+              <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{
+                formatDate(blog.published_at) }}</small>
+              <p class="blog-excerpt" style="color: black !important; font-weight:bolder;">{{ blog.excerpt }}</p>
+            </div>
+              <b-button variant="danger" class="read-more-btn"
+                :to="{ name: 'blog-detail', params: { slug:blog.slug } }" style="margin-left: 20px !important;">
+                Read more →
+              </b-button>
+            </div>
+          <!-- </router-link> -->
+        </div>
       </div>
-    </div>
 
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-      <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
-        class="custom-pagination" />
-    </div>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-center mt-4">
+        <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" @change="handlePageChange"
+          class="custom-pagination" />
+      </div>
 
-    <!-- </div> -->
-  </div>
-   <div class="container-fluid" style="margin-top: 50px; padding-right: 0; padding-left: 0">
+      <!-- </div> -->
+    </div>
+    <div class="container-fluid" style="margin-top: 50px; padding-right: 0; padding-left: 0">
       <Ourshops />
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -182,8 +192,8 @@ export default {
 }
 
 .featured-blog-content {
-  flex: 1 1 0;
-  max-width: 50%;
+  /* flex: 1 1 0; */
+  max-width: 65%;
   padding: 38px 34px 38px 34px;
   display: flex;
   flex-direction: column;
@@ -201,8 +211,8 @@ export default {
 }
 
 .featured-img {
-  width: 100%;
-  height:  250px;
+  width: 400px;
+  height: 250px;
   object-fit: cover;
   border-radius: 12px;
   background: #f0f0f0;
@@ -266,7 +276,7 @@ export default {
 
 .blog-img {
   width: 100%;
-  height: 37rem;
+  height: 300px !important;
   object-fit: cover;
   border-radius: 8px;
   aspect-ratio: 4/3;

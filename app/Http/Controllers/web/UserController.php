@@ -3185,7 +3185,8 @@ class UserController extends BaseController
     public function doLogin(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|min:3|max:100',
+            // 'email' => 'required|email|min:3|max:100',
+            'email' => 'required|min:3|max:100',
             'password' => 'required|min:6|max:100'
         ]);
         if ($validator->fails()) {
@@ -3195,7 +3196,28 @@ class UserController extends BaseController
             $response_Array = json_encode(['message' => $message, 'status' => $status, 'data' => $error_messages]);
             return $response_Array;
         }
-        $user = Users::where('email', $request->email)->first();
+
+        $username = $request->email;
+        $isEmail = filter_var($username, FILTER_VALIDATE_EMAIL);
+        $isMobile = preg_match('/^[0-9]{10}$/', $username);
+
+        if (!$isEmail && !$isMobile) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Please enter a valid email or mobile number.',
+                'data' => []
+            ]);
+        }
+
+        // $user = Users::where('email', $request->email)->first();
+        $user = Users::where(function ($query) use ($username, $isEmail) {
+            if ($isEmail) {
+                $query->where('email', $username);
+            } else {
+                // $query->where('phone', $username);
+                $query->whereRaw('RIGHT(REGEXP_REPLACE(phone, "[^0-9]", ""), 10) = ?', [$username]);
+            }
+        })->first();
         if (!$user) {
             $message = "Incorrect Email Address";
             $status = false;

@@ -20,13 +20,18 @@
                                     {{ $t("Takeaway") }}
                                 </div>
                             </div> -->
+                            <!-- <pre>{{ $store.state.deliware_cart.cart_total }}</pre> -->
                             <div class="toggle-container">
-                                <div :class="['toggle-option', { 'toggle-active': $store.state.deliware_cart.cart_total.dc === 1 }]"
-                                    @click="select_delivery_type(1)">
+                                <!-- <div :class="['toggle-option', { 'toggle-active': $store.state.deliware_cart.cart_total.dc === 1 }]"
+                                  @click="select_delivery_type(1)"> -->
+                                <div :class="['toggle-option', { 'toggle-active': delivery_type === 1 }]">
+                                   
                                     Delivery
                                 </div>
-                                <div :class="['toggle-option', { 'toggle-active': $store.state.deliware_cart.cart_total.dc === 2 }]"
-                                    @click="select_delivery_type(2)">
+                                <!-- <div :class="['toggle-option', { 'toggle-active': $store.state.deliware_cart.cart_total.dc === 2 }]"
+                                @click="select_delivery_type(2)"> -->
+                                <div :class="['toggle-option', { 'toggle-active': delivery_type === 2  }]">
+                                    
                                     Takeaway
                                 </div>
                             </div>
@@ -94,7 +99,8 @@
                             <div class="checkout_bill_section mt-2">
                                 <table width="100%" cellspacing="5" cellpadding="5">
                                     <tr>
-                                        <td style="font-weight: 700; font-size: 16px;color: black;">{{ $t("Item Total") }}</td>
+                                        <td style="font-weight: 700; font-size: 16px;color: black;">{{ $t("Item Total")
+                                            }}</td>
                                         <td style="float: right; font-weight: 700; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
                                             {{ $store.state["deliware_cart"].cart_total.item_total | priceformat }}
@@ -129,24 +135,24 @@
                                             {{ $store.state["deliware_cart"].cart_total.tips | priceformat }}
                                         </td>
                                     </tr>
-                                     <tr id="cgst_bill">
+                                    <tr id="cgst_bill">
                                         <td style="font-size: 16px; ">
                                             CGST
                                             <span>{{ tax($store.state["defaults"].tax) }}</span>
                                         </td>
                                         <td style="float: right ; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
-                                            {{ ($store.state["deliware_cart"].cart_total.tax/2) | priceformat }}
+                                            {{ ($store.state["deliware_cart"].cart_total.tax / 2) | priceformat }}
                                         </td>
                                     </tr>
-                                     <tr id="sgst_bill">
+                                    <tr id="sgst_bill">
                                         <td style="font-size: 16px; ">
                                             SGST
                                             <span>{{ tax($store.state["defaults"].tax) }}</span>
                                         </td>
                                         <td style="float: right ; font-size: 16px;color: black;">
                                             {{ $store.state["defaults"].currency }}
-                                            {{ ($store.state["deliware_cart"].cart_total.tax/2) | priceformat }}
+                                            {{ ($store.state["deliware_cart"].cart_total.tax / 2) | priceformat }}
                                         </td>
                                     </tr>
                                     <!-- <tr id="tips_bill">
@@ -172,7 +178,7 @@
                                 </table>
                             </div>
 
-                            <b-button  v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary" block
+                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="primary" block
                                 style="width: 100%; height: 44px; font-size: 20px; font-weight: 700;margin-top: 16px;"
                                 @click="proceed_to_payment()">
                                 {{ $t("Proceed to Payment") }}
@@ -309,18 +315,20 @@ export default {
             selected_day: null,
             selected_time: null,
             show_payment_success: false,
-
+            delivery_type: 1,
 
         }
     },
     directives: {
 
         Ripple,
-    }, methods: {
-        select_delivery_type(type) {
-            this.delivery_type = type;
-        },
     },
+    //  methods: {
+    //     select_delivery_type(type) {
+    //         this.delivery_type = type;
+    //     },
+
+    // },
     Select_delivery_type(type) {
         this.delivery_type = type
 
@@ -364,7 +372,18 @@ export default {
             return (tax) => taxtext[tax];
         },
     },
+    mounted() {
+         const saved = localStorage.getItem('delivery_type');
+  this.delivery_type = saved ? parseInt(saved) : 1;
+  console.log('Delivery type:', this.delivery_type);
+  },
     created() {
+        if (
+            localStorage.getItem("cart") &&
+            JSON.parse(localStorage.getItem("cart")).length > 0
+        ) {
+            this.loadcart();
+        }
         this.$http.post('/getpaymentmethods')
             .then(res => {
                 if (res.data.cod == 1) {
@@ -400,8 +419,25 @@ export default {
     },
 
     methods: {
+           select_delivery_type(type) {
+            this.delivery_type = type;
+             this.loadcart();
+        },
         proceed_to_payment() {
-            this.is_proceed_payment = true
+            if (this.selected_day != null && this.selected_time != null) {
+                this.is_proceed_payment = true
+            } else {
+                this.$toast({
+                    component: ToastificationContent,
+                    position: "bottom-right",
+                    props: {
+                        title: "Please select your preferred delivery time frame before placing the order.",
+                        icon: "AlertTriangleIcon",
+                        variant: "warning",
+                    },
+                });
+            }
+
         },
         select_slot(date, time) {
             this.selected_day = date
@@ -477,6 +513,256 @@ export default {
                 draggable: false
             });
         },
+        
+        async loadcart() {
+            let user = JSON.parse(localStorage.getItem("webuserData"));
+            localStorage.setItem("cart", localStorage.getItem("cart") || "[]");
+            let cart = JSON.parse(localStorage.getItem("cart"));
+            let p_id = JSON.parse(localStorage.getItem("pharmacy_id"));
+            if (p_id == 1) {
+                for (let i = 0; i < cart.length; i++) {
+                    let cart = JSON.parse(localStorage.getItem("cart"));
+                    if (cart[i].isveg == 1) {
+                        this.pharmacy_file = 1;
+                        break;
+                    } else {
+                        this.pharmacy_file = 0;
+                    }
+                }
+                localStorage.setItem("pharmacy_file", this.pharmacy_file);
+                store.commit(
+                    "deliware_cart/UPDATE_PHARMACY_FILE",
+                    this.pharmacy_file
+                );
+            }
+            var DELIVERY_CHARGE = localStorage.getItem("DC");
+            localStorage.getItem("DC", JSON.stringify(DELIVERY_CHARGE));
+            var DELIVERY_CHARGE_TYPE = localStorage.getItem(
+                "DELIVERY_CHARGE_TYPE"
+            );
+            var packaging_charge = 0; // localStorage.getItem('RES_PACK_CHARGE');
+            var DELIVERY_CHARGE_BASEDON = localStorage.getItem("DC_BON");
+            // let cart = JSON.parse(localStorage.getItem("cart"));
+            var lat = localStorage.getItem("latitude");
+            var lng = localStorage.getItem("longitude");
+            if (localStorage.getItem("webuserData")) {
+                this.$http
+                    .get(
+                        "/get_checkout_details/" +
+                        cart[0].restaurant +
+                        "/" +
+                        lat +
+                        "/" +
+                        lng +
+                        "/" +
+                        user.id
+                    )
+                    .then((res) => {
+                        localStorage.setItem("DISTANCE", res.data.distance);
+                    });
+            }
+            this.$http
+                .get(
+                    "/validate_pincode/" +
+                    lat +
+                    "/" +
+                    lng +
+                    "/" +
+                    cart[0].restaurant
+                )
+                .then((res) => {
+                    this.is_deliverable = res.data.is_deliverable;
+                });
+            // this.$http.get('/checkradius/'+cart[0].restaurant+'/'+lat+'/'+lng)
+            //     .then(res => {
+            //       if(res.data.status == true){
+            //       }else{
+            //         this.$toast({
+            //                     component: ToastificationContent,
+            //                     position: 'bottom-right',
+            //                     props: {
+            //                       title: "Restaurant Does not Come Under your Location",
+            //                       icon: 'UserIcon',
+            //                       variant: 'danger',
+            //                     },
+            //                   })
+            //       }
+            //     })
+            // var offer_discount =localStorage.getItem('discount_value') || 0;
+            if (document.getElementById("applied_coupon_Amount")) {
+                var offer_discount =
+                    document.getElementById("applied_coupon_Amount").value || 0;
+            } else {
+                var offer_discount = 0;
+            }
+            let wallet = localStorage.getItem("WALLET");
+            let total_price = 0;
+            let total_item = 0;
+            let tot_tax = 0;
+            let is_tax = localStorage.getItem("IS_TAX_INCLUSIVE");
+            let tot_amt = 0;
+            let item_amount_total = 0;
+            let restaurant_packaging_charge = 0;
+
+            if (packaging_charge == 0) {
+                packaging_charge =
+                    cart.length !== 0
+                        ? cart[0].restaurant_packaging_charge || 0
+                        : 0;
+                //  JSON.parse(localStorage.getItem('RES_PACK_CHARGE'));
+            }
+            if (cart.length === 0) {
+            } else {
+                cart.forEach(function (item, i) {
+                    console.log("taxperc", item.taxperc);
+                    if (
+                        document.querySelectorAll(
+                            '[id="food_control_' + item.id + 'r"]'
+                        )
+                    ) {
+                        var elms = document.querySelectorAll(
+                            '[id="food_control_' + item.id + 'r"]'
+                        );
+                        for (var i = 0; i < elms.length; i++) {
+                            elms[i].style.display = "block";
+                        }
+                        var elms2 = document.querySelectorAll(
+                            '[id="food_add_' + item.id + 'r"]'
+                        );
+                        for (var i = 0; i < elms2.length; i++) {
+                            elms2[i].style.display = "none";
+                        }
+                        var elms3 = document.querySelectorAll(
+                            '[id="food_qty_' + item.id + 'r"]'
+                        );
+                        for (var i = 0; i < elms3.length; i++) {
+                            elms3[i].value = item.quantity;
+                        }
+                        // document.getElementById('food_control_' + item.id + 'r').style.display = 'block';
+                        // document.getElementById('food_add_' + item.id+'r').style.display = 'none';
+                        // document.getElementById('food_qty_' + item.id+'r').value = item.quantity;
+                    }
+                    if (
+                        document.querySelectorAll(
+                            '[id="food_qty_' + item.id + 'c"]'
+                        )
+                    ) {
+                        var elms4 = document.querySelectorAll(
+                            '[id="food_qty_' + item.id + 'c"]'
+                        );
+                        for (var i = 0; i < elms4.length; i++) {
+                            elms4[i].value = item.quantity;
+                        }
+                        // document.getElementById('food_qty_' + item.id+'c').value = item.quantity;
+                    }
+                    total_price += parseFloat(
+                        (
+                            item.quantity *
+                            (item.price + item.addonsPrice)
+                        ).toFixed(2)
+                    );
+                    total_item++;
+                    let thisAmount = parseFloat(
+                        (
+                            (item.price + item.addonsPrice) *
+                            item.quantity
+                        ).toFixed(2)
+                    );
+                    tot_tax += parseFloat(
+                        (thisAmount / 100) * (item.taxperc || 0)
+                    );
+                    localStorage.setItem("tot_tax", tot_tax);
+                    // if (is_tax == 0) {
+                    //     tot_amt = total_price + tot_tax;
+
+                    // } else {
+                    tot_amt = total_price;
+
+                    // }
+                    item_amount_total += thisAmount;
+                });
+                console.log("tot_amt175*********", tot_amt);
+                restaurant_packaging_charge = parseFloat(
+                    (item_amount_total / 100) * packaging_charge
+                ); // Refer above - Commanded for temporary
+
+                var dc = this.delivery_type;
+                if (dc == 1) {
+                    var delivery_charge_calc = await this.calc_delivery_charge(
+                        tot_amt,
+                        cart[0].restaurant
+                    );
+                    if (document.getElementById("selected_tips")) {
+                        var tips =
+                            document.getElementById("selected_tips").value || 0;
+                    } else {
+                        var tips = 0;
+                    }
+                } else {
+                    var delivery_charge_calc = 0;
+                    var tips = 0;
+                }
+                total_price =
+                    tot_amt === 0
+                        ? tot_amt
+                        : (
+                            tot_amt -
+                            parseFloat(offer_discount) +
+                            tot_tax +
+                            restaurant_packaging_charge +
+                            delivery_charge_calc +
+                            parseFloat(tips)
+                        ).toFixed(2);
+                localStorage.setItem("tot_amt", total_price);
+                if (total_price < parseFloat(wallet)) {
+                    wallet = total_price;
+                    total_price = 0;
+                } else {
+                    total_price = total_price - wallet;
+                }
+                var bill = {
+                    item_total: tot_amt,
+                    packaging_charge: restaurant_packaging_charge,
+                    delivery_charge: delivery_charge_calc,
+                    discount: offer_discount,
+                    bill: total_price,
+                    tips: tips,
+                    dc: dc,
+                    tax: tot_tax,
+                    wallet: wallet,
+                };
+                localStorage.setItem("bill", bill);
+                store.commit("deliware_cart/UPDATE_CART_TOTAL", bill);
+            }
+        },
+        
+        calc_delivery_charge(total_price, rest_id) {
+            return new Promise(function (resolve, reject) {
+                var lat = localStorage.getItem("latitude");
+                var lng = localStorage.getItem("longitude");
+                axios
+                    .get(
+                        "/calc_delivery_charge/" +
+                        rest_id +
+                        "/" +
+                        lat +
+                        "/" +
+                        lng +
+                        "/" +
+                        total_price
+                    )
+                    .then(
+                        (response) => {
+                            var result = response.data.delivery_charge;
+                            console.log("Processing Request");
+                            resolve(result);
+                        },
+                        (error) => {
+                            reject(error);
+                        }
+                    );
+            });
+        },
         async placeOrder(pay_type) {
             try {
                 this.isloading = true;
@@ -497,7 +783,8 @@ export default {
                     FoodID: item.id,
                     Quantity: item.quantity,
                     SizeID: item.sizes || 0,
-                    AddonIDs: item.addons || [],
+                    // AddonIDs: item.addons || [],
+                    AddonIDs: [],
                     addons_quantity: item.addonsqty || []
                 }));
                 RestaurantID = cart[0].restaurant;
@@ -555,7 +842,7 @@ export default {
                 });
             } finally {
                 this.isloading = false;
-                 console.log("Placing order with payment type end:", this.isloading);
+                console.log("Placing order with payment type end:", this.isloading);
             }
         },
 
@@ -586,6 +873,7 @@ export default {
         },
         clear_cart() {
             let cart = []
+            localStorage.setItem('delivery_type', null);
             localStorage.setItem('cart', JSON.stringify(cart));
             this.$store.commit('deliware_cart/UPDATE_CART_ITEMS', cart);
             this.$store.commit('deliware_cart/UPDATE_CART_ITEMS_COUNT', cart.length);

@@ -552,6 +552,8 @@ export default {
     methods: {
         select_delivery_type(type) {
             this.delivery_type = type;
+
+             this.loadcart();
         },
         gotor(slug) {
             console.log("slug*****");
@@ -961,6 +963,8 @@ export default {
                                     this.$router.push({ name: "checkout" });
                                 } else {
                                     // if (this.prescription.image) {
+                                    localStorage.setItem('delivery_type', this.delivery_type);
+
                                     this.$router.push({ name: "checkout" });
                                     // }
                                     // else {
