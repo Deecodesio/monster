@@ -3421,6 +3421,8 @@ class UserController extends BaseController
                     'request_id' => $key->id,
                     'order_id' => $key->order_id,
                     'status' => $key->status,
+                    'ScheduledAt' => $key->ScheduledAt,
+                    'ScheduledTime' => $key->ScheduledTime,
                     'restaurant_id' => $restaurant_detail->id,
                     'restaurant_name' => $this->secondLanguage_user($restaurant_detail->restaurant_name, $restaurant_detail->restaurant_secondary_name),
                     // 'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_detail->image),
@@ -3498,6 +3500,8 @@ class UserController extends BaseController
                 $upcoming_order_list[] = array(
                     'request_id' => $key->id,
                     'order_id' => $key->order_id,
+                    'ScheduledAt' => $key->ScheduledAt,
+                    'ScheduledTime' => $key->ScheduledTime,
                     'restaurant_id' => $restaurant_details->id,
                     'restaurant_name' => $this->secondLanguage_user($restaurant_details->restaurant_name, $restaurant_details->restaurant_secondary_name),
                     'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_details->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_details->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_details->id . '/' . 'Logo/' . $restaurant_details->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_details->id . '/' . 'Logo/' . $restaurant_details->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_details->image),
@@ -3593,6 +3597,8 @@ class UserController extends BaseController
                 $order_list[] = array(
                     'request_id' => $key->id,
                     'order_id' => $key->order_id,
+                    'ScheduledAt' => $key->ScheduledAt,
+                    'ScheduledTime' => $key->ScheduledTime,
                     'restaurant_id' => $restaurant_detail->id,
                     'restaurant_name' => $this->secondLanguage_user($restaurant_detail->restaurant_name, $restaurant_detail->restaurant_secondary_name),
                     // 'restaurant_image' => File::exists(public_path('restaurant_uploads/') . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id : (File::exists(public_path('restaurant_uploads/') . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image) ? BASE_URL . RESTAURANT_UPLOADS_PATH . $restaurant_detail->id . '/' . 'Logo/' . $restaurant_detail->image : BASE_URL . UPLOADS_PATH_LOGO . $restaurant_detail->image),

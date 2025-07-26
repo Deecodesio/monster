@@ -135,6 +135,7 @@
                                                     {{ $t("Order Status") }} :
                                                     {{ order_status }}
                                                 </p>
+                                               
                                                 <p class="card-text mb-25" v-if="cancell_status">
                                                     {{ $t("Order Cancel Reason") }} :
                                                     {{ cancell_status.detail }}
@@ -146,6 +147,9 @@
                                                 <p class="card-text mb-25" v-if="req_details.takeaway_code">
                                                     {{ $t("Takeaway Code") }} :
                                                     {{ req_details.takeaway_code }}
+                                                </p>
+                                                 <p class="card-text mb-25" v-if="formattedDeliveryDateTime">
+                                                    {{ $t("Delivered On") }} : {{ formattedDeliveryDateTime }}
                                                 </p>
                                             </div>
 
@@ -178,9 +182,9 @@
                                                         $t("Customer Details")
                                                     }}:
                                                 </p>
-                                                <h6 class="mb-25">
+                                                <!-- <h6 class="mb-25">
                                                     {{ req_details.user_name }}
-                                                </h6>
+                                                </h6> -->
                                                 <p class="card-text mb-25">
                                                     {{
                                                         req_details.delivery_address
@@ -461,30 +465,30 @@ export default {
             cancell_status: {},
         };
     },
-  methods: {
-  priceFormatFinal(price) {
-    let number = price, decimals = 2, dec_point = ".", thousands_sep = ",";
-    number = (number + "").replace(/[^0-9+\-Ee.]/g, "");
-    var n = !isFinite(+number) ? 0 : +number,
-        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-        sep = typeof thousands_sep === "undefined" ? "," : thousands_sep,
-        dec = typeof dec_point === "undefined" ? "." : dec_point,
-        s = "",
-        toFixedFix = function (n, prec) {
-          var k = Math.pow(10, prec);
-          return "" + Math.round(n * k) / k;
-        };
-    s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
-    if (s[0].length > 3) {
-      s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-    }
-    if ((s[1] || "").length < prec) {
-      s[1] = s[1] || "";
-      s[1] += new Array(prec - s[1].length + 1).join("0");
-    }
-    return s.join(dec);
-  }
-},
+    methods: {
+        priceFormatFinal(price) {
+            let number = price, decimals = 2, dec_point = ".", thousands_sep = ",";
+            number = (number + "").replace(/[^0-9+\-Ee.]/g, "");
+            var n = !isFinite(+number) ? 0 : +number,
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = typeof thousands_sep === "undefined" ? "," : thousands_sep,
+                dec = typeof dec_point === "undefined" ? "." : dec_point,
+                s = "",
+                toFixedFix = function (n, prec) {
+                    var k = Math.pow(10, prec);
+                    return "" + Math.round(n * k) / k;
+                };
+            s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || "").length < prec) {
+                s[1] = s[1] || "";
+                s[1] += new Array(prec - s[1].length + 1).join("0");
+            }
+            return s.join(dec);
+        }
+    },
 
     mounted() {
         this.track_order();
@@ -570,7 +574,9 @@ export default {
                     this.req_details = res.data.message;
                     this.food_details = res.data.food;
                     this.order_status = res.data.order_status;
-                    this.cancell_status = res.data.cancell_status;
+                    this.ScheduledAt = res.data.ScheduledAt;
+                    this.ScheduledTime = res.data.ScheduledTime;
+                    this.ScheduledTime = s.cancell_status = res.data.cancell_status;
                 });
             window.setInterval(() => {
                 this.$http
@@ -579,6 +585,8 @@ export default {
                         this.req_details = res.data.message;
                         this.food_details = res.data.food;
                         this.order_status = res.data.order_status;
+                        this.ScheduledAt = res.data.ScheduledAt;
+                        this.ScheduledTime = res.data.ScheduledTime;
                         this.cancell_status = res.data.cancell_status;
                     });
             }, 10 * 1000);
@@ -604,19 +612,32 @@ export default {
                 cgst: (item.tax / 2).toFixed(2),
                 sgst: (item.tax / 2).toFixed(2),
             }));
+        },
+        // date formate in delivery date
+        formattedDeliveryDateTime() {
+            if (!this.req_details?.ScheduledAt || !this.req_details?.ScheduledTime) return '';
+
+            const dateObj = new Date(this.req_details.ScheduledAt);
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
+            const time = this.req_details.ScheduledTime;
+
+            return `${day}-${month}-${year} | ${time}`;
         }
+
     },
-  totals() {
-    return this.processedFoodDetails.reduce(
-      (sum, item) => ({
-        quantity: sum.quantity + Number(item.quantity || 0),
-        cgst: sum.cgst + Number(item.cgst || 0),
-        sgst: sum.sgst + Number(item.sgst || 0),
-        price: sum.price + Number(item.price || 0)
-      }),
-      { quantity: 0, cgst: 0, sgst: 0, price: 0 }
-    );
-  }
+    totals() {
+        return this.processedFoodDetails.reduce(
+            (sum, item) => ({
+                quantity: sum.quantity + Number(item.quantity || 0),
+                cgst: sum.cgst + Number(item.cgst || 0),
+                sgst: sum.sgst + Number(item.sgst || 0),
+                price: sum.price + Number(item.price || 0)
+            }),
+            { quantity: 0, cgst: 0, sgst: 0, price: 0 }
+        );
+    }
 
 
 

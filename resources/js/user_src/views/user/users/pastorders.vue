@@ -66,6 +66,11 @@
                                 <b-card-text class="textp">
                                     <feather-icon icon="ClockIcon" /> {{ data.ordered_on }}
                                 </b-card-text>
+   <b-card-text class="textp" v-if =" formatDateTime(data.ScheduledAt, data.ScheduledTime)">
+  <feather-icon icon="CheckCircleIcon" class="me-1 text-dark" />
+  Delivered on : {{ formatDateTime(data.ScheduledAt, data.ScheduledTime) }}
+</b-card-text>
+
                                 <b-card-text class="textp">
                                     <feather-icon icon="DollarSignIcon" />
                                     <span v-if="data.is_cod === 1">
@@ -154,6 +159,9 @@
                                         <p class="card-text mb-25">
                                             {{ $t("Ordered On") }} : {{ req_details.ordered_time }}
                                         </p>
+                                          <p class="card-text mb-25" v-if="formattedDeliveryDateTime">
+                                                    {{ $t("Delivered On") }} : {{ formattedDeliveryDateTime }}
+                                                </p>
                                     </div>
 
                                     <!-- Header: Right Content -->
@@ -457,6 +465,20 @@ export default {
 
             return status => statusColor[status]
         },
+       // date formate in delivery date
+           formattedDeliveryDateTime() {
+            if (!this.req_details?.ScheduledAt || !this.req_details?.ScheduledTime) return '';
+
+            const dateObj = new Date(this.req_details.ScheduledAt);
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
+            const time = this.req_details.ScheduledTime;
+console.log(this.req_details);
+
+            return `${day}-${month}-${year} | ${time}`;
+        }
+
     },
     directives: {
         'b-modal': VBModal,
@@ -633,7 +655,20 @@ export default {
         },
         goback() {
             this.view_order_page = false
-        }
+        },
+       
+  formatDateTime(dateString, timeString) {
+    if (!dateString || !timeString) return '';
+
+    const dateObj = new Date(dateString);
+    const day = String(dateObj.getDate()).padStart(2, '0');
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const year = dateObj.getFullYear();
+
+    return `${day}-${month}-${year} | ${timeString}`;
+  
+}
+
     },
 }
 </script>

@@ -19,9 +19,9 @@
           enabled: true,
           externalQuery: searchTerm
         }" :pagination-options="{
-  enabled: true,
-  perPage: pageLength
-}">
+          enabled: true,
+          perPage: pageLength
+        }">
           <template slot="table-row" slot-scope="props">
             <a id="link" hidden="hidden" target="_blank" href="/store/pickup"></a>
             <!-- Column: Name -->
@@ -286,6 +286,16 @@ export default {
           class: 'text-nowrap',
         },
         {
+          label: this.$t('Delivery Date'),
+          field: 'delivery_date',
+          class: 'text-nowrap',
+        },
+        {
+          label: this.$t('Delivery Time'),
+          field: 'delivery_time',
+          class: 'text-nowrap',
+        },
+        {
           label: this.$t('Store'),
           field: 'restaurant_names',
           tdClass: 'text-nowrap',
@@ -484,38 +494,74 @@ export default {
     },
   },
   created() {
+    const ad = localStorage.admin_email;
 
-    var ad = localStorage.admin_email
+    // Local helper function
+    const isValidDate = (date) => {
+      return date && !isNaN(new Date(date).getTime());
+    };
+
+    const formatDate = (date) => {
+      return isValidDate(date)
+        ? new Date(date).toISOString().split('T')[0]
+        : 'Not Scheduled';
+    };
+
+    // Initial fetch
     this.$http.get('/admin/Orders_list/' + this.$route.name + '/' + ad)
       .then(res => {
+        this.rows = res.data.map(item => ({
+          ...item,
+          delivery_date: formatDate(item.ScheduledAt),
+          delivery_time: item.ScheduledTime || 'N/A'
+        }));
 
-        this.rows = res.data;
         this.Loading = false;
+
         if (process.env.MIX_IS_DEMO) {
           for (let i = 0; i < this.rows.length; i++) {
-            this.rows[i].phone = "**********"
-            this.rows[i].email = "**********"
-            this.rows[i].contact = "**********"
-
+            this.rows[i].phone = "**********";
+            this.rows[i].email = "**********";
+            this.rows[i].contact = "**********";
           }
         }
-      })
+      });
 
+    // Currency fetch
     this.$http.get('/admin/get_currency')
       .then(res => {
+        this.setting = res.data;
+      });
 
-        this.setting = res.data
+    // Poll every 10 seconds
+    window.setInterval(() => {
+      this.$http.get('/admin/Orders_list/' + this.$route.name + '/' + ad)
+        .then(res => {
+          this.rows = res.data.map(item => ({
+            ...item,
+            delivery_date: formatDate(item.ScheduledAt),
+            delivery_time: item.ScheduledTime || 'N/A'
+          }));
 
+          this.Loading = false;
 
-      })
+          if (process.env.MIX_IS_DEMO) {
+            for (let i = 0; i < this.rows.length; i++) {
+              this.rows[i].phone = "**********";
+              this.rows[i].email = "**********";
+              this.rows[i].contact = "**********";
+            }
+          }
+        });
+    }, 10000); // 10 seconds
+  }
 
-  },
 
 
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import '~@resources/scss/vue/libs/vue-good-table.scss';
 
 .font-weight-bold {

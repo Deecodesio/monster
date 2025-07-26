@@ -328,6 +328,8 @@ class OrderController extends BaseController
 			'restaurant_lng' => $lng_res,
 			'user_lat' => $check_request->d_lat,
 			'user_lng' => $check_request->d_lng,
+			'ScheduledAt' => $check_request->ScheduledAt,
+			'ScheduledTime' => $check_request->ScheduledTime,
 
 		);
 

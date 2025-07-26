@@ -6,85 +6,60 @@
                 <div class="custom-search d-flex justify-content-start" style="margin-left: 15px;">
                     <b-form-group>
                         <div class="d-flex align-items-center">
-                            <label class="mr-1">{{ $t("District") }}</label>
-                            <v-select
-                                v-model="shopFilter.district"
-                                :options="city_list"
-                                label="city"
-                                :reduce="(sel) => sel.id"
-                                :placeholder="$t('Filter')"
-                                :dir="
-                                    $store.state.appConfig.isRTL ? 'rtl' : 'ltr'
-                                "
-                                style="width: 200px"
-                                @input="onChange($event)"
-                            />
+                            <label class="mr-1">{{ $t("state") }}</label>
+                            <v-select v-model="shopFilter.state" :options="state_list" label="state"
+                                :reduce="(sel) => sel.id" :placeholder="$t('select state')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'
+                                    " style="width: 200px" @input="onStateChange($event)" />
                         </div>
                     </b-form-group>
-                   <!-- <hr class="my-1" /> -->
+                    <b-form-group>
+                        <div class="d-flex align-items-center" style="margin-left: 15px;">
+                            <label class="mr-1">{{ $t("District") }}</label>
+                            <v-select v-model="shopFilter.district" :options="city_list" label="city"
+                                :reduce="(sel) => sel.id" :placeholder="$t('Filter')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'
+                                    " style="width: 200px" @input="onChange($event)" />
+                        </div>
+                    </b-form-group>
+                    <!-- <hr class="my-1" /> -->
                     <b-form-group>
                         <div class="d-flex align-items-center" style="margin-left: 30px;">
                             <label class="mr-1">{{
                                 $t("message.seachLabel")
-                            }}</label>
-                            <b-form-input
-                                v-model="searchTerm"
-                                :placeholder="$t('message.seachLabel')"
-                                type="text"
-                                class="d-inline-block"
-                            />
+                                }}</label>
+                            <b-form-input v-model="searchTerm" :placeholder="$t('message.seachLabel')" type="text"
+                                class="d-inline-block" />
                         </div>
                     </b-form-group>
                 </div>
 
                 <!-- table -->
-                <vue-good-table
-                    :columns="columns"
-                    :line-numbers="true"
-                    :rows="filteredRows"
-                    :rtl="direction"
+                <vue-good-table :columns="columns" :line-numbers="true" :rows="filteredRows" :rtl="direction"
                     :search-options="{
                         enabled: true,
                         externalQuery: searchTerm,
-                    }"
-                    :pagination-options="{
+                    }" :pagination-options="{
                         enabled: true,
                         perPage: pageLength,
-                    }"
-                >
+                    }">
                     <template slot="table-row" slot-scope="props">
-                        <a
-                            id="link"
-                            hidden="hidden"
-                            target="_blank"
-                            href="/store/dashboard"
-                        ></a>
+                        <a id="link" hidden="hidden" target="_blank" href="/store/dashboard"></a>
                         <!-- Column: Name -->
-                        <div
-                            v-if="props.column.field === 'fullName'"
-                            class="text-nowrap"
-                        >
+                        <div v-if="props.column.field === 'fullName'" class="text-nowrap">
                             <b-avatar :src="props.row.avatar" class="mx-1" />
                             <span class="text-nowrap">{{
                                 props.row.fullName
-                            }}</span>
+                                }}</span>
                         </div>
 
-                        <div
-                            v-if="props.column.field === 'order_id'"
-                            class="text-nowrap"
-                        >
+                        <div v-if="props.column.field === 'order_id'" class="text-nowrap">
                             <span class="text-nowrap">{{
                                 props.row.order_id
-                            }}</span>
+                                }}</span>
                             <br />
                             <span class="text-nowrap">
-                                <b-badge
-                                    :variant="statusVariant(props.row.status)"
-                                >
+                                <b-badge :variant="statusVariant(props.row.status)">
                                     {{ props.row.status }}
-                                </b-badge></span
-                            >
+                                </b-badge></span>
                         </div>
 
                         <!-- Column: Status -->
@@ -94,162 +69,79 @@
           </b-badge>
         </span>  -->
                         <span v-else-if="props.column.field === 'status'">
-                            <b-button
-                                v-if="props.row.status === 1"
-                                type="submit"
-                                variant="outline-success"
-                                class="mr-1"
-                                @click="changedefault(props.row.id)"
-                            >
+                            <b-button v-if="props.row.status === 1" type="submit" variant="outline-success" class="mr-1"
+                                @click="changedefault(props.row.id)">
                                 {{ $t("active") }}
                             </b-button>
-                            <b-button
-                                v-if="props.row.status === 0"
-                                type="submit"
-                                variant="outline-warning"
-                                class="mr-1"
-                                @click="changedefault(props.row.id)"
-                            >
+                            <b-button v-if="props.row.status === 0" type="submit" variant="outline-warning" class="mr-1"
+                                @click="changedefault(props.row.id)">
                                 {{ $t("inactive") }}
                             </b-button>
                         </span>
 
                         <!-- Column: Action_Redirect -->
                         <span v-else-if="props.column.field === 'login'">
-                            <feather-icon
-                                :id="`invoice1-row-${props.row.id}-preview-icon`"
-                                icon="LogInIcon"
-                                size="16"
-                                class="mx-1"
-                                @click="restaurant(props.row.id)"
-                                cursor="pointer"
-                            />
-                            <b-tooltip
-                                v-b-tooltip.hover.v-warning
-                                :title="'Login to ' + props.row.restaurant_name"
-                                :target="`invoice1-row-${props.row.id}-preview-icon`"
-                                placement="left"
-                            />
+                            <feather-icon :id="`invoice1-row-${props.row.id}-preview-icon`" icon="LogInIcon" size="16"
+                                class="mx-1" @click="restaurant(props.row.id)" cursor="pointer" />
+                            <b-tooltip v-b-tooltip.hover.v-warning :title="'Login to ' + props.row.restaurant_name"
+                                :target="`invoice1-row-${props.row.id}-preview-icon`" placement="left" />
 
-                            <a
-                                id="wlink"
-                                target="_blank"
-                                style="color: #6e6b7b"
-                                :href="
-                                    '/restaurant/' +
-                                    props.row.id +
-                                    '/' +
-                                    props.row.restaurant_name
-                                "
-                                ><feather-icon
-                                    :id="`invoice3-row_view-${props.row.id}-preview-icon`"
-                                    icon="GlobeIcon"
-                                    size="16"
-                                    class="mx-1"
-                                    cursor="pointer"
-                            /></a>
-                            <b-tooltip
-                                v-b-tooltip.hover.v-warning
-                                title="Open Web View "
-                                :target="`invoice3-row-${props.row.id}-preview-icon`"
-                                placement="left"
-                            />
+                            <a id="wlink" target="_blank" style="color: #6e6b7b" :href="'/restaurant/' +
+                                props.row.id +
+                                '/' +
+                                props.row.restaurant_name
+                                "><feather-icon :id="`invoice3-row_view-${props.row.id}-preview-icon`" icon="GlobeIcon"
+                                    size="16" class="mx-1" cursor="pointer" /></a>
+                            <b-tooltip v-b-tooltip.hover.v-warning title="Open Web View "
+                                :target="`invoice3-row-${props.row.id}-preview-icon`" placement="left" />
                         </span>
 
                         <!-- Column: Action -->
                         <span v-else-if="props.column.field === 'action'">
-                            <b-button
-                                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                                variant="outline-primary"
-                                class="btn-icon"
-                                @click="
+                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
+                                class="btn-icon" @click="
                                     $router.push({
                                         name: 'restaurant_view',
                                         params: { id: props.row.id },
                                     })
-                                "
-                                :id="`invoice-row_view-${props.row.id}-preview-icon`"
-                            >
-                                <feather-icon
-                                    :id="`invoice-row_view-${props.row.id}-preview-icon`"
-                                    icon="EyeIcon"
-                                    cursor="pointer"
-                                    style="color: #6e6b7b"
-                                />
+                                    " :id="`invoice-row_view-${props.row.id}-preview-icon`">
+                                <feather-icon :id="`invoice-row_view-${props.row.id}-preview-icon`" icon="EyeIcon"
+                                    cursor="pointer" style="color: #6e6b7b" />
                             </b-button>
-                            <b-tooltip
-                                placement="left"
-                                :title="$t('view') + ' ' + $t('order')"
-                                :target="`invoice-row_view-${props.row.id}-preview-icon`"
-                            />
+                            <b-tooltip placement="left" :title="$t('view') + ' ' + $t('order')"
+                                :target="`invoice-row_view-${props.row.id}-preview-icon`" />
 
-                            <b-button
-                                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                                variant="outline-primary"
-                                class="btn-icon"
-                                @click="
+                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
+                                class="btn-icon" @click="
                                     $router.push({
                                         name: 'edit_restaurant',
                                         params: { id: props.row.id },
                                     })
-                                "
-                                :id="`invoice-row_edit-${props.row.id}-preview-icon`"
-                            >
-                                <feather-icon
-                                    :id="`invoice-row_edit-${props.row.id}-preview-icon`"
-                                    icon="EditIcon"
-                                    cursor="pointer"
-                                    style="color: #6e6b7b"
-                                />
+                                    " :id="`invoice-row_edit-${props.row.id}-preview-icon`">
+                                <feather-icon :id="`invoice-row_edit-${props.row.id}-preview-icon`" icon="EditIcon"
+                                    cursor="pointer" style="color: #6e6b7b" />
                             </b-button>
-                            <b-tooltip
-                                placement="left"
-                                :title="$t('edit') + ' ' + $t('Store')"
-                                :target="`invoice-row_edit-${props.row.id}-preview-icon`"
-                            />
+                            <b-tooltip placement="left" :title="$t('edit') + ' ' + $t('Store')"
+                                :target="`invoice-row_edit-${props.row.id}-preview-icon`" />
 
-                            <b-button
-                                v-ripple.400="'rgba(113, 102, 240, 0.15)'"
-                                variant="outline-primary"
-                                class="btn-icon"
-                                @click="
+                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary"
+                                class="btn-icon" @click="
                                     showMsgBoxTwo(
                                         props.row.id,
                                         props.row.restaurant_name
                                     )
-                                "
-                                :id="`invoice-row-delete-${props.row.id}-preview-icon`"
-                            >
-                                <feather-icon
-                                    :id="`invoice-row-delete-${props.row.id}-preview-icon`"
-                                    icon="Trash2Icon"
-                                    cursor="pointer"
-                                    style="color: #6e6b7b"
-                                />
+                                    " :id="`invoice-row-delete-${props.row.id}-preview-icon`">
+                                <feather-icon :id="`invoice-row-delete-${props.row.id}-preview-icon`" icon="Trash2Icon"
+                                    cursor="pointer" style="color: #6e6b7b" />
                             </b-button>
-                            <b-tooltip
-                                placement="left"
-                                :title="$t('delete') + ' ' + $t('Store')"
-                                :target="`invoice-row-delete-${props.row.id}-preview-icon`"
-                            />
+                            <b-tooltip placement="left" :title="$t('delete') + ' ' + $t('Store')"
+                                :target="`invoice-row-delete-${props.row.id}-preview-icon`" />
                         </span>
-                        <span
-                            v-else-if="props.column.field === 'rating'"
-                            class="text-nowrap"
-                        >
-                            <b-form-rating
-                                no-border
-                                :value="props.row.rating"
-                                readonly
-                                variant="warning"
-                                inline
-                                precision="2"
-                            />
+                        <span v-else-if="props.column.field === 'rating'" class="text-nowrap">
+                            <b-form-rating no-border :value="props.row.rating" readonly variant="warning" inline
+                                precision="2" />
                         </span>
-                        <span
-                            v-else-if="props.column.field === 'contacts'"
-                            class="text-nowrap"
-                        >
+                        <span v-else-if="props.column.field === 'contacts'" class="text-nowrap">
                             +{{ props.row.contact_country_calling_code
                             }}{{ props.row.contact }}
                         </span>
@@ -266,61 +158,37 @@
                                 <span class="text-nowrap">
                                     {{ $t("message.pagelength") }}
                                 </span>
-                                <b-form-select
-                                    v-model="pageLength"
-                                    :options="['50', '100']"
-                                    class="mx-1"
-                                    @input="
-                                        (value) =>
-                                            props.perPageChanged({
-                                                currentPerPage: value,
-                                            })
-                                    "
-                                />
+                                <b-form-select v-model="pageLength" :options="['50', '100']" class="mx-1" @input="
+                                    (value) =>
+                                        props.perPageChanged({
+                                            currentPerPage: value,
+                                        })
+                                " />
                                 <span class="text-nowrap">
                                     {{ $t("message.of") }} {{ props.total }}
                                     {{ $t("message.pageText2") }}
                                 </span>
                             </div>
                             <div>
-                                <b-pagination
-                                    :value="1"
-                                    :total-rows="props.total"
-                                    :per-page="pageLength"
-                                    first-number
-                                    last-number
-                                    align="right"
-                                    prev-class="prev-item"
-                                    next-class="next-item"
-                                    class="mt-1 mb-0"
-                                    @input="
+                                <b-pagination :value="1" :total-rows="props.total" :per-page="pageLength" first-number
+                                    last-number align="right" prev-class="prev-item" next-class="next-item"
+                                    class="mt-1 mb-0" @input="
                                         (value) =>
                                             props.pageChanged({
                                                 currentPage: value,
                                             })
-                                    "
-                                >
+                                    ">
                                     <template #prev-text>
-                                        <feather-icon
-                                            icon="ChevronLeftIcon"
-                                            size="18"
-                                        />
+                                        <feather-icon icon="ChevronLeftIcon" size="18" />
                                     </template>
                                     <template #next-text>
-                                        <feather-icon
-                                            icon="ChevronRightIcon"
-                                            size="18"
-                                        />
+                                        <feather-icon icon="ChevronRightIcon" size="18" />
                                     </template>
                                 </b-pagination>
                             </div>
                         </div>
                     </template>
-                    <div
-                        slot="emptystate"
-                        style="text-align: center"
-                        v-if="Loading"
-                    >
+                    <div slot="emptystate" style="text-align: center" v-if="Loading">
                         <b-img src="/admin_loader.svg" fluid alt="Scan" />
                     </div>
                 </vue-good-table>
@@ -385,10 +253,13 @@ export default {
             dir: false,
             driver: {},
             Loading: true,
+            state_list: [],
             shopFilter: {
+                state: null,
                 district: null,
             },
             city_list: [],
+            all_city_list: [],
             codeColumnSearch,
             columns: [
                 {
@@ -491,12 +362,29 @@ export default {
             }
         });
 
+        this.$http.get("/admin/state_list").then((res) => {
+            this.state_list = res.data;
+            console.log(this.state_list);
+        });
+
         this.$http.get("/admin/city_list1").then((res) => {
-            this.city_list = res.data;
+            this.all_city_list = res.data;
         });
     },
 
     methods: {
+        onStateChange(stateId) {
+            console.log("State ID changed:", stateId);
+            // Filter city list by selected state ID
+            this.city_list = this.all_city_list.filter(
+                (city) => city.state_id === stateId
+            );
+
+            console.log("Filtered city list:", this.city_list);
+
+            // Clear previously selected district if not valid anymore
+            this.shopFilter.district = null;
+        },
         restaurant(id) {
             this.$http
                 .get("/admin/store_login/" + id)
