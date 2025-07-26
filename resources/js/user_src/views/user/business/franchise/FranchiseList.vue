@@ -163,6 +163,17 @@
                                             </b-form-group>
                                         </b-col> -->
 
+                                          <b-col md="12">
+                                            <b-form-group label="Shop Location" label-for="shop_location_plan" label-cols-sm="12">
+                                                <b-form-textarea id="shop_location_plan" v-model="form.shop_location_plan" rows="1"
+                                                    :state="shopLocationState" required
+                                                    class="compact-textarea"></b-form-textarea>
+                                                <b-form-invalid-feedback v-if="!shopLocationState">
+                                                    shopLocation is required
+                                                </b-form-invalid-feedback>
+                                            </b-form-group>
+                                        </b-col>
+
                                         <b-col md="12">
                                             <b-form-group label="Additional Message (Optional)" label-for="message"
                                                 label-cols-sm="12">
@@ -350,6 +361,7 @@ export default {
                 business_category_id: null,
                 product_id: null,
                 message: "",
+                shop_location_plan: '',
             },
             categoryOptions: [],
             productOptions: [],
@@ -435,6 +447,10 @@ export default {
             if (!this.submitted) return null;
             return this.form.product_id ? true : false;
         },
+        shopLocationState() {
+            if (!this.submitted) return null;
+            return this.form.shop_location_plan ? true : false;
+        },
     },
     methods: {
         async fetchCategories() {
@@ -496,9 +512,10 @@ export default {
                 !this.stateState ||
                 !this.districtState ||
                 !this.talukState ||
-                !this.pincodeState ||
-                !this.categoryState ||
-                !this.productState
+                !this.pincodeState  ||
+                !this.shopLocationState 
+                // !this.categoryState ||
+                // !this.productState
             ) {
                 this.$toast.error("Please fill all required fields", {
                     timeout: 3000,
@@ -510,7 +527,7 @@ export default {
             this.submitting = true;
             try {
                 const response = await axios.post(
-                    "/api/bulk_enquiry",
+                    "/api/franchises",
                     this.form
                 );
 
@@ -557,6 +574,7 @@ export default {
                 business_category_id: null,
                 product_id: null,
                 message: "",
+                shop_location_plan: ''
             };
         },
     },
