@@ -5,18 +5,11 @@
     </div>
 </template> -->
 <template>
-  <div class="align-content-center justify-content-between pt-1">
-    <vue-autosuggest
-      v-model="query"
-      :suggestions="suggestions"
-      :input-props="inputProps"
-      :section-configs="sectionConfigs"
-      :render-suggestion="renderSuggestion"
-      :limit="10"
-      @input="fetchResults"
-      class="custom-autosuggest"
-    />
-  </div>
+    <div class="align-content-center justify-content-between pt-1">
+        <vue-autosuggest v-model="query" :suggestions="suggestions" :input-props="inputProps"
+            :section-configs="sectionConfigs" :render-suggestion="renderSuggestion" :limit="10" @input="fetchResults"
+            class="custom-autosuggest" />
+    </div>
 </template>
 
 
@@ -57,15 +50,27 @@ export default {
                 placeholder: this.$t('Hungry ? Search Meats'),
             },
             sectionConfigs: {
+                category: {
+                    limit: 20,
+                    label: 'Product Categories',
+                    onSelected: selected => {
+                        this.selected = selected.item                        
+                        this.$router.push({ name: "cat_list", params: { slug: selected.item.slug } });
+                        this.suggestions = [];
+                        this.query = ''; 
+                    },
+                },
                 products: {
                     limit: 20,
                     label: 'Products',
                     onSelected: selected => {
                         this.selected = selected.item
                         this.$router.push({ name: 'product', params: { slug: selected.item.slug } });
-
+                        this.suggestions = [];
+                        this.query = ''; 
                     },
                 },
+
             },
             limit: 10,
         }
@@ -135,7 +140,7 @@ export default {
                         <b-avatar src={page.img} class="mr-50"></b-avatar>
                         <div class="detail">
                             <b-card-text class="mb-0">{page.name}</b-card-text>
-                            <small class="text-muted">{page.restaurant_name}</small>
+                            {/* <small class="text-muted">{page.restaurant_name}</small> */}
                         </div>
                     </div>
                 )
@@ -162,26 +167,24 @@ export default {
     -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
- 
- 
+
+
 .custom-autosuggest input {
-  width: 100%;
-  padding: 10px 14px;
-  font-size: 16px;
-  color: #2f2f2f;
-  outline: none;
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 16px;
+    color: #2f2f2f;
+    outline: none;
 }
 
- 
+
 .custom-autosuggest input::placeholder {
-  color: #7e8489;
-  font-weight: 400;
+    color: #7e8489;
+    font-weight: 400;
 }
 
- 
+
 .custom-autosuggest input:focus {
-  box-shadow: none;
+    box-shadow: none;
 }
- 
-
 </style>

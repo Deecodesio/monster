@@ -3082,6 +3082,7 @@ class UserController extends BaseController
             if (!empty($source_lat) && !empty($source_lng)) {
                 $geofenceRadius = (float) ($each_restaurant->GeofenceRadius ?? DEFAULT_RADIUS);
                 $distance = vincentyGreatCircleDistance($source_lat, $source_lng, $each_restaurant->lat, $each_restaurant->lng);
+                $distance = $distance * 1000;
                 if ($distance && $distance <= $geofenceRadius) {
                     $availableRestIDs[] = $each_restaurant->id;
                 }
@@ -3119,22 +3120,40 @@ class UserController extends BaseController
 
 
 
-        $food_list = DB::table('food_list')
-            ->wherein('food_list.restaurant_id', $availableRestIDs)
+        // $food_list = DB::table('food_list')
+        //     ->wherein('food_list.restaurant_id', $availableRestIDs)
+        //     ->where('food_list.name', 'like', '%' . $key_word . '%')
+        //     ->join('restaurants', 'restaurants.id', '=', 'food_list.restaurant_id')
+        //     ->join('category', 'category.id', '=', 'food_list.category_id')
+        //     ->where('food_list.status', 1)
+        //     ->where('restaurants.status', 1)
+        //     ->OrWhere('category_name', 'like', '%' . $key_word . '%')
+        //     ->where('restaurants.status', 1)
+        //     ->select(
+        //         'food_list.*',
+        //         'restaurants.restaurant_name',
+        //         'restaurants.restaurant_secondary_name',
+        //         'category.category_name'
+        //     )
+        //     ->orderby('restaurants.id', 'asc')
+        //     ->get();
+
+          $food_list = DB::table('food_list')
+            // ->wherein('food_list.restaurant_id', $availableRestIDs)
             ->where('food_list.name', 'like', '%' . $key_word . '%')
-            ->join('restaurants', 'restaurants.id', '=', 'food_list.restaurant_id')
-            ->join('category', 'category.id', '=', 'food_list.category_id')
+            // ->join('restaurants', 'restaurants.id', '=', 'food_list.restaurant_id')
+            ->join('business_category', 'business_category.id', '=', 'food_list.business_category_id')
             ->where('food_list.status', 1)
-            ->where('restaurants.status', 1)
-            ->OrWhere('category_name', 'like', '%' . $key_word . '%')
-            ->where('restaurants.status', 1)
+            // ->where('restaurants.status', 1)
+            ->OrWhere('business_category.category_name', 'like', '%' . $key_word . '%')
+            // ->where('restaurants.status', 1)
             ->select(
                 'food_list.*',
-                'restaurants.restaurant_name',
-                'restaurants.restaurant_secondary_name',
-                'category.category_name'
+                // 'restaurants.restaurant_name',
+                // 'restaurants.restaurant_secondary_name',
+                'business_category.category_name'
             )
-            ->orderby('restaurants.id', 'asc')
+            // ->orderby('restaurants.id', 'asc')
             ->get();
 
 
@@ -3149,8 +3168,8 @@ class UserController extends BaseController
             $rt2[] = [
                 'img' => $img,
                 'name' => $this->secondLanguage_user($dat->name, $dat->secondary_name),
-                'restaurant_name' => $this->secondLanguage_user($dat->restaurant_name, $dat->restaurant_secondary_name),
-                'restaurant_id' => $dat->restaurant_id,
+                // 'restaurant_name' => $this->secondLanguage_user($dat->restaurant_name, $dat->restaurant_secondary_name),
+                // 'restaurant_id' => $dat->restaurant_id,
                 'id' => $dat->id,
                 'slug' => $slug
 
@@ -3159,7 +3178,8 @@ class UserController extends BaseController
 
 
 
-        $cate = DB::table('category')->where('category_name', 'like', '%' . $key_word . '%')->get();
+        // $cate = DB::table('category')->where('category_name', 'like', '%' . $key_word . '%')->get();
+        $cate = DB::table('business_category')->where('category_name', 'like', '%' . $key_word . '%')->get();
 
         $rt3 = [];
         foreach ($cate as $cat) {
@@ -3168,9 +3188,9 @@ class UserController extends BaseController
 
             $rt3[] = [
                 'img' => $img,
-                'name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname),
-                'restaurant_name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname),
-                'restaurant_id' => $cat->id,
+                'name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname??''),
+                // 'restaurant_name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname),
+                // 'restaurant_id' => $cat->id,
                 'slug' => $slug
 
             ];

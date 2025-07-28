@@ -363,10 +363,10 @@
 
 
                             <!-- Button: DOwnload -->
-                            <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary"
+                            <!-- <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary"
                                 class="mb-75" block>
                                 {{ $t("Download") }}
-                            </b-button>
+                            </b-button> -->
 
                             <!-- Button: Print -->
                             <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary"

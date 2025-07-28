@@ -37,7 +37,7 @@
                 </span>
             </b-nav-item>
             <!-- <b-nav-item  @click="redirect(1)" class="white_text"> -->
-            <b-nav-item :to="{ name: 'blogs' }" class="white_text">
+            <b-nav-item :to="{ name: 'blogs-list' }" class="white_text">
                 <span class="white_text">
                     {{ $t("Blog") }}
                 </span>

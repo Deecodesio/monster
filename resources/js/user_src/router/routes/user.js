@@ -299,15 +299,15 @@ export default [
 
   // Blog routes
   {
-    path: '/blogs',
-    name: 'blogs',
-    component: () => import('@@@/views/user/business/blog/BlogList.vue'),
+    path: '/articles',
+    name: 'blogs-list',
+    component: () => import('@@@/views/user/business/articles/BlogList.vue'),
 
   },
   {
-    path: '/blogs/:slug',
+    path: '/articles/:slug',
     name: 'blog-detail',
-    component: () => import('@@@/views/user/business/blog/BlogDetail.vue'),
+    component: () => import('@@@/views/user/business/articles/BlogDetail.vue'),
     props: true,
 
   },

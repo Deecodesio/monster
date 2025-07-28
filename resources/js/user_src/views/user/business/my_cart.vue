@@ -171,7 +171,7 @@
                                 <!-- product name -->
                                 <td style="font-weight: 700 !important;">{{ data.name }}</td>
                                 <!-- product price -->
-                                <td> {{ $store.state['defaults'].currency }}{{ data.price }}</td>
+                                <td> {{ $store.state['defaults'].currency }} {{ data.price }}</td>
                                 <!-- CGST Column -->
                                 <td>
                                     {{ $store.state['defaults'].currency }}
