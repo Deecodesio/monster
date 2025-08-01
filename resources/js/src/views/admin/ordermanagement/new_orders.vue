@@ -666,10 +666,17 @@ export default {
 
 table.vgt-table td {
   vertical-align: middle;
-  color: #6e6b7b;
+  color: #000000;
 }
 
 .align {
   text-align: center;
 }
 </style>
+<style scoped>
+table.vgt-table td {
+    vertical-align: top;
+    color: #000000 !important;
+}
+</style>
+  

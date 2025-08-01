@@ -48,6 +48,7 @@ export default {
                 id: 'autosuggest__input',
                 class: 'form-control ht-6',
                 placeholder: this.$t('Hungry ? Search Meats'),
+                style: 'color: black !important;'  
             },
             sectionConfigs: {
                 category: {
@@ -152,8 +153,7 @@ export default {
 </script>
 <style lang="scss">
 @import '~@resources/scss/vue/libs/vue-autosuggest.scss';
-</style>
-<style lang="scss">
+
 .ht-6 {
     min-height: 35px !important;
 }
@@ -168,7 +168,6 @@ export default {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-
 .custom-autosuggest input {
     width: 100%;
     padding: 10px 14px;
@@ -177,14 +176,16 @@ export default {
     outline: none;
 }
 
-
 .custom-autosuggest input::placeholder {
     color: #7e8489;
     font-weight: 400;
 }
 
-
 .custom-autosuggest input:focus {
     box-shadow: none;
+}
+
+input::placeholder {
+  color: black !important;
 }
 </style>

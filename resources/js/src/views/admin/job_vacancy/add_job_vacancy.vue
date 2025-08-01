@@ -23,6 +23,7 @@
                             :placeholder="$t('name')"
                             v-model="job.job_name"
                             :required="!job.job_name"
+                           
                         />
                     </b-form-group>
 

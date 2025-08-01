@@ -167,7 +167,7 @@ export default {
             {{ data[0].earnings }}
           </h5>
           <b-card-text class="text-muted font-small-2">
-            <span class="font-weight-bolder"> {{ data[0].per }}%</span><span> {{ data[0].text }}</span>
+            <span class="font-weight-bolder" style="color: black !important;" > {{ data[0].per }}%</span><span style="color: black !important;"> {{ data[0].text }}</span>
           </b-card-text>
         </b-col>
         <b-col cols="6">

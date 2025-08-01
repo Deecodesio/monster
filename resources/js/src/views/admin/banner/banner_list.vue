@@ -27,6 +27,7 @@
                                         :placeholder="$t('message.seachLabel')"
                                         type="text"
                                         class="d-inline-block"
+                                        style="color: black !important;"
                                     />
                                 </div>
                             </b-form-group>
@@ -500,6 +501,6 @@ export default {
 
 table.vgt-table td {
     vertical-align: middle;
-    color: #6e6b7b;
+    color: black !important;
 }
 </style>

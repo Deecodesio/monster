@@ -9,22 +9,22 @@
       <b-nav-item @click="redirect(2)">{{ $t("Deliver with Us") }}</b-nav-item> -->
             <b-nav-item :to="{ name: 'privacypolicy' }">
             <!-- <b-nav-item> -->
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Privacy Policy") }}
                 </span>
             </b-nav-item>
             <b-nav-item :to="{ name: 'terms_conditions' }">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Terms and Conditions") }}
                 </span>
             </b-nav-item>
             <b-nav-item :to="{ name: 'cancellation' }">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Cancellation Policy") }}
                 </span>
             </b-nav-item>
             <b-nav-item :to="{ name: 'shipping' }">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Shipping and Delivery Policy") }}
                 </span>
             </b-nav-item>

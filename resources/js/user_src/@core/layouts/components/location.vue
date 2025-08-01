@@ -5,7 +5,7 @@
 
             <b-nav-item :to="{ name: 'about_us' }" class="white_text">
                 <!-- <b-nav-item class="white_text"> -->
-                <span class="white_text"> {{ $t("About Us") }}</span>
+                <span class="white_text font_size"> {{ $t("About Us") }}</span>
             </b-nav-item>
 
             <!-- <b-nav-item :to="{ name: 'faq' }" class="white_text">
@@ -14,31 +14,31 @@
             <!-- contact -->
    
             <b-nav-item :to="{ name: 'contact' }" class="white_text">
-                <span class="white_text">{{ $t("contacts") }} </span>
+                <span class="white_text font_size">{{ $t("contact Us") }} </span>
             </b-nav-item>
 
             <!-- <b-nav-item @click="redirect(2)" class="white_text"> -->
             <!-- <b-nav-item :to="{ name: 'careers' }" class="white_text"> -->
             <b-nav-item :to="{ name: 'careers' }" class="white_text">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Career") }}
                 </span>
             </b-nav-item>
 
             <!-- <b-nav-item @click="redirect(3)" class="white_text"> -->
             <b-nav-item :to="{ name: 'franchise' }" class="white_text">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Franchise") }}
                 </span>
             </b-nav-item>
             <b-nav-item :to="{ name: 'BulkOrders' }" class="white_text">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Bulk Orders") }}
                 </span>
             </b-nav-item>
             <!-- <b-nav-item  @click="redirect(1)" class="white_text"> -->
             <b-nav-item :to="{ name: 'blogs-list' }" class="white_text">
-                <span class="white_text">
+                <span class="white_text font_size">
                     {{ $t("Blog") }}
                 </span>
             </b-nav-item>

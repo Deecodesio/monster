@@ -35,10 +35,11 @@
                 formatDate(featuredBlog.published_at) }}</small>
               <p class="featured-excerpt" style="color: black !important; font-weight:bolder;">{{ featuredBlog.excerpt
                 }}</p>
-              <b-button variant="danger" class="read-more-btn"
-                :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
-                Read more →
-              </b-button>
+             <b-button variant="danger" class="read-more-btn"
+  :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
+  <i class="fas fa-arrow-right mr-1"></i> Read more
+</b-button>
+
             </div>
             <div class="featured-blog-image">
               <b-img :src="'/blogs/' + featuredBlog.featured_image" fluid alt="Featured blog image"
@@ -59,10 +60,11 @@
                 formatDate(blog.published_at) }}</small>
               <p class="blog-excerpt" style="color: black !important; font-weight:bolder;">{{ blog.excerpt }}</p>
             </div>
-              <b-button variant="danger" class="read-more-btn"
-                :to="{ name: 'blog-detail', params: { slug:blog.slug } }" style="margin-left: 20px !important;">
-                Read more →
-              </b-button>
+            <b-button variant="danger" class="read-more-btn"
+  :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
+  <i class="fas fa-arrow-right mr-1"></i> Read more
+</b-button>
+
             </div>
           <!-- </router-link> -->
         </div>
@@ -239,7 +241,7 @@ export default {
   border-radius: 799px;
   font-weight: 600;
   margin-top: 2px;
-  background: #d9534f !important;
+  background: #FF006B !important;
   border: none;
   width: 15rem;
   margin-top: auto;

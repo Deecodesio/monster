@@ -108,7 +108,7 @@ class="btn-icon"
 :id="`invoice3-row-${props.row.id}-preview-icon`"
 >
 <feather-icon :id="`invoice3-row-${props.row.id}-preview-icon`" icon="ListIcon"
- cursor="pointer" style="color: #6e6b7b;"/>
+ cursor="pointer" style="color: #000;"/>
 </b-button>
 <b-tooltip  :title="$t('view') + ' ' + $t('list')" :target="`invoice3-row-${props.row.id}-preview-icon`" placement="left"/>
 
@@ -121,7 +121,7 @@ class="btn-icon"
 :id="`invoice-row3-${props.row.id}-preview-icon`"
 >
 <feather-icon :id="`invoice-row3-${props.row.id}-preview-icon`" icon="EyeIcon"
- cursor="pointer" style="color: #6e6b7b;"/>
+ cursor="pointer" style="color: #000;"/>
 </b-button>
 <b-tooltip :title="$t('view') + ' ' + $t('details')" :target="`invoice-row3-${props.row.id}-preview-icon`" placement="left"/>
 
@@ -133,7 +133,7 @@ class="btn-icon"
 :id="`invoice-row-${props.row.id}-preview-icon`" 
 >
 <feather-icon :id="`invoice-row-${props.row.id}-preview-icon`"  icon="EditIcon"
- cursor="pointer"  style="color: #6e6b7b;"/>
+ cursor="pointer"  style="color: #000;"/>
 </b-button>
 <b-tooltip :title="$t('edit') + ' ' + $t('driver')" :target="`invoice-row-${props.row.id}-preview-icon`" placement="left"/>
 
@@ -145,7 +145,7 @@ class="btn-icon"
 :id="`invoice-row-delete-${props.row.id}-preview-icon`"
 >
 <feather-icon :id="`invoice-row-delete-${props.row.id}-preview-icon`"  icon="Trash2Icon"
- cursor="pointer" style="color: #6e6b7b;"/>
+ cursor="pointer" style="color: #000;"/>
 </b-button>
 <b-tooltip :title="$t('delete') + ' ' + $t('driver')" :target="`invoice-row-delete-${props.row.id}-preview-icon`" placement="left"/>
 
@@ -404,6 +404,11 @@ export default {
 </script>
 
 <style lang="scss" >
+// Make all action icons in actions column black
+.btn-icon .feather-icon,
+.btn-icon .feather {
+  color: #000 !important;
+}
 @import '~@resources/scss/vue/libs/vue-good-table.scss';
 @import '~@resources/scss/vue/pages/page-profile.scss';
 
@@ -413,5 +418,14 @@ export default {
 }
 .text-nowraps {
   min-width: 18rem;
+}
+</style>
+<style scoped>
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+  color: #000 !important;
+  opacity: 1;
 }
 </style>

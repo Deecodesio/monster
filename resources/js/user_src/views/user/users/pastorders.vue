@@ -10,7 +10,7 @@
             cols="12" class="pad0"
         >
                 <h4>{{$t("No Orders Found")}}</h4>
-   
+
         </b-col> -->
                 <div v-if="!informationData.length" class="text-center"
                     style=" display: flex; align-content: space-around; justify-content: space-between;    flex-direction: column;    flex-wrap: wrap;">
@@ -369,15 +369,25 @@
                             </b-button> -->
 
                             <!-- Button: Print -->
-                            <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary"
-                                class="mb-75" block @click="printInvoice">
-                                {{ $t("Print") }}
-                            </b-button>
+<b-button
 
-                            <b-button v-ripple.400="'rgba(186, 191, 199, 0.15)'" variant="outline-secondary"
-                                class="mb-75" block @click="goback">
-                                {{ $t("Back") }}
-                            </b-button>
+  class="mb-75 btn-pink"
+  block
+  @click="printInvoice"
+>
+  {{ $t("Print") }}
+</b-button>
+
+<b-button
+
+  class="mb-75 btn-pink"
+  block
+  @click="goback"
+>
+  {{ $t("Back") }}
+</b-button>
+
+
 
 
                         </b-card>
@@ -656,7 +666,7 @@ console.log(this.req_details);
         goback() {
             this.view_order_page = false
         },
-       
+
   formatDateTime(dateString, timeString) {
     if (!dateString || !timeString) return '';
 
@@ -666,14 +676,14 @@ console.log(this.req_details);
     const year = dateObj.getFullYear();
 
     return `${day}-${month}-${year} | ${timeString}`;
-  
+
 }
 
     },
 }
 </script>
 
-<style lang="scss">
+<style  scoped lang="scss">
 @import '~@resources/scss/vue/libs/vue-select.scss';
 @import '~@resources/scss/vue/libs/vue-flatpicker.scss';
 @import "~@resources/scss/base/pages/app-invoice.scss";
@@ -753,4 +763,28 @@ console.log(this.req_details);
 .hr {
     border-bottom: 1px solid #e6e6e6 !important;
 }
+
+
+
 </style>
+
+<style scoped>
+.btn-pink {
+  background-color: #FF006B !important;
+  color: white !important;
+  border: none !important;
+}
+
+
+.btn-pink:hover,
+.btn-pink:focus,
+.btn-pink:active,
+.btn-pink.active {
+  background-color: #FF006B !important;
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+</style>
+

@@ -99,6 +99,7 @@
                                         placeholder="Search"
                                         type="text"
                                         class="d-inline-block"
+                                        style="display: block; color: black !important;"
                                     />
                                 </div>
                             </b-form-group>

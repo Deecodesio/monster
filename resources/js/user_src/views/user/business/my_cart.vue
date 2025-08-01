@@ -526,6 +526,7 @@ export default {
                 .get("/get_near_address/" + lat + "/" + lng + "/" + user.id)
                 .then((res) => {
                     if (res.data.status == true) {
+                        // this.rows = res.data.address.address;
                         this.isdefault = true;
                     }
                 });

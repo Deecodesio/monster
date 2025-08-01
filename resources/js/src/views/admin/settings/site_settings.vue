@@ -4,7 +4,7 @@
       <b-row>
 
         <b-col md="6">
-          <b-form-group :label="$t('app') + ' ' + $t('name')">
+          <b-form-group :label="$t('app') + ' ' + $t('name')" color="black">
             <b-form-input id="mc-brand_name" :placeholder="$t('app') + ' ' + $t('name')" v-model="brand.app_name" />
 
           </b-form-group>
@@ -13,7 +13,8 @@
 
         <b-col md="6">
           <b-form-group :label="$t('Meta') + ' ' + $t('titles')">
-            <b-form-input id="mc-brand_name" :placeholder="$t('Meta') + ' ' + $t('titles')" v-model="brand.meta_title" />
+            <b-form-input id="mc-brand_name" :placeholder="$t('Meta') + ' ' + $t('titles')"
+              v-model="brand.meta_title" />
           </b-form-group>
         </b-col>
         <b-col md="6">
@@ -82,7 +83,8 @@
         </b-col>
         <b-col md="6">
           <b-form-group :label="$t('menu') + ' ' + $t('Colors')">
-            <b-form-input id="mc-brand_name" :placeholder="$t('menu') + ' ' + $t('Colors')" v-model="brand.menu_color" />
+            <b-form-input id="mc-brand_name" :placeholder="$t('menu') + ' ' + $t('Colors')"
+              v-model="brand.menu_color" />
           </b-form-group>
         </b-col>
 
@@ -179,8 +181,9 @@
         </b-col>
         <b-col md="6">
           <b-form-group :label="$t('Secondary') + ' ' + $t('Language')">
-            <v-select v-model="brand.secondary_language" :options="this.secondary" label="text" :reduce="sel => sel.value"
-              :placeholder="$t('select') + ' ' + $t('Secondary')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
+            <v-select v-model="brand.secondary_language" :options="this.secondary" label="text"
+              :reduce="sel => sel.value" :placeholder="$t('select') + ' ' + $t('Secondary')"
+              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
           </b-form-group>
         </b-col>
@@ -297,7 +300,8 @@
         </b-col>
         <b-col md="6">
           <b-form-group :label="$t('Time') + ' ' + $t('Zone')">
-            <b-form-select v-model="brand.time_zone" :options="options" />
+            <b-form-select style="border: 1px solid #FF006B !important;    box-shadow: none !important;
+    color: black !important;" v-model="brand.time_zone" :options="options" />
           </b-form-group>
         </b-col>
 
@@ -750,7 +754,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 @import '~@resources/scss/vue/pages/page-profile.scss';
 
 #site_logo-img {
@@ -766,3 +770,55 @@ export default {
 }
 </style>
 
+<style scoped>
+/* Make all input fields black */
+b-form-input,
+input.form-control,
+textarea.form-control,
+b-form-textarea,
+.vs__dropdown-toggle,
+select.form-control,
+.custom-file-input,
+.custom-file-label,
+.form-control,
+.vs__selected,
+.vs__search,
+.vs__dropdown-menu,
+.vs__dropdown-option {
+
+  color: #000000 !important;
+
+}
+
+
+input.form-control::placeholder,
+textarea.form-control::placeholder,
+.form-control::placeholder,
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #b0b0b0 !important;
+  opacity: 1 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #b0b0b0 !important;
+}
+
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+  color: #b0b0b0 !important;
+}
+
+/* For vue-select dropdown text */
+.vs__dropdown-option {
+  color: #fff !important;
+}
+
+/* For file input */
+.custom-file-label {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #222 !important;
+}
+</style>

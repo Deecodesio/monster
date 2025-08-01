@@ -36,7 +36,11 @@ export default {
             return footer;
         })(),
         addresses: [],
-        selectedAddress: null,
+        // selectedAddress: null,
+        selectedAddress: (() => {
+            const selectAddress = localStorage.getItem("address");
+            return selectAddress;
+        })(),
     },
     getters: {},
     mutations: {

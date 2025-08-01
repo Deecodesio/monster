@@ -7,12 +7,13 @@
     <div class="custom-search d-flex justify-content-end">
       <b-form-group>
         <div class="d-flex align-items-center">
-          <label class="mr-1">Search</label>
+          <label class="mr-1"  style="color : black !important;" >Search</label>
           <b-form-input
             v-model="searchTerm"
             placeholder="Search"
             type="text"
             class="d-inline-block"
+          style="color : black !important;"
           />
         </div>
       </b-form-group>
@@ -275,4 +276,15 @@ export default {
 
 <style lang="scss" >
 @import '~@resources/scss/vue/libs/vue-good-table.scss';
+</style>
+<style scoped>
+  [dir] .col-form-label {
+
+    color: black ! important;
+
+}
+.form-control {
+   
+    color: black ! important;
+}
 </style>

@@ -91,7 +91,7 @@
                                 '/' +
                                 props.row.restaurant_name
                                 "><feather-icon :id="`invoice3-row_view-${props.row.id}-preview-icon`" icon="GlobeIcon"
-                                    size="16" class="mx-1" cursor="pointer" /></a>
+                                    size="16" class="mx-1" cursor="pointer" style="color: black !important;" /></a>
                             <b-tooltip v-b-tooltip.hover.v-warning title="Open Web View "
                                 :target="`invoice3-row-${props.row.id}-preview-icon`" placement="left" />
                         </span>
@@ -514,5 +514,11 @@ export default {
 
 .address {
     min-width: 25rem;
+}
+</style>
+<style scoped>
+table.vgt-table td {
+    vertical-align: middle !important;
+    color: black !important;
 }
 </style>

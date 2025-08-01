@@ -301,9 +301,9 @@
 
                       </b-col>
                       <b-col md="12">
-                        <b-form-group :label="$t('admin') + ' ' + $t('commision') + '%'">
-                          <validation-provider #default="{ errors }" name="Commision" rules="required"
-                            :custom-messages="{ required: $t('The Commision field is required') }">
+                        <b-form-group :label="$t('admin') + ' ' + $t('commission') + '%'">
+                          <validation-provider #default="{ errors }" name="Commission" rules="required"
+                            :custom-messages="{ required: $t('The Commission field is required') }">
                             <b-form-input v-model="restaurants.admin_commision" :state="errors.length > 0 ? false : null"
                               placeholder="0" type="number" :disabled="disabled" />
                             <small class="text-danger">{{ errors[0] }}</small>
@@ -3365,4 +3365,23 @@ export default {
 
 <style lang="scss">
 @import '~@resources/scss/vue/libs/vue-sweetalert.scss';
+</style>
+<style scoped>
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: black ! important;
+    }
+
+    [dir] .col-form-label {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    color: black ! important;
+
+}
 </style>

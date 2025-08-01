@@ -8,7 +8,7 @@ use App\Http\Controllers\api\BaseController;
 use DB;
 use Illuminate\Support\Facades\Storage;
 use PDF;
-use Excel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use App\Exports\ExportDelivery;
 use App\Exports\ExportOrder;
@@ -19,7 +19,7 @@ class NoteboardController extends BaseController
 {
 
 	/**
-	 * function to get notification list 
+	 * function to get notification list
 	 * @param no param
 	 * @return array o blade file
 	 */
@@ -31,7 +31,7 @@ class NoteboardController extends BaseController
 	}
 
 	/**
-	 * function to View add_noticeboard blade file 
+	 * function to View add_noticeboard blade file
 	 * @param no param
 	 * @return view add_noticeboard
 	 */
@@ -43,7 +43,7 @@ class NoteboardController extends BaseController
 	}
 
 	/**
-	 * function to View custum push blade file 
+	 * function to View custum push blade file
 	 * @param no param
 	 * @return view custumpush
 	 */
@@ -62,7 +62,7 @@ class NoteboardController extends BaseController
 		return view('admin/custumpush_admin', ['users' => $users]);
 	}
 	/**
-	 * function to send push notification based send to user , provider or all 
+	 * function to send push notification based send to user , provider or all
 	 * @param Request param
 	 * @return back with success response
 	 */

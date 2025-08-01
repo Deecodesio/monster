@@ -273,3 +273,21 @@ export default {
 <style lang="scss" >
 @import '~@resources/scss/vue/libs/vue-good-table.scss';
 </style>
+<style scoped>
+  [dir] .col-form-label {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    color: black ! important;
+
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: black ! important;
+    }
+</style>

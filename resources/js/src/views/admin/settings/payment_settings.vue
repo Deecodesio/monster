@@ -88,7 +88,7 @@
                     <label class="col-md-3">{{ $t('razorpay') }} {{ $t('Key') }}</label>
                     <div class="col-md-9">
                       <input type="text" name="razor_key" v-model="brand.razor_key" id="razor_key" class="form-control"
-                        placeholder="Razor Key" required="">
+                        placeholder="Razor Key" required="" style="color: black !important;">
                     </div>
                   </div>
 
@@ -96,7 +96,7 @@
                     <label class="col-md-3">{{ $t('razorpay') }} {{ $t('secret') }}</label>
                     <div class="col-md-9">
                       <input type="text" name="razor_secret" v-model="brand.razor_secret" id="razor_secret"
-                        class="form-control" placeholder="Razor Secret" required="">
+                        class="form-control" placeholder="Razor Secret" required="" style="color: black !important;">
                     </div>
                   </div>
 

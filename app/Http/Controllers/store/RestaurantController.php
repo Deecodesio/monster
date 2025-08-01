@@ -3613,7 +3613,7 @@ class RestaurantController extends BaseController
 
         // $data = json_decode($data);
 
-        
+
 
         // if ($data == NULL || $data == "") {
         //     return '';
@@ -3671,10 +3671,10 @@ class RestaurantController extends BaseController
                     } else {
                         $this_driver = [];
                     }
-                   
+
                 } else {
                     // $driver = DB::table('delivery_partners')->where('id', $driver_id)->first();
-                    
+
                     $this_driver = DB::table('delivery_partners')
                         // ->where('delivery_partners.id', $driver_key)
                         //  ->whereIn('delivery_partner_details.services', array($business->layout_id))
@@ -3683,7 +3683,7 @@ class RestaurantController extends BaseController
                         ->select('delivery_partners.*', 'delivery_partners.id as driver_id', 'delivery_partner_details.*')
                         ->get();
 
-                      
+
                     // if ($this_driver) {
                         // if (json_decode($this_driver->services) != null) {
                             // foreach (json_decode($this_driver->services) as $d) {
@@ -3717,14 +3717,14 @@ class RestaurantController extends BaseController
 
                 // $distance = vincentyGreatCircleDistance($each_driver->lat, $each_driver->lng, $restaurant->lat, $restaurant->lng);
                 // $distance = $distance * 1000;
-                
+
                 // if ($distance > 0 && $distance <= DEFAULT_RADIUS) {
                     // $driver[] = [
                     //     'name' => $this_driver->name . ' - ' . $distance,
                     //     'distance' =>  $distance,
                     //     'id' => $this_driver->driver_id,
                     // ];
-                
+
                 // }
             // }
 
@@ -4747,7 +4747,7 @@ class RestaurantController extends BaseController
             sendNotification([$user_noti->device_token], $title, $message, ['amount' => $amount]);
 
 
-            // $html = view('emails.restaurant.revise')->with(['order_id' => $order_id , 'amount' => $amount , 'user_detail'=>$user_detail]); 
+            // $html = view('emails.restaurant.revise')->with(['order_id' => $order_id , 'amount' => $amount , 'user_detail'=>$user_detail]);
 
             $admin = DB::table('admin')
                 ->first();
@@ -5187,7 +5187,8 @@ class RestaurantController extends BaseController
             mkdir($filePath, 0777, true);
         }
 
-        $fileName = $filePath . '' . $restaurant_id . '_products.csv';
+        // $fileName = $filePath . '' . $restaurant_id . '_products.csv';
+        $fileName = $filePath . '' . '_products.csv';
         $fp = fopen($fileName, 'w+');
         foreach ($productList as $eachRow) {
             fputcsv($fp, $eachRow);
@@ -5314,7 +5315,7 @@ class RestaurantController extends BaseController
             // if(File::exists(public_path('product_image/').$each_food->image)){
             //     $food_list[$key]->image = BASE_URL  . UPLOADS_PATH_PRODUCT.$each_food->image;
             // }elseif(File::exists(public_path('restaurant_uploads/').$restaurant_id.'/'.'Product/'.$each_food->image)){
-            //     $food_list[$key]->image = BASE_URL  . BASE_URL  . RESTAURANT_UPLOADS_PATH.$restaurant_id.'/'.'Product/'.$each_food->image 
+            //     $food_list[$key]->image = BASE_URL  . BASE_URL  . RESTAURANT_UPLOADS_PATH.$restaurant_id.'/'.'Product/'.$each_food->image
             // }elseif(File::exists(public_path('common_images/').$each_food->image)){
             //     $food_list[$key]->image = BASE_URL  . UPLOADS_PATH_COMMON.$each_food->image:$each_food->image;
             // }else{
@@ -5967,7 +5968,7 @@ class RestaurantController extends BaseController
             $food_list[$key]->add_ons = [];
         }
 
-      
+
         foreach ($food_list as $key => $each_food) {
 
             $item_count = 0;
@@ -6284,7 +6285,7 @@ class RestaurantController extends BaseController
 
         $rest_id = DB::table('restaurants')->where('id', $restaurant_id)->first();
         $business_id = DB::table('business_type')->where('id', $rest_id->business_type)->first();
-        
+
         if ($request->header('authId') != "") {
             $user_id = $request->header('authId');
         } else {
@@ -6507,7 +6508,7 @@ class RestaurantController extends BaseController
             }
             // $food_list[$key]->groups = $add_group;
             $food_list[$key]->groups = [];
-        }       
+        }
 
         foreach ($food_list as $key => $each_food) {
 

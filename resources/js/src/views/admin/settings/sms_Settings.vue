@@ -48,17 +48,17 @@
                                <div class="row">
                                 <div class="col-md-12">  
                                 
-                                  <div class="form-group row">                        
-                                    <label class="col-md-3">{{$t('template')}} {{$t('id')}}</label>                          
+                                  <div class="form-group row" >                        
+                                    <label class="col-md-3" >{{$t('template')}} {{$t('id')}}</label>                          
                                     <div class="col-md-9">
-                                        <input type="text" name="template_id" v-model="brand.msg91_template_id" id="template_id" class="form-control" >
+                                        <input type="text" name="template_id" v-model="brand.msg91_template_id" id="template_id" class="form-control"  style="color: black !important;">
                                    </div>
                                 </div>
                                 
                                   <div class="form-group row">                        
-                                    <label class="col-md-3"> {{$t('auth')}} {{$t('Key')}}</label>                          
+                                    <label class="col-md-3" >{{$t('auth')}} {{$t('Key')}}</label>                          
                                     <div class="col-md-9"> 
-                                        <input type="text" name="auth_key" v-model="brand.msg91_auth_key" id="auth_key" class="form-control" >
+                                        <input type="text" name="auth_key" v-model="brand.msg91_auth_key" id="auth_key" class="form-control"  style="color: black !important;">
                                    </div>
                                 </div>
                                 <div class="form-group row">

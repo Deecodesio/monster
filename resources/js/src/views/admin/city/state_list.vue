@@ -26,6 +26,7 @@
             :placeholder="$t('message.seachLabel')"
             type="text"
             class="d-inline-block"
+            style="color: black !important;"
           />
         </div>
       </b-form-group>

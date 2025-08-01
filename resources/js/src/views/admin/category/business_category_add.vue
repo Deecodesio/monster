@@ -36,6 +36,7 @@
                             placeholder="name"
                             v-model="category.category_name"
                             required
+                            style="color: black !important;"
                         />
                         <b-form-input v-model="category.id" hidden="hidden" />
                     </b-form-group>

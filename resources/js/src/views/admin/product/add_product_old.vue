@@ -13,6 +13,7 @@
               id="name"
               placeholder="Name"
               v-model="product.name"
+              style="color: black !important;"
             />
           </b-form-group>
         </b-col>
@@ -36,6 +37,7 @@
                   v-model="product.description"
                   id="textarea-default"
                    placeholder="Textarea"
+                    style="color: black !important;"
                    rows="6"
                     />
               </b-form-group>
@@ -92,7 +94,6 @@
           </b-form-group>
         </b-col>
 
-         </b-col>
          <b-col md="6">
           <b-form-group
             label="Pure Veg"
@@ -149,7 +150,6 @@
           :key="addon.id"
           :value="addon.id"
           name="flavour-3a">{{ addon.name }}</b-form-checkbox>
-             </b-form-checkbox-group>
            
                 
               </b-form-group>
@@ -182,7 +182,7 @@
         add-on-change
         no-outer-focus
       >
-        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+        <template v-slot="{ tags, inputHandlers, disabled, removeTag }">
           <ul
             v-if="tags.length > 0"
             class="list-inline d-inline-block mb-1"
@@ -586,6 +586,15 @@ inputText: '',
 #profile-img {
     height: 8.92rem;
     width: 8.92rem;
+}
+[dir] .form-control
+ {
+    padding: 0.375rem 0.75rem;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    color: black !important;
 }
 </style>
 

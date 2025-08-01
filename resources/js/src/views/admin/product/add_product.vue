@@ -211,7 +211,7 @@
                                                     :key="index"
                                                     :id="'img' + index"
                                                 >
-                                                    <div class="imgcontainer">
+                                                    <!-- <div class="imgcontainer">
                                                         <b-img
                                                             thumbnail
                                                             :src="
@@ -288,7 +288,19 @@
                                                                 </b-button>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
+                                                    <div class="imgcontainer">
+    <b-img
+        thumbnail
+        :src="url1[index] ? url1[index] : '/no_image.png'"
+        rounded
+        fluid
+        style="width: 100%; padding: 1%;"
+        alt="banner photo"
+        id="lazy"
+        :class="featured_image == index ? 'mt-1 featured' : 'mt-1'"
+        />
+</div>
                                                 </b-col>
                                             </b-row>
                                         </div>
@@ -3165,5 +3177,23 @@ export default {
     border-style: solid !important;
     border-color: $primary !important;
     border-width: thick !important;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: black ! important;
+    }
+
+    [dir] .col-form-label {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    color: black ! important;
+
 }
 </style>

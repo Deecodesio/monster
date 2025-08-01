@@ -574,7 +574,7 @@ export default {
 
 table.vgt-table td {
   vertical-align: middle;
-  color: #6e6b7b;
+  color: #000000;
 }
 
 .align {

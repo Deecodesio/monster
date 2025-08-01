@@ -11,7 +11,7 @@
                     <div class="main-address-container">
                         <div class="address-container">
                             <h2 class="page-title">Choose Delivery Address</h2>
-                            <p class="page-subtitle">
+                            <p class="page-subtitle" style="color: black !important;">
                                 Select or add a delivery address for your order
                             </p>
 
@@ -25,7 +25,7 @@
                                     }" @click="setdefault(data.id)">
                                         <div class="address-header">
                                             <span class="address-tag" v-if="data.is_default">DEFAULT</span>
-                                            <span class="address-type">{{
+                                            <span class="address-type" >{{
                                                 data.type | add_type
                                             }}</span>
                                             <button class="edit-btn" @click.stop="editAddress(data)">
@@ -64,7 +64,7 @@
                                                 font-family: Quicksand;
                                                 font-weight: 400;
                                                 font-size: 14px;
-                                                color: #6b7280;
+                                                color:black !important;
                                                 margin-top: 15px;
                                             ">
                                             Please provide complete address
@@ -188,10 +188,10 @@ addressType, index
                             <div class="add-new-card" @click="showModal">
                                 <div class="add-new-content">
                                     <div class="circle-container">
-                                        <span class="plus-icon">+</span>
+                                        <span class="plus-icon" style="color: black !important;">+</span>
                                     </div>
-                                    <span class="add-new-title">Add New Address</span>
-                                    <p class="add-new-subtitle">
+                                    <span class="add-new-title" style="color: black !important;">Add New Address</span>
+                                    <p class="add-new-subtitle" style="color: black !important;">
                                         Add a new delivery location
                                     </p>
                                 </div>

@@ -4149,7 +4149,7 @@ class UserController extends BaseController
 
     public function SocialSignup(Request $request)
     {
-        // Socialite will pick response data automatic 
+        // Socialite will pick response data automatic
         $user = Socialite::driver("google")->stateless()->user();
         $check_email = Users::where('email', $user->email)->first();
         $phone_req = false;
@@ -4223,8 +4223,9 @@ class UserController extends BaseController
         foreach ($address as $ad) {
 
             $distance = vincentyGreatCircleDistance2($lat, $lng, $ad->lat, $ad->lng);
-            // print($distance);
-            if ($distance <= 0.1) {
+            $distance = $distance * 1000; // now in meters
+
+            if ($distance <= 100) { // 0.1 km = 100 meters
                 $near_address[] = [
                     'id' => $ad->id,
                     'user_id' => $ad->user_id,
@@ -4536,7 +4537,7 @@ class UserController extends BaseController
 
 
 
-                // FOR COUPON CODE 
+                // FOR COUPON CODE
                 if ($request->coupon_code != "") {
                     $get_offer = DB::table('coupon_code')->where('code', $request->coupon_code)->first();
                     if (count($get_offer) != 0) {

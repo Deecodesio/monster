@@ -602,4 +602,17 @@ export default {
   },
 }
 </script>
-  
+<style scoped>
+ #mc-brand_name{
+   color: black   !important;
+}
+</style>
+<style scoped>
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+  color: #000 !important;
+  opacity: 1;
+}
+</style>

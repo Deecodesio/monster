@@ -42,7 +42,7 @@
                         </h3>
 
                         <p class="modal-subtitle"
-                            style="font-family: Quicksand; font-weight: 400; font-size: 14px; color: #6B7280;margin-top: 15px;">
+                            style="font-family: Quicksand; font-weight: 400; font-size: 14px; color: black !important; margin-top: 15px;">
                             Please provide complete address information for accurate delivery</p>
 
 

@@ -322,6 +322,15 @@ export default {
 
 table.vgt-table td {
   vertical-align: middle;
-  color: #6e6b7b;
+  color: #000000;
+}
+</style>
+<style scoped>
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+  color: #000 !important;
+  opacity: 1;
 }
 </style>

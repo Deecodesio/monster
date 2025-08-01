@@ -14,7 +14,7 @@
         <b-col md="6">
           <b-form-group :label="$t('vehicle') + ' ' + $t('name')">
             <b-form-input id="mc-first-name" :placeholder="$t('vehicle') + ' ' + $t('name')"
-              v-model="vehicle.vehicle_name" />
+              style="color: black !important;" v-model="vehicle.vehicle_name" />
           </b-form-group>
         </b-col>
 
@@ -22,7 +22,8 @@
 
         <b-col md="6">
           <b-form-group :label="$t('vehicle') + ' ' + $t('no')">
-            <b-form-input id="mc-city" :placeholder="$t('vehicle') + ' ' + $t('no')" v-model="vehicle.vehicle_no" />
+            <b-form-input id="mc-city" :placeholder="$t('vehicle') + ' ' + $t('no')" v-model="vehicle.vehicle_no"
+              style="color: black !important;" />
           </b-form-group>
         </b-col>
 
@@ -42,20 +43,22 @@
 
         <b-col md="6">
           <b-form-group :label="$t('insurance') + ' ' + $t('no')">
-            <b-form-input id="mc-country" :placeholder="$t('insurance') + ' ' + $t('no')" v-model="vehicle.insurance_no" />
+            <b-form-input id="mc-country" :placeholder="$t('insurance') + ' ' + $t('no')" v-model="vehicle.insurance_no"
+              style="color: black !important;" />
           </b-form-group>
         </b-col>
 
         <b-col md="6">
           <b-form-group :label="$t('RC') + ' ' + $t('no')">
-            <b-form-input id="mc-first-name" :placeholder="$t('RC') + ' ' + $t('no')" v-model="vehicle.rc_no" />
+            <b-form-input id="mc-first-name" :placeholder="$t('RC') + ' ' + $t('no')" v-model="vehicle.rc_no"
+              style="color: black !important;" />
           </b-form-group>
         </b-col>
         <b-col md="6">
           <b-form-group :label="$t('insurance') + ' ' + $t('expiry') + ' ' + $t('date')">
 
             <b-form-datepicker id="mc-insurance_expiry_date" v-model="vehicle.insurance_expiry_date" class="mb-1"
-              :min="new Date()" />
+              :min="new Date()" style="color: black;" />
           </b-form-group>
         </b-col>
         <b-col md="6">
@@ -149,13 +152,13 @@
 
             </b-col>
 
-           
+
           </b-row>
 
         </b-col>
         <b-col md="6">
-              
-            </b-col>
+
+        </b-col>
         <!-- submit and reset -->
         <b-col>
           <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
@@ -213,7 +216,7 @@ export default {
         { value: 1, text: this.$t('active') },
         { value: 2, text: this.$t('inactive') },
       ],
-      options_carrier:[],
+      options_carrier: [],
     }
   },
   methods: {
@@ -221,13 +224,13 @@ export default {
     vehicle_add() {
       let data = new FormData();
       data.append('id', this.vehicle.id);
-      data.append('vehicle_name', this.vehicle.vehicle_name?this.vehicle.vehicle_name:'');
-      data.append('status', this.vehicle.status?this.vehicle.status:'');
-      data.append('vehicle_no', this.vehicle.vehicle_no?this.vehicle.vehicle_no:'');
-      data.append('insurance_no', this.vehicle.insurance_no? this.vehicle.insurance_no:'');
-      data.append('rc_no', this.vehicle.rc_no?this.vehicle.rc_no:'');
-      data.append('insurance_expiry_date', this.vehicle.insurance_expiry_date?this.vehicle.insurance_expiry_date:'');
-      data.append('rc_expiry_date', this.vehicle.rc_expiry_date?this.vehicle.rc_expiry_date:'');
+      data.append('vehicle_name', this.vehicle.vehicle_name ? this.vehicle.vehicle_name : '');
+      data.append('status', this.vehicle.status ? this.vehicle.status : '');
+      data.append('vehicle_no', this.vehicle.vehicle_no ? this.vehicle.vehicle_no : '');
+      data.append('insurance_no', this.vehicle.insurance_no ? this.vehicle.insurance_no : '');
+      data.append('rc_no', this.vehicle.rc_no ? this.vehicle.rc_no : '');
+      data.append('insurance_expiry_date', this.vehicle.insurance_expiry_date ? this.vehicle.insurance_expiry_date : '');
+      data.append('rc_expiry_date', this.vehicle.rc_expiry_date ? this.vehicle.rc_expiry_date : '');
       data.append('insurance_image', this.vehicle.insurance_image);
       data.append('rc_image', this.vehicle.rc_image);
       data.append('vehicle_image', this.vehicle.vehicle_image);
@@ -309,8 +312,8 @@ export default {
   },
   created() {
     this.$http.get('/admin/carrier_list')
-              .then(res => { this.options_carrier = res.data })
-              
+      .then(res => { this.options_carrier = res.data })
+
     if (this.$route.params.id) {
       this.$http.get('/admin/vehicle_edit/' + this.$route.params.id)
         .then(res => {
@@ -320,16 +323,31 @@ export default {
         })
     }
 
-  
+
 
   },
 
 }
 </script>
-<style lang="scss" >
+<style lang="scss">
 @import '~@resources/scss/vue/pages/page-profile.scss';
 
 #vehicle-img {
   width: 9rem;
+}
+
+// Make selected date text in b-form-datepicker black
+.b-form-datepicker input.form-control {
+  color: #000 !important;
+  
+}
+</style>
+<style scoped>
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+  color: #000 !important;
+  opacity: 1;
 }
 </style>

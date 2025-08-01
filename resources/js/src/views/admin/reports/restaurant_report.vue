@@ -182,9 +182,9 @@
 
          <label class="btn btn-outline-primary tiplabel tiphide  f-size-0" :id="'addresstype'+2"  name="export" type="button" style="margin-right: 20px; margin-left: 10px; padding: 10px; "  > <input type="radio" class="checktips" hidden name="addresstype"  @change="delivery_type(2)"  value="2">{{$t("PDF")}}</label>
 
-         <label class="btn btn-outline-primary tiplabel tiphide  f-size-0" :id="'addresstype'+3"  name="export" type="button" style="margin-right: 20px; margin-left: 10px; padding: 10px; "  > <input type="radio" class="checktips" hidden name="addresstype"  @change="delivery_type(3)"  value="3">{{$t("Excel")}}</label>
+         <!-- <label class="btn btn-outline-primary tiplabel tiphide  f-size-0" :id="'addresstype'+3"  name="export" type="button" style="margin-right: 20px; margin-left: 10px; padding: 10px; "  > <input type="radio" class="checktips" hidden name="addresstype"  @change="delivery_type(3)"  value="3">{{$t("Excel")}}</label> -->
 </b-col>
-                      
+
                         <b-col md="2">
 
 </b-col>
@@ -215,7 +215,7 @@
       locale="en"
     />
       </b-form-group>
-        </b-col>   
+        </b-col>
        <b-col md="6">
         <b-form-group>
         <h5 class="font-weight-bold">
@@ -231,7 +231,7 @@
       </b-form-group>
        </b-col>
        <b-col md="6">
-      
+
        </b-col>
        <b-col md="6" >
         <b-button class="mt-3"  variant="primary"   @click.prevent="filterdate" style="float: right;">{{$t('Filter')}}</b-button>
@@ -438,7 +438,7 @@ export default {
 
     delivery_type(id)
     {
-     
+
       var elements = document.getElementsByName("export");
        elements.forEach((element) => {
          element.classList.remove("tipsactive");
@@ -455,34 +455,34 @@ export default {
       data.append('from_date', this.From_Date);
       data.append('to_date', this.To_Date);
       data.append('type', "restaurant");
-      
+
     this.$http.post('/admin/Date_Filter',data)
       .then(res => {
         this.rows = res.data;
         this.Loading = false;
       })
   }
- 
+
 
 },
     export_download()
     {
       var dc = document.querySelector('input[name="addresstype"]:checked').value;
 
-     
+
       if(dc == 1)
       {
         let data = new FormData();
       data.append('from_date', this.From_Date);
       data.append('to_date', this.To_Date);
-      
+
       this.$http.post('/admin/restaurant_csv',data)
    .then(res => {
- 
-    
+
+
      if (res.data.status == true) {
        this.path = res.data.path;
- 
+
        this.$toast({
          component: ToastificationContent,
          position: 'bottom-right',
@@ -500,7 +500,7 @@ export default {
        }
       i++
      },2*1000);
-       
+
      }
      else {
        this.$toast({
@@ -514,22 +514,22 @@ export default {
        })
      }
    })
- 
- 
+
+
       }
       else if(dc == 2)
       {
-       
+
         let data = new FormData();
       data.append('from_date', this.From_Date);
       data.append('to_date', this.To_Date);
       this.$http.post('/admin/restaurant_pdf',data)
    .then(res => {
- 
-    
+
+
      if (res.data.status == true) {
        this.path = res.data.path;
- 
+
        this.$toast({
          component: ToastificationContent,
          position: 'bottom-right',
@@ -547,7 +547,7 @@ export default {
        }
       i++
      },2*1000);
-       
+
      }
      else {
        this.$toast({
@@ -561,24 +561,24 @@ export default {
        })
      }
    })
- 
+
 
       }
       else
       {
-        
+
         let data = new FormData();
       data.append('from_date', this.From_Date);
       data.append('to_date', this.To_Date);
       this.$http.post('/admin/restaurant_excel',data)
    .then(res => {
- 
-    
-    
- 
+
+
+
+
     if (res.data.status == true) {
        this.path = res.data.path;
- 
+
        this.$toast({
          component: ToastificationContent,
          position: 'bottom-right',
@@ -596,7 +596,7 @@ export default {
        }
       i++
      },2*1000);
-       
+
      }
      else {
        this.$toast({
@@ -609,20 +609,20 @@ export default {
          },
        })
      }
-     
-    
+
+
        })
-    
-   
- 
- 
+
+
+
+
 
       }
 
     },
 
 
-    
+
 call()
 {
   document.getElementById("download").click();

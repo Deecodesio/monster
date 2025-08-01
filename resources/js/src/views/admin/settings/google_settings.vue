@@ -193,4 +193,24 @@ export default {
   },
 }
 </script>
+<style scoped>
+ #mc-brand_name{
+  color: #000 !important;
+}
+input::placeholder,
+textarea::placeholder,
+.form-control::placeholder {
+  color: #000 !important;
+  opacity: 1;
+}
+::-webkit-input-placeholder {
+  color: #000 !important;
+}
+:-ms-input-placeholder {
+  color: #000 !important;
+}
+::-ms-input-placeholder {
+  color: #000 !important;
+}
+</style>
   

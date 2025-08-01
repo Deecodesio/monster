@@ -1,3 +1,12 @@
+<style scoped>
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder {
+    color: #000 !important;
+    opacity: 1;
+}
+</style>
 <template>
     <b-card>
         <b-form @submit.prevent="addBulkOrder">
@@ -8,7 +17,7 @@
                             id="name"
                             :placeholder="$t('name')"
                             v-model="bulkOrder.name"
-                            :required="!bulkOrder.name"
+                            :required="!bulkOrder.name" style="color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
@@ -18,7 +27,7 @@
                             id="state"
                             :placeholder="$t('select state')"
                             v-model="bulkOrder.state"
-                            :required="!bulkOrder.state"
+                            :required="!bulkOrder.state" style="color: black !important;"
                         />
                     </b-form-group>
                     <!-- <b-form-group :label="$t('state')">
@@ -44,7 +53,7 @@
                             id="city"
                             :placeholder="$t('select city')"
                             v-model="bulkOrder.district"
-                            :required="!bulkOrder.district"
+                            :required="!bulkOrder.district" style="color: black !important;"
                         />
                     </b-form-group>
 
@@ -67,7 +76,7 @@
                             id="taluk"
                             :placeholder="$t('select taluk')"
                             v-model="bulkOrder.taluk"
-                            :required="!bulkOrder.taluk"
+                            :required="!bulkOrder.taluk"  style="color: black !important;"
                         />
                     </b-form-group>
                     <!-- <b-form-group :label="$t('taluk')">
@@ -91,7 +100,7 @@
                             type="text"
                             :placeholder="$t('pincode')"
                             v-model="bulkOrder.pincode"
-                            :required="!bulkOrder.pincode"
+                            :required="!bulkOrder.pincode" style="color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
@@ -102,7 +111,7 @@
                             type="text"
                             :placeholder="$t('address')"
                             v-model="bulkOrder.address"
-                            :required="!bulkOrder.address"
+                            :required="!bulkOrder.address" style="color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
@@ -116,7 +125,7 @@
                             type="tel"
                             :placeholder="$t('phone_one')"
                             v-model="bulkOrder.phone_1"
-                            :required="!bulkOrder.phone_1"
+                            :required="!bulkOrder.phone_1" style="color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
@@ -126,7 +135,7 @@
                             id="phone2"
                             type="tel"
                             :placeholder="$t('phone_two')"
-                            v-model="bulkOrder.phone_2"
+                            v-model="bulkOrder.phone_2" style="color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
@@ -140,7 +149,7 @@
                             type="email"
                             :placeholder="$t('email')"
                             v-model="bulkOrder.email_id"
-                            :required="!bulkOrder.email_id"
+                            :required="!bulkOrder.email_id" style="color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
@@ -196,7 +205,7 @@
                             v-model="bulkOrder.message"
                             :placeholder="$t('messages')"
                             rows="4"
-                            style="resize: none; height: 105px"
+                            style="resize: none; height: 105px; color: black !important;"
                         />
                     </b-form-group>
                 </b-col>
