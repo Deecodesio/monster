@@ -19,7 +19,7 @@ export default {
 .banner {
   width: 100%;
   overflow: hidden;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 Default image styles
@@ -35,6 +35,7 @@ Default image styles
     height: 365px;
   }
   .banner img {
+    width: 100%;
     height: 100%;
   }
 }
@@ -45,6 +46,7 @@ Default image styles
     height: 280px;
   }
   .banner img {
+    width: 100%;
     height: 100%;
   }
 }
@@ -95,10 +97,10 @@ Default image styles
 
 
       <div class="col-lg-4 col-md-12 text-center">
-        <img 
-          src="/TakeAway-pana1.png" 
-          alt="Fast Delivery Service" 
-          class="img-fluid why-company-img" 
+        <img
+          src="/TakeAway-pana1.png"
+          alt="Fast Delivery Service"
+          class="img-fluid why-company-img"
           loading="lazy"
           width="400"
           height="300"
@@ -118,7 +120,7 @@ export default {
 .why-company {
   background: #ff007a;
   color: white;
-  padding: 3rem 3.75rem; 
+  padding: 3rem 3.75rem;
 }
 
 .company-name {
@@ -133,22 +135,22 @@ export default {
 }
 
 .title-text {
-  font-size: clamp(1.625rem, 3vw, 2.3125rem); 
+  font-size: clamp(1.625rem, 3vw, 2.3125rem);
   line-height: 1.2;
 }
 
 .description {
-  font-size: clamp(1.125rem, 2vw, 1.5625rem) !important; 
+  font-size: clamp(1.125rem, 2vw, 1.5625rem) !important;
   line-height: 1.4 !important;
 }
 
 
 .features {
-  margin-top: 1.25rem; 
+  margin-top: 1.25rem;
 }
 
 .features li {
-  font-size: clamp(1.25rem, 2.5vw, 2.1875rem); 
+  font-size: clamp(1.25rem, 2.5vw, 2.1875rem);
   font-weight: 700;
 }
 
@@ -160,8 +162,8 @@ export default {
   color: #ff007a;
   border-radius: 50%;
   font-size: 1rem;
-  min-width: 2rem; 
-  min-height: 2rem; 
+  min-width: 2rem;
+  min-height: 2rem;
   flex-shrink: 0;
 }
 
@@ -174,20 +176,20 @@ export default {
 
 @media (max-width: 991.98px) {
   .why-company {
-    padding: 1.875rem 1.25rem; 
+    padding: 1.875rem 1.25rem;
     text-align: center;
   }
-  
+
   .underline {
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .features {
     text-align: left;
     padding-left: 1rem;
   }
-  
+
   .why-company-img {
     max-width: 80%;
     margin-top: 1.5rem;
@@ -196,43 +198,43 @@ export default {
 
 @media (max-width: 767.98px) {
   .features li {
-    font-size: 1.375rem; 
+    font-size: 1.375rem;
   }
-  
+
   .check-icon {
     font-size: 0.875rem;
-    min-width: 1.75rem; 
-    min-height: 1.75rem; 
+    min-width: 1.75rem;
+    min-height: 1.75rem;
   }
 }
 
 @media (max-width: 575.98px) {
   .why-company {
-    padding: 1.25rem 0.9375rem; 
+    padding: 1.25rem 0.9375rem;
   }
-  
+
   .title-text {
-    font-size: 1.625rem; 
+    font-size: 1.625rem;
   }
-  
+
   .description {
-    font-size: 1.125rem !important; 
+    font-size: 1.125rem !important;
   }
-  
+
   .features li {
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
   }
 }
 
 @media (max-width: 991.98px) and (min-width: 768px) {
   .features {
-    max-width: 80%; 
+    max-width: 80%;
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .why-company-img {
-    max-width: 60%; 
+    max-width: 60%;
   }
 }
 
