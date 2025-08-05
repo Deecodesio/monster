@@ -1,6 +1,6 @@
 <template>
-    <b-row @click="showModal" class="location ">
-        <b-col cols="12">
+    <b-row @click="showModal" class="location " >
+        <!-- <b-col cols="12">
             <h5 class="size"><b>{{ $t("DeliveringTo") }}</b></h5>
             <p id="demo" class="wrap" style="font-size: 14px; float:left;   font-weight: 900 !important;  width:auto;max-width:175px;margin-right:10px !important;">
                 <feather-icon
@@ -9,7 +9,27 @@
                      <b-img class="dropdown-icon" src="/DR.svg" fluid
 
                 alt="Scan" style=" width:16px; height:20px; float:left; color: #FFCE00 !important; fill: #FFCE00 !important;"    />
+        </b-col> -->
+        <b-col cols="12" style="padding-left: 0% !important; right: 0% !important;">
+            <div class="d-flex align-items-start">
+                <!-- Location Icon -->
+                <feather-icon icon="MapPinIcon" style="color: #FFCE00;margin-top: 0px !important; height: auto;width: 45px;margin-top: 4px !important;margin-right: 10px !important;" />
+
+                <!-- Address Text -->
+                <div >
+                    <div class="d-flex align-items-center">
+                        <strong style="font-size: 16px; font-weight: bold;color: black !important;">{{ district }} </strong>
+                        <!-- Dropdown Icon -->
+                        <b-img src="/DR.svg" fluid alt="Dropdown" class="ml-1"
+                            style="width: 18px; height: 18px; margin-top: 0px; margin-bottom: 6px !important;" />
+                    </div>
+                    <div style="font-size: 13px; color:black;margin-bottom: 5px !important;">
+                         {{ address }}
+                    </div>
+                </div>
+            </div>
         </b-col>
+
         <b-modal id="modal-address" title="Login" ok-only ok-title="Login" cancel-title="Close" hide-footer hide-header
             size="lg" centered ref="my-modal" aria-label="Get address from user">
             <b-row>
@@ -134,12 +154,13 @@ export default {
     created() {
         var lat = localStorage.getItem('latitude');
         var lng = localStorage.getItem('longitude');
-        
-     
+
+
 
         this.$http.get('/get_address/' + lat + '/' + lng)
             .then(res => {
                 this.address = res.data.data
+                this.district = res.data.district;
                 localStorage.setItem('address', this.address);
             })
         this.$http.get('/get_site_logo')
@@ -169,7 +190,7 @@ export default {
             var autocomplete = new google.maps.places.Autocomplete(input);
             autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
-                console.log("Welcome Buddy",place);
+                console.log("Welcome Buddy", place);
                 var address = '';
                 if (place.address_components) {
                     address = [
@@ -253,13 +274,13 @@ export default {
                 function (results, status) {
                     if (results[0]) {
                         var add = results[0].formatted_address;
-                          console.log("add: " + add)   
+                        console.log("add: " + add)
                         localStorage.setItem('address', add)
                     } else {
                         alert("address not found");
                     }
                 },
-            
+
             );
             this.$refs['my-modal'].hide()
             location.reload()
@@ -339,13 +360,11 @@ p {
 .location {
     cursor: pointer;
 }
+
 .size {
     font-size: 17px;
     font-weight: 700;
     color: rgb(0, 0, 0);
 
 }
-
-
-
 </style>

@@ -3138,7 +3138,7 @@ class UserController extends BaseController
         //     ->orderby('restaurants.id', 'asc')
         //     ->get();
 
-          $food_list = DB::table('food_list')
+        $food_list = DB::table('food_list')
             // ->wherein('food_list.restaurant_id', $availableRestIDs)
             ->where('food_list.name', 'like', '%' . $key_word . '%')
             // ->join('restaurants', 'restaurants.id', '=', 'food_list.restaurant_id')
@@ -3188,7 +3188,7 @@ class UserController extends BaseController
 
             $rt3[] = [
                 'img' => $img,
-                'name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname??''),
+                'name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname ?? ''),
                 // 'restaurant_name' => $this->secondLanguage_user($cat->category_name, $cat->category_secondaryname),
                 // 'restaurant_id' => $cat->id,
                 'slug' => $slug
@@ -4205,9 +4205,28 @@ class UserController extends BaseController
         $json = file_get_contents($ad);
         $details = json_decode($json, TRUE);
 
+        // print_r($details['results'][0]);
+        // exit;
+
+        $district = '';
+
+        $full_address = $details['results'][0]['formatted_address'];
+        // $district = $details['results'][0]['address_components'][3]['long_name'];
+        foreach ($details['results'][0]['address_components'] as $component) {
+            if (in_array('administrative_area_level_3', $component['types'])) {
+                $district = $component['long_name'];
+                break; // stop once found
+            }
+        }
+
 
         $status = true;
-        $response_Array = json_encode(['status' => $status, 'data' => $details['results'][1]['address_components'][2]['long_name']]);
+        // $response_Array = json_encode(['status' => $status, 'data' => $details['results'][1]['address_components'][2]['long_name']]);
+        $response_Array = json_encode([
+            'status' => $status,
+            'district' => $district,
+            'data' => $full_address
+        ]);
         return $response_Array;
     }
 

@@ -30,8 +30,8 @@ export default {
 
     metaInfo: {
 
-        title: "Monster Foods",
-
+        title: "Chicken, Egg online buy-  Fresh tender chicken",
+        // title: "Monster Foods",
         titleTemplate: '%s'
     },
     components: {

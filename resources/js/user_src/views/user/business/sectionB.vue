@@ -61,11 +61,11 @@ Default image styles
   }
 }
 </style>
+
 <!-- updated code new  -->
 <!-- <template>
   <section class="why-company container-fluid py-5">
-    <div class="row align-items-center">
-
+    <div class="row d-flex justify-content-start">
       <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
         <h3 class="fw-bold text-white title-text">
           Why <span class="company-name">Company Name</span>
@@ -78,7 +78,7 @@ Default image styles
         </p>
       </div>
 
-      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+      <div class="col-lg-4 col-md-12 mb-4 mb-lg-0 px-5 d-flex justify-content-center">
         <ul class="features list-unstyled mb-0 mx-auto text-center text-md-start">
           <li class="d-flex align-items-center mb-3">
             <span class="check-icon" aria-hidden="true">&#10003;</span>
@@ -96,7 +96,7 @@ Default image styles
       </div>
 
 
-      <div class="col-lg-4 col-md-12 text-center">
+      <div class="col-lg-4 col-md-12 d-flex justify-content-end">
         <img
           src="/TakeAway-pana1.png"
           alt="Fast Delivery Service"

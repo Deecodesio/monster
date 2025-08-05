@@ -11,24 +11,83 @@
 
 <template>
   <div id="app" style="margin-top:80px;">
-     <!-- <div class="mt-5 mx-3 py-6 container"> -->
-     <div class="mt-5 py-6 container">
-                <top_banners />
-            </div>
+    <!-- <div class="mt-5 mx-3 py-6 container"> -->
+    <div class="mt-5 py-6 container">
+      <top_banners />
+    </div>
     <!-- Section 1: Gurlean Delicious Food -->
     <section class="section-1">
-       <h1 style="display: flex !important; color: black !important; justify-content: center; margin-bottom: 30px;">Annapoorna Foods</h1>
-      <div class="container">       
+      <h1 style="display: flex !important; color: black !important; justify-content: center; margin-bottom: 30px;">
+        Annapoorna Foods</h1>
+      <div class="container">
         <div class="content-grid">
+          <div class="image-placeholder">
+            <b-img src="/Res_2.jpg" fluid alt="Restaurant Interior" class="restaurant-image" />
+          </div>
           <div class="text-content">
-            <h1>Gurlean Delicious Food</h1>
-            <h2>Catering to your requirements</h2>
-            <p>Our store is more than just another ordinary online retailer. We are not only top-quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from one store to another, and then trying to find time to collect and organize your online orders. We will not only top-quality products, but give our customers a positive online shopping experience.</p>
+              <!-- <div style="text-align: center;margin-top: 5px  !important;margin-bottom: 5px !important;">
+                <h1>Gurlean Delicious Food</h1>
+                <h2 >Catering to your requirements</h2>
+              </div> -->
+
+            <p><br><span style="font-weight: bold;font-size:larger;">Annapurna Foods</span> is a start-up Poultry meat
+              and Poultry Egg online sales E Commerce company under
+              brand
+              Name<span style="font-weight: bold;font-size:medium;"> Monster Foods</span> across <span
+                style="font-weight: bold;font-size:medium;">South India</span>.</br>
+
+              <br>Chicken meat and Egg is a widely consumed source of protein in India. It is available in various forms
+              like fresh, frozen, processed, or ready-to-cook and is popular across young generations.</br>
+
+
+
+              <br> Among animal proteins poultry chicken and egg is economically cheaper price and freshly available any
+              time
+              and place in India. Today commercial production poultry of broiler chicken and egg is increase day by day
+              according to consumption and availability easily for large population all the time.</br>
+
+
+
+              <br>So, it is buyer needs to aware while buying quality, hygienic and right price all over the places in
+              India
+              at any time without compromising the quality of chicken and egg.</br>
+
+
+
+
+
+              <br>Annapurna Foods - <span style="font-weight: bold;font-size:medium;">Monster chicken</span> serve to
+              people chicken and egg with consciously buyer from broiler
+              integrators and layer farms all over India. We constantly monitoring our farmers Healthy and Hygienic
+              growth of birds feed with good quality raw materials.</br>
+
+
+
+              <br>we tied up with Broiler farms and Broiler integrated for consistent supply of quality birds to our
+              meat
+              shops.</br>
+
+              <br>Further also tied up with Meat shops are hygienic, and the chickens processed there are cleaned with
+              modern machines and we make hygienic and fresh chicken and eggs available to consumers.</br>
+
+              <br> We to provide you with healthy, hygienic broiler chicken and eggs at the right price and on
+              time.</br>
+              <br>
+              We simplify the buying process according to modern lifestyles and just order online and set the day and
+              time and we deliver it to your place within that time.</br>
+
+              <br>Also, those who are nearby can order online and get notified when your order is ready, so you can buy
+              it
+              without any delay when you go to the meat shop.</br>
+
+              <br> We have made it possible for apartment residents in big cities to avoid the hassle of going to the
+              meat
+              shops and buying chicken and eggs at their homes, even if there are thousands of families in our mobile
+              shop deliver at your doorstep.</br>
+            </p>
             <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from one store to another, ordering online. We will not only top-quality products.</p> -->
           </div>
-          <div class="image-placeholder">
-             <b-img src="/Res_2.jpg" fluid alt="Restaurant Interior" class="restaurant-image"/>
-          </div>
+
         </div>
       </div>
     </section>
@@ -78,7 +137,7 @@
             <h2>Goodness Without Borders</h2>
             <p>Our store is more than just another ordinary online retailer. We are not only top-quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p>
             <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders. We will not only top-quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p> -->
-            <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p>
+    <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from store to store, and then trying to find time to collect and organize your online orders.</p>
           </div>
           <div class="buffet-images">
             <div class="image-placeholder">
@@ -163,7 +222,7 @@ export default {
       rows: {},
     }
   },
-   methods: {
+  methods: {
     subscribeNewsletter() {
       if (this.email) {
         alert('Thank you for subscribing with: ' + this.email);
@@ -185,7 +244,7 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
 .pt-10 {
   padding-top: 10rem !important;
 }
@@ -241,12 +300,15 @@ export default {
 }
 
 /* Image Styles */
-.restaurant-image, .kitchen-image, .restaurant-interior, .buffet-image {
+.restaurant-image,
+.kitchen-image,
+.restaurant-interior,
+.buffet-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Section 1: Gurlean Delicious Food */
@@ -269,7 +331,7 @@ export default {
 }
 
 .content-grid {
-  display: grid;
+  /* display: grid; */
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   align-items: center;
@@ -318,8 +380,8 @@ export default {
 /* Section 3: Cocktails */
 .cocktail-section {
   padding: 80px 0;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-              linear-gradient(135deg, #2c3e50, #34495e);
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    linear-gradient(135deg, #2c3e50, #34495e);
   background-size: cover;
   background-position: center;
   color: white;
@@ -345,7 +407,7 @@ export default {
 }
 
 .info-box {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -373,7 +435,7 @@ export default {
 .buffet-section h2 {
   font-size: 1.5rem;
   color: #333;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .buffet-grid {
@@ -445,11 +507,14 @@ export default {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .content-grid, .buffet-grid {
+
+  .content-grid,
+  .buffet-grid {
     grid-template-columns: 1fr;
   }
 
-  .image-grid, .buffet-images {
+  .image-grid,
+  .buffet-images {
     grid-template-columns: 1fr;
   }
 
@@ -457,7 +522,10 @@ export default {
     flex-direction: column;
   }
 
-  .section-1 h1, .section-2 h1, .cocktail-section h1, .buffet-section h1 {
+  .section-1 h1,
+  .section-2 h1,
+  .cocktail-section h1,
+  .buffet-section h1 {
     font-size: 2rem;
   }
 
@@ -483,7 +551,10 @@ export default {
     padding: 0 15px;
   }
 
-  .section-1 h1, .section-2 h1, .cocktail-section h1, .buffet-section h1 {
+  .section-1 h1,
+  .section-2 h1,
+  .cocktail-section h1,
+  .buffet-section h1 {
     font-size: 1.8rem;
   }
 
@@ -491,7 +562,9 @@ export default {
     font-size: 1.5rem;
   }
 
-  .section-1 h2, .section-2 h2, .buffet-section h2 {
+  .section-1 h2,
+  .section-2 h2,
+  .buffet-section h2 {
     font-size: 1.2rem;
   }
 }

@@ -8,7 +8,8 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
 
-  <title>Monster Foods</title>
+  <title>Chicken, Egg online buy-  Fresh tender chicken</title>
+  <!-- <title>Monster Foods</title> -->
   <!-- Splash Screen/Loader Styles -->
   <link rel="stylesheet" type="text/css" href="{{ asset(mix('css/loader.css')) }}" />
 
