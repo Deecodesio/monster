@@ -14,7 +14,7 @@
             <!-- contact -->
    
             <b-nav-item :to="{ name: 'contact' }" class="white_text">
-                <span class="white_text font_size">{{ $t("contact Us") }} </span>
+                <span class="white_text font_size">{{ $t("Contact Us") }} </span>
             </b-nav-item>
 
             <!-- <b-nav-item @click="redirect(2)" class="white_text"> -->
@@ -77,5 +77,10 @@ a {
 
 .foot {
     background: #ff006b;
+}
+ .white_text {
+    font-size: 18px !important;
+    font-weight: 600;
+    color: #ffffff;
 }
 </style>

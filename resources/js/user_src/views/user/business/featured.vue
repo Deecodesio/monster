@@ -35,7 +35,7 @@
                                     <h4 class="media-heading pt-0" @click="open_image(data2, data2)"
                                         style="color: black; font-family: Poppins">
                                         {{ data2.name }}
-                                    </h4>
+                                    </h4> 
 
                                     <div style="display: flex; align-items: center; gap: 10px;">
                                         <b-card-text class="mb-0 textp wrap" @click="open_image(data2, data2)"

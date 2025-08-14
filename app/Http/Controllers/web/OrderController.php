@@ -452,4 +452,20 @@ class OrderController extends BaseController
 		$response = response()->json($response_array, 200);
 		return $response;
 	}
+
+	public function cancel_request_with_reason(Request $request)
+	{
+
+		// $role = $request->session()->get('res_role');
+
+		$Order = Order::find($request->order_id);
+
+		$cancelFlag =  $Order->cancelByRestaurant($request->reason);
+
+		$message = "Order Cancelled Successfully";
+		$status = true;
+		$response_Array = json_encode(['message' => $message, 'status' => $status]);
+		return $response_Array;
+		// return redirect('/store/orders/new')->with('success', 'Order cancelled successfully');
+	}
 }

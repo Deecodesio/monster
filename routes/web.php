@@ -81,6 +81,7 @@ Route::group(
         Route::get('/get_category_wise_food_list/{lat}/{lng}/{key_word}', 'RestaurantController@get_category_wise_food_list');
         Route::get('/mark_as_favourite/{restaurant_id}/{user_id}', 'UserController@mark_as_favourite');
         Route::get('/remove_favourite/{restaurant_id}/{user_id}/{lat}/{lng}', 'UserController@remove_favourite');
+        Route::get('/cancel_request_reson/{order_id}/{reason}', 'OrderController@cancel_request_with_reason');
 
 
         Route::get('/get_category_wise_food_list_business/{lat}/{lng}/{key_word}', 'RestaurantController@get_category_wise_food_list_business');

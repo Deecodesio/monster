@@ -14,7 +14,7 @@
 
                 <div class="row d-flex">
                     <div class="col-md-6 col-sm-12  d-flex">
-                       
+
                         <div id="apply-form" class="apply-form mt-1" style="
                                 background-color: transparent !important;
                                 box-shadow: none !important;
@@ -22,9 +22,10 @@
                                 max-width: 900px;
                                 min-width: 300px;
                             ">
-                             <div class="text-center my-4">
-                            <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Franchise Opportunity</p>
-                        </div>
+                            <div class="text-center my-4">
+                                <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Franchise
+                                    Opportunity</p>
+                            </div>
                             <b-form @submit.prevent="submitApplication">
                                 <b-card>
                                     <b-row>
@@ -137,14 +138,14 @@
                                                             Select a category
                                                         </option>
                                                     </template>
-                                                </b-form-select>
-                                                <b-form-invalid-feedback v-if="
+</b-form-select>
+<b-form-invalid-feedback v-if="
                                                     !form.business_category_id
                                                 ">
-                                                    Product Category is required
-                                                </b-form-invalid-feedback>
-                                            </b-form-group>
-                                        </b-col> -->
+    Product Category is required
+</b-form-invalid-feedback>
+</b-form-group>
+</b-col> -->
 
                                         <!-- <b-col md="6">
                                             <b-form-group label="Product" label-for="product_id" label-cols-sm="12">
@@ -163,9 +164,11 @@
                                             </b-form-group>
                                         </b-col> -->
 
-                                          <b-col md="12">
-                                            <b-form-group label="Shop Location" label-for="shop_location_plan" label-cols-sm="12">
-                                                <b-form-textarea id="shop_location_plan" v-model="form.shop_location_plan" rows="1"
+                                        <b-col md="12">
+                                            <b-form-group label="Shop Location" label-for="shop_location_plan"
+                                                label-cols-sm="12">
+                                                <b-form-textarea id="shop_location_plan"
+                                                    v-model="form.shop_location_plan" rows="1"
                                                     :state="shopLocationState" required
                                                     class="compact-textarea"></b-form-textarea>
                                                 <b-form-invalid-feedback v-if="!shopLocationState">
@@ -201,7 +204,7 @@
                             </b-form>
                         </div>
                     </div>
-                                    <div class="franchise-box" style="
+                    <div class="franchise-box" style="
                     /* background-color: #ffe6f0; */
                     padding: 30px;
                     border-radius: 10px;
@@ -248,49 +251,42 @@
                 </div>
             </div>
         </div>
-        <div class=" py-4">
+        <div class="container py-4">
             <div class="row gx-4 gy-4">
-
-                <div class="my-5">
-                    <b-card class="p-4 ">
+                <div class=" my-5" style="margin-left: 70px !important; margin-right: 70px !important;">
+                    <b-card class="   p-4">
                         <div class="row align-items-center">
                             <!-- Left Column: Text -->
-                            <div class="col-md-7">
-                                <h6 style="color: #ff006b; font-size: 18px; font-weight: 900;">Product Details</h6>
+                            <div class="col-md-7 col-12 mb-3 mb-md-0">
+                                <h6 class="fw-bold" style="color: #ff006b; font-size: 18px;">
+                                    Franchise
+                                </h6>
                                 <p class="text-justify mb-2">
-                                    Our chicken products are crafted with premium cuts, marinated in signature spices,
-                                    and cooked to perfection for irresistible flavor. Whether fried, grilled, or
-                                    curried,
-                                    each bit delivers juicy tenderness and bold taste. We use fresh, farm-sourced
-                                    chicken,
-                                    ensuring top quality and hygiene in every preparation. Perfect for quick meals,
-                                    combos, or
-                                    party
-                                    platters, our range suits every appetite. From crispy wings to spicy chicken 65,
-                                    there's a variant for every mood. The recipes are optimized for fast cooking and
-                                    consistent
-                                    results across outlets. Ideal for dine-in, takeaway, or delivery formats, it meets
-                                    modern
-                                    customer expectations. Our chicken dishes are loved by all age groups and offer
-                                    great profit
-                                    margins.With customizable spice levels and portion sizes, it’s a versatile
-                                    bestseller. Join
-                                    us in serving high-demand chicken dishes that keep customers coming back.
+                                    Own a Monster Foods franchise and become the go-to source for fresh, premium meat in
+                                    your
+                                    community. We provide the proven supply chain, streamlined systems, and full
+                                    support—you
+                                    build your exclusive territory, loyal customer base, and profits. Demand is soaring,
+                                    competition is low, and prime territories are going fast. Claim yours now.
                                 </p>
-
                             </div>
-
                             <!-- Right Column: Image -->
-                            <div class="col-md-5 text-center">
-
-                                <b-link> <img :src="`/product_image/${imageName}`" alt="Product Image" class="img-fluid"
-                                        style="width:50rem; height: 20rem; object-fit: cover;"></b-link>
+                            <div class="col-md-5 col-12 text-center">
+                                <b-link>
+                                    <!-- <img :src="`/resources/js/src/assets/mon23.jpg`" alt="Product Image"
+                                        class="img-fluid rounded shadow-sm"
+                                        style="max-width: 100%; height: auto; object-fit: cover;min-width: 336px;"> -->
+                                        <img src="/mon23.jpg" alt="Product Image"
+                                            class="img-fluid rounded shadow-sm"
+                                            style="max-width: 100%; height: auto; object-fit: cover;min-width: 336px;">
+                                </b-link>
                             </div>
                         </div>
                     </b-card>
                 </div>
             </div>
         </div>
+
         <div class="bg-franchise text-white text-center py-5">
             <div class="container">
                 <h5 class="mb-3 font-weight-bold text-white">For Franchise – Connect With Us</h5>
@@ -512,8 +508,8 @@ export default {
                 !this.stateState ||
                 !this.districtState ||
                 !this.talukState ||
-                !this.pincodeState  ||
-                !this.shopLocationState 
+                !this.pincodeState ||
+                !this.shopLocationState
                 // !this.categoryState ||
                 // !this.productState
             ) {
@@ -622,7 +618,7 @@ export default {
 .text-center.mb-4 {
     font-size: 1.75rem;
     font-weight: 600;
-    color: #212529;
+    color: #000000;
     margin-top: 2rem;
 }
 

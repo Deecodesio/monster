@@ -81,7 +81,7 @@ section {
 
 body {
   font-family: "Montserrat", Helvetica, Arial, serif;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.45;
   color: #000000;
@@ -455,36 +455,36 @@ h6,
 
 h1,
 .h1 {
-  font-size: 2.3rem;
+  font-size: 3rem;
 }
 
 h2,
 .h2 {
-  font-size: 1.9711rem;
+  font-size: 2.571rem;
 }
 
 h3,
 .h3 {
-  font-size: 1.725rem;
+  font-size: 2.25rem;
 }
 
 h4,
 .h4 {
-  font-size: 1.4789rem;
+  font-size: 1.929rem;
 }
 
 h5,
 .h5 {
-  font-size: 1.2305rem;
+  font-size: 1.605rem;
 }
 
 h6,
 .h6 {
-  font-size: 1.15rem;
+  font-size: 1.5rem;
 }
 
 .lead {
-  font-size: 1.311rem;
+  font-size: 1.71rem;
   font-weight: 400;
 }
 
@@ -572,7 +572,7 @@ small,
 }
 
 .blockquote {
-  font-size: 1.4375rem;
+  font-size: 1.875rem;
 }
 
 [dir] .blockquote {
@@ -3992,7 +3992,7 @@ textarea.form-control {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   line-height: 1;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, background 0s, border 0s, -webkit-box-shadow 0.15s ease-in-out;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, background 0s, border 0s, -webkit-box-shadow 0.15s ease-in-out;
@@ -5041,7 +5041,7 @@ fieldset:disabled a.btn {
 
 .btn-lg,
 .btn-group-lg > .btn {
-  font-size: 1.4375rem;
+  font-size: 1.875rem;
   line-height: 1.25;
 }
 
@@ -5052,7 +5052,7 @@ fieldset:disabled a.btn {
 
 .btn-sm,
 .btn-group-sm > .btn {
-  font-size: 1.035rem;
+  font-size: 1.35rem;
   line-height: 1;
 }
 
@@ -5589,7 +5589,7 @@ input[type=button].btn-block {
 
 .dropdown-header {
   display: block;
-  font-size: 1rem;
+  font-size: 2rem;
   color: #000000;
   white-space: nowrap;
 }
@@ -6030,7 +6030,7 @@ input[type=button].btn-block {
   position: relative;
   z-index: 1;
   display: block;
-  min-height: 1.6675rem;
+  min-height: 2.175rem;
   print-color-adjust: exact;
 }
 
@@ -6060,7 +6060,7 @@ input[type=button].btn-block {
   position: absolute;
   z-index: -1;
   width: 1rem;
-  height: 1.33375rem;
+  height: 1.5875rem;
   opacity: 0;
 }
 
@@ -6123,7 +6123,7 @@ input[type=button].btn-block {
 
 .custom-control-label::before {
   position: absolute;
-  top: 0.33375rem;
+  top: 0.5875rem;
   display: block;
   width: 1rem;
   height: 1rem;
@@ -6146,7 +6146,7 @@ input[type=button].btn-block {
 
 .custom-control-label::after {
   position: absolute;
-  top: 0.33375rem;
+  top: 0.5875rem;
   display: block;
   width: 1rem;
   height: 1rem;
@@ -6228,7 +6228,7 @@ input[type=button].btn-block {
 }
 
 .custom-switch .custom-control-label::after {
-  top: calc(0.33375rem + 2px);
+  top: calc(0.5875rem + 2px);
   width: 1rem;
   height: 1rem;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, background 0s, border-color 0s, -webkit-transform 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -6938,8 +6938,8 @@ input[type=button].btn-block {
 }
 
 [dir] .navbar-brand {
-  padding-top: -0.25825rem;
-  padding-bottom: -0.25825rem;
+  padding-top: -0.0045rem;
+  padding-bottom: -0.0045rem;
 }
 
 [dir=ltr] .navbar-brand {
@@ -8163,7 +8163,7 @@ input[type=button].btn-block {
 }
 
 .pagination-sm .page-link {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
@@ -8520,11 +8520,11 @@ a.badge-dark.focus {
 }
 
 [dir=ltr] .alert-dismissible {
-  padding-right: 4.3rem;
+  padding-right: 5rem;
 }
 
 [dir=rtl] .alert-dismissible {
-  padding-left: 4.3rem;
+  padding-left: 5rem;
 }
 
 .alert-dismissible .close {
@@ -8729,7 +8729,7 @@ a.badge-dark.focus {
   height: 0.857rem;
   overflow: hidden;
   line-height: 0;
-  font-size: 0.98555rem;
+  font-size: 1.2855rem;
 }
 
 [dir] .progress {
@@ -9479,7 +9479,7 @@ a.badge-dark.focus {
 }
 
 .close {
-  font-size: 2.3rem;
+  font-size: 3rem;
   font-weight: 400;
   line-height: 1;
   color: #000000;
@@ -10376,7 +10376,7 @@ a.close.disabled {
 }
 
 .popover-header {
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   color: #fff;
 }
 
@@ -18877,7 +18877,7 @@ select.form-control:not([multiple=multiple]) {
 
 .custom-checkbox .custom-control-label,
 .custom-radio .custom-control-label {
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   position: static;
 }
 
@@ -21605,8 +21605,8 @@ select:-webkit-autofill {
 }
 
 .nav-pills .nav-link {
-  font-size: 1.15rem;
-  line-height: 1.15rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
   color: #000000;
 }
 
@@ -22027,7 +22027,7 @@ select:-webkit-autofill {
 
 .alert .alert-heading {
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
 }
 
 [dir] .alert .alert-heading {
@@ -22268,7 +22268,7 @@ ul.list-inline.list-inline-pipe > li + li:before {
 
 [class*=collapse-] .collapse-title {
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 
 [dir] [class*=collapse-] .card {
@@ -22984,8 +22984,8 @@ ul.list-inline.list-inline-pipe > li + li:before {
 }
 
 [dir] .modal-slide-in .modal-dialog .modal-content {
-  padding-bottom: 4.135rem;
-  padding-top: 4.135rem;
+  padding-bottom: 5.15rem;
+  padding-top: 5.15rem;
   border-radius: 0;
 }
 
@@ -23121,7 +23121,7 @@ ul.list-inline.list-inline-pipe > li + li:before {
 }
 
 .popover .popover-header {
-  font-size: 1.07rem;
+  font-size: 1.3rem;
 }
 
 [dir] .popover .popover-header {
@@ -23169,7 +23169,7 @@ ul.list-inline.list-inline-pipe > li + li:before {
 }
 
 .font-small-1 {
-  font-size: 0.7rem !important;
+  font-size: 1.3rem !important;
 }
 
 svg.font-small-1 {
@@ -23178,7 +23178,7 @@ svg.font-small-1 {
 }
 
 .font-small-2 {
-  font-size: 0.8rem !important;
+  font-size: 1.4rem !important;
 }
 
 svg.font-small-2 {
@@ -23187,7 +23187,7 @@ svg.font-small-2 {
 }
 
 .font-small-3 {
-  font-size: 0.9rem !important;
+  font-size: 1.4rem !important;
 }
 
 svg.font-small-3 {
@@ -23196,7 +23196,7 @@ svg.font-small-3 {
 }
 
 .font-small-4 {
-  font-size: 1rem !important;
+  font-size: 1.3rem !important;
 }
 
 svg.font-small-4 {
@@ -23205,7 +23205,7 @@ svg.font-small-4 {
 }
 
 .font-medium-1 {
-  font-size: 1.1rem !important;
+  font-size: 1.4rem !important;
 }
 
 svg.font-medium-1 {
@@ -23214,7 +23214,7 @@ svg.font-medium-1 {
 }
 
 .font-medium-2 {
-  font-size: 1.2rem !important;
+  font-size: 1.5rem !important;
 }
 
 svg.font-medium-2 {
@@ -23223,7 +23223,7 @@ svg.font-medium-2 {
 }
 
 .font-medium-3 {
-  font-size: 1.3rem !important;
+  font-size: 1.6rem !important;
 }
 
 svg.font-medium-3 {
@@ -23232,7 +23232,7 @@ svg.font-medium-3 {
 }
 
 .font-medium-4 {
-  font-size: 1.4rem !important;
+  font-size: 1.7rem !important;
 }
 
 svg.font-medium-4 {
@@ -23241,7 +23241,7 @@ svg.font-medium-4 {
 }
 
 .font-medium-5 {
-  font-size: 1.5rem !important;
+  font-size: 1.8rem !important;
 }
 
 svg.font-medium-5 {
@@ -23250,7 +23250,7 @@ svg.font-medium-5 {
 }
 
 .font-large-1 {
-  font-size: 2rem !important;
+  font-size: 2.3rem !important;
 }
 
 svg.font-large-1 {
@@ -23259,7 +23259,7 @@ svg.font-large-1 {
 }
 
 .font-large-2 {
-  font-size: 3rem !important;
+  font-size: 3.3rem !important;
 }
 
 svg.font-large-2 {
@@ -23268,7 +23268,7 @@ svg.font-large-2 {
 }
 
 .font-large-3 {
-  font-size: 4rem !important;
+  font-size: 4.3rem !important;
 }
 
 svg.font-large-3 {
@@ -23277,7 +23277,7 @@ svg.font-large-3 {
 }
 
 .font-large-4 {
-  font-size: 5rem !important;
+  font-size: 5.3rem !important;
 }
 
 svg.font-large-4 {
@@ -23286,7 +23286,7 @@ svg.font-large-4 {
 }
 
 .font-large-5 {
-  font-size: 6rem !important;
+  font-size: 6.3rem !important;
 }
 
 svg.font-large-5 {
@@ -31158,8 +31158,8 @@ html[dir] .content .content-wrapper .content-header-right .btn-icon {
 
 html .content .content-wrapper .content-header-right .btn-icon i,
 html .content .content-wrapper .content-header-right .btn-icon svg {
-  height: 1.15rem;
-  width: 1.15rem;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 html .navbar-floating.footer-static .app-content .content-area-wrapper,
@@ -32603,7 +32603,7 @@ footer.footer-shadow {
 }
 
 .navigation {
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   font-family: "Montserrat", Helvetica, Arial, serif;
   font-weight: 500;
   overflow-y: hidden;
@@ -33365,7 +33365,7 @@ footer.footer-shadow {
   bottom: 0;
   width: 2.95rem;
   line-height: 2.7rem;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
 }
 
 [dir] .btn-social > :first-child, [dir] .btn-social-icon > :first-child {
@@ -39412,7 +39412,7 @@ body.dark-layout {
 
 .custom-checkbox.b-custom-control-sm,
 .input-group-sm .custom-checkbox {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
@@ -39426,7 +39426,7 @@ body.dark-layout {
 
 .custom-checkbox.b-custom-control-sm .custom-control-label::before,
 .input-group-sm .custom-checkbox .custom-control-label::before {
-  top: 0.0625rem;
+  top: 0.5625rem;
   width: 0.875rem;
   height: 0.875rem;
 }
@@ -39445,7 +39445,7 @@ body.dark-layout {
 
 .custom-checkbox.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-checkbox .custom-control-label::after {
-  top: 0.0625rem;
+  top: 0.5625rem;
   width: 0.875rem;
   height: 0.875rem;
 }
@@ -39535,13 +39535,13 @@ body.dark-layout {
 
 .custom-switch.b-custom-control-sm .custom-control-label,
 .input-group-sm .custom-switch .custom-control-label {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
 .custom-switch.b-custom-control-sm .custom-control-label::before,
 .input-group-sm .custom-switch .custom-control-label::before {
-  top: 0.0625rem;
+  top: 0.5625rem;
   width: 1.53125rem;
   height: 0.875rem;
 }
@@ -39560,7 +39560,7 @@ body.dark-layout {
 
 .custom-switch.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-switch .custom-control-label::after {
-  top: calc( 0.0625rem + 2px );
+  top: calc( 0.5625rem + 2px );
   width: calc( 0.875rem - 4px );
   height: calc( 0.875rem - 4px );
 }
@@ -40205,7 +40205,7 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-sm,
 .input-group-sm .custom-radio {
-  font-size: 1rem;
+  font-size: 2rem;
   line-height: 1;
 }
 
@@ -40219,7 +40219,7 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-sm .custom-control-label::before,
 .input-group-sm .custom-radio .custom-control-label::before {
-  top: 0.0625rem;
+  top: 0.5625rem;
   width: 0.875rem;
   height: 0.875rem;
 }
@@ -40238,7 +40238,7 @@ input[type=color].form-control:disabled {
 
 .custom-radio.b-custom-control-sm .custom-control-label::after,
 .input-group-sm .custom-radio .custom-control-label::after {
-  top: 0.0625rem;
+  top: 0.5625rem;
   width: 0.875rem;
   height: 0.875rem;
 }
@@ -41334,7 +41334,7 @@ input[type=color].form-control:disabled {
 }
 
 .b-skeleton-text {
-  height: 1.15rem;
+  height: 1.5rem;
 }
 
 [dir] .b-skeleton-text {
@@ -41344,7 +41344,7 @@ input[type=color].form-control:disabled {
 
 .b-skeleton-button {
   width: 75px;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
   line-height: 1;
 }
 

@@ -450,8 +450,9 @@ export default {
     },
 
     Assign(id) {
-      this.$http.get('/store/accept_request/' + id +'/'+ localStorage.admin_id)
-        .then(response => {
+      // this.$http.get('/store/accept_request/' + id +'/'+ localStorage.admin_id)
+      this.$http.get('/store/accept_request/' + id)  
+      .then(response => {
 
           if (response.data.status == true) {
 

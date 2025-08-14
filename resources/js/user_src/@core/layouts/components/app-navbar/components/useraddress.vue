@@ -23,7 +23,7 @@
                         <b-img src="/DR.svg" fluid alt="Dropdown" class="ml-1"
                             style="width: 18px; height: 18px; margin-top: 0px; margin-bottom: 6px !important;" />
                     </div>
-                    <div style="font-size: 13px; color:black;margin-bottom: 5px !important;">
+                    <div style="font-size: 13px; color:black;margin-bottom: 5px !important;font-weight: 600;">
                          {{ address }}
                     </div>
                 </div>

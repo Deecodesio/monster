@@ -4,7 +4,7 @@
   box-shadow: $popover-box-shadow;
   // popover header style
   .popover-header {
-    @include font-size(1.07rem);
+    @include font-size(1.3rem);
     border: 1px solid $popover-header-bg;
   }
   // popover body style

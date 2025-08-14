@@ -16,7 +16,7 @@
       <top_banners />
     </div>
     <!-- Section 1: Gurlean Delicious Food -->
-    <section class="section-1">
+    <!-- <section class="section-1">
       <h1 style="display: flex !important; color: black !important; justify-content: center; margin-bottom: 30px;">
         Annapoorna Foods</h1>
       <div class="container">
@@ -25,10 +25,10 @@
             <b-img src="/Res_2.jpg" fluid alt="Restaurant Interior" class="restaurant-image" />
           </div>
           <div class="text-content">
-              <!-- <div style="text-align: center;margin-top: 5px  !important;margin-bottom: 5px !important;">
+              <div style="text-align: center;margin-top: 5px  !important;margin-bottom: 5px !important;">
                 <h1>Gurlean Delicious Food</h1>
                 <h2 >Catering to your requirements</h2>
-              </div> -->
+              </div> 
 
             <p><br><span style="font-weight: bold;font-size:larger;">Annapurna Foods</span> is a start-up Poultry meat
               and Poultry Egg online sales E Commerce company under
@@ -85,12 +85,77 @@
               shops and buying chicken and eggs at their homes, even if there are thousands of families in our mobile
               shop deliver at your doorstep.</br>
             </p>
-            <!-- <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from one store to another, ordering online. We will not only top-quality products.</p> -->
+            <p>Products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running from one store to another, ordering online. We will not only top-quality products.</p> 
           </div>
 
         </div>
       </div>
-    </section>
+    </section> -->
+ <section class="section-1">
+  <h1 class="text-center mb-4" style="color: black;">Annapoorna Foods</h1>
+
+  <div class="container">
+    <!-- TOP ROW: Text (L) + Image (R) with equal heights -->
+    <div class="row equalize mb-4">
+      <div class="col-md-6 d-flex pr-md-4">
+        <div class="text-box">
+          <p>
+            <strong>Annapurna Foods</strong> is a start-up Poultry meat
+            and Poultry Egg online sales E-Commerce company under brand name
+            <strong>Monster Foods</strong> across <strong>South India</strong>.<br><br>
+
+            Chicken meat and egg is a widely consumed source of protein in India. It is available in various forms
+            like fresh, frozen, processed, or ready-to-cook and is popular across young generations.<br><br>
+
+            Among animal proteins, poultry chicken and egg are economically cheaper and freshly available any
+            time and place in India. Commercial production of broiler chicken and egg is increasing day by day
+            according to consumption and easy availability for a large population.<br><br>
+
+            So, buyers need to be aware while buying quality, hygienic products at the right price all over India
+            without compromising quality.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <div class="image-box">
+          <b-img src="/Res_2.jpg" alt="Restaurant Interior" class="img-equal rounded shadow"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW: Two text blocks, equal heights -->
+    <div class="row equalize">
+      <div class="col-md-6 d-flex pr-md-4 mb-4 mb-md-0">
+        <div class="text-box">
+            <p>
+            We provide you with healthy, hygienic broiler chicken and eggs at the right price and on time.<br><br>
+            We simplify the buying process according to modern lifestyles — just order online, set the day and time,
+            and we deliver it to your place within that time.<br><br>
+            For nearby customers, you can order online and get notified when your order is ready, so you can pick it up
+            without delay. We’ve also made it possible for apartment residents in big cities to avoid the hassle of going
+            to meat shops — our mobile shop delivers to your doorstep.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <div class="text-box">
+        <p>
+            Annapurna Foods – <strong>Monster chicken</strong> serves chicken and eggs to conscious
+            buyers from broiler integrators and layer farms all over India. We constantly monitor our
+            farmers’ healthy and hygienic growth of birds fed with good quality raw materials.<br><br>
+            We tied up with broiler farms and broiler integrators for a consistent supply of quality birds to our
+            meat shops. Further, we also tied up with hygienic meat shops where chickens are cleaned with modern
+            machines to make fresh chicken and eggs available to consumers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
     <!-- Section 2: Midnight vision -->
     <!-- <section class="section-2">
@@ -568,4 +633,52 @@ export default {
     font-size: 1.2rem;
   }
 }
+ .section-1 {
+  padding: 30px 0;
+  background: #f8f9fa;
+  font-size: 18px; 
+  font-weight: 500;    
+  color: black;          
+}
+
+.section-1 p {                    
+  font-size: 18px;
+  line-height: 1.8;
+  color: #22292f;
+  margin: 0;                    
+}
+
+ 
+.equalize {
+  align-items: stretch;         
+}
+
+.equalize > [class*="col-"] {
+  display: flex;                 
+}
+
+.text-box,
+.image-box {
+  width: 100%;
+  height: 100%;                  
+}
+
+ 
+@media (min-width: 768px) {
+  .pr-md-4 { padding-right: 1.5rem !important; }
+}
+ 
+.img-equal {
+  display: block;
+  width: 100%;
+  height: 100%;                  
+  object-fit: cover;
+}
+ 
+@media (max-width: 767.98px) {
+  .img-equal { height: auto; }
+  .pr-md-4 { padding-right: 0 !important; }
+}
+
+
 </style>

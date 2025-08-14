@@ -20,9 +20,10 @@
                                 max-width: 900px;
                                 min-width: 300px;
                             ">
-                             <div class="text-center my-4">
-                            <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Bulk Order Enquiry</p>
-                        </div>
+                            <div class="text-center my-4">
+                                <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Bulk Order
+                                    Enquiry</p>
+                            </div>
                             <b-form @submit.prevent="submitApplication">
                                 <b-card>
                                     <b-row>
@@ -205,7 +206,7 @@
                         </h2>
 
                         <h3 style="margin-top: 0; margin-bottom: 20px; color: #ff006b; font-size: 18px; ">
-                            Product Details
+                            What Sets Us Apart
                         </h3>
 
                         <ol style="padding-left: 20px; margin: 20px 0 0 0;">
@@ -238,11 +239,11 @@
         <div class="container py-4">
             <div class="row gx-4 gy-4">
                 <div class="col-md-4 col-sm-12">
-                    <div class="style-card p-3 shadow-sm bg-white rounded">
-                        <h5 style="color: #ff006b; margin-bottom: 10px; font-size: 18px;">
+                    <!-- <div class="style-card p-3 shadow-sm bg-white rounded"> -->
+                    <!-- <h5 style="color: #ff006b; margin-bottom: 10px; font-size: 18px;">
                             Product Detail
-                        </h5>
-                        <p>
+                        </h5> -->
+                    <!-- <p>
                             Our food product range includes
                             <strong>Organic Basmati Rice</strong>, known for its
                             aroma and perfect texture for biryani. Cook
@@ -260,12 +261,14 @@
                             and rice flour. And when time is tight, grab our
                             <strong>Instant Soup Packets</strong>—flavorful and
                             ready in minutes.
-                        </p>
-                    </div>
+                        </p> -->
+                    <img src="/mon3.jpg" alt="Bulk Order Image"
+                        style="width: 100%; height: 100%; object-fit:  contain; border-radius: 8px;"></img>
+                    <!-- </div> -->
                 </div>
 
                 <div class="col-md-4 col-sm-12">
-                    <div class="style-card p-3 shadow-sm bg-white rounded">
+                    <!-- <div class="style-card p-3 shadow-sm bg-white rounded">
                         <h5 style="color: #ff006b; margin-bottom: 10px;font-size: 18px;">
                             Product Detail
                         </h5>
@@ -288,11 +291,15 @@
                             <strong>Instant Soup Packets</strong>—flavorful and
                             ready in minutes.
                         </p>
-                    </div>
+                    </div> -->
+                    <img src="/mon4.jpg" alt="Bulk Order Image"
+                        style="width: 100%; height: 100%; object-fit:  contain; border-radius: 8px;"></img>
+
+
                 </div>
 
                 <div class="col-md-4 col-sm-12">
-                    <div class="style-card p-3 shadow-sm bg-white rounded">
+                    <!-- <div class="style-card p-3 shadow-sm bg-white rounded">
                         <h5 style="color: #ff006b; margin-bottom: 10px;font-size: 18px;">
                             Product Detail
                         </h5>
@@ -315,7 +322,10 @@
                             <strong>Instant Soup Packets</strong>—flavorful and
                             ready in minutes.
                         </p>
-                    </div>
+                    </div> -->
+                    <img src="/mon5.jpg" alt="Bulk Order Image"
+                        style="width: 100%; height: 100%; object-fit:  contain; border-radius: 8px;"></img>
+
                 </div>
             </div>
         </div>
@@ -624,7 +634,7 @@ export default {
 .text-center.mb-4 {
     font-size: 1.75rem;
     font-weight: 600;
-    color: #212529;
+    color: #000000;
     margin-top: 2rem;
 }
 
@@ -682,5 +692,10 @@ export default {
 .style-card {
     border: 2px solid lightgrey;
     margin-top: 20px;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 </style>

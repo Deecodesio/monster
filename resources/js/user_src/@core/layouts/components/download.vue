@@ -2,11 +2,11 @@
     <div class="foot pt-2">
         <h2 class="white_text">{{ $t("Download Apps") }}</h2>
         <b-nav vertical v-for="(data, index) in rows" :key="index">
-            <b-nav-item>
+            <!-- <b-nav-item>
                 <b-link @click="redirect(data.ios)"> <b-img class="down" src="/monster/app_store.png" alt="appstore"
                         aria-label="appstore" /></b-link>
 
-            </b-nav-item>
+            </b-nav-item> -->
             <b-nav-item>
                 <b-link @click="redirect(data.android)"> <b-img class="down" src="/monster/play_Store.png"
                         alt="playstore" aria-label="playstore" /></b-link>

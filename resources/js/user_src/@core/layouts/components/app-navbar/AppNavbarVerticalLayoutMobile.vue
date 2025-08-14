@@ -1,26 +1,24 @@
 <template>
-  <b-row >
+  <b-row class="align-items-center">
+    <!-- Logo -->
+    <b-col cols="3">
+      <b-link class="navbar-brand" to="/">
+        <span class="brand-logo">
+          <b-img :src="rows_detail || '/default-logo.png'" :alt="alt || 'Logo'" class="logo_image_mobile" />
+        </span>
+      </b-link>
+    </b-col>
     
-      
-     <b-col     cols="6"  style="display: -webkit-inline-box;">
-
-   
-
+    <!-- Address -->
+    <b-col cols="6">
       <useraddress />
-     </b-col>
+    </b-col>
     
-     <b-col         cols="6"     >
-
-     <b-row>      
-      
-      <b-col md-12>
+    <!-- User Dropdown -->
+    <b-col cols="3" class="text-right">
       <user-dropdown />
     </b-col>
-    </b-row>
-     </b-col>
   </b-row>
-    
- 
 </template>
 
 <script>
@@ -53,6 +51,12 @@ export default {
 
 
   },
+  data() {
+    return {
+      rows_detail: '',
+      alt: '',
+    }
+  },
   setup(props) {
     
 
@@ -72,6 +76,13 @@ export default {
       default: () => {},
     },
   },
+  created() {
+    this.$http.get('/get_site_logo/')
+      .then(res => {
+        this.rows_detail = res.data.logo
+        this.alt = res.data.app_name
+      })
+  },
   methods:{
     goback(){
       return this.$router.go(-1);
@@ -86,4 +97,23 @@ export default {
 //   width: 600px;
 // }
 .pad-1{padding: 10px 20px;}
+
+.logo_image_mobile {
+  max-width: 120px !important;
+  width: 100% !important;
+  height: 35px !important;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+  padding: 0% !important;
+
+  @media (max-width: 580px) {
+    max-width: 100px !important;
+    height: 30px !important;
+  }
+  @media (max-width: 360px) {
+    max-width: 80px !important;
+    height: 25px !important;
+  }
+}
 </style>

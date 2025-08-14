@@ -74,4 +74,9 @@ a {
 .foot {
     background: #FF006B;
 }
+.white_text {
+    font-size: 18px !important;
+    font-weight: 600;
+    color: #ffffff;
+}
 </style>

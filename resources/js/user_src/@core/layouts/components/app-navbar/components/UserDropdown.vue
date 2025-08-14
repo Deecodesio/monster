@@ -38,7 +38,16 @@
 
     <b-modal id="modal-login" title="Sign Up" ok-only ok-title="Login" cancel-title="Close" hide-footer hide-header
       size="sm" centered ref="login_modal">
+      <button
+        type="button"
+        class="close-modal-btn"
+        @click="$refs.login_modal.hide()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
       <b-row>
+ 
         <!-- <b-col
             xxl="6"
             lg="6"
@@ -842,5 +851,29 @@ export default {
 
 .btn-flat-success {
   padding: 0px !important;
+}
+
+.close-modal-btn {
+ 
+  
+  right: 18px;
+  
+  background: #fff;
+  border: none;
+  font-size: 2.2rem;
+  color: #ff006b;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+}
+.close-modal-btn:hover {
+  background: #ff006b;
+  color: #fff;
 }
 </style>

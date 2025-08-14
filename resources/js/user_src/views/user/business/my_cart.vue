@@ -169,7 +169,7 @@
                                         style="width:50px;height:50px;object-fit:cover;" />
                                 </td>
                                 <!-- product name -->
-                                <td style="font-weight: 700 !important;">{{ data.name }}</td>
+                                <td style="font-weight: 700 !important;padding-left: 2px !important; text-align: left;">{{ data.name }}</td>
                                 <!-- product price -->
                                 <td> {{ $store.state['defaults'].currency }} {{ data.price }}</td>
                                 <!-- CGST Column -->
