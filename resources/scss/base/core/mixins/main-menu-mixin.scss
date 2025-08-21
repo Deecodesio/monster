@@ -160,20 +160,7 @@
     }
 
     // Menu Item Hover Animation
-    li.nav-item {
-      a:hover > * {
-        transition: transform 0.25s ease;
-        transform: translateX(5px);
-      }
-      ul.menu-content {
-        li {
-          a:hover > * {
-            transition: transform 0.25s ease;
-            transform: translateX(5px);
-          }
-        }
-      }
-    }
+  // Hover effect disabled for side menu
 
     > li {
       > a {

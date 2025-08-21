@@ -50,75 +50,83 @@
                                     </div>
 
 
-                                    <b-row class="pt-0 featured-row-sm d-flex ">
-                                        <b-col cols="6" style="justify-content: start;">
-                                            <span class="media-heading text-primary strike"
-                                                @click="open_image(data2, data2)" v-if="data2.price < data2.bprice">
-                                                {{
-                                                    $store.state["defaults"]
-                                                        .currency
-                                                }}
-                                                {{ data2.bprice | priceformat }}
-                                            </span>
-                                            <span class="media-heading text-primary sprice"
-                                                @click="open_image(data2, data2)">
-                                                {{
-                                                    $store.state["defaults"]
-                                                        .currency
-                                                }}
-                                                {{ data2.price | priceformat }}
-                                            </span>
-                                        </b-col>
+                                  <b-row class="pt-0 featured-row-sm d-flex align-items-center justify-content-between">
+  <!-- ✅ PRICE COLUMN -->
+  <b-col cols="auto" class="d-flex align-items-center">
+    <span
+      class="media-heading text-primary strike me-2"
+      v-if="data2.price < data2.bprice"
+      @click="open_image(data2, data2)"
+    >
+      {{ $store.state["defaults"].currency }}
+      {{ data2.bprice | priceformat }}
+    </span>
 
-                                        <b-col cols="6" class="text-r pl-0" style="justify-content: end;">
-                                            <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'
-                                                " variant="flat-primary" class="btn-icon add_to_cart" :id="'food_add_' +
-                                                    data2.food_id +
-                                                    'r'
-                                                    " :data-price="data2.price" @click="
-                                                        check_product(data2, isopen)
-                                                        " v-if="data2.menu_available === 1">
-                                                <div class="add_cart_btn">
-                                                    {{ $t("Add to Cart") }}
-                                                    <b-img src="/monster/plate.svg" class="add_cart_btn_img" />
-                                                </div>
-                                            </b-button>
+    <span
+      class="media-heading text-primary sprice"
+      @click="open_image(data2, data2)"
+    >
+      {{ $store.state["defaults"].currency }}
+      {{ data2.price | priceformat }}
+    </span>
+  </b-col>
 
-                                            <div class="num-block skin-2" :id="'food_control_' +
-                                                data2.food_id +
-                                                'r'
-                                                " style="display: none" v-if="data2.menu_available === 1">
-                                                <div class="num-in">
-                                                    <span class="minus dis" :id="'food_minus_' +
-                                                        data2.food_id
-                                                        " @click="
-                                                            removefromcart(
-                                                                data2.price,
-                                                                data2.item_tax,
-                                                                data2.name,
-                                                                data2.food_id,
-                                                                data2.is_veg,
-                                                                data2.add_ons,
-                                                                data2.food_quantity,
-                                                                data2.image
-                                                            )
-                                                            "></span>
-                                                    <input type="text" class="in-num" value="1" readonly :id="'food_qty_' +
-                                                        data2.food_id +
-                                                        'r'
-                                                        " />
-                                                    <span class="plus" :id="'food_plus_' +
-                                                        data2.food_id
-                                                        " @click="
-                                                            check_product(
-                                                                data2,
-                                                                isopen
-                                                            )
-                                                            "></span>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                    </b-row>
+  <!-- ✅ BUTTON / QTY CONTROL COLUMN -->
+  <b-col cols="auto" class="d-flex align-items-center">
+    <b-button
+      v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+      variant="flat-primary"
+      class="btn-icon add_to_cart"
+      :id="'food_add_' + data2.food_id + 'r'"
+      :data-price="data2.price"
+      @click="check_product(data2, isopen)"
+      v-if="data2.menu_available === 1"
+    >
+      <div class="add_cart_btn d-flex align-items-center">
+        {{ $t('Add to Cart') }}
+        <b-img src="/monster/plate.svg" class="add_cart_btn_img ms-1" />
+      </div>
+    </b-button>
+
+    <!-- ✅ Qty control -->
+    <div
+      class="num-block skin-2 ms-2"
+      :id="'food_control_' + data2.food_id + 'r'"
+      style="display: none"
+      v-if="data2.menu_available === 1"
+    >
+      <div class="num-in d-flex align-items-center">
+        <span
+          class="minus dis"
+          :id="'food_minus_' + data2.food_id"
+          @click="removefromcart(
+            data2.price,
+            data2.item_tax,
+            data2.name,
+            data2.food_id,
+            data2.is_veg,
+            data2.add_ons,
+            data2.food_quantity,
+            data2.image
+          )"
+        ></span>
+        <input
+          type="text"
+          class="in-num"
+          value="1"
+          readonly
+          :id="'food_qty_' + data2.food_id + 'r'"
+        />
+        <span
+          class="plus"
+          :id="'food_plus_' + data2.food_id"
+          @click="check_product(data2, isopen)"
+        ></span>
+      </div>
+    </div>
+  </b-col>
+</b-row>
+
 
                                 </div>
                             </div>

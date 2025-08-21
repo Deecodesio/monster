@@ -1,198 +1,204 @@
 <template>
-    <div class="career-list container">
-        <div class="mt-5 mx-3 py-6">
-            <top_banners />
-        </div>
-        <!-- Loading -->
-        <div v-if="loading" class="text-center">
-            <b-spinner label="Loading..."></b-spinner>
-        </div>
-
-        <!-- Error -->
-        <div v-else-if="error" class="alert alert-danger">
-            {{ error }}
-        </div>
-
-        <!-- Main Content -->
-        <div v-else>
-            <!-- Search -->
-            <div class="mb-5 " style="margin-top: 50px">
-                <b-card-body class="custom-card ">
-                    <b-row>
-                        <b-col cols="12" md="4" style="margin-top: 22px;">
-                            <b-form-group>
-                                <b-form-select v-model="selectedCategory" :options="categoryOptions"
-                                    class="mb-3 custom-select-border" style="margin-bottom: 0px !important;">
-                                </b-form-select>
-                            </b-form-group>
-                        </b-col>
-                        <b-col cols="12" md="4" style="margin-top: 22px;">
-                            <b-form-group>
-                                <b-form-select v-model="selectedLocation" :options="locationOptions"
-                                    class="mb-3 custom-select-border" style="margin-bottom: 0px !important;">
-                                </b-form-select>
-                            </b-form-group>
-                        </b-col>
-                        <b-col cols="12" md="2" style="margin-top: 22px;">
-                            <div class="text-center">
-                                <b-button style="width: 100%" variant="primary" @click="searchJobs">SEARCH
-                                    JOBS</b-button>
-                            </div>
-                        </b-col>
-                    </b-row>
-                </b-card-body>
+        <div class="career-list container">
+            <div class="mt-5 mx-3 py-6">
+                <top_banners />
+            </div>
+            <!-- Loading -->
+            <div v-if="loading" class="text-center">
+                <b-spinner label="Loading..."></b-spinner>
             </div>
 
-            <!-- Job Details View -->
-            <div v-if="selectedJobDetails">
-                <b-card class="mb-4">
-                    <b-button variant="light" class="pink-button" @click="backToList">
-                        &larr; Back to Job List
-                    </b-button>
-                    <br />
-                    <h3 class="mb-3" style="margin-top: 3rem;">{{ selectedJobDetails.job_name }}</h3>
-                    <p><strong>Location: {{ selectedJobDetails.location_name }} </strong></p>
-                    <p><strong>Posted On: {{ formatDate(selectedJobDetails.created_at) }} </strong></p>
-                    <div v-if="selectedJobDetails.job_details">
-                        <strong>Description:</strong>
-                        <div v-html="selectedJobDetails.job_details"></div>
+            <!-- Error -->
+            <div v-else-if="error" class="alert alert-danger">
+                {{ error }}
+            </div>
+
+            <!-- Main Content -->
+            <div v-else>
+                <div class="text-center my-4">
+                    <h5 class="job-title">Career Opportunities</h5>
+                </div>
+
+                <!-- Search -->
+                <div class="mb-5" style="margin-top: 50px">
+                    <b-card-body class="custom-card">
+                        <b-row class="justify-content-center align-items-center" style="gap: 20px;">
+
+                            <b-col cols="12" md="3" class="d-flex justify-content-center mb-3 mb-md-0">
+                                <b-form-group class="w-100 mb-0">
+                                    <b-form-select v-model="selectedCategory" :options="categoryOptions"
+                                        class="custom-select-border uniform-control"></b-form-select>
+                                </b-form-group>
+                            </b-col>
+
+                            <b-col cols="12" md="3" class="d-flex justify-content-center mb-3 mb-md-0">
+                                <b-form-group class="w-100 mb-0">
+                                    <b-form-select v-model="selectedLocation" :options="locationOptions"
+                                        class="custom-select-border uniform-control"></b-form-select>
+                                </b-form-group>
+                            </b-col>
+
+                            <b-col cols="12" md="2" class="d-flex justify-content-center">
+                                <b-button class="w-100 uniform-control" variant="primary" @click="searchJobs">
+                                    SEARCH JOBS
+                                </b-button>
+                            </b-col>
+
+                        </b-row>
+                    </b-card-body>
+                </div>
+
+
+                <!-- Job Details View -->
+                <div v-if="selectedJobDetails">
+                    <b-card class="mb-4">
+                        <b-button variant="light" class="pink-button" @click="backToList">
+                            &larr; Back to Job List
+                        </b-button>
+                        <br />
+                        <h3 class="mb-3" style="margin-top: 3rem;">{{ selectedJobDetails.job_name }}</h3>
+                        <p><strong>Location: {{ (selectedJobDetails.city && typeof selectedJobDetails.city === 'object' && selectedJobDetails.city.city) ? selectedJobDetails.city.city : (selectedJobDetails.location_name || 'N/A') }} </strong></p>
+                        <p><strong>Posted On: {{ formatDate(selectedJobDetails.created_at) }} </strong></p>
+                        <div v-if="selectedJobDetails.job_details">
+                            <strong>Description:</strong>
+                            <div v-html="selectedJobDetails.job_details"></div>
+                        </div>
+                    </b-card>
+
+                    <div class="mt-5" style="max-width: 850px;min-width:300px;">
+                        <p class="mb-4" style="color: black; font-size: 28px; font-weight: 600;">Apply Online</p>
+
+                        <b-form @submit.prevent="submitApplication">
+                            <b-form-group>
+                                <b-row class="align-items-center mb-3">
+                                    <b-col md="3">
+                                        <label for="name" class="form-label-custom">
+                                            Name <span class="text-danger">*</span>
+                                        </label>
+                                    </b-col>
+
+                                    <b-col md="6">
+                                        <b-form-input id="name" v-model="form.name" :state="nameState" required
+                                            class="custom-input" />
+                                        <b-form-invalid-feedback v-if="!nameState">Name is
+                                            required</b-form-invalid-feedback>
+                                    </b-col>
+                                </b-row>
+
+                                <b-row class="align-items-center mb-3">
+                                    <b-col md="3">
+                                        <label for="email" class="form-label-custom">Email ID<span
+                                                class="text-danger">*</span></label>
+                                    </b-col>
+                                    <b-col md="6">
+                                        <b-form-input id="email" v-model="form.email" type="email" :state="emailState"
+                                            required class="custom-input" />
+                                        <b-form-invalid-feedback v-if="!emailState">Please enter a valid
+                                            email</b-form-invalid-feedback>
+                                    </b-col>
+                                </b-row>
+
+                                <b-row class="align-items-center mb-3">
+                                    <b-col md="3">
+                                        <label for="contact_number" class="form-label-custom">Contact Number <span
+                                                class="text-danger">*</span></label>
+                                    </b-col>
+                                    <b-col md="6">
+                                        <b-form-input id="contact_number" v-model="form.contact_number"
+                                            :state="contactState" required class="custom-input" />
+                                        <b-form-invalid-feedback v-if="!contactState">Contact number is
+                                            required</b-form-invalid-feedback>
+                                    </b-col>
+                                </b-row>
+
+                                <!-- <b-row class="align-items-center mb-3">
+                                    <b-col md="3">
+                                        <label for="resume" class="form-label-custom">Attach Resume <span
+                                                class="text-danger">*</span></label>
+                                    </b-col>
+                                    <b-col md="6">
+                                        <b-form-file id="resume" v-model="form.resume" :state="resumeState" accept=".pdf"
+                                            placeholder="Choose a file or drop it here..."
+                                            drop-placeholder="Drop file here..." required />
+                                        <b-form-invalid-feedback v-if="!resumeState">Please upload a PDF file (max
+                                            5MB)</b-form-invalid-feedback>
+                                    </b-col>
+                                </b-row> -->
+                                <b-row class="align-items-center mb-3">
+                                    <b-col md="3">
+                                        <label for="resume" class="form-label-custom"
+                                            style="padding-bottom: 65px !important;">
+                                            Attach Resume <span class="text-danger">*</span>
+                                        </label>
+                                    </b-col>
+                                    <b-col md="6">
+
+                                        <input id="resume" ref="fileInput" type="file" accept=".pdf"
+                                            @change="handleFileChange" style="display: none" />
+
+                                        <div class="custom-file-wrapper" @click="triggerFileInput">
+                                            <input type="text" :value="fileName" placeholder="No file chosen"
+                                                readonly />
+                                            <button type="button">Browse</button>
+
+                                        </div>
+                                        <div class="text-right mt-3">
+                                            <b-button type="submit" class="btn-black" :disabled="submitting">
+                                                <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
+                                                Submit
+                                            </b-button>
+                                        </div>
+
+
+
+                                        <!-- <div v-if="!resumeState" class="invalid-feedback d-block">
+                                            Please upload a PDF file (max 5MB)
+                                        </div> -->
+                                    </b-col>
+                                </b-row>
+
+                                <b-row class="justify-content-end">
+                                    <b-col md="6" class="text-right">
+
+                                    </b-col>
+                                </b-row>
+
+                            </b-form-group>
+                        </b-form>
                     </div>
-                </b-card>
+                </div>
 
-                <div class="mt-5" style="max-width: 850px;min-width:300px;">
-                    <p class="mb-4" style="color: black; font-size: 28px; font-weight: 600;">Apply Online</p>
+                <!-- Job Table or No Result -->
+                <b-row v-else-if="showJobs && (selectedLocation || selectedCategory)">
+                    <b-col v-if="jobs.length === 0" cols="12" class="text-center">
+                        <h5 class="pink-text mb-0">No jobs available in this location.</h5>
+                    </b-col>
+                    <b-col v-else cols="12">
+                        <b-table :items="jobs" :fields="fields" bordered striped responsive thead-class="custom-table-header">
+                            <template #cell(job_name)="data">
+                                <span @click="goToCareerDetails(data.item)" style="cursor: pointer;  ">
+                                    <strong>{{ data.item.job_name }}</strong>
+                                </span>
+                            </template>
+                            <template #cell(location_name)="data">
+                                {{ (data.item.city && typeof data.item.city === 'object' && data.item.city.city) ? data.item.city.city : (data.item.location_name || 'N/A') }}
+                            </template>
+                            <template #cell(created_at)="data">
+                                <strong>{{ formatDate(data.item.created_at) }}</strong>
+                            </template>
+                        </b-table>
+                    </b-col>
+                </b-row>
 
-                    <b-form @submit.prevent="submitApplication">
-                        <b-form-group>
-                            <b-row class="align-items-center mb-3">
-                                <b-col md="3">
-                                    <label for="name" class="form-label-custom">
-                                        Name <span class="text-danger">*</span>
-                                    </label>
-                                </b-col>
-
-                                <b-col md="6">
-                                    <b-form-input id="name" v-model="form.name" :state="nameState" required
-                                        class="custom-input" />
-                                    <b-form-invalid-feedback v-if="!nameState">Name is
-                                        required</b-form-invalid-feedback>
-                                </b-col>
-                            </b-row>
-
-                            <b-row class="align-items-center mb-3">
-                                <b-col md="3">
-                                    <label for="email" class="form-label-custom">Email ID<span
-                                            class="text-danger">*</span></label>
-                                </b-col>
-                                <b-col md="6">
-                                    <b-form-input id="email" v-model="form.email" type="email" :state="emailState"
-                                        required class="custom-input" />
-                                    <b-form-invalid-feedback v-if="!emailState">Please enter a valid
-                                        email</b-form-invalid-feedback>
-                                </b-col>
-                            </b-row>
-
-                            <b-row class="align-items-center mb-3">
-                                <b-col md="3">
-                                    <label for="contact_number" class="form-label-custom">Contact Number <span
-                                            class="text-danger">*</span></label>
-                                </b-col>
-                                <b-col md="6">
-                                    <b-form-input id="contact_number" v-model="form.contact_number"
-                                        :state="contactState" required class="custom-input" />
-                                    <b-form-invalid-feedback v-if="!contactState">Contact number is
-                                        required</b-form-invalid-feedback>
-                                </b-col>
-                            </b-row>
-
-                            <!-- <b-row class="align-items-center mb-3">
-                                <b-col md="3">
-                                    <label for="resume" class="form-label-custom">Attach Resume <span
-                                            class="text-danger">*</span></label>
-                                </b-col>
-                                <b-col md="6">
-                                    <b-form-file id="resume" v-model="form.resume" :state="resumeState" accept=".pdf"
-                                        placeholder="Choose a file or drop it here..."
-                                        drop-placeholder="Drop file here..." required />
-                                    <b-form-invalid-feedback v-if="!resumeState">Please upload a PDF file (max
-                                        5MB)</b-form-invalid-feedback>
-                                </b-col>
-                            </b-row> -->
-                            <b-row class="align-items-center mb-3">
-                                <b-col md="3">
-                                    <label for="resume" class="form-label-custom"
-                                        style="padding-bottom: 65px !important;">
-                                        Attach Resume <span class="text-danger">*</span>
-                                    </label>
-                                </b-col>
-                                <b-col md="6">
-
-                                    <input id="resume" ref="fileInput" type="file" accept=".pdf"
-                                        @change="handleFileChange" style="display: none" />
-
-                                    <div class="custom-file-wrapper" @click="triggerFileInput">
-                                        <input type="text" :value="fileName" placeholder="No file chosen" readonly />
-                                        <button type="button">Browse</button>
-
-                                    </div>
-                                    <div class="text-right mt-3">
-                                        <b-button type="submit" class="btn-black" :disabled="submitting">
-                                            <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
-                                            Submit
-                                        </b-button>
-                                    </div>
-
-
-
-                                    <!-- <div v-if="!resumeState" class="invalid-feedback d-block">
-                                        Please upload a PDF file (max 5MB)
-                                    </div> -->
-                                </b-col>
-                            </b-row>
-
-                            <b-row class="justify-content-end">
-                                <b-col md="6" class="text-right">
-
-                                </b-col>
-                            </b-row>
-
-                        </b-form-group>
-                    </b-form>
+                <!-- Pagination -->
+                <div v-if="showJobs && selectedLocation && selectedCategory && jobs.length && !selectedJobDetails"
+                    class="d-flex justify-content-center mt-4">
+                    <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"
+                        @change="handlePageChange" class="custom-pagination" />
                 </div>
             </div>
-
-            <!-- Job Table or No Result -->
-            <b-row v-else-if="showJobs && (selectedLocation || selectedCategory)">
-                <b-col v-if="jobs.length === 0" cols="12" class="text-center">
-                    <h5 class="pink-text mb-0">No jobs available in this location.</h5>
-                </b-col>
-                <b-col v-else cols="12">
-                    <b-table :items="jobs" :fields="fields" bordered striped responsive
-                        thead-class="custom-table-header">
-                        <template #cell(job_name)="data">
-                            <span @click="goToCareerDetails(data.item)" style="cursor: pointer;  ">
-                                <strong>{{ data.item.job_name }}</strong>
-                            </span>
-                        </template>
-                        <template #cell(location_name)="data">
-                            {{ data.item.city.city || 'N/A' }}
-                        </template>
-                        <template #cell(created_at)="data">
-                            <strong>{{ formatDate(data.item.created_at) }}</strong>
-                        </template>
-                    </b-table>
-                </b-col>
-            </b-row>
-
-            <!-- Pagination -->
-            <div v-if="showJobs && selectedLocation && selectedCategory && jobs.length && !selectedJobDetails"
-                class="d-flex justify-content-center mt-4">
-                <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"
-                    @change="handlePageChange" class="custom-pagination" />
-            </div>
         </div>
-    </div>
-</template>
+    </template>
 
 <script>
 import { ref, onMounted, computed } from "@vue/composition-api";
@@ -618,4 +624,42 @@ export default {
 .custom-pagination>>>.page-item .page-link .arrow {
     font-size: 25px !important;
 }
+.custom-select-border {
+
+    height: 40px !important;
+}
+
+.uniform-control {
+    height: 45px;
+    /* same height for selects and button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-body {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+
+}
+.job-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333; /* Dark gray for modern look */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;    
+  padding-bottom: 8px;
+}
+
+.job-title::after {
+  content: "";
+  display: block;
+  width: 60%;
+  height: 3px;
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
 </style>

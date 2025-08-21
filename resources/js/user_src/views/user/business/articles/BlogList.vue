@@ -30,15 +30,16 @@
           <div class="featured-blog-row">
             <div class="featured-blog-content">
 
-              <h3 class="featured-title">{{ featuredBlog.title }}</h3>
-              <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{
-                formatDate(featuredBlog.published_at) }}</small>
-              <p class="featured-excerpt" style="color: black !important; font-weight:bolder;">{{ featuredBlog.excerpt
-                }}</p>
-             <b-button variant="danger" class="read-more-btn"
-  :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
-  <i class="fas fa-arrow-right mr-1"></i> Read more
-</b-button>
+              <h3 class="featured-title" style="font-size: 18px;">{{ featuredBlog.title }}</h3>
+              <small class="text-muted"
+                style="color: black !important;font-weight: 600; margin-bottom: 5px;font-size: 18px;">{{
+                  formatDate(featuredBlog.published_at) }}</small>
+              <p class="featured-excerpt" style="color: black !important; font-weight:bolder;font-size: 20px;">{{ featuredBlog.excerpt
+              }}</p>
+              <b-button variant="danger" class="read-more-btn"
+                :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
+                <i class="fas fa-arrow-right mr-1"></i> Read more
+              </b-button>
 
             </div>
             <div class="featured-blog-image">
@@ -52,20 +53,20 @@
       <div class="row blog-grid">
         <div v-for="blog in regularBlogs" :key="blog.id" class="col-md-6 mb-4">
           <!-- <router-link :to="{ name: 'blog-detail', params: { slug: blog.slug } }" class="card h-100 blog-card-link"> -->
-            <div class="card h-100 blog-card-link">
+          <div class="card h-100 blog-card-link">
             <div class="card-body flex-column">
               <b-img :src="'/blogs/' + blog.featured_image" fluid alt="Blog image" class="blog-img mb-3" />
-              <h4 class="blog-title mt-2 mb-2">{{ blog.title }}</h4>
-              <small class="text-muted" style="color: black !important;font-weight: 500; margin-bottom: 2px;">{{
+              <h4 class="blog-title mt-2 mb-2" style="font-size: 18px;">{{ blog.title }}</h4>
+              <small class="text-muted" style="color: black !important;font-weight: 600; margin-bottom: 5px;font-size: 18px;">{{
                 formatDate(blog.published_at) }}</small>
-              <p class="blog-excerpt" style="color: black !important; font-weight:bolder;">{{ blog.excerpt }}</p>
+              <p class="blog-excerpt" style="color: black !important; font-weight:bolder;font-size: 20px;">{{ blog.excerpt }}</p>
             </div>
             <b-button variant="danger" class="read-more-btn"
-  :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
-  <i class="fas fa-arrow-right mr-1"></i> Read more
-</b-button>
+              :to="{ name: 'blog-detail', params: { slug: featuredBlog.slug } }">
+              <i class="fas fa-arrow-right mr-1"></i> Read more
+            </b-button>
 
-            </div>
+          </div>
           <!-- </router-link> -->
         </div>
       </div>

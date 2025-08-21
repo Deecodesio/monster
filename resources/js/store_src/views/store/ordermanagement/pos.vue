@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </b-col>
-            <b-col lg="6" md="6" cols="12">
+            <!-- <b-col lg="6" md="6" cols="12">
                 <!-- <vue-autosuggest
                     v-model="query"     
                     :suggestions="suggestions"
@@ -21,7 +21,7 @@
                     :render-suggestion="renderSuggestion"
                     :limit="10"
                     @input="fetchResults"
-                /> -->
+                />  
                 <div v-if="isLoading" class="ecommerce-searchbar mt-1">
                     <b-row>
 
@@ -65,7 +65,7 @@
                                                             fluid
                                                             alt="Scan"
                                                             style="width: 12px"
-                                                        /> -->
+                                                        />  
                                                             <div 
                                                                 style="color: black; font-weight: 600; font-family: Quicksand; cursor: pointer;padding-top: 4px;">
                                                                 {{ data3.label }}
@@ -74,7 +74,7 @@
                                                     </h5>
 
                                                     <b-col v-if="isopen" cols="12" class="text-r pad0">
-                                                        <!-- <h4 class="media-heading text-primary">{{ setting.value }} {{ data3.price }}</h4> -->
+                                                        <!-- <h4 class="media-heading text-primary">{{ setting.value }} {{ data3.price }}</h4>  
                                                         <h4 class="media-heading text-primary dynamic-margin">{{
                                                             setting.value }} {{ data3.price || 0 }}</h4>
 
@@ -110,7 +110,93 @@
                         </b-col>
                     </b-row>
                 </div>
+            </b-col> -->
+            <b-col lg="6" md="6" cols="12">
+                <!-- <vue-autosuggest ... /> -->
+                <div v-if="isLoading" class="ecommerce-searchbar mt-1">
+                    <b-row>
+                        <b-col cols="2">
+                            <b-img src="/loader.svg" fluid alt="Scan" />
+                        </b-col>
+                    </b-row>
+                </div>
+
+                <div class="ecommerce-searchbar mt-1 text-black" v-if="!isLoading" style="color: black;">
+
+                    <b-row class="align-stretch">
+                        <b-col cols="12" v-for="(data2, index2) in rows_detail" :key="index2" id="products"
+                            style="color: black;">
+                            <h3>{{ data2.menu_name }}</h3>
+                            <div :id="data2.menu_name">
+
+                                <b-row class="align-stretch">
+                                    <b-col xxl="6" lg="6" md="6" cols="12" class="d-flex"
+                                        v-for="(data3, index3) in data2.items" :key="index3">
+
+
+                                        <b-card class="rounded3 flex-fill">
+                                            <b-row>
+                                                <b-col cols="5" md="4" lg="5" xxl="3">
+                                                    <b-img class="bor" :src="data3.image" blank-color="#ccc" width="80"
+                                                        @click="open_image(data3.image, data3.name)" />
+                                                </b-col>
+
+                                                <b-col cols="7" md="8" lg="7" xxl="9">
+
+                                                    <h5 class="media-heading">
+                                                        <div v-if="data3.is_veg">
+                                                            {{ data3.name }}
+                                                            <b-img src="/veg.svg" fluid alt="Scan"
+                                                                style="width: 12px" />
+                                                        </div>
+                                                        <div v-else>
+                                                            {{ data3.name }}
+                                                            <div
+                                                                style="color: black; font-weight: 600; font-family: Quicksand; cursor: pointer; padding-top: 4px;">
+                                                                {{ data3.label }}
+                                                            </div>
+                                                        </div>
+                                                    </h5>
+
+                                                    <b-col v-if="isopen" cols="12" class="text-r pad0">
+                                                        <h4 class="media-heading text-primary dynamic-margin">
+                                                            {{ setting.value }} {{ data3.price || 0 }}
+                                                        </h4>
+
+                                                        <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'"
+                                                            variant="outline-primary"
+                                                            class="btn-icon rounded-circle add_to_cart"
+                                                            :id="'food_add_' + data3.food_id + 'r'"
+                                                            :data-price="data3.price"
+                                                            @click=" addcart(data3.price, data3.item_tax, data3.name, data3.food_id, data3.is_veg, data3.add_ons, data3.food_quantity, data3.image)">
+                                                            <feather-icon icon="PlusIcon" />
+                                                        </b-button>
+
+                                                        <div class="num-block skin-2"
+                                                            :id="'food_control_' + data3.food_id + 'r'"
+                                                            style="display:none">
+                                                            <div class="num-in">
+                                                                <span class="minus dis"
+                                                                    :id="'food_minus_' + data3.food_id"
+                                                                    @click="removefromcart(data3.price, data3.item_tax, data3.name, data3.food_id, data3.is_veg, data3.add_ons, data3.food_quantity, data3.image)"></span>
+                                                                <input type="text" class="in-num" value="1" readonly=""
+                                                                    :id="'food_qty_' + data3.food_id + 'r'">
+                                                                <span class="plus" :id="'food_plus_' + data3.food_id"
+                                                                    @click="addcart(data3.price, data3.item_tax, data3.name, data3.food_id, data3.is_veg, data3.add_ons, data3.food_quantity, data3.image)"></span>
+                                                            </div>
+                                                        </div>
+                                                    </b-col>
+                                                </b-col>
+                                            </b-row>
+                                        </b-card>
+                                    </b-col>
+                                </b-row>
+                            </div>
+                        </b-col>
+                    </b-row>
+                </div>
             </b-col>
+
             <b-col lg="4" md="4" cols="12">
                 <h3>{{ $t("Customer") }}</h3>
                 <vue-autosuggest v-model="query1" :suggestions="suggestions1" :input-props="inputProps1"
@@ -327,7 +413,7 @@
                         </td>
                         <td>
                             <label :for="'addon_' + itemid + '_' + data4.id" style="font-size:16px;"> {{ setting.value
-                                }}
+                            }}
                                 {{ data4.price }} </label>
                         </td>
 
@@ -2119,5 +2205,11 @@ export default {
     .dynamic-margin {
         margin-top: 34px;
     }
+}
+
+.media-heading {
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
 }
 </style>

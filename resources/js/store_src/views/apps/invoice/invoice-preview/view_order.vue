@@ -108,8 +108,8 @@
           </b-card-body>
           <!-- selectable -->
 
-          <b-table ref="ordertable" selectable :select-mode="selectMode" :items="food_details" :fields="fields" responsive
-            @row-selected="onRowSelected" selected-variant="strikeout">
+          <b-table ref="ordertable" selectable :select-mode="selectMode" :items="food_details" :fields="fields"
+            responsive @row-selected="onRowSelected" selected-variant="strikeout">
             <template #cell(selected)="{ rowSelected }">
               <template v-if="rowSelected">
                 <i class="feather icon-disc primary"></i>
@@ -119,22 +119,25 @@
                 <i class="feather icon-circle"></i>
               </template>
             </template>
+            <template #cell(serial)="data">
+              {{ data.index + 1 }}
+            </template>
 
             <template #cell(taskDescription)="data">
-              <b-card-text class="font-weight-bold mb-25" v-if="data.item.image">
+              <!-- <b-card-text class="font-weight-bold mb-25" v-if="data.item.image">
                 <b-img :src="url1 ? url1 : data.item.image" rounded fluid id="view-img" alt="product photo" />
-              </b-card-text>
+              </b-card-text> -->
               <b-card-text class="font-weight-bold mb-25">
                 {{ data.item.Name }}
               </b-card-text>
-              <b-card-text class="text-nowrap">
+              <!-- <b-card-text class="text-nowrap">
                 {{ data.item.description }}
-              </b-card-text>
+              </b-card-text> -->
             </template>
-            <template #cell(image)="data">
+            <!-- <template #cell(image)="data">
               <b-img :src="data.item.image" rounded fluid id="view-img" alt="product photo" />
-            </template>
-            <template #cell(action)="data">
+            </template> -->
+            <!-- <template #cell(action)="data">
 
               <b-button v-ripple.400="'rgba(113, 102, 240, 0.15)'" variant="outline-primary" class="btn-icon"
                 v-b-tooltip.hover.top="'Mark as In Stock'" v-if="isRowSelected(data.index)">
@@ -145,7 +148,7 @@
                 v-b-tooltip.hover.top="'Mark as Out of Stock'" v-if="!isRowSelected(data.index)">
                 <i class="fa-solid fa-xmark" @click="select_row(data)"></i>
               </b-button>
-            </template>
+            </template> -->
             <template #cell(price)="data">
               <b-card-text class="text-nowrap">
                 {{ setting.value }} {{ data.item.price }}
@@ -197,20 +200,20 @@
                       {{ setting.value }} {{ req_details.delivery_charge }}
                     </p>
                   </div> -->
-                   <div class="invoice-total-item">
+                  <div class="invoice-total-item">
                     <p class="invoice-total-title">
-                       CGST  :
+                      CGST :
                     </p>
                     <p class="invoice-total-amount">
-                      {{ setting.value }} {{ req_details.rtax/2 }}
+                      {{ setting.value }} {{ req_details.rtax / 2 }}
                     </p>
                   </div>
-                   <div class="invoice-total-item">
+                  <div class="invoice-total-item">
                     <p class="invoice-total-title">
-                       SGST :
+                      SGST :
                     </p>
                     <p class="invoice-total-amount">
-                      {{ setting.value }} {{ req_details.rtax/2 }}
+                      {{ setting.value }} {{ req_details.rtax / 2 }}
                     </p>
                   </div>
                   <!-- <div class="invoice-total-item">
@@ -316,8 +319,8 @@
             :placeholder="$t('cancel') + ' ' + $t('reason')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
           <b-form-input type="text" id="reson_id" v-model="user_info.order_id" hidden="hidden" />
         </b-form-group>
-        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" id="myfunction"
-          hidden="hidden">
+        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
+          id="myfunction" hidden="hidden">
         </b-button>
         <b-col>
         </b-col>
@@ -393,7 +396,8 @@ export default {
       layout: '',
       selectMode: 'multi',
       // fields: ['image', 'action', 'Name', 'description', 'size', 'addons', 'quantity', 'price'],
-      fields: ['image', 'action', 'Name', 'quantity', 'price'],
+      fields: ['serial', 'Name', 'quantity', 'price'],
+
       selected: [],
       marked: []
     }
@@ -887,7 +891,7 @@ export default {
   }
 }
 </style>
-<style lang="scss" >
+<style lang="scss">
 @import '~@resources/scss/vue/pages/page-profile.scss';
 
 #view-img {

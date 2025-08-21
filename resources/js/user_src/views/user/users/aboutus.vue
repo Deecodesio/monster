@@ -100,9 +100,9 @@
       <div class="col-md-6 d-flex pr-md-4">
         <div class="text-box">
           <p>
-            <strong>Annapurna Foods</strong> is a start-up Poultry meat
+            <strong>Annapoorna Foods</strong> is a start-up Poultry meat
             and Poultry Egg online sales E-Commerce company under brand name
-            <strong>Monster Foods</strong> across <strong>South India</strong>.<br><br>
+            <strong>Monster Foods</strong> across <strong>India</strong>.<br><br>
 
             Chicken meat and egg is a widely consumed source of protein in India. It is available in various forms
             like fresh, frozen, processed, or ready-to-cook and is popular across young generations.<br><br>

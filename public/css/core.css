@@ -31879,48 +31879,6 @@ footer.footer-shadow {
   -webkit-transition: -webkit-transform 0.25s ease;
 }
 
-.main-menu.menu-light .navigation li.nav-item a:hover > * {
-  transition: -webkit-transform 0.25s ease;
-  -webkit-transition: -webkit-transform 0.25s ease;
-  transition: transform 0.25s ease;
-  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
-}
-
-[dir] .main-menu.menu-light .navigation li.nav-item a:hover > * {
-  -webkit-transition: -webkit-transform 0.25s ease;
-}
-
-[dir=ltr] .main-menu.menu-light .navigation li.nav-item a:hover > * {
-  -webkit-transform: translateX(5px);
-  transform: translateX(5px);
-}
-
-[dir=rtl] .main-menu.menu-light .navigation li.nav-item a:hover > * {
-  -webkit-transform: translateX(-5px);
-          transform: translateX(-5px);
-}
-
-.main-menu.menu-light .navigation li.nav-item ul.menu-content li a:hover > * {
-  transition: -webkit-transform 0.25s ease;
-  -webkit-transition: -webkit-transform 0.25s ease;
-  transition: transform 0.25s ease;
-  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
-}
-
-[dir] .main-menu.menu-light .navigation li.nav-item ul.menu-content li a:hover > * {
-  -webkit-transition: -webkit-transform 0.25s ease;
-}
-
-[dir=ltr] .main-menu.menu-light .navigation li.nav-item ul.menu-content li a:hover > * {
-  -webkit-transform: translateX(5px);
-  transform: translateX(5px);
-}
-
-[dir=rtl] .main-menu.menu-light .navigation li.nav-item ul.menu-content li a:hover > * {
-  -webkit-transform: translateX(-5px);
-          transform: translateX(-5px);
-}
-
 [dir] .main-menu.menu-light .navigation > li > a {
   margin: 0 0px;
 }
@@ -32179,48 +32137,6 @@ footer.footer-shadow {
 
 [dir] .main-menu.menu-dark .navigation li a > * {
   -webkit-transition: -webkit-transform 0.25s ease;
-}
-
-.main-menu.menu-dark .navigation li.nav-item a:hover > * {
-  transition: -webkit-transform 0.25s ease;
-  -webkit-transition: -webkit-transform 0.25s ease;
-  transition: transform 0.25s ease;
-  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
-}
-
-[dir] .main-menu.menu-dark .navigation li.nav-item a:hover > * {
-  -webkit-transition: -webkit-transform 0.25s ease;
-}
-
-[dir=ltr] .main-menu.menu-dark .navigation li.nav-item a:hover > * {
-  -webkit-transform: translateX(5px);
-  transform: translateX(5px);
-}
-
-[dir=rtl] .main-menu.menu-dark .navigation li.nav-item a:hover > * {
-  -webkit-transform: translateX(-5px);
-          transform: translateX(-5px);
-}
-
-.main-menu.menu-dark .navigation li.nav-item ul.menu-content li a:hover > * {
-  transition: -webkit-transform 0.25s ease;
-  -webkit-transition: -webkit-transform 0.25s ease;
-  transition: transform 0.25s ease;
-  transition: transform 0.25s ease, -webkit-transform 0.25s ease;
-}
-
-[dir] .main-menu.menu-dark .navigation li.nav-item ul.menu-content li a:hover > * {
-  -webkit-transition: -webkit-transform 0.25s ease;
-}
-
-[dir=ltr] .main-menu.menu-dark .navigation li.nav-item ul.menu-content li a:hover > * {
-  -webkit-transform: translateX(5px);
-  transform: translateX(5px);
-}
-
-[dir=rtl] .main-menu.menu-dark .navigation li.nav-item ul.menu-content li a:hover > * {
-  -webkit-transform: translateX(-5px);
-          transform: translateX(-5px);
 }
 
 [dir] .main-menu.menu-dark .navigation > li > a {
