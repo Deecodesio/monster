@@ -377,10 +377,10 @@
                                         class="fa-solid fa-money-bill"></i> {{ $t("Cash") }}</span></label>
 
 
-                            <label class="btn btn-outline-secondary tiplabel tiphide take f-size-0 " id="walletp"
+                            <!-- <label class="btn btn-outline-secondary tiplabel tiphide take f-size-0 " id="walletp"
                                 type="button"> <input type="radio" class="checktips" hidden name="d_type" id="takeaway"
                                     @change="payment_type_sel(2)" value="2"><span style="color:#282828;"><i
-                                        class="fa-solid fa-wallet"></i> {{ $t("Wallet") }}</span></label>
+                                        class="fa-solid fa-wallet"></i> {{ $t("Wallet") }}</span></label> -->
                         </div>
                         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" @click="create_order()"
                             style="width:100%;">
@@ -413,7 +413,7 @@
                         </td>
                         <td>
                             <label :for="'addon_' + itemid + '_' + data4.id" style="font-size:16px;"> {{ setting.value
-                            }}
+                                }}
                                 {{ data4.price }} </label>
                         </td>
 
@@ -586,16 +586,18 @@ export default {
     data() {
         return {
             rest_id: localStorage.id,
-            order_details: {},
-            rows: {},
-            rows_detail: {},
-            rows_detail2: {},
+            order_details: { tax: 0 },
+            // rows is an array because you access rows[0] in code
+            rows: [{ id: null, name: "", address: "", image: "", offer_discount: 0, packaging_charge: 0, tax: 0, is_open: 1 }],
+            rows_detail: [],
+            rows_detail2: [],
             isLoading: true,
             isfav: false,
             address: "",
-            cart: JSON.parse(localStorage.getItem("store_cart")),
-            add_ons: {},
-            food_quantity: {},
+            // IMPORTANT: provide a fallback so cart is never null
+            cart: JSON.parse(localStorage.getItem("store_cart")) || [],
+            add_ons: [],
+            food_quantity: [],
             itemid: "",
             selected: {},
             quantity: [],
@@ -605,7 +607,7 @@ export default {
             isopen: true,
             modal_image: "",
             modal_title: "",
-            setting: {},
+            setting: { value: "₹" },
             ctax: 0,
             cdc: 0,
             ctips: 0,
@@ -632,15 +634,16 @@ export default {
                 class: 'form-control ht-6',
                 placeholder: "Search Products ",
             },
-            sectionConfigs: {
+            // initialize data2 since template expects it
+            data2: [],
 
+            sectionConfigs: {
                 products: {
                     limit: 20,
                     label: 'Products',
                     onSelected: selected1 => {
-
-                        this.selected1 = selected1.item
-                        this.go_to_product(selected1.item)
+                        this.selected1 = selected1.item;
+                        this.go_to_product(selected1.item);
                     },
                 },
             },
@@ -650,39 +653,23 @@ export default {
                 placeholder: "Search Customer ",
             },
             sectionConfigs1: {
-
                 Users: {
                     limit: 20,
                     label: 'Users',
                     onSelected: selected2 => {
-
-                        this.selected2 = selected2.item
-                        this.go_to_user(selected2.item)
+                        this.selected2 = selected2.item;
+                        this.go_to_user(selected2.item);
                     },
                 },
             },
             limit: 10,
             swiperOptions: {
                 breakpoints: {
-                    320: {
-                        slidesPerView: 1.2,
-                        spaceBetween: 30,
-                    },
-                    420: {
-                        slidesPerView: 2.2,
-                        spaceBetween: 30,
-                    },
-
-                    768: {
-                        slidesPerView: 3.2,
-                        spaceBetween: 30,
-                    },
-                    1200: {
-                        slidesPerView: 4.2,
-                        spaceBetween: 30,
-                    },
+                    320: { slidesPerView: 1.2, spaceBetween: 30 },
+                    420: { slidesPerView: 2.2, spaceBetween: 30 },
+                    768: { slidesPerView: 3.2, spaceBetween: 30 },
+                    1200: { slidesPerView: 4.2, spaceBetween: 30 },
                 },
-
                 navigation: {
                     nextEl: ".swiper-button-next",
                     prevEl: ".swiper-button-prev",
@@ -690,6 +677,7 @@ export default {
             },
         };
     },
+
     mounted() { },
 
     directives: {
@@ -992,7 +980,7 @@ export default {
 
             data.append('paid_type', this.payment_type);
 
-            data.append('gst', parseFloat(this.ctax));
+            data.append('gst', parseFloat(this.ctax)/2);
             data.append('tips', 0);
             data.append('offer_discount', parseFloat(this.cdiscount));
             data.append('delivery_charge', 0);
@@ -1248,15 +1236,18 @@ export default {
                 tax: tot_tax,
             };
             this.citem_total = tot_amt
+            console.log(this.citem_total)
             this.cpackaging_charge = restaurant_packaging_charge
             console.log(this.cpackaging_charge)
             this.cdelivery_charge = DELIVERY_CHARGE
             this.cdiscount = offer_discount
             this.cbill = total_price
+            console.log(this.cbill)
             this.ctips = tips
             this.cdc = DELIVERY_CHARGE
+            
             this.ctax = tot_tax
-
+            // this.cart = cart;
             this.cart_items = JSON.parse(localStorage.getItem("store_cart"))
             // localStorage.setItem("DC", JSON.stringify(DELIVERY_CHARGE));
 

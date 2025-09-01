@@ -3,13 +3,13 @@
         <b-form @submit.prevent="addJobVacancy">
             <b-row>
                 <b-col md="6">
-                    <b-form-group :label="$t('Category')">
-                        <v-select
+                    <b-form-group  style="font-size: 1.3rem !important;color: black !important;" :label="$t('Category')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             id="category"
                             v-model="job.category_id"
                             :options="category_list"
                             label="name"
-                            :reduce="(sel) => sel.id"
+                            :reduce="(sel) => sel.id" 
                             :placeholder="$t('Select Category')"
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                             :required="!job.category_id"
@@ -17,8 +17,8 @@
                         />
                     </b-form-group>
 
-                    <b-form-group :label="$t('Job Name')">
-                        <b-form-input
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Job Name')">
+                        <b-form-input style="font-size: 1.2rem !important;color: black !important;"
                             id="name"
                             :placeholder="$t('name')"
                             v-model="job.job_name"
@@ -27,8 +27,8 @@
                         />
                     </b-form-group>
 
-                    <b-form-group :label="$t('state')">
-                        <v-select
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('state')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             id="state"
                             v-model="job.state_id"
                             :options="state_list"
@@ -41,8 +41,8 @@
                         />
                     </b-form-group>
 
-                    <b-form-group :label="$t('Location')">
-                        <v-select
+                    <b-form-group  style="font-size: 1.3rem !important;color: black !important;" :label="$t('Location')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             id="location"
                             v-model="job.location_id"
                             :options="city_list"
@@ -54,8 +54,8 @@
                         />
                     </b-form-group>
 
-                    <b-form-group :label="$t('status')">
-                        <v-select
+                    <b-form-group  style="font-size: 1.3rem !important;color: black !important;" :label="$t('status')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             v-model="job.status"
                             :options="options"
                             label="text"
@@ -67,7 +67,7 @@
                     </b-form-group>
                     <b-row>
                         <b-col md="12">
-                            <b-button
+                            <b-button style="font-size: 1.2rem !important;color: white !important;"
                                 v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                                 type="submit"
                                 variant="primary"
@@ -81,7 +81,7 @@
                 </b-col>
 
                 <b-col md="6">
-                    <div style="padding-bottom: calc(0.438rem + 1px)">
+                    <div style="padding-bottom: calc(0.438rem + 1px);font-size: 1.3rem !important;color: black !important;" >
                         Job Details
                     </div>
                     <b-row>
@@ -238,4 +238,19 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+label,
+.col-form-label {
+    font-size: 1.3rem !important;
+    color: black !important;
+}
+
+.form-control {
+    font-size: 1.1rem !important;
+    color: black !important;
+
+    &::placeholder {
+        font-size: 1.2rem !important;
+        color: black !important;
+    }
+}</style>

@@ -521,7 +521,7 @@ h6,
 
 small,
 .small {
-  font-size: 0.986rem;
+  font-size: 1.3rem;
   font-weight: 400;
 }
 
@@ -581,7 +581,7 @@ small,
 
 .blockquote-footer {
   display: block;
-  font-size: 0.986rem;
+  font-size: 1.3rem;
   color: #000000;
 }
 
@@ -3503,7 +3503,7 @@ textarea.form-control {
 .valid-feedback {
   display: none;
   width: 100%;
-  font-size: 0.986rem;
+  font-size: 1.3rem;
   color: #28c76f;
 }
 
@@ -3683,7 +3683,7 @@ textarea.form-control {
 .invalid-feedback {
   display: none;
   width: 100%;
-  font-size: 0.986rem;
+  font-size: 1.3rem;
   color: #ea5455;
 }
 
@@ -18307,7 +18307,31 @@ code {
 
 label {
   color: #000000;
-  font-size: 0.986rem;
+  font-size: 1.3rem;
+}
+
+.form-control {
+  font-size: 1rem;
+}
+
+.form-control::-webkit-input-placeholder {
+  font-size: 1.2rem;
+}
+
+.form-control::-moz-placeholder {
+  font-size: 1.2rem;
+}
+
+.form-control:-ms-input-placeholder {
+  font-size: 1.2rem;
+}
+
+.form-control::-ms-input-placeholder {
+  font-size: 1.2rem;
+}
+
+.form-control::placeholder {
+  font-size: 1.2rem;
 }
 
 .form-control::-webkit-input-placeholder {
@@ -19456,6 +19480,11 @@ select:-webkit-autofill {
   border: 1px solid #FF006B !important;
           -webkit-box-shadow: none !important;
                   box-shadow: none !important;
+}
+
+.btn-primary {
+  font-size: 1.2rem !important;
+  color: white !important;
 }
 
 .btn {
@@ -21327,9 +21356,54 @@ select:-webkit-autofill {
   }
 }
 
+.breadcrumb {
+  font-size: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.breadcrumb .breadcrumb-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.breadcrumb .breadcrumb-item i,
+.breadcrumb .breadcrumb-item svg {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .breadcrumb:not([class*=breadcrumb-]) .breadcrumb-item + .breadcrumb-item:before {
   content: " ";
   color: #000000;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 [dir] .breadcrumb:not([class*=breadcrumb-]) .breadcrumb-item + .breadcrumb-item:before {
@@ -21347,8 +21421,28 @@ select:-webkit-autofill {
   margin-left: 0.6rem;
 }
 
+.breadcrumb .breadcrumb-item + .breadcrumb-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .breadcrumb .breadcrumb-item + .breadcrumb-item:before {
-  height: 20px;
+  height: 1.5rem;
+  width: 1.5rem;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  vertical-align: middle;
 }
 
 /* Component Specific */
@@ -21374,6 +21468,17 @@ select:-webkit-autofill {
 .breadcrumb-chevron.breadcrumb .breadcrumb-item + .breadcrumb-item:before {
   content: " ";
   color: #000000;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 [dir] .breadcrumb-chevron.breadcrumb .breadcrumb-item + .breadcrumb-item:before {
@@ -21399,6 +21504,16 @@ select:-webkit-autofill {
   .breadcrumbs-top .content-header-title {
     display: contents !important;
   }
+}
+
+[dir] .content-header-title {
+  margin: 8px;
+}
+
+/* Store Admin specific styling - remove top margin */
+
+[dir] .store-admin-header .content-header-title {
+  margin: 0 8px 8px 8px !important;
 }
 
 .breadcrumb .breadcrumb-item,

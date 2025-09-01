@@ -24,7 +24,7 @@
 </b-col>
         <b-col md="6">
           <b-form-group :label="$t('role')">
-            <v-select v-model="banner.role_id" :options="this.roles" label="role_name" :reduce="sel => sel.id"
+            <v-select style="font-size: 1.2rem !important;color: black !important;"  v-model="banner.role_id" :options="this.roles" label="role_name" :reduce="sel => sel.id"
               :placeholder="$t('select') + ' ' + $t('role')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" @input="onChange($event)" />
 
 
@@ -72,7 +72,7 @@
 
         <b-col md="6">
           <b-form-group :label="$t('status')">
-            <v-select v-model="banner.status" :options="options_status" label="text" :reduce="sel => sel.value"
+            <v-select  style="font-size: 1.2rem !important;color: black !important;"  v-model="banner.status" :options="options_status" label="text" :reduce="sel => sel.value"
               :placeholder="$t('status')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
           </b-form-group>
         </b-col>
@@ -83,7 +83,7 @@
 
         <!-- submit and reset -->
         <b-col>
-          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
+          <b-button  style="font-size: 1.2rem !important;color: white !important;"  v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
             {{ $t('save') }}
           </b-button>
 
@@ -283,3 +283,20 @@ console.log(res.data.type);
   },
 }
 </script>
+<style>
+ label,
+.col-form-label {
+    font-size: 1.3rem !important;
+    color: black !important;
+}
+
+.form-control {
+    font-size: 1.1rem !important;
+    color: black !important;
+
+    &::placeholder {
+        font-size: 1.2rem !important;
+        color: black !important;
+    }
+}
+</style>

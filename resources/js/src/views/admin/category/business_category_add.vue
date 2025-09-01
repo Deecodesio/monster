@@ -6,76 +6,55 @@
                     <b-tabs>
                         <b-tab active @click="onTabChange(1)">
                             <template #title>
-                                <i
-                                    class="fa fa-language"
-                                    aria-hidden="true"
-                                ></i>
+                                <i class="fa fa-language" aria-hidden="true"></i>
                                 <span class="d-none d-sm-inline">{{
                                     setting.primary.value
-                                }}</span>
+                                    }}</span>
                             </template>
                         </b-tab>
 
                         <!-- Tab: Information -->
                         <b-tab @click="onTabChange(2)">
                             <template #title>
-                                <i
-                                    class="fa fa-language"
-                                    aria-hidden="true"
-                                ></i>
+                                <i class="fa fa-language" aria-hidden="true"></i>
                                 <span class="d-none d-sm-inline">{{
                                     setting.secondary.value
-                                }}</span>
+                                    }}</span>
                             </template>
                         </b-tab>
                     </b-tabs>
                 </b-col>
                 <b-col md="6" id="primary" style="display: block">
-                    <b-form-group label="Category Name">
-                        <b-form-input
-                            placeholder="name"
-                            v-model="category.category_name"
-                            required
-                            style="color: black !important;"
-                        />
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" label="Category Name">
+                        <b-form-input class="custom-input" style="font-size: 1.2rem !important;color: black !important;" placeholder="name"
+                            v-model="category.category_name" required />
                         <b-form-input v-model="category.id" hidden="hidden" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6" id="secondary" style="display: none">
-                    <b-form-group label="Category Name">
-                        <b-form-input
-                            placeholder="name"
-                            v-model="category.secondary_categoryname"
-                        />
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" label="Category Name">
+                        <b-form-input class="custom-input" style="font-size: 1.2rem !important;color: black !important;" placeholder="name"
+                            v-model="category.secondary_categoryname" />
                         <b-form-input v-model="category.id" hidden="hidden" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
-                    <b-form-group label="Business Type">
-                        <v-select
-                            v-model="category.business_id"
-                            :options="options"
-                            label="name"
-                            :reduce="(sel) => sel.id"
-                            placeholder="Business Type"
-                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                        />
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" label="Business Type">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
+                            v-model="category.business_id" :options="options" label="name" :reduce="(sel) => sel.id"
+                            placeholder="Business Type" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
-                    <b-form-group label="Status">
-                        <v-select
-                            v-model="category.status"
-                            :options="options_status"
-                            label="text"
-                            :reduce="(sel) => sel.value"
-                            placeholder="Select Status"
-                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                        />
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" label="Status">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
+                            v-model="category.status" :options="options_status" label="text"
+                            :reduce="(sel) => sel.value" placeholder="Select Status"
+                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
-                    <b-form-group label="Image">
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" label="Image">
                         <!-- <b-form-file
         v-model="category.image"
         placeholder="Choose a file or drop it here..."
@@ -97,49 +76,28 @@
           <b-img src="/no_image.png"   id="banner-img" fluid alt="Scan"  v-else/>
       </b-form-group> -->
                     <b-form-group>
-                        <b-img
-                            :src="
-                                url1
-                                    ? url1
-                                    : category.image
-                                    ? category.image
-                                    : '/no_image.png'
-                            "
-                            rounded
-                            fluid
-                            id="banner-img"
-                            alt="category photo"
-                        />
+                        <b-img :src="url1
+                            ? url1
+                            : category.image
+                                ? category.image
+                                : '/no_image.png'
+                            " rounded fluid id="banner-img" alt="category photo" />
                     </b-form-group>
                     <!-- <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" v-b-modal.modal-xl variant="primary" class="mr-1"> -->
-                    <b-button
-                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                        @click="$refs.fileInput.click()"
-                        variant="primary"
-                        class="mr-1"
-                    >
+                    <b-button style="font-size: 1.2rem !important;color: white !important;" v-ripple.400="'rgba(255, 255, 255, 0.15)'" @click="$refs.fileInput.click()"
+                        variant="primary" class="mr-1">
                         Choose a file
                     </b-button>
-                    <input
-                        ref="fileInput"
-                        type="file"
-                        class="d-none"
-                        @change="onFileChange2"
-                        accept=".jpg, .png, .jpeg"
-                    />
+                    <input ref="fileInput" type="file" class="d-none" @change="onFileChange2"
+                        accept=".jpg, .png, .jpeg" />
                 </b-col>
             </b-row>
             <!-- submit and reset -->
             <br />
             <b-row>
-                <b-col md="6"> </b-col>
+                 
                 <b-col md="6">
-                    <b-button
-                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                        type="submit"
-                        variant="primary"
-                        class="mr-1"
-                    >
+                    <b-button style="font-size: 1.2rem !important;color: white !important;"  v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
                         Save
                     </b-button>
                 </b-col>
@@ -156,45 +114,25 @@
             <b-tabs v-model="tabIndex" pills>
                 <b-tab>
                     <template #title>
-                        <feather-icon
-                            icon="ImageIcon"
-                            size="16"
-                            class="mr-0 mr-sm-50"
-                        />
+                        <feather-icon icon="ImageIcon" size="16" class="mr-0 mr-sm-50" />
                         <span class="d-none d-sm-inline">Select File </span>
                     </template>
                     <div>
                         <b-row>
-                            <b-col
-                                cols="2"
-                                v-for="(img, index) in imgs"
-                                :key="index"
-                            >
-                                <b-img
-                                    :src="img"
-                                    rounded
-                                    fluid
-                                    style="
+                            <b-col cols="2" v-for="(img, index) in imgs" :key="index">
+                                <b-img :src="img" rounded fluid style="
                                         width: 30%;
                                         padding: 1%;
                                         max-height: 100px;
                                         cursor: pointer;
-                                    "
-                                    alt="banner photo"
-                                    @click="myMethod(img)"
-                                    id="lazy"
-                                />
+                                    " alt="banner photo" @click="myMethod(img)" id="lazy" />
                             </b-col>
                         </b-row>
                     </div>
                 </b-tab>
                 <b-tab>
                     <template #title>
-                        <feather-icon
-                            icon="FilePlusIcon"
-                            size="16"
-                            class="mr-0 mr-sm-50"
-                        />
+                        <feather-icon icon="FilePlusIcon" size="16" class="mr-0 mr-sm-50" />
                         <span class="d-none d-sm-inline">Crop Image</span>
                     </template>
                     <div>
@@ -202,41 +140,22 @@
                             <b-col md="4"></b-col>
                             <b-col md="4">
                                 <label></label>
-                                <b-form-file
-                                    id="new_img"
-                                    v-model="file"
-                                    placeholder="Choose a file or drop it here..."
-                                    drop-placeholder="Drop file here..."
-                                    @change="onFileChange2"
-                                    accept=".jpg, .png, .jpeg"
-                                />
+                                <b-form-file id="new_img" v-model="file" placeholder="Choose a file or drop it here..."
+                                    drop-placeholder="Drop file here..." @change="onFileChange2"
+                                    accept=".jpg, .png, .jpeg" />
                             </b-col>
                             <b-col md="4"></b-col>
                             <b-col md="12">
-                                <div
-                                    style="
+                                <div style="
                                         max-width: 1200px;
                                         max-height: 640px;
                                         display: none;
                                         margin: auto;
-                                    "
-                                    id="crop_js"
-                                >
-                                    <vue-cropper
-                                        ref="cropper"
-                                        :guides="false"
-                                        drag-mode="move"
-                                        :aspectRatio="1 / 1"
-                                        :restore="false"
-                                        :crop-box-movable="false"
-                                        :crop-box-resizable="false"
-                                        :toggle-drag-mode-on-dblclick="false"
-                                        :scalable="true"
-                                        :background="true"
-                                        :rotatable="true"
-                                        :src="imgSrc"
-                                        view-mode="1"
-                                    >
+                                    " id="crop_js">
+                                    <vue-cropper ref="cropper" :guides="false" drag-mode="move" :aspectRatio="1 / 1"
+                                        :restore="false" :crop-box-movable="false" :crop-box-resizable="false"
+                                        :toggle-drag-mode-on-dblclick="false" :scalable="true" :background="true"
+                                        :rotatable="true" :src="imgSrc" view-mode="1">
                                     </vue-cropper>
                                 </div>
                             </b-col>
@@ -245,26 +164,10 @@
                 </b-tab>
             </b-tabs>
             <template #modal-footer v-if="tabIndex == 1">
-                <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    type="submit"
-                    variant="primary"
-                    class="mr-1"
-                    @click="cropImage"
-                    style="display: none"
-                    id="crop_btn"
-                    >Crop Image</b-button
-                >
-                <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    type="submit"
-                    variant="primary"
-                    class="mr-1"
-                    @click="rotate"
-                    style="display: none"
-                    id="rotate_btn"
-                    >Rotate</b-button
-                >
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
+                    @click="cropImage" style="display: none" id="crop_btn">Crop Image</b-button>
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
+                    @click="rotate" style="display: none" id="rotate_btn">Rotate</b-button>
             </template>
         </b-modal>
     </b-card>
@@ -509,5 +412,11 @@ export default {
 
 #banner-img {
     width: 10rem;
+}
+.form-control:focus{
+    box-shadow: none !important;
+}
+.custom-input::placeholder {
+    color: #000000 !important;
 }
 </style>

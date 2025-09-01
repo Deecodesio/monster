@@ -50,7 +50,7 @@
                                 <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary"
                                   @click="$refs.onFileChange.click()" class="ml-auto">
                                   <feather-icon icon="PlusIcon" class="mr-25" />
-                                  <span>{{ $t('Update') + ' ' + $t('cover') + ' ' + $t('photo') }}</span>
+                                  <span  style="font-size: 1rem !important; " >{{ $t('Update') + ' ' + $t('cover') + ' ' + $t('photo') }}</span>
                                 </b-button>
                               </template>
                             </b-tabs>
@@ -82,18 +82,19 @@
                     <b-col lg="6" md="12" sm="12">
                       <b-row>
                         <b-col md="12" v-if="business_type.length > 1">
-                          <b-form-group :label="$t('Business') + ' ' + $t('type')" label-for="name">
-                            <v-select v-model="restaurants.business_type" :options="this.business_type" label="name"
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Business') + ' ' + $t('type')" label-for="name">
+                            <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.business_type" :options="this.business_type" label="name"
                               :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('Business')"
                               @input="business($event)" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
                           </b-form-group>
                         </b-col>
                         <b-col md="12" id="primary" v-if="primary_name">
-                          <b-form-group :label="$t('Store') + ' ' + $t('name')" label-for="name">
+                          <b-form-group 
+                           style="font-size: 1.3rem !important;color: black !important;" :label="$t('Store') + ' ' + $t('name')" label-for="name">
                             <validation-provider #default="{ errors }" name="Name" rules="required"
                               :custom-messages="{ required: $t('The Name field is required') }">
-                              <b-form-input id="searchMadminnputname" v-model="restaurants.restaurant_name" type="text"
+                              <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="searchMadminnputname" v-model="restaurants.restaurant_name" type="text"
                                 :state="errors.length > 0 ? false : null"
                                 :placeholder="$t('enter') + ' ' + $t('Store') + ' ' + $t('name')" :disabled="disabled"
                                 @input="initMapName" />
@@ -102,16 +103,16 @@
                           </b-form-group>
                         </b-col>
                         <b-col md="12" id="secondary" v-if="!primary_name">
-                          <b-form-group :label="$t('Store') + ' ' + $t('name')" label-for="name">
-                            <b-form-input id="name" v-model="restaurants.restaurant_secondary_name" type="text"
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Store') + ' ' + $t('name')" label-for="name">
+                            <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="name" v-model="restaurants.restaurant_secondary_name" type="text"
                               :placeholder="$t('enter') + ' ' + $t('Store') + ' ' + $t('name')" :disabled="disabled" />
                           </b-form-group>
                         </b-col>
                         <b-col md="12">
-                          <b-form-group :label="$t('email') + '*'">
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('email') + '*'">
                             <validation-provider #default="{ errors }" name="email" rules="required|email"
                               :custom-messages="{ required: $t('The email field is required') }">
-                              <b-form-input id="email" v-model="restaurants.email" type="email"
+                              <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="email" v-model="restaurants.email" type="email"
                                 :state="errors.length > 0 ? false : null" :placeholder="$t('enter') + ' ' + $t('email')"
                                 :disabled="disabled" />
                               <small class="text-danger">{{ errors[0] }}</small>
@@ -119,10 +120,10 @@
                           </b-form-group>
                         </b-col>
                         <b-col md="12">
-                          <b-form-group :label="$t('password')" label-for="password">
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('password')" label-for="password">
                             <validation-provider #default="{ errors }" name="Password" vid="Password"
                               :custom-messages="{ required: $t('The Password field is required') }" rules="required">
-                              <b-form-input id="password" v-model="restaurants.password" type="text"
+                              <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="password" v-model="restaurants.password" type="text"
                                 :state="errors.length > 0 ? false : null" :placeholder="$t('password')" autocomplete="off"
                                 :disabled="disabled" />
                               <small class="text-danger">{{ errors[0] }}</small>
@@ -131,9 +132,9 @@
                         </b-col>
                         <b-col md="12">
                           <validation-provider #default="{ errors }" name="City" rules="required">
-                            <b-form-group :label="$t('select') + ' ' + $t('city') + '*'" label-for="city"
+                            <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('select') + ' ' + $t('city') + '*'" label-for="city"
                               :state="errors.length > 0 ? false : null">
-                              <v-select id="city" v-model="restaurants.city"
+                              <v-select style="font-size: 1.2rem !important;color: black !important;" id="city" v-model="restaurants.city"
                                 :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="cities" label="city"
                                 :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('city')" autocomplete="off"
                                 @input="onChange($event)" :disabled="disabled">
@@ -153,9 +154,9 @@
                         </b-col>
                         <b-col md="12">
                           <validation-provider #default="{ errors }" name="Area" rules="required">
-                            <b-form-group :label="$t('select') + ' ' + $t('area') + '*'" label-for="area"
+                            <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('select') + ' ' + $t('area') + '*'" label-for="area"
                               :state="errors.length > 0 ? false : null">
-                              <v-select id="area" v-model="restaurants.area"
+                              <v-select style="font-size: 1.2rem !important;color: black !important;" id="area" v-model="restaurants.area"
                                 :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="areas" label="area"
                                 :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('area')"
                                 :disabled="disabled">
@@ -174,10 +175,10 @@
                           </validation-provider>
                         </b-col>
                         <b-col md="12">
-                          <b-form-group :label="$t('mobile') + ' ' + $t('number') + '*'">
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('mobile') + ' ' + $t('number') + '*'">
                             <validation-provider #default="{ errors }" name="mobile number" rules="required"
                               :custom-messages="{ required: $t('The number field is required') }">
-                              <VuePhoneNumberInput id="phone1" no-example @update="updatePhoneNumber"
+                              <VuePhoneNumberInput style="font-size: 1.2rem !important;color: black !important;" id="phone1" no-example @update="updatePhoneNumber"
                                 v-model="restaurants.phone" :state="errors[0] ? false : (valid ? true : null)"
                                 :fetch-country=false no-validator-state :default-country-code="country_code_phone">
                               </VuePhoneNumberInput>
@@ -187,10 +188,10 @@
                         </b-col>
 
                         <b-col md="12">
-                          <b-form-group :label="$t('contact') + ' ' + $t('number') + '*'">
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('contact') + ' ' + $t('number') + '*'">
                             <validation-provider #default="{ errors }" name="contact number" rules="required"
                               :custom-messages="{ required: $t('The number field is required') }">
-                              <VuePhoneNumberInput id="phone1" no-example @update="updatePhoneNumber2"
+                              <VuePhoneNumberInput style="font-size: 1.2rem !important;color: black !important;" id="phone1" no-example @update="updatePhoneNumber2"
                                 v-model="restaurants.contact" :state="errors[0] ? false : (valid ? true : null)"
                                 :fetch-country=false no-validator-state :default-country-code="country_code_phone">
                               </VuePhoneNumberInput>
@@ -200,10 +201,10 @@
                         </b-col>
                         <b-col md="12">
                           <validation-provider #default="{ errors }" name="Delivery Time" rules="required">
-                            <b-form-group
+                            <b-form-group style="font-size: 1.3rem !important;color: black !important;"
                               :label="$t('estimated') + ' ' + $t('delivery') + ' ' + $t('Time') + '(' + $t('mins') + ')' + '*'"
                               label-for="deliveryTime" :state="errors.length > 0 ? false : null">
-                              <v-select id="deliveryTime" v-model="restaurants.estimated_delivery_time"
+                              <v-select style="font-size: 1.2rem !important;color: black !important;" id="deliveryTime" v-model="restaurants.estimated_delivery_time"
                                 :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :options="deliveryTime" label="text"
                                 :reduce="sel => sel.text" :disabled="disabled" />
                               <b-form-invalid-feedback :state="errors.length > 0 ? false : null">
@@ -213,27 +214,27 @@
                           </validation-provider>
                         </b-col>
                         <b-col md="12" v-if="isLayout_package_types">
-                          <b-form-group :label="$t('packaging') + ' ' + $t('charge') + '(%)*'">
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('packaging') + ' ' + $t('charge') + '(%)*'">
                             <validation-provider #default="{ errors }" name="Packaging charge" rules="required"
                               :custom-messages="{ required: $t('The Packaging charge field is required') }">
-                              <b-form-input v-model="restaurants.packaging_charge"
+                              <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.packaging_charge"
                                 :state="errors.length > 0 ? false : null" type="number" :disabled="disabled" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-form-group>
                         </b-col>
                         <b-col md="12">
-                          <b-form-group :label="$t('geofence') + ' ' + $t('radius')">
+                          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('geofence') + ' ' + $t('radius')">
                             <validation-provider #default="{ errors }" name="Geofence Radius" rules="required"
                               :custom-messages="{ required: $t('The Geofence Radius field is required') }">
-                              <b-form-input v-model="restaurants.GeofenceRadius" :state="errors.length > 0 ? false : null"
+                              <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.GeofenceRadius" :state="errors.length > 0 ? false : null"
                                 type="number" :disabled="disabled" />
                               <small class="text-danger">{{ errors[0] }}</small>
                             </validation-provider>
                           </b-form-group>
                         </b-col>
-                        <b-col md="12" v-if="isLayout_deliver_types">
-                          <b-form-group :label="$t('delivery') + ' ' + $t('type') + '*'">
+                        <b-col md="12" v-if="isLayout_deliver_types" >
+                          <b-form-group  style="font-size: 1.2rem !important;" :label="$t('delivery') + ' ' + $t('type') + '*'">
                             <b-form-checkbox style="margin-top: 2%;" v-for="option in options_check" :key="option.value"
                               :value="option.value" ::id="'del' + option.value" name="delivery_name"
                               :disabled="disabled">{{
@@ -241,7 +242,7 @@
                           </b-form-group>
                         </b-col>
                         <b-col md="12" v-if="isLayout_video_type">
-                          <b-form-group :label="$t('Video') + ' ' + $t('Reviews')">
+                          <b-form-group  :label="$t('Video') + ' ' + $t('Reviews')">
                             <b-form ref="form" :style="{ height: trHeight }" class="repeater-form"
                               @submit.prevent="repeateAgain" style="margin-top: 2%;">
                               <b-row v-for="(item, index) in items" :id="item.id" :key="item.id" ref="row">
@@ -283,10 +284,10 @@
                     </b-col>
                     <b-col lg="6" md="12" sm="12">
                       <b-col md="12">
-                        <b-form-group :label="$t('address') + '*'">
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('address') + '*'">
                           <validation-provider #default="{ errors }" name="Address" rules="required"
                             :custom-messages="{ required: $t('The Address field is required') }">
-                            <b-form-input v-model="restaurants.address" :state="errors.length > 0 ? false : null"
+                            <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.address" :state="errors.length > 0 ? false : null"
                               :placeholder="$t('enter') + ' ' + $t('address')" id="searchMadminnput" autocomplete="off"
                               :disabled="disabled" />
                             <small class="text-danger">{{ errors[0] }}</small>
@@ -301,18 +302,18 @@
 
                       </b-col>
                       <b-col md="12">
-                        <b-form-group :label="$t('admin') + ' ' + $t('commission') + '%'">
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('admin') + ' ' + $t('commission') + '%'">
                           <validation-provider #default="{ errors }" name="Commission" rules="required"
                             :custom-messages="{ required: $t('The Commission field is required') }">
-                            <b-form-input v-model="restaurants.admin_commision" :state="errors.length > 0 ? false : null"
+                            <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.admin_commision" :state="errors.length > 0 ? false : null"
                               placeholder="0" type="number" :disabled="disabled" />
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </b-form-group>
                       </b-col>
                       <b-col md="12" v-if="isLayout_brand_types">
-                        <b-form-group :label="$t('brand')">
-                          <v-select v-model="restaurants.brands" :options="this.brand" label="name"
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('brand')">
+                          <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.brands" :options="this.brand" label="name"
                             :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('brand')" class="brand_name"
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :disabled="disabled">
                             <template #list-header>
@@ -325,23 +326,23 @@
                         </b-form-group>
                       </b-col>
                       <b-col md="12">
-                        <b-form-group :label="$t('status') + '*'">
-                          <v-select v-model="restaurants.status" :options="options" label="text"
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('status') + '*'">
+                          <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.status" :options="options" label="text"
                             :reduce="sel => sel.value" :placeholder="$t('select status')"
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :disabled="disabled" />
                         </b-form-group>
                       </b-col>
-                      <b-col md="6" v-if="isLayout_cuisines">
+                      <!-- <b-col md="6" v-if="isLayout_cuisines">
                         <b-form-group :label="$t('cuisines') + '*'">
                           <b-form-checkbox style="margin-top: 2%;" v-for="cuisines1 in cuisines" :key="cuisines1.id"
                             :value="cuisines1.id" :id="'cus' + cuisines1.id" name="cuisines_name" :disabled="disabled">{{
                               cuisines1.name }}
                           </b-form-checkbox>
                         </b-form-group>
-                      </b-col>
+                      </b-col> -->
                       <b-col md="12" v-if="isLayout_Carrier_type">
-                        <b-form-group :label="$t('Carrier Type')">
-                          <v-select v-model="restaurants.carrier_type" :options="this.carrier_type" label="package_name"
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Carrier Type')">
+                          <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.carrier_type" :options="this.carrier_type" label="package_name"
                             :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('Carrier Type')"
                             class="carrier_type" multiple :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                             :disabled="disabled" />
@@ -350,17 +351,17 @@
                         </b-form-group>
                       </b-col>
                       <b-col md="12" v-if="isLayout_tax">
-                        <b-form-group :label="$t('Tax') + '%'">
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Tax') + '%'">
                           <validation-provider #default="{ errors }" name="Tax">
-                            <b-form-input v-model="restaurants.tax" :state="errors.length > 0 ? false : null"
+                            <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.tax" :state="errors.length > 0 ? false : null"
                               placeholder="0" type="number" :disabled="disabled" />
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </b-form-group>
                       </b-col>
                       <b-col md="12">
-                        <b-form-group :label="$t('Cart') + '*'">
-                          <v-select v-model="restaurants.cart" :options="cart_options" label="text"
+                        <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Cart') + '*'">
+                          <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="restaurants.cart" :options="cart_options" label="text"
                             :reduce="sel => sel.value" :placeholder="$t('select Cart status')"
                             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" :disabled="disabled" />
                         </b-form-group>
@@ -633,10 +634,10 @@
             <validation-observer ref="accountRules3" tag="form">
               <b-row>
                 <b-col md="6">
-                  <b-form-group :label="$t('account') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('account') + ' ' + $t('name') + '*'">
                     <validation-provider #default="{ errors }" name="Account Name" rules="required"
                       :custom-messages="{ required: $t('The Account Name field is required') }">
-                      <b-form-input v-model="bank.account_name"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.account_name"
                         :placeholder="$t('enter') + ' ' + $t('account') + ' ' + $t('name')"
                         :state="errors.length > 0 ? false : null" />
                       <small class="text-danger">{{ errors[0] }}</small>
@@ -644,20 +645,20 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('bank') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('bank') + ' ' + $t('name') + '*'">
                     <validation-provider #default="{ errors }" name="Bank Name" rules="required"
                       :custom-messages="{ required: $t('The Bank Name field is required') }">
-                      <b-form-input v-model="bank.bank_name" :state="errors.length > 0 ? false : null"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.bank_name" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('bank') + ' ' + $t('name')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('account') + ' ' + $t('address') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('account') + ' ' + $t('address') + '*'">
                     <validation-provider #default="{ errors }" name="Account Address" rules="required"
                       :custom-messages="{ required: $t('The Account Address field is required') }">
-                      <b-form-input v-model="bank.account_address"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.account_address"
                         :placeholder="$t('enter') + ' ' + $t('account') + ' ' + $t('address')"
                         :state="errors.length > 0 ? false : null" />
                       <small class="text-danger">{{ errors[0] }}</small>
@@ -665,21 +666,21 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('branch') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('branch') + ' ' + $t('name') + '*'">
                     <validation-provider #default="{ errors }" name="Branch Name" rules="required"
                       :custom-messages="{ required: $t('The Branch Name field is required') }">
-                      <b-form-input v-model="bank.branch_name" :state="errors.length > 0 ? false : null"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.branch_name" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('branch') + ' ' + $t('name')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('Account Number') + ' / ' + $t('IBAN Number') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Account Number') + ' / ' + $t('IBAN Number') + '*'">
                     <validation-provider #default="{ errors }" name="Account Number / IBAN Number" rules="required"
                       :custom-messages="{ required: $t('The Account Number / IBAN Number field is required') }">
 
-                      <b-form-input v-model="bank.account_no"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.account_no"
                         :placeholder="$t('enter') + ' ' + $t('Account Number') + ' / ' + $t('IBAN Number')"
                         :state="errors.length > 0 ? false : null" />
                       <small class="text-danger">{{ errors[0] }}</small>
@@ -687,27 +688,27 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('branch') + ' ' + $t('address') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('branch') + ' ' + $t('address') + '*'">
                     <validation-provider #default="{ errors }" name="Branch Address" rules="required"
                       :custom-messages="{ required: $t('The Branch Address field is required') }">
-                      <b-form-input id="Address" v-model="bank.branch_address" :state="errors.length > 0 ? false : null"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="Address" v-model="bank.branch_address" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('branch') + ' ' + $t('address')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('swift') + ' ' + $t('code')">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('swift') + ' ' + $t('code')">
 
-                    <b-form-input v-model="bank.swift_code"
+                    <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.swift_code"
                       :placeholder="$t('enter') + ' ' + $t('swift') + ' ' + $t('code')" />
 
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('routing') + ' ' + $t('number')">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('routing') + ' ' + $t('number')">
 
-                    <b-form-input v-model="bank.routing_no"
+                    <b-form-input style="font-size: 1.2rem !important;color: black !important;" v-model="bank.routing_no"
                       :placeholder="$t('enter') + ' ' + $t('routing') + ' ' + $t('number')" />
 
                   </b-form-group>
@@ -3383,5 +3384,28 @@ export default {
     margin-bottom: 0;
     color: black ! important;
 
+}
+ .custom-input::placeholder {
+    color: #000000 !important;
+}
+
+.form-control::placeholder {
+    color: #000000 !important;
+}
+
+input::placeholder {
+    color: #000000 !important;
+}
+
+.vue-tel-input input::placeholder {
+    color: #000000 !important;
+}
+
+.vti__input::placeholder {
+    color: #000000 !important;
+}
+
+*::placeholder {
+    color: #000000 !important;
 }
 </style>

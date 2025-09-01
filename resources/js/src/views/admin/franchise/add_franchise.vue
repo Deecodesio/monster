@@ -186,12 +186,12 @@
             <b-row>
                 <!-- submit and reset -->
                 <b-col>
-                    <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
+                    <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" style="font-size: 1.2rem !important;color: white !important;"
                         :disabled="loading">
                         <b-spinner small v-if="loading"></b-spinner>
                         {{ loading ? $t("saving") : $t("save") }}
                     </b-button>
-                    <b-button variant="outline-secondary" @click="$router.go(-1)">
+                    <b-button variant="outline-secondary" @click="$router.go(-1)" style="font-size: 1.2rem !important;color: black !important;">
                         {{ $t("cancel") }}
                     </b-button>
                 </b-col>
@@ -520,3 +520,50 @@ export default {
     },
 };
 </script>
+<style>
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
+}
+</style>

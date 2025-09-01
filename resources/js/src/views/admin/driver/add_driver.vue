@@ -34,8 +34,8 @@
                   </b-tabs>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('Store') + ' ' + '(' + $t('optional') + ')'">
-                    <v-select v-model="driver.restaurant_id" :options="rows" label="restaurant_name"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Store') + ' ' + '(' + $t('optional') + ')'">
+                    <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="driver.restaurant_id" :options="rows" label="restaurant_name"
                       :reduce="sel => sel.id" :placeholder="$t('Select Store')"
                       :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
@@ -43,8 +43,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('vehicle') + ' ' + $t('name') + '*'">
-                    <v-select v-model="driver.vehicle_name" :options="vehicles" label="vehicle_name"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('vehicle') + ' ' + $t('name') + '*'">
+                    <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="driver.vehicle_name" :options="vehicles" label="vehicle_name"
                       :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('vehicle')"
                       :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
@@ -52,17 +52,17 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('email') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('email') + '*'">
                     <validation-provider #default="{ errors }" name="email" rules="required|email">
-                      <b-form-input id="email" v-model="driver.email" type="email" style="color: black !important;"
+                      <b-form-input id="email" v-model="driver.email" type="email" style="font-size: 1.2rem !important;color: black !important;"
                         :state="errors.length > 0 ? false : null" placeholder="john.doe@email.com" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('work') + ' ' + $t('city')">
-                    <v-select v-model="driver.city" :options="cities" label="city" :reduce="sel => sel.id"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('work') + ' ' + $t('city')">
+                    <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="driver.city" :options="cities" label="city" :reduce="sel => sel.id"
                       :placeholder="$t('select') + ' ' + $t('city')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                       @input="onChange($event)">
                       <template #list-header>
@@ -76,27 +76,27 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="!isHidden">
-                  <b-form-group :label="$t('driver') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('driver') + ' ' + $t('name') + '*'">
 
                     <validation-provider #default="{ errors }" name="drivername"
                       :custom-messages="{ required: $t('The Drivername field is required') }" rules="required">
-                      <b-form-input id="name" type="text" v-model="driver.name" style="color: black !important;"
+                      <b-form-input id="name" type="text" v-model="driver.name" style="font-size: 1.2rem !important;color: black !important;"
                         :state="errors.length > 0 ? false : null" :placeholder="$t('name')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="isHidden">
-                  <b-form-group :label="$t('driver') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('driver') + ' ' + $t('name') + '*'">
 
                     <b-form-input id="name" type="text" v-model="driver.second_name" :placeholder="$t('name')"
-                      style="color: black !important;" />
+                      style="font-size: 1.2rem !important;color: black !important;" />
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('phone') + ' ' + $t('no') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('phone') + ' ' + $t('no') + '*'">
                     <validation-provider #default="{ errors }" name="number" rules="required">
-                      <VuePhoneNumberInput id="phone1" no-example @update="updatePhoneNumber" v-model="driver.phone"
+                      <VuePhoneNumberInput style="font-size: 1.2rem !important;color: black !important;" id="phone1" no-example @update="updatePhoneNumber" v-model="driver.phone"
                         :state="errors[0] ? false : (valid ? true : null)" :fetch-country=true>
                       </VuePhoneNumberInput>
 
@@ -105,8 +105,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('work') + ' ' + $t('area') + '(' + $t('optional') + ')'">
-                    <v-select v-model="driver.area" :options="areas" label="area" :reduce="sel => sel.id"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('work') + ' ' + $t('area') + '(' + $t('optional') + ')'">
+                    <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="driver.area" :options="areas" label="area" :reduce="sel => sel.id"
                       :placeholder="$t('select') + ' ' + $t('area')"
                       :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
                       <template #list-header>
@@ -120,95 +120,95 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="!isHidden">
-                  <b-form-group :label="$t('address') + ' ' + $t('line') + '1 ' + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('address') + ' ' + $t('line') + '1 ' + '*'">
                     <validation-provider #default="{ errors }" name="Address"
                       :custom-messages="{ required: $t('The Address field is required') }" rules="required">
                       <b-form-input id="name" type="text" v-model="driver.address_line_1"
-                        style="color: black !important;" :state="errors.length > 0 ? false : null"
+                        style="font-size: 1.2rem !important;color: black !important;" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('address')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="isHidden">
-                  <b-form-group :label="$t('address') + ' ' + $t('line') + '1 ' + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('address') + ' ' + $t('line') + '1 ' + '*'">
 
                     <b-form-input id="name" type="text" v-model="driver.second_address_line_1"
-                      style="color: black !important;" :placeholder="$t('enter') + ' ' + $t('address')" />
+                      style="font-size: 1.2rem !important;color: black !important;" :placeholder="$t('enter') + ' ' + $t('address')" />
 
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="!isHidden">
-                  <b-form-group :label="$t('address') + ' ' + $t('line') + '2'">
-                    <b-form-input id="name" type="text" v-model="driver.address_line_2" style="color: black !important;"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('address') + ' ' + $t('line') + '2'">
+                    <b-form-input id="name" type="text" v-model="driver.address_line_2" style="font-size: 1.2rem !important;color: black !important;"
                       :placeholder="$t('enter') + ' ' + $t('address')" />
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="isHidden">
-                  <b-form-group :label="$t('address') + ' ' + $t('line') + '2'">
-                    <b-form-input id="name" type="text" v-model="driver.address_line_2" style="color: black !important;"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('address') + ' ' + $t('line') + '2'">
+                    <b-form-input id="name" type="text" v-model="driver.address_line_2" style="font-size: 1.2rem !important;color: black !important;"
                       :placeholder="$t('enter') + ' ' + $t('address')" />
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="!isHidden">
-                  <b-form-group :label="$t('city') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('city') + '*'">
                     <validation-provider #default="{ errors }" name="City"
                       :custom-messages="{ required: $t('The City field is required') }" rules="required">
                       <b-form-input type="text" v-model="driver.address_city" :state="errors.length > 0 ? false : null"
-                        :placeholder="$t('enter') + ' ' + $t('city')" style="color: black !important;" />
+                        :placeholder="$t('enter') + ' ' + $t('city')" style="font-size: 1.2rem !important;color: black !important;" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="isHidden">
-                  <b-form-group :label="$t('city') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('city') + '*'">
 
                     <b-form-input type="text" v-model="driver.second_address_city"
-                      :placeholder="$t('enter') + ' ' + $t('city')" style="color: black !important;" />
+                      :placeholder="$t('enter') + ' ' + $t('city')" style="font-size: 1.2rem !important;color: black !important;" />
 
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="!isHidden">
-                  <b-form-group :label="$t('state/province') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('state/province') + '*'">
                     <validation-provider #default="{ errors }" name="State"
                       :custom-messages="{ required: $t('The State field is required') }" rules="required">
                       <b-form-input type="text" v-model="driver.state_province"
                         :state="errors.length > 0 ? false : null"
-                        :placeholder="$t('enter') + ' ' + $t('state/province')" style="color: black !important;" />
+                        :placeholder="$t('enter') + ' ' + $t('state/province')" style="font-size: 1.2rem !important;color: black !important;" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="isHidden">
-                  <b-form-group :label="$t('state/province') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('state/province') + '*'">
 
                     <b-form-input type="text" v-model="driver.second_state_province"
-                      :placeholder="$t('enter') + ' ' + $t('state/province')" />
+                      :placeholder="$t('enter') + ' ' + $t('state/province')" style="font-size: 1.2rem !important;color: black !important;" />
 
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="!isHidden">
-                  <b-form-group :label="$t('country') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('country') + '*'">
                     <validation-provider #default="{ errors }" name="Country"
                       :custom-messages="{ required: $t('The Country field is required') }" rules="required">
                       <b-form-input type="text" v-model="driver.country" :state="errors.length > 0 ? false : null"
-                        :placeholder="$t('enter') + ' ' + $t('country')" style="color: black !important;" />
+                        :placeholder="$t('enter') + ' ' + $t('country')" style="font-size: 1.2rem !important;color: black !important;" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4" v-if="isHidden">
-                  <b-form-group :label="$t('country') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('country') + '*'">
 
                     <b-form-input type="text" v-model="driver.second_country"
-                      :placeholder="$t('enter') + ' ' + $t('country')" style="color: black !important;" />
+                      :placeholder="$t('enter') + ' ' + $t('country')" style="font-size: 1.2rem !important;color: black !important;" />
 
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('avatar') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('avatar') + '*'">
 
-                    <b-form-file v-model="driver.profile_pic" drop-placeholder="Drag your image" @change="onFileChange1"
+                    <b-form-file style="font-size: 1.2rem !important;color: black !important;" v-model="driver.profile_pic" drop-placeholder="Drag your image" @change="onFileChange1"
                       accept=".jpg, .png, .jpeg" />
                     <b-form-group>
                       <b-img :src="url1 ? url1 : driver.profile_pic" rounded fluid id="avator-img" alt="category photo"
@@ -221,18 +221,19 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('zip') + '' + $t('code') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('zip') + '' + $t('code') + '*'">
                     <validation-provider #default="{ errors }" name="Zip Code" rules="required">
-                      <b-form-input type="text" v-model="driver.zip_code"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" type="text" v-model="driver.zip_code"
                         :placeholder="$t('enter') + ' ' + $t('zip') + ' ' + $t('code')"
-                        style="color: black !important;" />
+
+    />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('Gender')">
-                    <b-form-radio-group v-model="driver.gender" :options="online_radio" />
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Gender')">
+                    <b-form-radio-group style="font-size: 1.2rem !important;color: black !important;" v-model="driver.gender" :options="online_radio" />
                   </b-form-group>
                 </b-col>
                 <!-- <b-col md="6">
@@ -258,27 +259,27 @@
                   </h5>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('password')">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('password')">
                     <validation-provider #default="{ errors }" name="Password" vid="Password" rules="required|password">
-                      <b-form-input id="password" v-model="driver.password" type="text"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="password" v-model="driver.password" type="text"
                         :state="errors.length > 0 ? false : null" :placeholder="$t('enter') + ' ' + $t('password')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('confirm') + ' ' + $t('password')">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('confirm') + ' ' + $t('password')">
                     <validation-provider #default="{ errors }" name="Password Confirm"
                       rules="required|confirmed:Password">
-                      <b-form-input id="c-password" v-model="driver.passwords" type="text"
+                      <b-form-input style="font-size: 1.2rem !important;color: black !important;" id="c-password" v-model="driver.passwords" type="text"
                         :state="errors.length > 0 ? false : null" :placeholder="$t('re-type') + ' ' + $t('password')" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="4">
-                  <b-form-group :label="$t('status') + '*'">
-                    <v-select v-model="driver.status" :options="options" label="text" :reduce="sel => sel.value"
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('status') + '*'">
+                    <v-select style="font-size: 1.2rem !important;color: black !important;" v-model="driver.status" :options="options" label="text" :reduce="sel => sel.value"
                       :placeholder="$t('select') + ' ' + $t('status')"
                       :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
@@ -348,7 +349,7 @@
 
 
           <!-- personal details tab -->
-          <tab-content :title="$t('bank') + ' ' + $t('details')" :before-change="validationFormBank">
+          <tab-content style="font-size: 1.4rem !important;color: black !important;" :title="$t('bank') + ' ' + $t('details')" :before-change="validationFormBank">
             <validation-observer ref="infoRules" tag="form">
 
               <b-form-input id="res_id" v-model="driver_tab.id" type="text" hidden="hidden" />
@@ -357,83 +358,83 @@
                   <h5 class="mb-0">
                     {{ $t('bank') }} {{ $t('details') }}
                   </h5>
-                  <small class="text-muted">{{ $t('add') }} {{ $t('bank') }} {{ $t('details') }}</small>
+                  <small class="text-muted" style="font-size: 1.4rem !important;color: black !important;" >{{ $t('add') }} {{ $t('bank') }} {{ $t('details') }}</small>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('account') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('account') + ' ' + $t('name') + '*'">
                     <validation-provider #default="{ errors }" name="Account Name" rules="required">
                       <b-form-input v-model="driver_tab.account_name"
                         :placeholder="$t('enter') + ' ' + $t('account') + ' ' + $t('name')"
-                        style="color: black !important;" :state="errors.length > 0 ? false : null" />
+                         style="font-size: 1.1rem !important;color: black !important;" :state="errors.length > 0 ? false : null" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('bank') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('bank') + ' ' + $t('name') + '*'">
                     <validation-provider #default="{ errors }" name="Bank Name" rules="required">
                       <b-form-input v-model="driver_tab.bank_name" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('bank') + ' ' + $t('name')"
-                        style="color: black !important;" />
+                         style="font-size: 1.1rem !important;color: black !important;" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('account') + ' ' + $t('address') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('account') + ' ' + $t('address') + '*'">
                     <validation-provider #default="{ errors }" name="Account Address" rules="required">
                       <b-form-input v-model="driver_tab.account_address"
                         :placeholder="$t('enter') + ' ' + $t('account') + ' ' + $t('address')"
-                        style="color: black !important;" :state="errors.length > 0 ? false : null" />
+                         style="font-size: 1.1rem !important;color: black !important;" :state="errors.length > 0 ? false : null" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('branch') + ' ' + $t('name') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('branch') + ' ' + $t('name') + '*'">
                     <validation-provider #default="{ errors }" name="Branch Name" rules="required">
                       <b-form-input v-model="driver_tab.branch_name" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('branch') + ' ' + $t('name')"
-                        style="color: black !important;" />
+                         style="font-size: 1.1rem !important;color: black !important;" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('account') + ' ' + $t('number') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('account') + ' ' + $t('number') + '*'">
                     <validation-provider #default="{ errors }" name="Account Number" rules="required">
                       <b-form-input v-model="driver_tab.account_no"
                         :placeholder="$t('enter') + ' ' + $t('account') + ' ' + $t('number')"
-                        style="color: black !important;" :state="errors.length > 0 ? false : null" />
+                         style="font-size: 1.1rem !important;color: black !important;" :state="errors.length > 0 ? false : null" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('branch') + ' ' + $t('address') + '*'">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('branch') + ' ' + $t('address') + '*'">
                     <validation-provider #default="{ errors }" name="Branch Address" rules="required">
                       <b-form-input v-model="driver_tab.branch_address" :state="errors.length > 0 ? false : null"
                         :placeholder="$t('enter') + ' ' + $t('branch') + ' ' + $t('address')"
-                        style="color: black !important;" />
+                         style="font-size: 1.1rem !important;color: black !important;" />
                       <small class="text-danger">{{ errors[0] }}</small>
                     </validation-provider>
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('swift') + ' ' + $t('code')">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('swift') + ' ' + $t('code')">
 
                     <b-form-input v-model="driver_tab.swift_code"
                       :placeholder="$t('enter') + ' ' + $t('swift') + ' ' + $t('code')"
-                      style="color: black !important;" />
+                       style="font-size: 1.1rem !important;color: black !important;" />
 
                   </b-form-group>
                 </b-col>
                 <b-col md="6">
-                  <b-form-group :label="$t('routing') + ' ' + $t('number')">
+                  <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('routing') + ' ' + $t('number')">
 
                     <b-form-input v-model="driver_tab.routing_no"
                       :placeholder="$t('enter') + ' ' + $t('routing') + ' ' + $t('number')"
-                      style="color: black !important;" />
+                       style="font-size: 1.1rem !important;color: black !important;" />
 
                   </b-form-group>
                 </b-col>
@@ -457,7 +458,7 @@
         <b-col md="6">
           <b-form-group :label="$t('city')">
             <b-form-input id="searchMadminnput" :placeholder="$t('city')" v-model="citys.city"
-              style="color: black !important;" />
+               style="font-size: 1.1rem !important;color: black !important;" />
 
           </b-form-group>
         </b-col>
@@ -1386,16 +1387,16 @@ export default {
 
 
 .wizard-icon-container {
-  background-color: #E01764 !important;
+  background-color: #FF006B !important;
 }
 
 .stepTitle {
-  color: #E01764 !important;
+  color: #FF006B !important;
 }
 
 .wizard-btn {
-  background-color: #E01764 !important;
-  border-color: #E01764 !important;
+  background-color: #FF006B !important;
+  border-color: #FF006B !important;
   color: white !important;
 }
 
@@ -1418,5 +1419,50 @@ select::placeholder,
 .form-control::placeholder {
   color: #000 !important;
   opacity: 1;
+}
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
 }
 </style>

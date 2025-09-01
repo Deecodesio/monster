@@ -4,37 +4,37 @@
       <b-row>
 
         <b-col md="6">
-          <b-form-group :label="$t('Carrier') + ' ' + $t('Type')">
-            <v-select id="country" v-model="vehicle.carrier_type" :options="options_carrier" label="package_name"
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Carrier') + ' ' + $t('Type')">
+            <v-select style="font-size: 1.2rem !important;color: black !important;" id="country" v-model="vehicle.carrier_type" :options="options_carrier" label="package_name"
               :reduce="sel => sel.id" :placeholder="$t('select') + ' ' + $t('Carrier')"
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('vehicle') + ' ' + $t('name')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('vehicle') + ' ' + $t('name')">
             <b-form-input id="mc-first-name" :placeholder="$t('vehicle') + ' ' + $t('name')"
-              style="color: black !important;" v-model="vehicle.vehicle_name" />
+              style="font-size: 1.2rem !important;color: black !important;" v-model="vehicle.vehicle_name" />
           </b-form-group>
         </b-col>
 
 
 
         <b-col md="6">
-          <b-form-group :label="$t('vehicle') + ' ' + $t('no')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('vehicle') + ' ' + $t('no')">
             <b-form-input id="mc-city" :placeholder="$t('vehicle') + ' ' + $t('no')" v-model="vehicle.vehicle_no"
-              style="color: black !important;" />
+              style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
 
         <b-col md="6">
-          <b-form-group :label="$t('status')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('status')">
 
             <!-- <b-form-select
         v-model="vehicle.status"
         :options="options_status"
       /> -->
-            <v-select id="country" v-model="vehicle.status" :options="options_status" label="text"
+            <v-select style="font-size: 1.2rem !important;color: black !important;" id="country" v-model="vehicle.status" :options="options_status" label="text"
               :reduce="sel => sel.value" :placeholder="$t('select') + ' ' + $t('status')"
               :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
@@ -42,29 +42,29 @@
         </b-col>
 
         <b-col md="6">
-          <b-form-group :label="$t('insurance') + ' ' + $t('no')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('insurance') + ' ' + $t('no')">
             <b-form-input id="mc-country" :placeholder="$t('insurance') + ' ' + $t('no')" v-model="vehicle.insurance_no"
-              style="color: black !important;" />
+              style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
 
         <b-col md="6">
-          <b-form-group :label="$t('RC') + ' ' + $t('no')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('RC') + ' ' + $t('no')">
             <b-form-input id="mc-first-name" :placeholder="$t('RC') + ' ' + $t('no')" v-model="vehicle.rc_no"
-              style="color: black !important;" />
+              style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('insurance') + ' ' + $t('expiry') + ' ' + $t('date')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('insurance') + ' ' + $t('expiry') + ' ' + $t('date')">
 
             <b-form-datepicker id="mc-insurance_expiry_date" v-model="vehicle.insurance_expiry_date" class="mb-1"
-              :min="new Date()" style="color: black;" />
+              :min="new Date()" style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('RC') + ' ' + $t('expiry') + ' ' + $t('date')">
+          <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('RC') + ' ' + $t('expiry') + ' ' + $t('date')">
             <b-form-datepicker id="mc-rc_expiry_date" :placeholder="$t('RC') + ' ' + $t('expiry') + ' ' + $t('date')"
-              v-model="vehicle.rc_expiry_date" :min="new Date()" />
+              v-model="vehicle.rc_expiry_date" :min="new Date()" style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
 
@@ -81,9 +81,9 @@
 
             </b-col>
             <b-col md="9">
-              <b-form-group :label="$t('vehicle') + ' ' + $t('Image')">
+              <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('vehicle') + ' ' + $t('Image')">
 
-                <b-form-file v-model="vehicle.vehicle_image" placeholder="Choose a file or drop it here..."
+                <b-form-file style="font-size: 1.2rem !important;color: black !important;" v-model="vehicle.vehicle_image" placeholder="Choose a file or drop it here..."
                   drop-placeholder="Drop file here..." @change="onFileChange3" accept=".jpg, .png, .jpeg" />
 
               </b-form-group>
@@ -105,7 +105,7 @@
 
             </b-col>
             <b-col md="9">
-              <b-form-group :label="$t('insurance') + ' ' + $t('Image')">
+              <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('insurance') + ' ' + $t('Image')">
                 <!--            
          <b-form-file
         v-model="vehicle.insurance_image"
@@ -113,7 +113,7 @@
         plain
           
       /> -->
-                <b-form-file v-model="vehicle.insurance_image" placeholder="Choose a file or drop it here..."
+                <b-form-file style="font-size: 1.2rem !important;color: black !important;" v-model="vehicle.insurance_image" placeholder="Choose a file or drop it here..."
                   drop-placeholder="Drop file here..." @change="onFileChange1" accept=".jpg, .png, .jpeg" />
               </b-form-group>
 
@@ -138,7 +138,7 @@
 
             </b-col>
             <b-col md="9">
-              <b-form-group :label="$t('RC') + ' ' + $t('Image')">
+              <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('RC') + ' ' + $t('Image')">
 
                 <!-- <b-form-file
         v-model="vehicle.rc_image"
@@ -146,7 +146,7 @@
         plain
           
       /> -->
-                <b-form-file v-model="vehicle.rc_image" placeholder="Choose a file or drop it here..."
+                <b-form-file style="font-size: 1.2rem !important;color: black !important;" v-model="vehicle.rc_image" placeholder="Choose a file or drop it here..."
                   drop-placeholder="Drop file here..." @change="onFileChange2" accept=".jpg, .png, .jpeg" />
               </b-form-group>
 
@@ -161,7 +161,7 @@
         </b-col>
         <!-- submit and reset -->
         <b-col>
-          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
+          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" style="font-size: 1.2rem !important;color: white !important;">
             {{ $t('save') }}
           </b-button>
 
@@ -349,5 +349,50 @@ select::placeholder,
 .form-control::placeholder {
   color: #000 !important;
   opacity: 1;
+}
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
 }
 </style>

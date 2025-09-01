@@ -205,7 +205,7 @@
                       CGST :
                     </p>
                     <p class="invoice-total-amount">
-                      {{ setting.value }} {{ req_details.rtax / 2 }}
+                      {{ setting.value }} {{ req_details.rtax | price_format_final }}
                     </p>
                   </div>
                   <div class="invoice-total-item">
@@ -213,7 +213,7 @@
                       SGST :
                     </p>
                     <p class="invoice-total-amount">
-                      {{ setting.value }} {{ req_details.rtax / 2 }}
+                      {{ setting.value }} {{ req_details.rtax | price_format_final }}
                     </p>
                   </div>
                   <!-- <div class="invoice-total-item">

@@ -72,7 +72,7 @@
                                 v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                                 type="submit"
                                 variant="primary"
-                                :disabled="loading"
+                                :disabled="loading" style="font-size: 1.2rem !important;color: white !important;"
                             >
                                 {{ $t("save") }}
                             </b-button>
@@ -81,7 +81,7 @@
                 </b-col>
 
                 <b-col md="6">
-                    <div style="padding-bottom: calc(0.438rem + 1px)">
+                    <div style="padding-bottom: calc(0.438rem + 1px);font-size: 1.3rem !important;color: black !important;"> 
                         Blog Details
                     </div>
                     <b-row>
@@ -233,7 +233,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 #avatar-img {
     width: 9.92rem;
 }
@@ -254,5 +254,50 @@ export default {
     min-height: 180px;
     max-height: 260px;
     overflow-y: auto;
+}
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
 }
 </style>

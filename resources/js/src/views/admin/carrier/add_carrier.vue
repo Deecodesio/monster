@@ -58,7 +58,7 @@
         <b-col md="6">
           <b-form-group :label="$t('status')">
 
-            <v-select v-model="carrier.status" :options="options" label="text" :reduce="sel => sel.value"
+            <v-select style="font-size: 1.2rem !important;color: black !important;"  v-model="carrier.status" :options="options" label="text" :reduce="sel => sel.value"
               :placeholder="$t('select status')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
           </b-form-group>
         </b-col>
@@ -80,7 +80,7 @@
         </b-col>
         <!-- submit and reset -->
         <b-col>
-          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
+          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" style="font-size: 1.2rem !important;color: white !important;" >
             {{ $t('save') }}
           </b-button>
 
@@ -209,5 +209,50 @@ export default {
 
 #categorys-img {
   width: 10rem;
+}
+ .label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
 }
 </style>

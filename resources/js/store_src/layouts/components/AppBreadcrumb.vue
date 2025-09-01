@@ -1,7 +1,7 @@
 <template>
   <b-row
     v-if="$route.meta.breadcrumb || $route.meta.pageTitle"
-    class="content-header"
+    class="content-header store-admin-header"
   >
 
     <!-- Content Left -->

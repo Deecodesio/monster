@@ -4,23 +4,14 @@
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('name')">
-                        <b-form-input
-                            id="name"
-                            :placeholder="$t('name')"
-                            v-model="consumer.name"
-                            :required="!consumer.name"
-                        />
+                        <b-form-input id="name" :placeholder="$t('name')" v-model="consumer.name"
+                            :required="!consumer.name" />
                     </b-form-group>
                 </b-col>
-                 <b-col md="6">
+                <b-col md="6">
                     <b-form-group :label="$t('phone')">
-                        <b-form-input
-                            id="phone"
-                            type="tel"
-                            :placeholder="$t('phone')"
-                            v-model="consumer.phone"
-                            :required="!consumer.phone"
-                        />
+                        <b-form-input id="phone" type="tel" :placeholder="$t('phone')" v-model="consumer.phone"
+                            :required="!consumer.phone" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -28,24 +19,14 @@
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('email')">
-                        <b-form-input
-                            id="email"
-                            type="email"
-                            :placeholder="$t('email')"
-                            v-model="consumer.email"
-                            :required="!consumer.email"
-                        />
+                        <b-form-input id="email" type="email" :placeholder="$t('email')" v-model="consumer.email"
+                            :required="!consumer.email" />
                     </b-form-group>
                 </b-col>
-                 <b-col md="6">
+                <b-col md="6">
                     <b-form-group :label="$t('Wallet Balance')">
-                        <b-form-input
-                            id="wallet_balance"
-                            type="number"
-                            :placeholder="$t('Wallet Balance')"
-                            v-model="consumer.wallet_amount"
-                            :required="!consumer.wallet_amount"
-                        />
+                        <b-form-input id="wallet_balance" type="number" :placeholder="$t('Wallet Balance')"
+                            v-model="consumer.wallet_amount" :required="!consumer.wallet_amount" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -53,25 +34,17 @@
             <b-row>
                 <!-- submit and reset -->
                 <b-col>
-                    <b-button
-                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                        type="submit"
-                        variant="primary"
-                        class="mr-1"
-                        :disabled="loading"
-                    >
+                    <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" style="font-size: 1.2rem !important;color: white !important;" 
+                        :disabled="loading">
                         <b-spinner small v-if="loading"></b-spinner>
                         {{ loading ? $t("saving") : $t("save") }}
                     </b-button>
-                    <b-button
-                        variant="outline-secondary"
-                        @click="$router.go(-1)"
-                    >
+                    <b-button variant="outline-secondary" @click="$router.go(-1)"  style="font-size: 1.2rem !important;color: black !important;" >
                         {{ $t("cancel") }}
                     </b-button>
                 </b-col>
             </b-row>
-               </b-form>
+        </b-form>
     </b-card>
 </template>
 
@@ -131,7 +104,7 @@ export default {
         };
     },
     methods: {
-        addBulkOrder() {            
+        addBulkOrder() {
             // Set loading state
             this.loading = true;
 
@@ -140,7 +113,7 @@ export default {
             user_info.append(
                 "name",
                 this.consumer.name ? this.consumer.name : ""
-            );       
+            );
             user_info.append(
                 "phone",
                 this.consumer.phone ? this.consumer.phone : ""
@@ -186,7 +159,7 @@ export default {
                 });
         },
 
-        
+
         popToast(response, icon, variant) {
             this.$toast({
                 component: ToastificationContent,
@@ -203,3 +176,20 @@ export default {
     },
 };
 </script>
+<style lang="scss">
+label,
+.col-form-label {
+    font-size: 1.3rem !important;
+    color: black !important;
+}
+
+.form-control {
+    font-size: 1.1rem !important;
+    color: black !important;
+
+    &::placeholder {
+        font-size: 1.2rem !important;
+        color: black !important;
+    }
+}
+</style>

@@ -36,14 +36,14 @@
           <b-form-group :label="$t('state')">
 
             <v-select id="country" v-model="citys.state" :options="this.state" label="state" :reduce="sel => sel.id"
-              :placeholder="$t('select state')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" >
+              :placeholder="$t('select state')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
               <template #list-header>
                 <li @click="open_statemodal" class="add-new-client-header d-flex align-items-center my-50">
                   <feather-icon icon="PlusIcon" size="16" />
                   <span class="align-middle ml-25">{{ $t('Add New State') }}</span>
                 </li>
               </template>
-            
+
             </v-select>
 
           </b-form-group>
@@ -52,7 +52,7 @@
 
         <!-- submit and reset -->
         <b-col>
-          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
+          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" style="font-size: 1.2rem !important;color: white !important;">
             {{ $t('save') }}
           </b-button>
 
@@ -74,10 +74,10 @@
         <b-col md="6">
           <b-form-group :label="$t('country')">
 
-            <v-select id="country" v-model="scitys.country_id" :options="country" label="country" :reduce="sel => sel.id"
-              :placeholder="$t('select country')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              @input="onChange($event)" >
-            
+            <v-select id="country" v-model="scitys.country_id" :options="country" label="country"
+              :reduce="sel => sel.id" :placeholder="$t('select country')"
+              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" @input="onChange($event)">
+
               <template #list-header>
                 <li @click="open_countrymodal" class="add-new-client-header d-flex align-items-center my-50">
                   <feather-icon icon="PlusIcon" size="16" />
@@ -92,8 +92,8 @@
 
       </b-row>
     </b-modal>
-    <b-modal id="modal-center" centered :title="$t('Add New Country')" ok-only :ok-title="$t('Save')" ref="country-modal"
-      @hidden="resetcModal" @show="resetcModal" @ok="country_add">
+    <b-modal id="modal-center" centered :title="$t('Add New Country')" ok-only :ok-title="$t('Save')"
+      ref="country-modal" @hidden="resetcModal" @show="resetcModal" @ok="country_add">
       <b-row>
 
 
@@ -216,10 +216,10 @@ export default {
     },
   },
   methods: {
-    resetcModal(){
+    resetcModal() {
       this.acitys = {}
     },
-    resetsModal(){
+    resetsModal() {
       this.scitys = {}
     },
     open_countrymodal() {
@@ -230,7 +230,7 @@ export default {
     },
     state_add() {
       let citys = new FormData();
-      var cid =  this.scitys.country_id
+      var cid = this.scitys.country_id
       citys.append('country_id', this.scitys.country_id);
       citys.append('state', this.scitys.state);
 
@@ -244,17 +244,17 @@ export default {
               let sscitys = new FormData();
               sscitys.append('country', cid);
               this.$http.post('/admin/state_list_by_country', sscitys)
-              .then(res => {
+                .then(res => {
 
-                this.state = res.data;
-                if (this.state.length > 0) {
-                  this.citys.state = this.state[0].id;
-                }
-                else {
-                  this.citys.state = '';
-                }
+                  this.state = res.data;
+                  if (this.state.length > 0) {
+                    this.citys.state = this.state[0].id;
+                  }
+                  else {
+                    this.citys.state = '';
+                  }
 
-              })
+                })
               this.$toast({
                 component: ToastificationContent,
                 position: 'bottom-right',
@@ -390,26 +390,75 @@ export default {
 @import '~@resources/scss/vue/libs/vue-wizard.scss';
 @import '~@resources/scss/vue/libs/vue-select.scss';
 @import '~@resources/scss/vue/pages/page-profile.scss';
+
 .add-new-client-header {
-    padding: $options-padding-y $options-padding-x;
-    color: $success;
+  padding: $options-padding-y $options-padding-x;
+  color: $success;
 
-    cursor: pointer;
+  cursor: pointer;
 }
-  [dir] .col-form-label {
-    padding-top: calc(0.375rem + 1px);
-    padding-bottom: calc(0.375rem + 1px);
-    margin-bottom: 0;
-    color: black ! important;
+
+[dir] .col-form-label {
+  padding-top: calc(0.375rem + 1px);
+  padding-bottom: calc(0.375rem + 1px);
+  margin-bottom: 0;
+  color: black ! important;
 
 }
+
 .form-control {
-    display: block;
-    width: 100%;
-    height: calc(1.5em + 0.75rem + 2px);
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: black ! important;
-    }
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: black ! important;
+}
+
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
+}
 </style>

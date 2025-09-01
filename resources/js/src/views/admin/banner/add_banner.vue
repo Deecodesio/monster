@@ -3,8 +3,8 @@
         <b-form @submit.prevent="add_banner">
             <b-row>
                 <b-col md="6">
-                    <b-form-group :label="$t('Category')">
-                        <v-select
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Category')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             v-model="banner.category"
                             :options="this.options_category"
                             label="category_name"
@@ -21,8 +21,8 @@
           </b-form-group>
         </b-col> -->
                 <b-col md="6">
-                    <b-form-group :label="$t('city')">
-                        <v-select
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;":label="$t('city')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             v-model="banner.city_id"
                             :options="this.cities"
                             label="city"
@@ -33,8 +33,8 @@
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
-                    <b-form-group :label="$t('status')">
-                        <v-select
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('status')">
+                        <v-select style="font-size: 1.2rem !important;color: black !important;"
                             v-model="banner.status"
                             :options="options_status"
                             label="text"
@@ -48,14 +48,14 @@
                     <b-row>
                         <!-- Choose a File -->
                         <b-col md="3">
-                            <b-form-group :label="$t('banner_image')">
+                            <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('banner_image')">
                                 <!-- <b-button
                                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                                     v-b-modal.modal-xl
                                     variant="primary"
                                     class="mr-1"
                                 > -->
-                                <b-button
+                                <b-button style="font-size: 1.2rem !important;color: white !important;"
                                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                                     variant="primary"
                                     class="mr-1"
@@ -73,8 +73,8 @@
                             </b-form-group>
                         </b-col>
                         <b-col md="9">
-                            <b-form-group :label="$t('Banner Image Type')">
-                                <v-select
+                            <b-form-group style="font-size: 1.3rem !important;color: black !important;" :label="$t('Banner Image Type')">
+                                <v-select style="font-size: 1.2rem !important;color: black !important;"
                                     v-model="banner.banner_type"
                                     :options="banner_options"
                                     label="text"
@@ -105,9 +105,9 @@
                         />
                     </b-form-group>
                 </b-col>
-                <b-col md="6"> </b-col>
+             
                 <b-col>
-                    <b-button
+                    <b-button style="font-size: 1.2rem !important;color: white !important;"
                         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                         type="submit"
                         variant="primary"

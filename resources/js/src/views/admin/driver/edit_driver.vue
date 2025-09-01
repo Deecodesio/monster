@@ -26,24 +26,24 @@
             <b-row>
               <b-col md="12" v-if="setting.lang.value == 1">
 
-<b-tabs>
-    <b-tab active  @click="onTabChange(1)" >
-      <template #title>
-          <i class="fa fa-language" aria-hidden="true"></i>
-        <span class="d-none d-sm-inline">{{ setting.primary.value }}</span>
-      </template>
-    </b-tab>
+                <b-tabs>
+                  <b-tab active @click="onTabChange(1)">
+                    <template #title>
+                      <i class="fa fa-language" aria-hidden="true"></i>
+                      <span class="d-none d-sm-inline">{{ setting.primary.value }}</span>
+                    </template>
+                  </b-tab>
 
-    <!-- Tab: Information -->
-    <b-tab @click="onTabChange(2)">
-      <template #title>
-          <i class="fa fa-language" aria-hidden="true"></i>
-        <span class="d-none d-sm-inline">{{ setting.secondary.value }}</span>
-      </template>
-    </b-tab>
+                  <!-- Tab: Information -->
+                  <b-tab @click="onTabChange(2)">
+                    <template #title>
+                      <i class="fa fa-language" aria-hidden="true"></i>
+                      <span class="d-none d-sm-inline">{{ setting.secondary.value }}</span>
+                    </template>
+                  </b-tab>
 
-  </b-tabs>
-</b-col>
+                </b-tabs>
+              </b-col>
               <b-col md="4">
                 <b-form-group :label="$t('Store') + ' ' + '(' + $t('optional') + ')'">
                   <v-select v-model="driver.restaurant_id" :options="rows" label="restaurant_name"
@@ -65,8 +65,8 @@
               <b-col md="4">
                 <b-form-group :label="$t('email') + '*'">
                   <validation-provider #default="{ errors }" name="email" rules="required|email">
-                    <b-form-input id="email" v-model="driver.email" type="email" :state="errors.length > 0 ? false : null"
-                      placeholder="john.doe@email.com" />
+                    <b-form-input id="email" v-model="driver.email" type="email"
+                      :state="errors.length > 0 ? false : null" placeholder="john.doe@email.com" />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
@@ -74,16 +74,15 @@
               <b-col md="4">
                 <b-form-group :label="$t('work') + ' ' + $t('city')">
                   <v-select v-model="driver.city" :options="cities" label="city" :reduce="sel => sel.id"
-                    :placeholder="$t('select') + ' ' + $t('city')"
-                    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" @input="onChange($event)">
+                    :placeholder="$t('select') + ' ' + $t('city')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                    @input="onChange($event)">
                     <template #list-header>
-                                                                    <li @click="open_citymodal"
-                                                                        class="add-new-client-header d-flex align-items-center my-50">
-                                                                        <feather-icon icon="PlusIcon" size="16" />
-                                                                        <span class="align-middle ml-25">{{ $t('Add New City')}}</span>
-                                                                    </li>
-                                                                </template>
-                                                              </v-select>
+                      <li @click="open_citymodal" class="add-new-client-header d-flex align-items-center my-50">
+                        <feather-icon icon="PlusIcon" size="16" />
+                        <span class="align-middle ml-25">{{ $t('Add New City') }}</span>
+                      </li>
+                    </template>
+                  </v-select>
 
                 </b-form-group>
               </b-col>
@@ -91,8 +90,7 @@
                 <b-form-group :label="$t('driver') + ' ' + $t('name') + '*'">
 
                   <validation-provider #default="{ errors }" name="drivername"
-                  :custom-messages="{required: $t('The Drivername field is required')}"
-                  rules="required">
+                    :custom-messages="{ required: $t('The Drivername field is required') }" rules="required">
                     <b-form-input id="name" type="text" v-model="driver.name" :state="errors.length > 0 ? false : null"
                       :placeholder="$t('name')" />
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -103,23 +101,16 @@
                 <b-form-group :label="$t('driver') + ' ' + $t('name') + '*'">
 
 
-                    <b-form-input id="name" type="text" v-model="driver.second_driver_name"
-                      :placeholder="$t('name')" />
+                  <b-form-input id="name" type="text" v-model="driver.second_driver_name" :placeholder="$t('name')" />
 
                 </b-form-group>
               </b-col>
               <b-col md="4">
                 <b-form-group :label="$t('phone') + ' ' + $t('no') + '*'">
                   <validation-provider #default="{ errors }" name="number" rules="required">
-                    <VuePhoneNumberInput
-                      id="phone1"
-                      no-example
-                      @update="updatePhoneNumber"
-                      v-model="driver.phone"
+                    <VuePhoneNumberInput id="phone1" no-example @update="updatePhoneNumber" v-model="driver.phone"
                       :state="errors[0] ? false : (valid ? true : null)"
-                      :default-country-code = "driver.country_calling_code"
-
-                    >
+                      :default-country-code="driver.country_calling_code">
                     </VuePhoneNumberInput>
                     <!-- <b-form-input v-model="driver.phone" type="number" :state="errors.length > 0 ? false : null"
                       :placeholder="$t('enter') + ' ' + $t('phone') + ' ' + $t('number')" /> -->
@@ -130,35 +121,32 @@
               <b-col md="4">
                 <b-form-group :label="$t('work') + ' ' + $t('area') + '(' + $t('optional') + ')'">
                   <v-select v-model="driver.area" :options="areas" label="area" :reduce="sel => sel.id"
-                    :placeholder="$t('select') + ' ' + $t('area')"
-                    :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" >
+                    :placeholder="$t('select') + ' ' + $t('area')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
                     <template #list-header>
-                                                                    <li @click="open_areamodal"
-                                                                        class="add-new-client-header d-flex align-items-center my-50">
-                                                                        <feather-icon icon="PlusIcon" size="16" />
-                                                                        <span class="align-middle ml-25">{{ $t('Add New Area')}}</span>
-                                                                    </li>
-                                                                </template>
-                                                              </v-select>
+                      <li @click="open_areamodal" class="add-new-client-header d-flex align-items-center my-50">
+                        <feather-icon icon="PlusIcon" size="16" />
+                        <span class="align-middle ml-25">{{ $t('Add New Area') }}</span>
+                      </li>
+                    </template>
+                  </v-select>
 
                 </b-form-group>
               </b-col>
               <b-col md="4" v-if="!isHidden">
                 <b-form-group :label="$t('address') + ' ' + $t('line') + '1 ' + '*'">
                   <validation-provider #default="{ errors }" name="Address"
-                  :custom-messages="{required: $t('The Address field is required')}"
-                  rules="required">
+                    :custom-messages="{ required: $t('The Address field is required') }" rules="required">
                     <b-form-input id="name" type="text" v-model="driver.address_line_1"
                       :state="errors.length > 0 ? false : null" :placeholder="$t('enter') + ' ' + $t('address')" />
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col md="4"  v-if="isHidden">
+              <b-col md="4" v-if="isHidden">
                 <b-form-group :label="$t('address') + ' ' + $t('line') + '1 ' + '*'">
 
-                    <b-form-input id="name" type="text" v-model="driver.second_address_line_1"
-                      :placeholder="$t('enter') + ' ' + $t('address')" />
+                  <b-form-input id="name" type="text" v-model="driver.second_address_line_1"
+                    :placeholder="$t('enter') + ' ' + $t('address')" />
 
                 </b-form-group>
               </b-col>
@@ -177,8 +165,7 @@
               <b-col md="4" v-if="!isHidden">
                 <b-form-group :label="$t('city') + '*'">
                   <validation-provider #default="{ errors }" name="City"
-                  :custom-messages="{required: $t('The City field is required')}"
-                  rules="required">
+                    :custom-messages="{ required: $t('The City field is required') }" rules="required">
                     <b-form-input type="text" v-model="driver.address_city" :state="errors.length > 0 ? false : null"
                       :placeholder="$t('enter') + ' ' + $t('city')" />
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -188,16 +175,15 @@
               <b-col md="4" v-if="isHidden">
                 <b-form-group :label="$t('city') + '*'">
 
-                    <b-form-input type="text" v-model="driver.second_address_city"
-                      :placeholder="$t('enter') + ' ' + $t('city')" />
+                  <b-form-input type="text" v-model="driver.second_address_city"
+                    :placeholder="$t('enter') + ' ' + $t('city')" />
 
                 </b-form-group>
               </b-col>
               <b-col md="4" v-if="!isHidden">
                 <b-form-group :label="$t('state/province') + '*'">
                   <validation-provider #default="{ errors }" name="State"
-                  :custom-messages="{required: $t('The State field is required')}"
-                  rules="required">
+                    :custom-messages="{ required: $t('The State field is required') }" rules="required">
                     <b-form-input type="text" v-model="driver.state_province" :state="errors.length > 0 ? false : null"
                       :placeholder="$t('enter') + ' ' + $t('state/province')" />
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -207,16 +193,15 @@
               <b-col md="4" v-if="isHidden">
                 <b-form-group :label="$t('state/province') + '*'">
 
-                    <b-form-input type="text" v-model="driver.second_state_province"
-                      :placeholder="$t('enter') + ' ' + $t('state/province')" />
+                  <b-form-input type="text" v-model="driver.second_state_province"
+                    :placeholder="$t('enter') + ' ' + $t('state/province')" />
 
                 </b-form-group>
               </b-col>
               <b-col md="4" v-if="!isHidden">
                 <b-form-group :label="$t('country') + '*'">
                   <validation-provider #default="{ errors }" name="Country"
-                  :custom-messages="{required: $t('The Country field is required')}"
-                  rules="required">
+                    :custom-messages="{ required: $t('The Country field is required') }" rules="required">
                     <b-form-input type="text" v-model="driver.country" :state="errors.length > 0 ? false : null"
                       :placeholder="$t('enter') + ' ' + $t('country')" />
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -225,16 +210,16 @@
               </b-col>
               <b-col md="4" v-if="isHidden">
                 <b-form-group :label="$t('country') + '*'">
-                    <b-form-input type="text" v-model="driver.second_country"
-                      :placeholder="$t('enter') + ' ' + $t('country')" />
+                  <b-form-input type="text" v-model="driver.second_country"
+                    :placeholder="$t('enter') + ' ' + $t('country')" />
 
                 </b-form-group>
               </b-col>
               <b-col md="4">
                 <b-form-group :label="$t('avatar') + '*'">
 
-                  <b-form-file v-model="driver.profile_pic" drop-placeholder="Drag your image"
-                    @change="onFileChange1" accept=".jpg, .png, .jpeg" />
+                  <b-form-file v-model="driver.profile_pic" drop-placeholder="Drag your image" @change="onFileChange1"
+                    accept=".jpg, .png, .jpeg" />
                   <b-form-group>
                     <b-img :src="url1 ? url1 : driver.profile_pic" rounded fluid id="avator-img" alt="category photo"
                       v-if="driver.profile_pic" />
@@ -256,10 +241,10 @@
               </b-col>
               <b-col md="4">
                 <b-form-group :label="$t('Gender')">
-               <b-form-radio-group v-model="driver.gender" :options="online_radio" />
-                  </b-form-group>
-                 </b-col>
-                 <!-- <b-col md="6">
+                  <b-form-radio-group v-model="driver.gender" :options="online_radio" />
+                </b-form-group>
+              </b-col>
+              <!-- <b-col md="6">
                 <b-form-group :label="$t('Services Type')">
                   <b-form-checkbox
                     v-for="option1 in services"
@@ -367,7 +352,8 @@
                     <b-form-input :id="'doc_id' + item.id" hidden="hidden" :value="item.id" :key="item.id" />
                   </b-form-group>
                   <b-form-group>
-                    <img rounded fluid class="document-img" :id="'document_img' + item.id" src="/no_image.png" alt="category photo" @click="open_image(item.id)" style="cursor: pointer;"/>
+                    <img rounded fluid class="document-img" :id="'document_img' + item.id" src="/no_image.png"
+                      alt="category photo" @click="open_image(item.id)" style="cursor: pointer;" />
 
                   </b-form-group>
                 </b-col>
@@ -516,26 +502,18 @@
       </b-tab>
 
 
-      <b-modal
-      id="modal-center"
-      centered
-      :title="modal_title"
-      hide-footer
-      ok-only
-      ok-title="Accept"
-      ref="image-modal"
-    >
-      <b-card-text>
-        <img class="modal-content" :src="modal_image" id="img01">
-      </b-card-text>
-    </b-modal>
-    <b-modal id="modal-center" centered :title="$t('Add New City')" ok-only :ok-title="$t('Save')" ref="city-modal" @hidden="resetsModal"  @show="resetsModal"
-              @ok="city_add">
-              <b-row>
+      <b-modal id="modal-center" centered :title="modal_title" hide-footer ok-only ok-title="Accept" ref="image-modal">
+        <b-card-text>
+          <img class="modal-content" :src="modal_image" id="img01">
+        </b-card-text>
+      </b-modal>
+      <b-modal id="modal-center" centered :title="$t('Add New City')" ok-only :ok-title="$t('Save')" ref="city-modal"
+        @hidden="resetsModal" @show="resetsModal" @ok="city_add">
+        <b-row>
 
 
 
-                  <b-col md="6" >
+          <b-col md="6">
             <b-form-group :label="$t('city')">
               <b-form-input id="searchMadminnput" :placeholder="$t('city')" v-model="citys.city" />
 
@@ -556,15 +534,14 @@
 
               <v-select id="country" v-model="citys.country" :options="country" label="country" :reduce="sel => sel.id"
                 :placeholder="$t('select country')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                @input="onChange_city($event)" >
+                @input="onChange_city($event)">
                 <template #list-header>
-                                                                      <li @click="open_countrymodal"
-                                                                          class="add-new-client-header d-flex align-items-center my-50">
-                                                                          <feather-icon icon="PlusIcon" size="16" />
-                                                                          <span class="align-middle ml-25">{{ $t('Add New Country')}}</span>
-                                                                      </li>
-                                                                  </template>
-                                                                </v-select>
+                  <li @click="open_countrymodal" class="add-new-client-header d-flex align-items-center my-50">
+                    <feather-icon icon="PlusIcon" size="16" />
+                    <span class="align-middle ml-25">{{ $t('Add New Country') }}</span>
+                  </li>
+                </template>
+              </v-select>
 
 
             </b-form-group>
@@ -573,43 +550,40 @@
             <b-form-group :label="$t('state')">
 
               <v-select id="country" v-model="citys.state" :options="this.state" label="state" :reduce="sel => sel.id"
-                :placeholder="$t('select state')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" >
+                :placeholder="$t('select state')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
                 <template #list-header>
-                                                                      <li @click="open_statemodal"
-                                                                          class="add-new-client-header d-flex align-items-center my-50">
-                                                                          <feather-icon icon="PlusIcon" size="16" />
-                                                                          <span class="align-middle ml-25">{{ $t('Add New State')}}</span>
-                                                                      </li>
-                                                                  </template>
-                                                                </v-select>
+                  <li @click="open_statemodal" class="add-new-client-header d-flex align-items-center my-50">
+                    <feather-icon icon="PlusIcon" size="16" />
+                    <span class="align-middle ml-25">{{ $t('Add New State') }}</span>
+                  </li>
+                </template>
+              </v-select>
 
             </b-form-group>
           </b-col>
 
 
-              </b-row>
-          </b-modal>
+        </b-row>
+      </b-modal>
 
-          <b-modal id="modal-center" centered :title="$t('Add New Area')" ok-only :ok-title="$t('Save')" ref="area-modal" @hidden="resetsModal"  @show="resetsModal"
-              @ok="area_add">
-              <b-row>
+      <b-modal id="modal-center" centered :title="$t('Add New Area')" ok-only :ok-title="$t('Save')" ref="area-modal"
+        @hidden="resetsModal" @show="resetsModal" @ok="area_add">
+        <b-row>
 
 
 
-                <b-col md="6">
+          <b-col md="6">
             <b-form-group :label="$t('city')">
 
               <v-select v-model="areas1.city" :options="cities" label="city" :reduce="sel => sel.id"
-                        :placeholder="$t('select') + ' ' + $t('city')"
-                        :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" >
-                        <template #list-header>
-                                                                      <li @click="open_citymodal"
-                                                                          class="add-new-client-header d-flex align-items-center my-50">
-                                                                          <feather-icon icon="PlusIcon" size="16" />
-                                                                          <span class="align-middle ml-25">{{ $t('Add New City')}}</span>
-                                                                      </li>
-                                                                  </template>
-                                                                </v-select>
+                :placeholder="$t('select') + ' ' + $t('city')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'">
+                <template #list-header>
+                  <li @click="open_citymodal" class="add-new-client-header d-flex align-items-center my-50">
+                    <feather-icon icon="PlusIcon" size="16" />
+                    <span class="align-middle ml-25">{{ $t('Add New City') }}</span>
+                  </li>
+                </template>
+              </v-select>
 
             </b-form-group>
           </b-col>
@@ -639,14 +613,14 @@
           </b-col>
 
 
-              </b-row>
-          </b-modal>
+        </b-row>
+      </b-modal>
 
-          <b-modal id="modal-center" centered :title="$t('Add New Country')" ok-only :ok-title="$t('Save')" ref="country-modal" @hidden="resetsModal"  @show="resetsModal"
-              @ok="country_add">
-              <b-row>
+      <b-modal id="modal-center" centered :title="$t('Add New Country')" ok-only :ok-title="$t('Save')"
+        ref="country-modal" @hidden="resetsModal" @show="resetsModal" @ok="country_add">
+        <b-row>
 
-                <b-col md="6">
+          <b-col md="6">
             <b-form-group :label="$t('country')">
               <b-form-input id="mc-first-name" :placeholder="$t('country')" v-model="citys_country.country" />
 
@@ -661,28 +635,30 @@
           </b-col>
           <b-col md="6">
             <b-form-group :label="$t('currency code')">
-              <b-form-input id="mc-first-name" :placeholder="$t('currency code')" v-model="citys_country.currency_code" />
+              <b-form-input id="mc-first-name" :placeholder="$t('currency code')"
+                v-model="citys_country.currency_code" />
             </b-form-group>
           </b-col>
           <b-col md="6">
             <b-form-group :label="$t('currency symbol')">
-              <b-form-input id="mc-first-name" :placeholder="$t('currency symbol')" v-model="citys_country.currency_symbol" />
+              <b-form-input id="mc-first-name" :placeholder="$t('currency symbol')"
+                v-model="citys_country.currency_symbol" />
             </b-form-group>
           </b-col>
 
 
 
-              </b-row>
-          </b-modal>
+        </b-row>
+      </b-modal>
 
-          <b-modal id="modal-center" centered :title="$t('Add New State')" ok-only :ok-title="$t('Save')" ref="state-modal" @hidden="resetsModal"  @show="resetsModal"
-              @ok="state_add">
-              <b-row>
-
-
+      <b-modal id="modal-center" centered :title="$t('Add New State')" ok-only :ok-title="$t('Save')" ref="state-modal"
+        @hidden="resetsModal" @show="resetsModal" @ok="state_add">
+        <b-row>
 
 
-          <b-col md="6" >
+
+
+          <b-col md="6">
             <b-form-group :label="$t('state')">
               <b-form-input id="mc-first-name" :placeholder="$t('state')" v-model="citys_state.state" />
             </b-form-group>
@@ -692,9 +668,9 @@
           <b-col md="6">
             <b-form-group :label="$t('country')">
 
-              <v-select id="country" v-model="citys_state.country_id" :options="country" label="country" :reduce="sel => sel.id"
-                :placeholder="$t('select country')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                />
+              <v-select id="country" v-model="citys_state.country_id" :options="country" label="country"
+                :reduce="sel => sel.id" :placeholder="$t('select country')"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
 
 
             </b-form-group>
@@ -702,8 +678,8 @@
 
 
 
-              </b-row>
-          </b-modal>
+        </b-row>
+      </b-modal>
     </b-tabs>
   </b-card>
 
@@ -744,16 +720,16 @@ import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
 import {
   BRow,
-  BCol, BTab,BTabs,BCard,
-  BFormGroup,BAlert,BLink, BFormRadioGroup,
-  BFormInput,BForm,
+  BCol, BTab, BTabs, BCard,
+  BFormGroup, BAlert, BLink, BFormRadioGroup,
+  BFormInput, BForm,
   BFormInvalidFeedback,
-  BFormSelect,BCardText,BFormFile,BFormTextarea,BFormDatepicker,
-  BImg,BMedia,BButton,BFormRadio,BModal,VBModal,BFormCheckboxGroup,BFormCheckbox,
+  BFormSelect, BCardText, BFormFile, BFormTextarea, BFormDatepicker,
+  BImg, BMedia, BButton, BFormRadio, BModal, VBModal, BFormCheckboxGroup, BFormCheckbox,
   BDropdownForm,
-    BDropdownDivider,
-    BDropdownText,
-      BListGroup, BListGroupItem,
+  BDropdownDivider,
+  BDropdownText,
+  BListGroup, BListGroupItem,
 } from 'bootstrap-vue'
 
 import { required, email } from '@validations'
@@ -777,14 +753,14 @@ export default {
     BFormSelect, BCardText,
     BCardCode,
     BFormFile,
-    BFormTextarea,BFormCheckboxGroup,
+    BFormTextarea, BFormCheckboxGroup,
     BFormCheckbox,
-    BImg, BMedia, BFormRadio,BModal,VBModal,VuePhoneNumberInput,
-    BTab,BTabs,BCard,BAlert, BLink,BFormRadioGroup,BButton,
-  BDropdownForm,
+    BImg, BMedia, BFormRadio, BModal, VBModal, VuePhoneNumberInput,
+    BTab, BTabs, BCard, BAlert, BLink, BFormRadioGroup, BButton,
+    BDropdownForm,
     BDropdownDivider,
     BDropdownText,
-      BListGroup, BListGroupItem,
+    BListGroup, BListGroupItem,
   },
 
   created() {
@@ -799,7 +775,7 @@ export default {
 
         this.rows = res.data
       })
-      this.$http.get('/admin/vehicles_list_drive')
+    this.$http.get('/admin/vehicles_list_drive')
       .then(res => {
 
         this.vehicles = res.data
@@ -809,7 +785,7 @@ export default {
 
         this.cities = res.data
       })
-      this.$http.get('/admin/area_list')
+    this.$http.get('/admin/area_list')
       .then(res => {
 
         this.areas = res.data
@@ -820,12 +796,12 @@ export default {
         this.document_view = res.data
 
       })
-      this.$http.get('/admin/layout_driver')
-            .then(res => {
+    this.$http.get('/admin/layout_driver')
+      .then(res => {
 
-             this.services=res.data;
-        })
-        this.$http.get('/admin/country_list')
+        this.services = res.data;
+      })
+    this.$http.get('/admin/country_list')
       .then(res => {
 
         this.country = res.data
@@ -836,23 +812,21 @@ export default {
         .then(res => {
 
           this.driver = res.data.data;
-      this.driver_tab = res.data.data;
-      this.driver.vehicle_name = res.data.data.vehicle_name;
-      if(res.data.data.city == 0)
-      {
-        this.driver.city ='';
-      }
-      else
-      {
-        this.driver.city =res.data.data.city;
-      }
-      this.formattedNumber = this.driver.phone;
-      this.phone_country_code = this.driver.country_code;
-      this.phone_country_calling_code = this.driver.country_calling_code;
-      this.driver.password = this.driver.org_password;
-      this.driver.cpassword = this.driver.org_password;
+          this.driver_tab = res.data.data;
+          this.driver.vehicle_name = res.data.data.vehicle_name;
+          if (res.data.data.city == 0) {
+            this.driver.city = '';
+          }
+          else {
+            this.driver.city = res.data.data.city;
+          }
+          this.formattedNumber = this.driver.phone;
+          this.phone_country_code = this.driver.country_code;
+          this.phone_country_calling_code = this.driver.country_calling_code;
+          this.driver.password = this.driver.org_password;
+          this.driver.cpassword = this.driver.org_password;
 
-       if (this.driver.services.length > 0) {
+          if (this.driver.services.length > 0) {
             this.driver.services.forEach(function (element) {
               document.getElementById(element).checked = true;
             });
@@ -901,10 +875,10 @@ export default {
       selected_vehicle: "",
       selected_city: "",
       selected_area: null,
-      modal_image:'',
-      formattedNumber:'',
-      country_calling_code:'',
-      country_code:'',
+      modal_image: '',
+      formattedNumber: '',
+      country_calling_code: '',
+      country_code: '',
       options: [
         { value: 1, text: this.$t('active') },
         { value: 2, text: this.$t('inactive') },
@@ -917,9 +891,9 @@ export default {
         { text: 'Female', value: 0 },
 
       ],
-      services:[],
+      services: [],
       license_expiry: {},
-      setting:{},
+      setting: {},
       isHidden: false,
       citys: {},
       isHidden1: false,
@@ -943,61 +917,61 @@ export default {
   methods: {
     onTabChange(id) {
 
-if (id == 1) {
-  this.isHidden = false;
-}
-else {
-  this.isHidden = true;
-}
+      if (id == 1) {
+        this.isHidden = false;
+      }
+      else {
+        this.isHidden = true;
+      }
 
 
-},
+    },
     open_citymodal() {
-            this.$refs["city-modal"].show();
-            this.$refs["area-modal"].hide();
-        },
-        open_areamodal() {
+      this.$refs["city-modal"].show();
+      this.$refs["area-modal"].hide();
+    },
+    open_areamodal() {
 
-            this.$refs["area-modal"].show();
-            var timer = setInterval(function() {
+      this.$refs["area-modal"].show();
+      var timer = setInterval(function () {
 
-          const element = document.getElementById("gmap");
-          const mapoptions = {
-            zoom: 18,
-            disableDefaultUI: true,
+        const element = document.getElementById("gmap");
+        const mapoptions = {
+          zoom: 18,
+          disableDefaultUI: true,
 
-          };
-          const map = new google.maps.Map(element,mapoptions);
+        };
+        const map = new google.maps.Map(element, mapoptions);
 
-          var lati = document.getElementById('latitude_area').value;
-          var long = document.getElementById('longitude_area').value;
+        var lati = document.getElementById('latitude_area').value;
+        var long = document.getElementById('longitude_area').value;
 
-          var myLatlng = new google.maps.LatLng(Number(lati), Number(long));
-          var geocoder = new google.maps.Geocoder();
+        var myLatlng = new google.maps.LatLng(Number(lati), Number(long));
+        var geocoder = new google.maps.Geocoder();
 
-          var input = document.getElementById('searchMadminnput_area');
+        var input = document.getElementById('searchMadminnput_area');
 
-          var autocomplete = new google.maps.places.Autocomplete(input);
-          autocomplete.bindTo('bounds', map);
-          var infowindow = new google.maps.InfoWindow();
-              var marker = new google.maps.Marker({
-                  position: myLatlng,
-                  map: map,
-                  draggable: true
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          draggable: true
 
-              });
-          autocomplete.addListener('place_changed', function() {
+        });
+        autocomplete.addListener('place_changed', function () {
           var place = autocomplete.getPlace();
 
 
 
           var address = '';
           if (place.address_components) {
-          address = [
+            address = [
               (place.address_components[0] && place.address_components[0].short_name || ''),
               (place.address_components[1] && place.address_components[1].short_name || ''),
               (place.address_components[2] && place.address_components[2].short_name || '')
-          ].join(' ');
+            ].join(' ');
           }
 
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
@@ -1006,290 +980,290 @@ else {
 
           var latlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
           geocoder.geocode({
-          'latLng': latlng
+            'latLng': latlng
           },
-          function(results, status) {
+            function (results, status) {
 
-          if (results[0]) {
-          var add = results[0].formatted_address;
-          document.getElementById('selectedadd').value = results[0].formatted_address;
-          document.getElementById('latitude_area').value = place.geometry.location.lat();
-          document.getElementById('longitude_area').value = place.geometry.location.lng();
+              if (results[0]) {
+                var add = results[0].formatted_address;
+                document.getElementById('selectedadd').value = results[0].formatted_address;
+                document.getElementById('latitude_area').value = place.geometry.location.lat();
+                document.getElementById('longitude_area').value = place.geometry.location.lng();
 
-          } else {
-          alert("address not found");
-          }
+              } else {
+                alert("address not found");
+              }
 
-          }
+            }
 
           );
 
 
-          });
-           google.maps.event.addListener(marker, 'dragend',
-          function(marker) {
-              var latLng = marker.latLng;
-              var currentLatitude = latLng.lat();
-              var currentLongitude = latLng.lng();
+        });
+        google.maps.event.addListener(marker, 'dragend',
+          function (marker) {
+            var latLng = marker.latLng;
+            var currentLatitude = latLng.lat();
+            var currentLongitude = latLng.lng();
 
-              geocoder.geocode({
-                  'latLng': latLng
-              }, function(results, status) {
-                  if (status == google.maps.GeocoderStatus.OK) {
-                      if (results[0]) {
-                          document.getElementById('searchMadminnput_area').value = results[0].formatted_address;
-                          document.getElementById('selectedadd').value = results[0].formatted_address;
+            geocoder.geocode({
+              'latLng': latLng
+            }, function (results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                if (results[0]) {
+                  document.getElementById('searchMadminnput_area').value = results[0].formatted_address;
+                  document.getElementById('selectedadd').value = results[0].formatted_address;
 
-                          document.getElementById('latitude_area').value = currentLatitude;
-                          document.getElementById('longitude_area').value = currentLongitude;
-                          infowindow.setContent('<div>' + results[0].formatted_address + '<br>');
-                          infowindow.open(map, marker);
-                      }
-                  }
-              });
+                  document.getElementById('latitude_area').value = currentLatitude;
+                  document.getElementById('longitude_area').value = currentLongitude;
+                  infowindow.setContent('<div>' + results[0].formatted_address + '<br>');
+                  infowindow.open(map, marker);
+                }
+              }
+            });
           });
-              clearInterval(timer);
+        clearInterval(timer);
 
       }, 1000);
 
+    },
+    open_countrymodal() {
+      this.$refs["city-modal"].hide();
+      this.$refs["country-modal"].show();
+    },
+    open_statemodal() {
+      this.$refs["city-modal"].hide();
+      this.$refs["state-modal"].show();
+    },
+
+    popToast(response, icon, variant) {
+
+      this.$toast({
+        component: ToastificationContent,
+        position: 'bottom-right',
+        props: {
+          title: this.$t(response.data.message),
+          icon: icon,
+          variant: variant,
         },
-        open_countrymodal() {
-          this.$refs["city-modal"].hide();
-            this.$refs["country-modal"].show();
-        },
-        open_statemodal() {
-          this.$refs["city-modal"].hide();
-            this.$refs["state-modal"].show();
-        },
+      })
+    },
 
-        popToast(response, icon, variant) {
+    onTabChange1(id) {
 
-this.$toast({
-  component: ToastificationContent,
-  position: 'bottom-right',
-  props: {
-    title: this.$t(response.data.message),
-    icon: icon,
-    variant: variant,
-  },
-})
-},
-
-onTabChange1(id) {
-
-if (id == 1) {
-this.isHidden1 = false;
-}
-else {
-this.isHidden1 = true;
-}
-
-
-},
-onTabChange_city(id) {
-
-if (id == 1) {
-this.isHidden2 = false;
-}
-else {
-this.isHidden2 = true;
-}
-
-
-},
-
-onTabChange_state(id) {
-
-if (id == 1) {
-this.isHidden3 = false;
-}
-else {
-this.isHidden3 = true;
-}
-
-
-},
-// onTabChange(id) {
-// if (id == 1) {
-//   document.getElementById("primary").style.display = 'block';
-//   document.getElementById("secondary").style.display = 'none';
-// }
-// else {
-//   document.getElementById("primary").style.display = 'none';
-//   document.getElementById("secondary").style.display = 'block';
-// }
-
-
-
-country_add() {
-let citys = new FormData();
-
-citys.append('country', this.citys_country.country);
-citys.append('country_code', this.citys_country.country_code);
-citys.append('currency_symbol', this.citys_country.currency_symbol);
-citys.append('currency_code', this.citys_country.currency_code);
-this.$http
-  .post("/admin/save_country", this.citys_country)
-  .then(
-    response => {
-      if (response.data.status == true) {
-        this.$http.get('/admin/country_list')
-          .then(res => {
-
-            this.country = res.data
-
-          })
-          this.$refs["city-modal"].show();
-        this.$toast({
-          component: ToastificationContent,
-          position: 'bottom-right',
-          props: {
-            title: this.$t(response.data.message),
-            icon: 'CheckIcon',
-            variant: 'success',
-          },
-        })
-
-      } else {
-        this.$toast({
-          component: ToastificationContent,
-          position: 'bottom-right',
-          props: {
-            title: this.$t(response.data.message),
-            icon: 'CheckIcon',
-            variant: 'warning',
-          },
-        })
-
+      if (id == 1) {
+        this.isHidden1 = false;
       }
-    }
+      else {
+        this.isHidden1 = true;
+      }
+
+
+    },
+    onTabChange_city(id) {
+
+      if (id == 1) {
+        this.isHidden2 = false;
+      }
+      else {
+        this.isHidden2 = true;
+      }
+
+
+    },
+
+    onTabChange_state(id) {
+
+      if (id == 1) {
+        this.isHidden3 = false;
+      }
+      else {
+        this.isHidden3 = true;
+      }
+
+
+    },
+    // onTabChange(id) {
+    // if (id == 1) {
+    //   document.getElementById("primary").style.display = 'block';
+    //   document.getElementById("secondary").style.display = 'none';
+    // }
+    // else {
+    //   document.getElementById("primary").style.display = 'none';
+    //   document.getElementById("secondary").style.display = 'block';
+    // }
 
 
 
-  )
-  .catch((error) => console.log(error))
-  .finally(() => (this.loading = false));
-},
+    country_add() {
+      let citys = new FormData();
 
-state_add() {
-let citys2 = new FormData();
-citys2.append('country_id', this.citys_state.country_id);
-citys2.append('state', this.citys_state.state);
-citys2.append('second_state', this.citys_state.second_state ? this.citys.second_state : '');
+      citys.append('country', this.citys_country.country);
+      citys.append('country_code', this.citys_country.country_code);
+      citys.append('currency_symbol', this.citys_country.currency_symbol);
+      citys.append('currency_code', this.citys_country.currency_code);
+      this.$http
+        .post("/admin/save_country", this.citys_country)
+        .then(
+          response => {
+            if (response.data.status == true) {
+              this.$http.get('/admin/country_list')
+                .then(res => {
 
-this.$http
-  .post("/admin/save_state", this.citys_state)
-  .then(
+                  this.country = res.data
 
-    response => {
-      if (response.data.status == true) {
-        this.$refs["city-modal"].show();
-        this.$toast({
-          component: ToastificationContent,
-          position: 'bottom-right',
-          props: {
-            title: this.$t(response.data.message),
-            icon: 'CheckIcon',
-            variant: 'success',
-          },
+                })
+              this.$refs["city-modal"].show();
+              this.$toast({
+                component: ToastificationContent,
+                position: 'bottom-right',
+                props: {
+                  title: this.$t(response.data.message),
+                  icon: 'CheckIcon',
+                  variant: 'success',
+                },
+              })
+
+            } else {
+              this.$toast({
+                component: ToastificationContent,
+                position: 'bottom-right',
+                props: {
+                  title: this.$t(response.data.message),
+                  icon: 'CheckIcon',
+                  variant: 'warning',
+                },
+              })
+
+            }
+          }
+
+
+
+        )
+        .catch((error) => console.log(error))
+        .finally(() => (this.loading = false));
+    },
+
+    state_add() {
+      let citys2 = new FormData();
+      citys2.append('country_id', this.citys_state.country_id);
+      citys2.append('state', this.citys_state.state);
+      citys2.append('second_state', this.citys_state.second_state ? this.citys.second_state : '');
+
+      this.$http
+        .post("/admin/save_state", this.citys_state)
+        .then(
+
+          response => {
+            if (response.data.status == true) {
+              this.$refs["city-modal"].show();
+              this.$toast({
+                component: ToastificationContent,
+                position: 'bottom-right',
+                props: {
+                  title: this.$t(response.data.message),
+                  icon: 'CheckIcon',
+                  variant: 'success',
+                },
+              })
+
+            } else {
+              this.$toast({
+                component: ToastificationContent,
+                position: 'bottom-right',
+                props: {
+                  title: this.$t(response.data.message),
+                  icon: 'CheckIcon',
+                  variant: 'warning',
+                },
+              })
+
+            }
+          }
+
+        )
+        .catch((error) => console.log(error))
+        .finally(() => (this.loading = false));
+    },
+    onChange_city(event) {
+
+      this.$http.post('/admin/state_list_by_country', this.citys)
+        .then(res => {
+
+          this.state = res.data;
+
+
         })
 
-      } else {
-        this.$toast({
-          component: ToastificationContent,
-          position: 'bottom-right',
-          props: {
-            title: this.$t(response.data.message),
-            icon: 'CheckIcon',
-            variant: 'warning',
-          },
-        })
+    },
+    city_add() {
 
-      }
-    }
+      this.$http
+        .post("/admin/city_add", this.citys)
+        .then(
+          response => {
+            if (response.data.status == true) {
+              this.popToast(response, "CheckIcon", "success")
+              this.$http.get('/admin/city_list')
+                .then(res => {
 
-  )
-  .catch((error) => console.log(error))
-  .finally(() => (this.loading = false));
-},
-onChange_city(event) {
+                  this.cities = res.data
+                })
 
-this.$http.post('/admin/state_list_by_country', this.citys)
-.then(res => {
+            } else {
+              this.popToast(response, "AlertTriangleIcon", "danger")
 
-this.state = res.data;
+            }
+          }
 
+        )
+        .catch((error) => console.log(error))
+        .finally(() => (this.loading = false));
+    },
 
-})
+    area_add() {
+      var lati1 = document.getElementById('latitude_area').value;
+      var long1 = document.getElementById('longitude_area').value;
+      var area1 = document.getElementById('searchMadminnput_area').value;
+      let data = new FormData();
+      data.append('id', this.areas1.city);
+      data.append('area', area1);
+      data.append('status', this.areas1.status);
+      data.append('latitude', lati1);
+      data.append('longitude', long1);
+      this.$http
+        .post("/admin/area_add", data)
+        .then(
+          response => {
+            if (response.data.status == true) {
+              this.popToast(response, "CheckIcon", "success")
+              this.$http.get('/admin/area_list')
+                .then(res => {
 
-},
-city_add() {
+                  this.areas = res.data
+                })
 
-this.$http
-.post("/admin/city_add", this.citys)
-.then(
-response => {
-if (response.data.status == true) {
-  this.popToast(response, "CheckIcon", "success")
-  this.$http.get('/admin/city_list')
-.then(res => {
+            } else {
+              this.popToast(response, "AlertTriangleIcon", "danger")
 
-  this.cities = res.data
-})
+            }
+          }
 
-} else {
-  this.popToast(response, "AlertTriangleIcon", "danger")
-
-}
-}
-
-)
-.catch((error) => console.log(error))
-.finally(() => (this.loading = false));
-},
-
-area_add() {
-var lati1 = document.getElementById('latitude_area').value;
-var long1 = document.getElementById('longitude_area').value;
-var area1 = document.getElementById('searchMadminnput_area').value;
-let data = new FormData();
-data.append('id', this.areas1.city);
-data.append('area', area1);
-data.append('status', this.areas1.status);
-data.append('latitude', lati1);
-data.append('longitude', long1);
-this.$http
-  .post("/admin/area_add", data)
-  .then(
-    response => {
-      if (response.data.status == true) {
-        this.popToast(response, "CheckIcon", "success")
-        this.$http.get('/admin/area_list')
-          .then(res => {
-
-            this.areas = res.data
-          })
-
-      } else {
-        this.popToast(response, "AlertTriangleIcon", "danger")
-
-      }
-    }
-
-  )
-  .catch((error) => console.log(error))
-  .finally(() => (this.loading = false));
-},
+        )
+        .catch((error) => console.log(error))
+        .finally(() => (this.loading = false));
+    },
     onChange(event) {
 
-this.$http.post('/admin/area_list1', this.driver)
-  .then(res => {
+      this.$http.post('/admin/area_list1', this.driver)
+        .then(res => {
 
-    this.areas = res.data
+          this.areas = res.data
 
-  })
+        })
 
-},
+    },
     formSubmitted() {
       this.$toast({
         component: ToastificationContent,
@@ -1307,10 +1281,10 @@ this.$http.post('/admin/area_list1', this.driver)
       this.formattedNumber = data.nationalNumber
       this.country_calling_code = data.countryCode
       this.country_code = data.countryCallingCode
-            },
-    open_image(id){
+    },
+    open_image(id) {
       // this.$refs['image-modal'].show()
-      var youtubeimgsrc = document.getElementById("document_img"+id).src;
+      var youtubeimgsrc = document.getElementById("document_img" + id).src;
       // this.modal_image = youtubeimgsrc
       window.open(youtubeimgsrc);
     },
@@ -1327,8 +1301,8 @@ this.$http.post('/admin/area_list1', this.driver)
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-         var img = document.querySelector('[id="' + 'document_img'+id + '"]') ;
-         img.setAttribute("src",reader.result);
+        var img = document.querySelector('[id="' + 'document_img' + id + '"]');
+        img.setAttribute("src", reader.result);
       };
     },
 
@@ -1351,7 +1325,7 @@ this.$http.post('/admin/area_list1', this.driver)
       data.append('vehicle_name', this.driver.vehicle_name);
       data.append('city', this.driver.city);
       data.append('driver_name', this.driver.name);
-      data.append('phone_no', this.formattedNumber );
+      data.append('phone_no', this.formattedNumber);
       data.append('area', this.driver.area);
       data.append('address_line_1', this.driver.address_line_1);
       data.append('address_line_2', this.driver.address_line_2);
@@ -1362,7 +1336,7 @@ this.$http.post('/admin/area_list1', this.driver)
       data.append('zip_code', this.driver.zip_code);
       data.append('status', this.driver.status);
       data.append('gender', this.driver.gender);
-      data.append('services', this. driver.services);
+      data.append('services', this.driver.services);
       data.append('phone_country_calling_code', this.country_calling_code);
       data.append('phone_country_code', this.country_code);
 
@@ -1530,16 +1504,16 @@ this.$http.post('/admin/area_list1', this.driver)
   border-color: #117439 !important;
   color: white !important;
 }
-.add-new-client-header {
-    padding: $options-padding-y $options-padding-x;
-    color: $success;
 
-    cursor: pointer;
+.add-new-client-header {
+  padding: $options-padding-y $options-padding-x;
+  color: $success;
+
+  cursor: pointer;
 }
+
 .pac-container {
 
   z-index: 10000 !important;
 }
 </style>
-
-

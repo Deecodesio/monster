@@ -8,24 +8,18 @@
                             <b-tabs>
                                 <b-tab active @click="onTabChange(1)">
                                     <template #title>
-                                        <i
-                                            class="fa fa-language"
-                                            aria-hidden="true"
-                                        ></i>
+                                        <i class="fa fa-language" aria-hidden="true"></i>
                                         <span class="d-none d-sm-inline">{{
                                             setting1.primary.value
-                                        }}</span>
+                                            }}</span>
                                     </template>
                                 </b-tab>
                                 <b-tab @click="onTabChange(2)">
                                     <template #title>
-                                        <i
-                                            class="fa fa-language"
-                                            aria-hidden="true"
-                                        ></i>
+                                        <i class="fa fa-language" aria-hidden="true"></i>
                                         <span class="d-none d-sm-inline">{{
                                             setting1.secondary.value
-                                        }}</span>
+                                            }}</span>
                                     </template>
                                 </b-tab>
                             </b-tabs>
@@ -35,121 +29,71 @@
                         <b-row>
                             <b-col lg="6" md="12" sm="12">
                                 <b-row>
-                                     <b-col md="12">
-                                        <validation-provider
-                                            name="Category"
-                                            rules="required"
-                                            :custom-messages="{
-                                                required:
-                                                    'Category is required',
-                                            }"
-                                            v-slot="{ errors }"
-                                        >
-                                            <b-form-group
-                                                :label="$t('category')"
-                                                :state="errors.length === 0"
-                                                :invalid-feedback="errors[0]"
-                                            >
-                                                <v-select
-                                                    v-model="
-                                                        product.business_category
-                                                    "
-                                                    :options="bus_category"
-                                                    label="category_name"
-                                                    :reduce="(sel) => sel.id"
-                                                    :placeholder="
-                                                        $t('select') +
+                                    <b-col md="12">
+                                        <validation-provider name="Category" rules="required" :custom-messages="{
+                                            required:
+                                                'Category is required',
+                                        }" v-slot="{ errors }">
+                                            <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                                :label="$t('category')" :state="errors.length === 0"
+                                                :invalid-feedback="errors[0]">
+                                                <v-select style="font-size: 1.2rem !important;color: black !important;"
+                                                    v-model="product.business_category
+                                                        " :options="bus_category" label="category_name"
+                                                    :reduce="(sel) => sel.id" :placeholder="$t('select') +
                                                         ' ' +
                                                         $t('category')
-                                                    "
-                                                    :dir="
-                                                        $store.state.appConfig
+                                                        " :dir="$store.state.appConfig
                                                             .isRTL
                                                             ? 'rtl'
                                                             : 'ltr'
-                                                    "
-                                                    @input="onChange($event)"
-                                                />
+                                                            " @input="onChange($event)" />
                                             </b-form-group>
                                         </validation-provider>
                                     </b-col>
-                                    <b-col
-                                        md="12"
-                                        id="primary"
-                                        style="display: block"
-                                    >
-                                        <b-form-group :label="$t('name')">
-                                            <validation-provider
-                                                #default="{ errors }"
-                                                rules="required"
+                                    <b-col md="12" id="primary" style="display: block">
+                                        <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                            :label="$t('name')">
+                                            <validation-provider #default="{ errors }" rules="required"
                                                 :custom-messages="{
                                                     required: $t(
                                                         'The Product Name field is required'
                                                     ),
-                                                }"
-                                                name="Product Name"
-                                            >
-                                                <b-form-input
-                                                    id="name"
-                                                    :placeholder="$t('name')"
-                                                    v-model="product.name"
-                                                    :state="
-                                                        errors.length > 0
-                                                            ? false
-                                                            : null
-                                                    "
-                                                />
+                                                }" name="Product Name">
+                                                <b-form-input id="name"
+                                                    style="font-size: 1.2rem !important;color: black !important;"
+                                                    :placeholder="$t('name')" v-model="product.name" :state="errors.length > 0
+                                                        ? false
+                                                        : null
+                                                        " />
                                                 <small class="text-danger">{{
                                                     errors[0]
-                                                }}</small>
+                                                    }}</small>
                                             </validation-provider>
                                         </b-form-group>
                                     </b-col>
-                                    <b-col
-                                        md="12"
-                                        id="secondary"
-                                        style="display: none"
-                                    >
-                                        <b-form-group :label="$t('name')">
-                                            <b-form-input
-                                                id="name"
-                                                :placeholder="$t('name')"
-                                                v-model="product.secondary_name"
-                                            />
+                                    <b-col md="12" id="secondary" style="display: none">
+                                        <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                            :label="$t('name')">
+                                            <b-form-input style="font-size: 1.2rem !important;color: black !important;"
+                                                id="name" :placeholder="$t('name')" v-model="product.secondary_name" />
                                         </b-form-group>
                                     </b-col>
-                                    <b-col
-                                        md="12"
-                                        id="primary_des"
-                                        style="display: block"
-                                    >
-                                        <b-form-group
-                                            :label="$t('description')"
-                                        >
-                                            <b-form-textarea
-                                                v-model="product.description"
-                                                id="textarea-default"
-                                                :placeholder="$t('description')"
-                                                rows="6"
-                                            />
+                                    <b-col md="12" id="primary_des"
+                                        style="display: block;font-size: 1.3rem !important;color: black !important;">
+                                        <b-form-group :label="$t('description')">
+                                            <b-form-textarea v-model="product.description" id="textarea-default"
+                                                style="font-size: 1.2rem !important;color: black !important;"
+                                                :placeholder="$t('description')" rows="6" />
                                         </b-form-group>
                                     </b-col>
-                                    <b-col
-                                        md="12"
-                                        id="secondary_des"
-                                        style="display: none"
-                                    >
-                                        <b-form-group
-                                            :label="$t('description')"
-                                        >
+                                    <b-col md="12" id="secondary_des" style="display: none">
+                                        <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                            :label="$t('description')">
                                             <b-form-textarea
-                                                v-model="
-                                                    product.secondary_description
-                                                "
-                                                id="textarea-default"
-                                                :placeholder="$t('description')"
-                                                rows="6"
-                                            />
+                                                style="font-size: 1.2rem !important;color: black !important;" v-model="product.secondary_description
+                                                    " id="textarea-default" :placeholder="$t('description')"
+                                                rows="6" />
                                         </b-form-group>
                                     </b-col>
                                     <!-- <b-col md="6">
@@ -174,7 +118,7 @@
                                             </validation-provider>
                                         </b-form-group>
                                     </b-col> -->
-                                   
+
                                     <!-- <b-col md="6" id="subcategory_list" v-if="layout_id != 1">
                                         <b-form-group :label="$t('subcategory')">
                                             <v-select v-model="product.category" :options="this.category"
@@ -196,21 +140,14 @@
                             </b-col>
                             <b-col lg="6" md="12" sm="12">
                                 <b-col md="12">
-                                    <span
-                                        >Note: Upload only .jpg,.png,.jpeg
-                                        files</span
-                                    >
+                                    <span style="font-size: 1.2rem !important;color: black !important;" >Note: Upload only .jpg,.png,.jpeg
+                                        files</span>
                                     <b-form-group :label="$t('Image')">
                                         <div v-if="url1.length">
                                             <b-row>
-                                                <b-col
-                                                    cols="4"
-                                                    v-for="(
-                                                        imageItem, index
-                                                    ) in url1"
-                                                    :key="index"
-                                                    :id="'img' + index"
-                                                >
+                                                <b-col cols="4" v-for="(
+imageItem, index
+                                                    ) in url1" :key="index" :id="'img' + index">
                                                     <!-- <div class="imgcontainer">
                                                         <b-img
                                                             thumbnail
@@ -290,28 +227,18 @@
                                                         </div>
                                                     </div> -->
                                                     <div class="imgcontainer">
-    <b-img
-        thumbnail
-        :src="url1[index] ? url1[index] : '/no_image.png'"
-        rounded
-        fluid
-        style="width: 100%; padding: 1%;"
-        alt="banner photo"
-        id="lazy"
-        :class="featured_image == index ? 'mt-1 featured' : 'mt-1'"
-        />
-</div>
+                                                        <b-img thumbnail
+                                                            :src="url1[index] ? url1[index] : '/no_image.png'" rounded
+                                                            fluid style="width: 100%; padding: 1%;" alt="banner photo"
+                                                            id="lazy"
+                                                            :class="featured_image == index ? 'mt-1 featured' : 'mt-1'" />
+                                                    </div>
                                                 </b-col>
                                             </b-row>
                                         </div>
                                         <div v-else>
-                                            <b-img
-                                                src="/no_image.png"
-                                                rounded
-                                                fluid
-                                                id="profile-img"
-                                                alt="profile photo"
-                                            />
+                                            <b-img src="/no_image.png" rounded fluid id="profile-img"
+                                                alt="profile photo" />
                                         </div>
                                     </b-form-group>
                                     <!-- <b-button
@@ -322,183 +249,91 @@
                                         variant="primary"
                                         class="mr-1"
                                     > -->
-                                     <b-button
-                        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                        @click="$refs.fileInput.click()"
-                        variant="primary"
-                        class="mr-1"
-                    >
+                                    <b-button style="font-size: 1.2rem !important;color: white !important;"  v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                                        @click="$refs.fileInput.click()" variant="primary" class="mr-1">
                                         {{ $t(" Choose a file") }}
                                     </b-button>
-                                      <input
-                        ref="fileInput"
-                        type="file"
-                        class="d-none"
-                        @change="onFileChange2"
-                        accept=".jpg, .png, .jpeg"
-                    />
+                                    <input ref="fileInput" type="file" class="d-none" @change="onFileChange2"
+                                        accept=".jpg, .png, .jpeg" />
                                 </b-col>
-                                <b-col
-                                    md="12"
-                                    id="menu_list"
-                                    v-if="layout_id == 1"
-                                >
+                                <b-col md="12" id="menu_list" v-if="layout_id == 1">
                                     <b-form-group :label="$t('menu')">
-                                        <v-select
-                                            v-model="product.menu"
-                                            :options="this.menu"
-                                            label="menu_name"
-                                            :reduce="(sel) => sel.id"
-                                            :placeholder="
-                                                $t('select') + ' ' + $t('menu')
-                                            "
-                                            :dir="
-                                                $store.state.appConfig.isRTL
+                                        <v-select v-model="product.menu" :options="this.menu" label="menu_name"
+                                            :reduce="(sel) => sel.id" :placeholder="$t('select') + ' ' + $t('menu')
+                                                " :dir="$store.state.appConfig.isRTL
                                                     ? 'rtl'
                                                     : 'ltr'
-                                            "
-                                        >
+                                                    ">
                                             <template #list-header>
-                                                <li
-                                                    @click="open_menumodal"
-                                                    class="add-new-client-header d-flex align-items-center my-50"
-                                                >
-                                                    <feather-icon
-                                                        icon="PlusIcon"
-                                                        size="16"
-                                                    />
-                                                    <span
-                                                        class="align-middle ml-25"
-                                                        >{{
-                                                            $t("Add New Menu")
-                                                        }}</span
-                                                    >
+                                                <li @click="open_menumodal"
+                                                    class="add-new-client-header d-flex align-items-center my-50">
+                                                    <feather-icon icon="PlusIcon" size="16" />
+                                                    <span class="align-middle ml-25">{{
+                                                        $t("Add New Menu")
+                                                    }}</span>
                                                 </li>
                                             </template>
                                         </v-select>
                                     </b-form-group>
                                 </b-col>
-                                <b-col
-                                    md="12"
-                                    id="pure_veg"
-                                    v-if="layout_id == 1"
-                                >
-                                    <b-form-group
-                                        :label="$t('pure') + ' ' + $t('veg')"
-                                    >
-                                        <b-form-radio-group
-                                            v-model="product.food_type"
-                                            :options="options_veg"
-                                            class="demo-inline-spacing mb-1"
-                                            value-field="value"
-                                            text-field="text"
-                                        />
+                                <b-col md="12" id="pure_veg" v-if="layout_id == 1">
+                                    <b-form-group :label="$t('pure') + ' ' + $t('veg')">
+                                        <b-form-radio-group v-model="product.food_type" :options="options_veg"
+                                            class="demo-inline-spacing mb-1" value-field="value" text-field="text" />
                                     </b-form-group>
                                 </b-col>
-                                <b-col
-                                    md="12"
-                                    id="pharmacy"
-                                    v-if="p_status == 1"
-                                >
+                                <b-col md="12" id="pharmacy" v-if="p_status == 1">
                                     <b-form-group :label="$t('Prescription')">
-                                        <b-form-radio-group
-                                            v-model="product.food_type"
-                                            :options="options_veg"
-                                            class="demo-inline-spacing mb-1"
-                                            value-field="value"
-                                            text-field="text"
-                                        />
+                                        <b-form-radio-group v-model="product.food_type" :options="options_veg"
+                                            class="demo-inline-spacing mb-1" value-field="value" text-field="text" />
                                     </b-form-group>
                                 </b-col>
                                 <b-col md="12" v-if="tabIndex === 1">
-                                    <b-form-group
-                                        :label="$t('Grouped Attributes')"
-                                    >
+                                    <b-form-group :label="$t('Grouped Attributes')">
                                         <div v-if="!list2.length">
-                                            <draggable
-                                                :list="list2"
-                                                tag="ul"
-                                                group="people"
-                                                class="list-group list-group-flush cursor-move"
-                                            >
-                                                <b-card
-                                                    class="text-center dotted"
-                                                >
+                                            <draggable :list="list2" tag="ul" group="people"
+                                                class="list-group list-group-flush cursor-move">
+                                                <b-card class="text-center dotted">
                                                     <b-card-text>
                                                         Drag And Drop Here
                                                     </b-card-text>
                                                 </b-card>
                                             </draggable>
                                         </div>
-                                        <app-collapse
-                                            accordion
-                                            type="margin"
-                                            v-else
-                                        >
-                                            <draggable
-                                                :list="list2"
-                                                tag="ul"
-                                                group="people"
-                                                class="list-group list-group-flush cursor-move"
-                                            >
+                                        <app-collapse accordion type="margin" v-else>
+                                            <draggable :list="list2" tag="ul" group="people"
+                                                class="list-group list-group-flush cursor-move">
                                                 <div>
-                                                    <app-collapse-item
-                                                        :title="listItem.name"
-                                                        v-for="(
-                                                            listItem, index
-                                                        ) in list2"
-                                                        :key="index"
-                                                        tag="li"
-                                                    >
+                                                    <app-collapse-item :title="listItem.name" v-for="(
+listItem, index
+                                                        ) in list2" :key="index" tag="li">
                                                         <b-row>
                                                             <b-col md="12">
-                                                                <b-form-group
-                                                                    :label="
-                                                                        $t(
+                                                                <b-form-group :label="$t(
+                                                                    'Minimum'
+                                                                )
+                                                                    ">
+                                                                    <b-form-input :id="'min' +
+                                                                        listItem.id
+                                                                        " :placeholder="$t(
                                                                             'Minimum'
                                                                         )
-                                                                    "
-                                                                >
-                                                                    <b-form-input
-                                                                        :id="
-                                                                            'min' +
-                                                                            listItem.id
-                                                                        "
-                                                                        :placeholder="
-                                                                            $t(
-                                                                                'Minimum'
-                                                                            )
-                                                                        "
-                                                                        v-model="
-                                                                            listItem.min
-                                                                        "
-                                                                        disabled
-                                                                    />
+                                                                            " v-model="listItem.min
+                                                                                " disabled />
                                                                 </b-form-group>
                                                             </b-col>
                                                             <b-col md="12">
-                                                                <b-form-group
-                                                                    :label="
-                                                                        $t(
+                                                                <b-form-group :label="$t(
+                                                                    'Maximum'
+                                                                )
+                                                                    ">
+                                                                    <b-form-input :id="'max' +
+                                                                        listItem.id
+                                                                        " :placeholder="$t(
                                                                             'Maximum'
                                                                         )
-                                                                    "
-                                                                >
-                                                                    <b-form-input
-                                                                        :id="
-                                                                            'max' +
-                                                                            listItem.id
-                                                                        "
-                                                                        :placeholder="
-                                                                            $t(
-                                                                                'Maximum'
-                                                                            )
-                                                                        "
-                                                                        v-model="
-                                                                            listItem.max
-                                                                        "
-                                                                        disabled
-                                                                    />
+                                                                            " v-model="listItem.max
+                                                                                " disabled />
                                                                 </b-form-group>
                                                             </b-col>
                                                             <b-col md="12">
@@ -512,19 +347,13 @@
                                                                 <b-list-group>
                                                                     <b-list-group-item
                                                                         class="d-flex justify-content-between align-items-center"
-                                                                        v-for="grs in listItem.group_addons"
-                                                                        :key="
-                                                                            grs.id
-                                                                        "
-                                                                    >
+                                                                        v-for="grs in listItem.group_addons" :key="grs.id
+                                                                            ">
                                                                         <span>{{
                                                                             grs.name
-                                                                        }}</span>
-                                                                        <b-badge
-                                                                            variant="primary"
-                                                                            pill
-                                                                            class="badge-round"
-                                                                        >
+                                                                            }}</span>
+                                                                        <b-badge variant="primary" pill
+                                                                            class="badge-round">
                                                                             {{
                                                                                 setting.value
                                                                             }}
@@ -1143,174 +972,100 @@
                                         </b-col>
 
                                         <b-col md="5">
-                                            <b-form-group :label="$t('price')">
-                                                <validation-provider
-                                                    #default="{ errors }"
-                                                    rules="required"
+                                            <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                                :label="$t('price')">
+                                                <validation-provider #default="{ errors }" rules="required"
                                                     :custom-messages="{
                                                         required: $t(
                                                             'The Price field is required'
                                                         ),
-                                                    }"
-                                                    :name="`Price ${index}`"
-                                                >
+                                                    }" :name="`Price ${index}`">
                                                     <b-form-input
-                                                        :id="'Price' + index"
-                                                        :placeholder="
-                                                            $t('price')
-                                                        "
-                                                        v-model="product.price"
-                                                        :state="
-                                                            errors.length > 0
-                                                                ? false
-                                                                : null
-                                                        "
-                                                        @input="
-                                                            update_sp($event)
-                                                        "
-                                                    />
-                                                    <small
-                                                        class="text-danger"
-                                                        >{{ errors[0] }}</small
-                                                    >
+                                                        style="font-size: 1.2rem !important;color: black !important;"
+                                                        :id="'Price' + index" :placeholder="$t('price')
+                                                            " v-model="product.price" :state="errors.length > 0
+                                                            ? false
+                                                            : null
+                                                            " @input="
+                                                                update_sp($event)
+                                                                " />
+                                                    <small class="text-danger">{{ errors[0] }}</small>
                                                 </validation-provider>
                                             </b-form-group>
-                                            <b-form-group
-                                                :label="
-                                                    $t('tax') +
+                                            <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                                :label="$t('tax') +
                                                     ' ' +
                                                     $t('in') +
                                                     '% *'
-                                                "
-                                            >
-                                                <validation-provider
-                                                    #default="{ errors }"
-                                                    :custom-messages="{
-                                                        required: $t(
-                                                            'The Tax field is required'
-                                                        ),
-                                                    }"
-                                                    rules="required|regex:^([.0-9]+)$"
-                                                    name="Tax"
-                                                >
-                                                    <b-form-input
-                                                        id="'tax' + index"
-                                                        :placeholder="$t('tax')"
-                                                        v-model="product.tax"
-                                                        type="number"
-                                                        :state="
-                                                            errors.length > 0
-                                                                ? false
-                                                                : null
-                                                        "
-                                                    />
-                                                    <small
-                                                        class="text-danger"
-                                                        >{{ errors[0] }}</small
-                                                    >
+                                                    ">
+                                                <validation-provider #default="{ errors }" :custom-messages="{
+                                                    required: $t(
+                                                        'The Tax field is required'
+                                                    ),
+                                                }" rules="required|regex:^([.0-9]+)$" name="Tax">
+                                                    <b-form-input id="'tax' + index" :placeholder="$t('tax')"
+                                                        v-model="product.tax" type="number" :state="errors.length > 0
+                                                            ? false
+                                                            : null
+                                                            " />
+                                                    <small class="text-danger">{{ errors[0] }}</small>
                                                 </validation-provider>
                                             </b-form-group>
 
-                                            <b-form-group :label="$t('Weight / Litre')">
-                                                <b-form-input
-                                                    :id="'label' + index"
-                                                    :placeholder="$t('Wt / Ltr')"
-                                                    v-model="product.label"
-                                                    type="text"
-                                                />
+                                            <b-form-group style="font-size: 1.3rem !important;color: black !important;"
+                                                :label="$t('Weight / Litre')">
+                                                <b-form-input :id="'label' + index" :placeholder="$t('Wt / Ltr')"
+                                                    v-model="product.label" type="text" />
                                             </b-form-group>
 
-                                            <validation-provider
-                                                name="state"
-                                                rules="required"
-                                                :custom-messages="{
-                                                    required:
-                                                        'State is required',
-                                                }"
-                                                v-slot="{ errors }"
-                                            >
+                                            <validation-provider name="state" rules="required" :custom-messages="{
+                                                required:
+                                                    'State is required',
+                                            }" v-slot="{ errors }">
                                                 <b-form-group
-                                                    :label="$t('state')"
-                                                    :state="errors.length === 0"
-                                                    :invalid-feedback="
-                                                        errors[0]
-                                                    "
-                                                >
+                                                    style="font-size: 1.3rem !important;color: black !important;"
+                                                    :label="$t('state')" :state="errors.length === 0" :invalid-feedback="errors[0]
+                                                        ">
                                                     <v-select
-                                                        :id="'state' + index"
-                                                        v-model="product.state"
-                                                        :options="state_list"
-                                                        label="state"
-                                                        :reduce="
-                                                            (sel) => sel.id
-                                                        "
-                                                        :placeholder="
-                                                            $t('select state')
-                                                        "
-                                                        :dir="
-                                                            $store.state
-                                                                .appConfig.isRTL
-                                                                ? 'rtl'
-                                                                : 'ltr'
-                                                        "
-                                                        :required="
-                                                            !product.state
-                                                        "
-                                                        @input="
-                                                            onStateChange(index)
-                                                        "
-                                                    />
+                                                        style="font-size: 1.2rem !important;color: black !important;"
+                                                        :id="'state' + index" v-model="product.state"
+                                                        :options="state_list" label="state" :reduce="(sel) => sel.id
+                                                            " :placeholder="$t('select state')
+                                                                " :dir="$store.state
+                                                                    .appConfig.isRTL
+                                                                    ? 'rtl'
+                                                                    : 'ltr'
+                                                                    " :required="!product.state
+                                                                        " @input="
+                                                                            onStateChange(index)
+                                                                            " />
                                                 </b-form-group>
                                             </validation-provider>
 
-                                            <b-button
-                                                v-ripple.400="
-                                                    'rgba(234, 84, 85, 0.15)'
-                                                "
-                                                v-if="index != 0"
-                                                variant="outline-danger"
-                                                class="mt-0 mt-md-2"
+                                            <b-button v-ripple.400="'rgba(234, 84, 85, 0.15)'
+                                                " v-if="index != 0" variant="outline-danger" class="mt-0 mt-md-2"
                                                 @click="
                                                     removeProductPriceItem_table(
                                                         index
                                                     )
-                                                "
-                                            >
-                                                <feather-icon
-                                                    icon="XIcon"
-                                                    class="mr-25"
-                                                />
+                                                    ">
+                                                <feather-icon style="font-size: 1.2rem !important;"  icon="XIcon" class="mr-25" />
                                                 <span>Delete Price</span>
                                             </b-button>
                                         </b-col>
-                                        <b-col
-                                            md="7"
-                                            v-if="
-                                                getAvailableDistricts(product)
-                                                    .length !== 0
-                                            "
-                                        >
-                                            <b-form-group
-                                                :label="$t('Select a District')"
-                                            >
+                                        <b-col md="7" v-if="
+                                            getAvailableDistricts(product)
+                                                .length !== 0
+                                        ">
+                                            <b-form-group :label="$t('Select a District')">
                                                 <b-row>
-                                                    <b-col
-                                                        v-for="(
-                                                            dis, cityIndex
+                                                    <b-col v-for="(
+dis, cityIndex
                                                         ) in getAvailableDistricts(
-                                                            product
-                                                        )"
-                                                        :key="cityIndex"
-                                                        cols="8"
-                                                        md="3"
-                                                        class="mb-2"
-                                                    >
-                                                        <b-form-checkbox
-                                                            :value="dis.id"
-                                                            v-model="
-                                                                product.district
-                                                            "
-                                                        >
+    product
+)" :key="cityIndex" cols="8" md="3" class="mb-2">
+                                                        <b-form-checkbox :value="dis.id" v-model="product.district
+                                                            ">
                                                             {{
                                                                 dis.city.toUpperCase()
                                                             }}
@@ -1327,12 +1082,8 @@
 
                     <b-col cols="12">
                         <b-col md="12">
-                            <b-button
-                                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                                variant="primary"
-                                class="mr-1"
-                                @click="addGroupProduct"
-                            >
+                            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" class="mr-1" style="font-size: 1.2   rem !important;color: white !important;" 
+                                @click="addGroupProduct">
                                 {{ $t("Add New Price") }}
                             </b-button>
                         </b-col>
@@ -1649,151 +1400,84 @@
                         </b-card>
                     </b-col> -->
                     <b-col class="mt-1">
-                        <b-button
-                            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                            type="submit"
-                            variant="primary"
-                            class="mr-1"
-                        >
+                        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" style="font-size: 1.2rem !important;color: white !important;margin-left: 15px !important;" 
+                            class="mr-1">
                             {{ $t("save") }}
                         </b-button>
                     </b-col>
                 </b-row>
             </b-form>
         </validation-observer>
-        <b-modal
-            id="modal-center"
-            centered
-            :title="$t('Add New Size')"
-            ok-only
-            :ok-title="$t('Save')"
-            ref="size-modal"
-            @ok="sizem_add"
-        >
+        <b-modal id="modal-center" centered :title="$t('Add New Size')" ok-only :ok-title="$t('Save')" ref="size-modal"
+            @ok="sizem_add">
             <b-row>
                 <b-col md="12">
                     <b-form-group>
-                        <b-form-input
-                            id="name"
-                            :placeholder="
-                                $t('enter') +
-                                ' ' +
-                                $t('Size') +
-                                ' ' +
-                                $t('name')
-                            "
-                            v-model="sbrand.name"
-                        />
+                        <b-form-input id="name" :placeholder="$t('enter') +
+                            ' ' +
+                            $t('Size') +
+                            ' ' +
+                            $t('name')
+                            " v-model="sbrand.name" />
                         <!-- <colour-picker v-model="sbrand.name" :value="colour" label="Pick Colour" picker="sketch" /> -->
                     </b-form-group>
                 </b-col>
             </b-row>
         </b-modal>
-        <b-modal
-            id="modal-center"
-            centered
-            :title="$t('Add New Attributes')"
-            ok-only
-            :ok-title="$t('Save')"
-            ref="addon-modal"
-            @ok="addon_add"
-        >
+        <b-modal id="modal-center" centered :title="$t('Add New Attributes')" ok-only :ok-title="$t('Save')"
+            ref="addon-modal" @ok="addon_add">
             <b-row>
                 <b-col md="12">
                     <b-form-group :label="$t('Attributes') + ' ' + $t('name')">
-                        <b-form-input
-                            id="name"
-                            :placeholder="
-                                $t('enter') +
-                                ' ' +
-                                $t('attributes') +
-                                ' ' +
-                                $t('name')
-                            "
-                            v-model="brand.name"
-                        />
+                        <b-form-input id="name" :placeholder="$t('enter') +
+                            ' ' +
+                            $t('attributes') +
+                            ' ' +
+                            $t('name')
+                            " v-model="brand.name" />
                     </b-form-group>
                 </b-col>
                 <b-col md="12">
-                    <b-form-group :label="$t('price')">
-                        <b-form-input
-                            id="name"
-                            :placeholder="$t('enter') + ' ' + $t('price')"
-                            v-model="brand.price"
-                        />
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('price')">
+                        <b-form-input style="font-size: 1.2rem !important;color: black !important;"  id="name" :placeholder="$t('enter') + ' ' + $t('price')" v-model="brand.price" />
                     </b-form-group>
                 </b-col>
             </b-row>
         </b-modal>
-        <b-modal
-            id="modal-center"
-            centered
-            :title="$t('Add New Group')"
-            ok-only
-            :ok-title="$t('Save')"
-            ref="group-modal"
-            @ok="group_add"
-            @show="resetModal"
-            @hidden="resetModal"
-        >
+        <b-modal id="modal-center"   centered :title="$t('Add New Group')" ok-only :ok-title="$t('Save')"
+            ref="group-modal" @ok="group_add" @show="resetModal" @hidden="resetModal">
             <b-row>
                 <b-col md="12">
-                    <b-form-group :label="$t('Name')">
-                        <b-form-input
-                            id="name"
-                            :placeholder="$t('Name')"
-                            v-model="abrand.name"
-                        />
+                    <b-form-group style="font-size: 1.3rem !important;color: black !important;"  :label="$t('Name')">
+                        <b-form-input style="font-size: 1.2rem !important;color: black !important;"  id="name" :placeholder="$t('Name')" v-model="abrand.name" />
                     </b-form-group>
                 </b-col>
                 <b-col md="12">
                     <b-form-group>
-                        <b-form-radio-group
-                            v-model="optionalm"
-                            :options="optional"
-                        />
+                        <b-form-radio-group v-model="optionalm" :options="optional" />
                     </b-form-group>
                 </b-col>
                 <b-col md="12" v-if="optionalm == 1">
                     <b-form-group :label="$t('Force Minimum')">
-                        <b-form-input
-                            id="min"
-                            :placeholder="$t('Force Minimum')"
-                            v-model="abrand.min"
-                        />
+                        <b-form-input id="min" :placeholder="$t('Force Minimum')" v-model="abrand.min" />
                     </b-form-group>
                 </b-col>
                 <b-col md="12" v-if="optionalm == 1">
                     <b-form-group :label="$t('Force Maximum')">
-                        <b-form-input
-                            id="max"
-                            :placeholder="$t('Force Maximum')"
-                            v-model="abrand.max"
-                        />
+                        <b-form-input id="max" :placeholder="$t('Force Maximum')" v-model="abrand.max" />
                     </b-form-group>
                 </b-col>
 
                 <b-col md="12">
                     <b-form-group :label="$t('Attributes')">
-                        <b-form-checkbox
-                            style="margin-top: 2%"
-                            v-for="addon in addons"
-                            :key="addon.id"
-                            :value="addon.id"
-                            :id="'a' + addon.id"
-                            name="gaddon_name"
-                            >{{ addon.name }}
+                        <b-form-checkbox style="margin-top: 2%" v-for="addon in addons" :key="addon.id"
+                            :value="addon.id" :id="'a' + addon.id" name="gaddon_name">{{ addon.name }}
                         </b-form-checkbox>
                     </b-form-group>
                 </b-col>
                 <b-col md="12">
-                    <b-form-group
-                        :label="$t('Allow Adding Same Choice Multiple Times')"
-                    >
-                        <b-form-radio-group
-                            v-model="abrand.multiple"
-                            :options="multiple"
-                        />
+                    <b-form-group :label="$t('Allow Adding Same Choice Multiple Times')">
+                        <b-form-radio-group v-model="abrand.multiple" :options="multiple" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -1803,44 +1487,24 @@
                 <!-- Tab: Account -->
                 <b-tab>
                     <template #title>
-                        <feather-icon
-                            icon="ImageIcon"
-                            size="16"
-                            class="mr-0 mr-sm-50"
-                        />
+                        <feather-icon icon="ImageIcon" size="16" class="mr-0 mr-sm-50" />
                         <span class="d-none d-sm-inline">Select File </span>
                     </template>
                     <div>
                         <b-row>
-                            <b-col
-                                cols="3"
-                                v-for="(img, index) in imgs"
-                                :key="index"
-                            >
-                                <b-img
-                                    :src="img"
-                                    rounded
-                                    fluid
-                                    style="
+                            <b-col cols="3" v-for="(img, index) in imgs" :key="index">
+                                <b-img :src="img" rounded fluid style="
                                         width: 75%;
                                         padding: 1%;
                                         max-height: 100px;
-                                    "
-                                    alt="banner photo"
-                                    @click="myMethod(img)"
-                                    id="lazy"
-                                />
+                                    " alt="banner photo" @click="myMethod(img)" id="lazy" />
                             </b-col>
                         </b-row>
                     </div>
                 </b-tab>
                 <b-tab>
                     <template #title>
-                        <feather-icon
-                            icon="FilePlusIcon"
-                            size="16"
-                            class="mr-0 mr-sm-50"
-                        />
+                        <feather-icon icon="FilePlusIcon" size="16" class="mr-0 mr-sm-50" />
                         <span class="d-none d-sm-inline">Crop Image</span>
                     </template>
                     <div>
@@ -1848,51 +1512,29 @@
                             <b-col md="4"></b-col>
                             <b-col md="4">
                                 <label></label>
-                                <b-form-file
-                                    id="new_img"
-                                    v-model="file"
-                                    placeholder="Choose a file or drop it here..."
-                                    drop-placeholder="Drop file here..."
-                                    @change="onFileChange2"
-                                    accept=".jpg, .png, .jpeg"
-                                />
+                                <b-form-file id="new_img" v-model="file" placeholder="Choose a file or drop it here..."
+                                    drop-placeholder="Drop file here..." @change="onFileChange2"
+                                    accept=".jpg, .png, .jpeg" />
                             </b-col>
                             <b-col md="4"></b-col>
                             <b-col md="12">
-                                <div
-                                    style="
+                                <div style="
                                         max-width: 1200px;  
                                         max-height:  640px;
                                         display: none;
                                         margin: auto;
-                                    "
-                                    id="crop_js"
-                                >
-                                    <vue-cropper
-                                        ref="cropper"
-                                        :guides="false"
-                                        drag-mode="move"
-                                        :aspectRatio="1 / 1"
-                                        :restore="false"
-                                        :crop-box-movable="false"
-                                        :crop-box-resizable="false"
-                                        :toggle-drag-mode-on-dblclick="false"
-                                        :scalable="true"
-                                        :background="true"
-                                        :rotatable="true"
-                                        :src="imgSrc"
-                                        view-mode="1"
-                                    >
+                                    " id="crop_js">
+                                    <vue-cropper ref="cropper" :guides="false" drag-mode="move" :aspectRatio="1 / 1"
+                                        :restore="false" :crop-box-movable="false" :crop-box-resizable="false"
+                                        :toggle-drag-mode-on-dblclick="false" :scalable="true" :background="true"
+                                        :rotatable="true" :src="imgSrc" view-mode="1">
                                     </vue-cropper>
                                 </div>
-                                <b-col
-                                    md="12"
-                                    style="
+                                <b-col md="12" style="
                                         display: flex;
                                         justify-content: center;
                                         margin-top: 20px;
-                                    "
-                                >
+                                    ">
                                     <br />
                                 </b-col>
                             </b-col>
@@ -1901,90 +1543,41 @@
                 </b-tab>
             </b-tabs>
             <template #modal-footer v-if="tabIndexcr == 1">
-                <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    type="submit"
-                    variant="primary"
-                    class="mr-1"
-                    @click="cropImage"
-                    style="display: none"
-                    id="crop_btn"
-                    >Crop Image</b-button
-                >
-                <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    type="submit"
-                    variant="primary"
-                    class="mr-1"
-                    @click="rotate"
-                    style="display: none"
-                    id="rotate_btn"
-                    >Rotate</b-button
-                >
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
+                    @click="cropImage" style="display: none" id="crop_btn">Crop Image</b-button>
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
+                    @click="rotate" style="display: none" id="rotate_btn">Rotate</b-button>
             </template>
         </b-modal>
-        <b-modal
-            id="modal-center"
-            centered
-            :title="$t('Add New Menu')"
-            ok-only
-            :ok-title="$t('Save')"
-            ref="menu-modal"
-            @hidden="resetsModal"
-            @show="resetsModal"
-            @ok="menu_add"
-        >
+        <b-modal id="modal-center" centered :title="$t('Add New Menu')" ok-only :ok-title="$t('Save')" ref="menu-modal"
+            @hidden="resetsModal" @show="resetsModal" @ok="menu_add">
             <b-row>
                 <b-col md="12">
                     <b-form-group :label="$t('Menu Name')">
-                        <b-form-input
-                            :placeholder="$t('Menu name')"
-                            v-model="smenu.menu_name"
-                        />
+                        <b-form-input :placeholder="$t('Menu name')" v-model="smenu.menu_name" />
                     </b-form-group>
                 </b-col>
             </b-row>
         </b-modal>
-        <b-modal
-            id="modal-center"
-            centered
-            :title="$t('Add New Subcategory')"
-            ok-only
-            :ok-title="$t('Save')"
-            ref="cat-modal"
-            @hidden="resetsModal"
-            @show="resetsModal"
-            @ok="cat_add"
-        >
+        <b-modal id="modal-center" centered :title="$t('Add New Subcategory')" ok-only :ok-title="$t('Save')"
+            ref="cat-modal" @hidden="resetsModal" @show="resetsModal" @ok="cat_add">
             <b-row>
                 <b-col md="6">
                     <b-form-group :label="$t('category')">
-                        <v-select
-                            v-model="scat.business_category_id"
-                            :options="this.bus_category"
-                            label="category_name"
-                            :reduce="(sel) => sel.id"
-                            :placeholder="$t('select') + ' ' + $t('category')"
-                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                        />
+                        <v-select v-model="scat.business_category_id" :options="this.bus_category" label="category_name"
+                            :reduce="(sel) => sel.id" :placeholder="$t('select') + ' ' + $t('category')"
+                            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('Subcategory')">
-                        <b-form-input
-                            :placeholder="$t('Subcategory')"
-                            v-model="scat.category_name"
-                        />
+                        <b-form-input :placeholder="$t('Subcategory')" v-model="scat.category_name" />
                     </b-form-group>
                 </b-col>
                 <b-col md="6">
                     <b-form-group :label="$t('sub category image')">
-                        <b-form-file
-                            v-model="scat.category_image"
-                            placeholder="Choose a file or drop it here..."
-                            drop-placeholder="Drop file here..."
-                            accept=".jpg, .png, .jpeg"
-                        />
+                        <b-form-file v-model="scat.category_image" placeholder="Choose a file or drop it here..."
+                            drop-placeholder="Drop file here..." accept=".jpg, .png, .jpeg" />
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -2271,7 +1864,7 @@ export default {
             // this.product.image.splice(image_id, 1);
             this.productImage.splice(image_id, 1);
         },
-        resetsModal() {},
+        resetsModal() { },
         change() {
             this.$refs.cropper.replace(this.imgSrc);
         },
@@ -2978,12 +2571,12 @@ export default {
             var img_size = e.target.files[0].size;
             const reader = new FileReader();
             reader.readAsDataURL(file);
-             var ind = this.productImage.length;
+            var ind = this.productImage.length;
             reader.onload = () => {
                 this.imgSrc = reader.result;
-  // Newly Added Data
+                // Newly Added Data
                 this.url1.push(reader.result);
-                this.productImage.push(reader.result);                
+                this.productImage.push(reader.result);
                 this.productExisting[ind] = 2;
                 this.tabIndex = 0;
                 // Newly Added Data
@@ -3187,13 +2780,28 @@ export default {
     font-weight: 400;
     line-height: 1.5;
     color: black ! important;
-    }
+}
 
-    [dir] .col-form-label {
+[dir] .col-form-label {
     padding-top: calc(0.375rem + 1px);
     padding-bottom: calc(0.375rem + 1px);
     margin-bottom: 0;
     color: black ! important;
 
+}
+label,
+.col-form-label {
+    font-size: 1.3rem !important;
+    color: black !important;
+}
+
+.form-control {
+    font-size: 1.1rem !important;
+    color: black !important;
+
+    &::placeholder {
+        font-size: 1.2rem !important;
+        color: black !important;
+    }
 }
 </style>

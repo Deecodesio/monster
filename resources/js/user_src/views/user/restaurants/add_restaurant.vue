@@ -359,7 +359,7 @@ export default {
       length,
       alphaDash,
       cities: [],
-      areas: [],
+      areas: [], 
       cuisines: [],
       business_type: [],
       disabled: true,

@@ -3,7 +3,17 @@
 //
 label {
   color: $headings-color;
-  font-size: $small-font-size;
+  // font-size: $small-font-size;
+  font-size: 1.3rem;
+ 
+}
+
+.form-control {
+  font-size: 1.0rem; // Add this for input text
+  &::placeholder {
+    font-size: 1.2rem; // Add this for placeholder text
+    
+  }
 }
 
 // placeholder specific scss
@@ -603,4 +613,9 @@ select:-webkit-autofill {
 .country-selector__input {
   border: 1px solid $primary !important;
   box-shadow: none !important;
+}
+
+.btn-primary {
+  font-size: 1.2rem !important;
+  color: white !important;
 }

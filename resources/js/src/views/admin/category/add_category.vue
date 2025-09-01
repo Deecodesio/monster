@@ -337,7 +337,7 @@ export default {
     this.$http.get('/admin/get_lang')
       .then(res => {
 
-        this.setting = res.data
+        this.setting = res.data  
       })
     if (this.$route.params.id) {
       this.$http.get('/admin/edit_category/' + this.$route.params.id)

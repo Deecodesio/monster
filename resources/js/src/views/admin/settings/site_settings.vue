@@ -770,7 +770,7 @@ export default {
 }
 </style>
 
-<style scoped>
+<style lang="scss">
 /* Make all input fields black */
 b-form-input,
 input.form-control,
@@ -781,13 +781,15 @@ select.form-control,
 .custom-file-input,
 .custom-file-label,
 .form-control,
-.vs__selected,
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
 .vs__search,
 .vs__dropdown-menu,
 .vs__dropdown-option {
-
   color: #000000 !important;
-
 }
 
 
@@ -796,18 +798,21 @@ textarea.form-control::placeholder,
 .form-control::placeholder,
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #b0b0b0 !important;
+  color: black !important;
   opacity: 1 !important;
+  font-size: 1.2rem !important;
 }
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #b0b0b0 !important;
+  color: black !important;
+  font-size: 1.2rem !important;
 }
 
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
-  color: #b0b0b0 !important;
+  color: black !important;
+  font-size: 1.2rem !important;
 }
 
 /* For vue-select dropdown text */
@@ -817,8 +822,49 @@ textarea::-ms-input-placeholder {
 
 /* For file input */
 .custom-file-label {
-  background-color: #000 !important;
-  color: #fff !important;
-  border-color: #222 !important;
+ 
+  color: #000000 !important;
+ 
+}
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+ 
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
 }
 </style>

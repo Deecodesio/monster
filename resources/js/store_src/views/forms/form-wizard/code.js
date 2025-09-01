@@ -510,7 +510,7 @@ export const codeIconInfo = `
         </b-col>
         <b-col md="3">
           <b-form-group>
-            <label>DRIVING LICENCE </label>
+            <label>DRIVING LICENCE </label> 
             <b-form-file placeholder="Choose File" />
           </b-form-group>
         </b-col>

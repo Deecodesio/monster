@@ -92,7 +92,7 @@
       </div>
     </section> -->
  <section class="section-1">
-  <h1 class="text-center mb-4" style="color: black;">Annapoorna Foods</h1>
+  <h1 class="text-center mb-4" style="color: black;">Annapurna Foods</h1>
 
   <div class="container">
     <!-- TOP ROW: Text (L) + Image (R) with equal heights -->
@@ -100,7 +100,7 @@
       <div class="col-md-6 d-flex pr-md-4">
         <div class="text-box">
           <p>
-            <strong>Annapoorna Foods</strong> is a start-up Poultry meat
+            <strong>Annapurna Foods</strong> is a start-up Poultry meat
             and Poultry Egg online sales E-Commerce company under brand name
             <strong>Monster Foods</strong> across <strong>India</strong>.<br><br>
 

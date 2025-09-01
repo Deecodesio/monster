@@ -83,7 +83,7 @@
               alt="Business photo" />
 
           </b-form-group>
-          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" v-b-modal.modal-xl variant="primary" class="mr-1">
+          <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" v-b-modal.modal-xl variant="primary" class="mr-1"  style="font-size: 1.2rem !important;color: white !important;">
             Choose a file
           </b-button>
         </b-col>

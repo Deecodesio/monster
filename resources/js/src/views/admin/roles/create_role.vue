@@ -54,7 +54,7 @@
             :label="$t('account')+' '+$t('type')+'*'"
            
           >
-              <v-select
+              <v-select style="font-size: 1.2rem !important;color: black !important;"
           id="type"
           v-model="role.similar"
           :options="options_status"
@@ -74,7 +74,7 @@
             
           >
         
-           <v-select
+           <v-select  style="font-size: 1.2rem !important;color: black !important;" 
           id="role_name"
          v-model="role.role_type"
         :options="this.state"
@@ -106,7 +106,7 @@
   <tbody v-for="(name, index) in permissons_name" :key="index">
     <tr>
     
-      <td>{{name.text}}</td>
+      <td style="font-size: 1.3rem;color: black;">{{name.text}}</td>
       <td> <b-form-checkbox 
            :id="name.value+'-view'"
            v-model="Permissions" 
@@ -134,7 +134,7 @@
         </b-col>
         <!-- submit and reset -->
         <b-col md="6"  style="text-align: right">
-          <b-button
+          <b-button style="font-size: 1.2rem !important;color: white !important;"
             v-ripple.400="'rgba(255, 255, 255, 0.15)'"
             type="submit"
             variant="primary"
@@ -398,3 +398,20 @@ export default {
 
 }
 </script>
+<style>
+label,
+.col-form-label {
+    font-size: 1.3rem !important;
+    color: black !important;
+}
+
+.form-control {
+    font-size: 1.1rem !important;
+    color: black !important;
+
+    &::placeholder {
+        font-size: 1.2rem !important;
+        color: black !important;
+    }
+}
+</style>

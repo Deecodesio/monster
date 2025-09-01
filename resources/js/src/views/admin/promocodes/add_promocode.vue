@@ -23,20 +23,22 @@
           </b-tabs>
         </b-col>
         <b-col md="6" v-if="!isHidden_lang">
-          <b-form-group :label="$t('titles') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('titles') }}*</label>
             <validation-provider #default="{ errors }" :name="$t('titles')"
               :custom-messages="{ required: $t('The Title field is required') }" rules="required">
 
 
-              <b-form-input :placeholder="$t('titles')" v-model="promocode.title" />
+              <b-form-input :placeholder="$t('titles')" v-model="promocode.title" style="font-size: 1.2rem !important;color: black !important;" />
               <b-form-input hidden="hidden" v-model="promocode.restaurant_id" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6" v-if="isHidden_lang">
-          <b-form-group :label="$t('titles') + '*'">
-            <b-form-input :placeholder="$t('titles')" v-model="promocode.second_title" />
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('titles') }}*</label>
+            <b-form-input :placeholder="$t('titles')" v-model="promocode.second_title" style="font-size: 1.2rem !important;color: black !important;" />
             <b-form-input hidden="hidden" v-model="promocode.restaurant_id" />
 
           </b-form-group>
@@ -44,126 +46,140 @@
 
 
         <b-col md="6">
-          <b-form-group :label="$t('Store')">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('Store') }}</label>
             <v-select v-model="promocode.restaurant_id" :options="this.res_list" label="restaurant_name"
               :reduce="sel => sel.id" :placeholder="$t('Store') + ' ' + $t('name')"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
+              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
 
 
         <b-col md="6" v-if="!isHidden_lang">
-          <b-form-group :label="$t('description') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('description') }}*</label>
 
             <validation-provider #default="{ errors }" :name="$t('description')"
               :custom-messages="{ required: $t('The Description field is required') }" rules="required">
-              <b-form-input id="mc-last-name" :placeholder="$t('description')" v-model="promocode.description" />
+              <b-form-input id="mc-last-name" :placeholder="$t('description')" v-model="promocode.description" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6" v-if="isHidden_lang">
-          <b-form-group :label="$t('description') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('description') }}*</label>
 
 
-            <b-form-input id="mc-last-name" :placeholder="$t('description')" v-model="promocode.second_description" />
+            <b-form-input id="mc-last-name" :placeholder="$t('description')" v-model="promocode.second_description" style="font-size: 1.2rem !important;color: black !important;" />
 
           </b-form-group>
         </b-col>
         <b-col md="6" v-if="!isHidden_lang">
-          <b-form-group :label="$t('promocode') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('promocode') }}*</label>
             <validation-provider #default="{ errors }" :name="$t('promocode')"
               :custom-messages="{ required: $t('The Promocode field is required') }" rules="required">
               <b-form-input id="mc-last-name" :placeholder="$t('promocode')" v-model="promocode.code"
-                style="text-transform:uppercase" />
+                style="text-transform:uppercase;font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6" v-if="isHidden_lang">
-          <b-form-group :label="$t('promocode') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('promocode') }}*</label>
 
             <b-form-input id="mc-last-name" :placeholder="$t('promocode')" v-model="promocode.second_code"
-              style="text-transform:uppercase" />
+              style="text-transform:uppercase;font-size: 1.2rem !important;color: black !important;" />
 
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('Offer') + ' ' + $t('type') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('Offer') }} {{ $t('type') }}*</label>
             <v-select v-model="promocode.offer_type" :options="options_amount" label="text" :reduce="sel => sel.value"
               :placeholder="$t('Offer') + ' ' + $t('type')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-              @input="isHiddens" id="offer_type" />
+              @input="isHiddens" id="offer_type" style="font-size: 1.2rem !important;color: black !important;" />
 
 
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('maximum') + ' ' + $t('amount') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('maximum') }} {{ $t('amount') }}*</label>
             <validation-provider #default="{ errors }" :name="$t('maximum') + ' ' + $t('amount')" rules="required">
               <b-form-input type="number" id="Maximum_amount" :placeholder="$t('maximum') + ' ' + $t('amount')"
-                v-model="promocode.max_amount" />
+                v-model="promocode.max_amount" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('minimum') + ' ' + $t('order') + ' ' + $t('value') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('minimum') }} {{ $t('order') }} {{ $t('value') }}*</label>
             <validation-provider #default="{ errors }" :name="$t('minimum') + ' ' + $t('order') + ' ' + $t('value')"
               rules="required">
               <b-form-input type="number" id="Minimum_Order_value"
-                :placeholder="$t('minimum') + ' ' + $t('order') + ' ' + $t('value')" v-model="promocode.min_amount" />
+                :placeholder="$t('minimum') + ' ' + $t('order') + ' ' + $t('value')" v-model="promocode.min_amount" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('discount') + '(%) *'" v-if="isHidden">
+          <b-form-group v-if="isHidden">
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('discount') }}(%) *</label>
             <validation-provider #default="{ errors }" :name="$t('discount')" rules="required">
-              <b-form-input placeholder="0-100" v-model="promocode.value" />
+              <b-form-input placeholder="0-100" v-model="promocode.value" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
-          <b-form-group :label="$t('discount') + '(amount) *'" v-else>
+          <b-form-group v-else>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('discount') }}(amount) *</label>
             <validation-provider #default="{ errors }" :name="$t('discount')" rules="required">
-              <b-form-input placeholder="0-100" v-model="promocode.value" />
+              <b-form-input placeholder="0-100" v-model="promocode.value" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('usage') + ' ' + $t('limit') + ' ' + $t('per') + ' ' + $t('coupon') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('usage') }} {{ $t('limit') }} {{ $t('per') }} {{ $t('coupon') }}*</label>
             <validation-provider #default="{ errors }"
               :name="$t('usage') + ' ' + $t('limit') + ' ' + $t('per') + ' ' + $t('coupon')" rules="required">
               <b-form-input id="mc-last-name" :placeholder="$t('enter') + ' ' + $t('per') + ' ' + $t('coupon')"
-                v-model="promocode.total_use" />
+                v-model="promocode.total_use" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('usage') + ' ' + $t('limit') + ' ' + $t('per') + ' ' + $t('User') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('usage') }} {{ $t('limit') }} {{ $t('per') }} {{ $t('User') }}*</label>
             <validation-provider #default="{ errors }"
               :name="$t('usage') + ' ' + $t('limit') + ' ' + $t('per') + ' ' + $t('User')" rules="required">
               <b-form-input id="mc-last-name" :placeholder="$t('enter') + ' ' + $t('per') + ' ' + $t('User')"
-                v-model="promocode.use_per_customer" />
+                v-model="promocode.use_per_customer" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('available') + ' ' + $t('from') + '*'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('available') }} {{ $t('from') }}*</label>
             <validation-provider #default="{ errors }" :name="$t('available') + ' ' + $t('from')" rules="required">
               <b-form-datepicker id="example-datepicker" v-model="promocode.available_from" class="mb-1"
-                :min="new Date()" />
+                :min="new Date()" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group :label="$t('expiry') + ' ' + $t('date') + ' *'">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('expiry') }} {{ $t('date') }} *</label>
             <validation-provider #default="{ errors }" :name="$t('expiry') + ' ' + $t('date')" rules="required">
               <b-form-datepicker id="example-datepicker1" v-model="promocode.valid_till" class="mb-1"
-                :min="promocode.available_from" />
+                :min="promocode.available_from" style="font-size: 1.2rem !important;color: black !important;" />
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
 
@@ -171,9 +187,10 @@
         </b-col>
 
         <b-col md="6">
-          <b-form-group :label="$t('status')">
+          <b-form-group>
+            <label style="font-size: 1.3rem !important;color: black !important;">{{ $t('status') }}</label>
             <v-select v-model="promocode.status" :options="options_status" label="text" :reduce="sel => sel.value"
-              :placeholder="$t('select status')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" />
+              :placeholder="$t('select status')" :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'" style="font-size: 1.2rem !important;color: black !important;" />
           </b-form-group>
         </b-col>
 
@@ -188,104 +205,61 @@
         </b-col>
         <b-col md="6"></b-col>
         <b-col md="6">
-          <h4 class="pt-3">{{ $t('Coupon Availability') }}</h4>
+          <h4 class="pt-3">{{ $t('Coupon') }} {{ $t('timing') }}</h4>
         </b-col>
-        <b-col md=12>
-          <b-form-group>
-            <b-form ref="form" :style="{ height: trHeight }" class="repeater-form" @submit.prevent="repeateAgain">
-
-              <!-- Row Loop -->
-              <b-row v-for="(item, index) in items" :id="item.id" :key="item.id" ref="row">
-
-                <!-- Item Name -->
-                <b-col md="4">
-                  <b-form-group :label="$t('from')" label-for="item-name">
-                    <b-form-timepicker v-model="item.from_time" :name="'from' + item.id" />
-                    <b-form-input :id="'from' + item.id" hidden="hidden" :value=item.from_time :key="'from' + item.id" />
-                  </b-form-group>
-                </b-col>
-
-                <!-- Cost -->
-                <b-col md="4">
-                  <b-form-group :label="$t('to')" label-for="cost">
-                    <b-form-timepicker v-model="item.to_time" :name="'to' + item.id" />
-
-                    <b-form-input :id="'to' + item.id" hidden="hidden" :value=item.to_time :key="'to' + item.id" />
-                  </b-form-group>
-
-                </b-col>
-
-                <!-- Remove Button -->
-                <b-col lg="2" md="3" class="mb-50">
-                  <b-button v-ripple.400="'rgba(234, 84, 85, 0.15)'" variant="outline-danger" class="mt-0 mt-md-2"
-                    @click="removeItem(index)">
-                    <feather-icon icon="XIcon" class="mr-25" />
-                    <span>{{ $t('delete') }}</span>
-                  </b-button>
-                </b-col>
-                <b-col cols="12">
-                  <hr>
-                </b-col>
-
-              </b-row>
-
-            </b-form>
-          </b-form-group>
-        </b-col>
+        <b-col md="6"></b-col>
         <b-col md="6">
-          <b-form-group>
-            <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" @click="repeateAgain">
-              <feather-icon icon="PlusIcon" class="mr-25" />
-              <span>{{ $t('add') }} {{ $t('new') }} {{ $t('Time Slot') }}</span>
-            </b-button>
-          </b-form-group>
+          <b-form-checkbox class="custom-control-success" name="check-button" switch v-model="promocode.all_day"
+            @change="showDate" id="All_day">
+            <h5>{{ $t('All') }} {{ $t('day') }}</h5>
+          </b-form-checkbox>
         </b-col>
-        <b-col md="12">
-          <b-form-group :label="$t('Days') + '*'" />
+        <b-col md="6"></b-col>
+        <b-col md="12" id="days">
+          <b-row v-for="(item, index) in items" :key="item.id" ref="row">
+            <b-col md="4">
+              <b-form-group>
+                <label :for="'from' + item.id" style="font-size: 1.3rem !important;color: black !important;">{{ $t('from') }}</label>
+                <b-form-timepicker :id="'from' + item.id" v-model="item.from_time" locale="en" style="font-size: 1.2rem !important;color: black !important;" />
+              </b-form-group>
+            </b-col>
+            <b-col md="4">
+              <b-form-group>
+                <label :for="'to' + item.id" style="font-size: 1.3rem !important;color: black !important;">{{ $t('to') }}</label>
+                <b-form-timepicker :id="'to' + item.id" v-model="item.to_time" locale="en" style="font-size: 1.2rem !important;color: black !important;" />
+              </b-form-group>
+            </b-col>
+            <b-col md="4">
+              <b-form-group>
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="primary" class="mr-1"
+                  @click="repeateAgain()">
+                  {{ $t('add') }} {{ $t('more') }}
+                </b-button>
+                <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="danger" class="mr-1"
+                  @click="removeItem(index)" v-if="items.length > 1">
+                  {{ $t('remove') }}
+                </b-button>
+              </b-form-group>
+            </b-col>
+          </b-row>
           <b-row>
             <b-col md="12">
-              <b-row>
-
-                <b-col md="12">
-                  <b-form-group>
-                    <b-form-checkbox id="All_day" @change="showDate" name="flavour-3a">{{ $t('All') }}</b-form-checkbox>
-                  </b-form-group>
-                </b-col>
-
-
-                <b-col md="6" id="days">
-                  <b-form-group>
-                    <b-form-checkbox @change="changeMethod" v-model="Day" v-for="option in options_check"
-                      :key="option.value" name="days" :id="'day_' + option.value" :value="option.value"
-                      style="margin-bottom: 3%;">{{ option.text
-                      }}</b-form-checkbox>
-
-                  </b-form-group>
-                </b-col>
-
-              </b-row>
-
-
+              <b-form-group>
+                <b-form-checkbox v-for="option in options_check" v-model="Day" @change="changeMethod()" :key="option.value" name="days" :id="'day_' + option.value" :value="option.value"
+                  style="margin-bottom: 3%;">{{ option.text
+                  }}</b-form-checkbox>
+              </b-form-group>
             </b-col>
-
           </b-row>
-
         </b-col>
-
-
-
       </b-row>
       <!-- submit and reset -->
-      <b-col>
-        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1">
+      <b-col style="padding-left: 0px !important;">
+        <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1" style="font-size: 1.2rem !important;color: white !important;">
           {{ $t('save') }}
         </b-button>
-
       </b-col>
-
     </b-form>
-
-
   </b-card-code>
 </template>
 
@@ -294,8 +268,6 @@ import BCardCode from '@core/components/b-card-code'
 import {
   BRow, BCol, BFormSelect, BFormRadioGroup, BFormDatepicker,
   BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BCard, BFormTimepicker, BTabs, BTab,
-
-
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import vSelect from 'vue-select'
@@ -360,15 +332,11 @@ export default {
         { text: this.$t('Sunday'), value: 7 },
       ],
       res_list: [],
-
     }
   },
   methods: {
-
     changeMethod() {
-
       this.promocode.sevendays = this.Day
-
     },
     showDate() {
       var checkBox = document.getElementById("All_day");
@@ -380,20 +348,16 @@ export default {
         text.style.display = "block";
         this.promocode.days = "NULL";
       }
-      // alert(this.menu.days);
     },
     repeateAgain() {
       this.items.push({
         id: this.nextTodoId += this.nextTodoId,
-
       })
-      // alert( this.nextTodoId)
       this.$nextTick(() => {
         this.trAddHeight(this.$refs.row[0].offsetHeight)
       })
     },
     removeItem(index) {
-      // alert(index);
       this.items.splice(index, 1)
       this.trTrimHeight(this.$refs.row[0].offsetHeight)
     },
@@ -403,20 +367,15 @@ export default {
         this.trSetHeight(this.$refs.form.scrollHeight)
       })
     },
-
     onTabChange(id) {
-
       if (id == 1) {
         this.isHidden_lang = false;
       }
       else {
         this.isHidden_lang = true;
       }
-
-
     },
     promocode_add() {
-
       let promo = new FormData();
       if (this.$route.params.id) {
         promo.append('id', this.$route.params.id);
@@ -442,7 +401,6 @@ export default {
       promo.append('restaurant_id', this.promocode.restaurant_id);
 
       let checkboxes = document.querySelectorAll('input[name="days"]:checked');
-
       let values = [];
       checkboxes.forEach((checkbox) => {
         values.push(checkbox.value);
@@ -450,17 +408,14 @@ export default {
 
       promo.append('sevendays', JSON.stringify(values));
       this.items.forEach(function (number) {
-
-
         promo.append('from[]', document.getElementById('from' + number.id).value);
         promo.append('to[]', document.getElementById('to' + number.id).value);
-
       });
+      
       this.$http
         .post("/admin/add_to_promocode", promo)
         .then(
           (response => {
-
             if (response.data.status == true) {
               this.$router.push({ name: "promocode_list" })
               this.$toast({
@@ -473,7 +428,6 @@ export default {
                 },
               })
             } else {
-
               this.$toast({
                 component: ToastificationContent,
                 position: 'bottom-right',
@@ -484,15 +438,12 @@ export default {
                 },
               })
             }
-
           })
-          //  console.log(response.data)
         )
         .catch((error) => console.log(error))
         .finally(() => (this.loading = false));
     },
     isHiddens(value) {
-
       if (value == 1) {
         this.isHidden = false;
       }
@@ -500,18 +451,14 @@ export default {
         this.isHidden = true;
       }
     }
-
   },
   created() {
     this.$http.get('/admin/res_list')
       .then(res => {
-
         this.res_list = res.data
-
       })
     this.$http.get('/admin/get_lang')
       .then(res => {
-
         this.setting = res.data
       })
     if (this.$route.params.id) {
@@ -520,12 +467,10 @@ export default {
           console.log(res)
           this.promocode = res.data.coupon;
           this.datamenu = res.data.coupon_timing;
-
           this.items = this.datamenu;
           if (res.data.coupon.code_required == 1) {
             this.promocode.selected_l = true
             document.getElementById("switch").checked = true
-
           } else {
             this.promocode.selected_l = false
             document.getElementById("switch").checked = false
@@ -536,12 +481,9 @@ export default {
           var checkBox = document.getElementById("All_day");
           var text = document.getElementById("days");
           if (this.datamenu[0].all_days != 1) {
-
             if (res.data.day.length > 0) {
               console.log(res.data.day)
-
               res.data.day.forEach(function (element) {
-
                 document.getElementById('day_' + element).checked = true;
               });
             }
@@ -549,26 +491,62 @@ export default {
             this.promocode.days = "NULL";
           }
           else {
-
             document.getElementById('All_day').checked = true;
             text.style.display = "none";
             this.promocode.days = 1;
           }
           this.datamenu.forEach(function (element, index) {
-
-
             document.getElementsByName('from' + element.id).innerHTML = element.from_time;
             document.getElementsByName('to' + element.id).innerHTML = element.to_time;
-
-
           });
-
-
-
         })
     }
-
   },
-
 }
 </script>
+<style>
+.label {
+
+  font-size: 1.3rem;
+  color: black;
+}
+
+.form-control {
+  font-size: 1.0rem;
+
+  &::placeholder {
+    font-size: 1.0rem;
+    color: black;
+  }
+}
+
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.1rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.1rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
+}</style>

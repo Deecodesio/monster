@@ -2,7 +2,7 @@
   <div>
     <b-form @submit.prevent="sortMenu">
       <!-- submit and reset -->
-      <b-col>
+      <b-col style="padding-left: 0px !important;">
         <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary" class="mr-1"
           style="margin-bottom: 2%;">
           {{ $t('save') }}
