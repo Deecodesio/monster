@@ -893,10 +893,6 @@ class UserController extends BaseController
         $user_wallet = $user_wa->wallet_amount;
         $orders = DB::table('requests')->where('requests.user_id', $user_id)
             ->where('status', '!=', -1)
-            ->where('status', '!=', 9)
-            ->where('status', '!=', 10)
-            ->where('status', '!=', 11)
-            ->where('requests.is_paid', 1)
             ->latest()->limit(10)->get();
 
         $order_list = array();
@@ -952,6 +948,8 @@ class UserController extends BaseController
             ->where('requests.status', '!=', 9)
             ->where('requests.status', '!=', 10)
             ->where('requests.status', '!=', 11)
+            ->where('requests.status', '!=', 12)
+            ->where('requests.status', '!=', 13)
             ->get();
 
         $upcoming_order_list = array();
