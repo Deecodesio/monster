@@ -3243,7 +3243,7 @@ export default {
     },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@resources/scss/vue/libs/vue-wizard.scss";
 @import "~@resources/scss/vue/libs/vue-select.scss";
 @import "~@resources/scss/vue/pages/page-profile.scss";
@@ -3313,4 +3313,6 @@ export default {
     border-color: $primary !important;
     border-width: thick !important;
 }
+
+// Global form styles are now handled in core.scss
 </style>

@@ -2,20 +2,16 @@
   <div class="mt-5">
     <div class="pt-4 text-center">
       <b-img src="/more1.jpg" fluid alt="Scan" />
+       <!-- <div class="containrer" style="width: 100%;height: 500px;">
+
+       </div> -->
     </div>
 
     <div class="container pt-1">
-      <b-card>
-        <h4 class="pb-2">Contact Us</h4>
-        <b-row>
-          <!-- Left: Form -->
-         <b-col cols="12" lg="4">
-            <div v-if="rows.length > 0 && rows[0].contact" v-html="rows[0].contact"></div>
-            <div v-else class="text-muted text-center">Loading contact info or no data available.</div>
-          </b-col>
-
-          <!-- Right: Info Block -->
-           <b-col cols="12" lg="8" class="pb-2">
+      <b-row class="justify-content-center">
+        <b-col cols="12" md="10" lg="8">
+          <b-card>
+            <h2 class="pb-2 text-center contact-title">Contact Us</h2>
             <ValidationObserver ref="simpleRules">
               <b-form @submit.prevent="validationForm">
                 <b-row>
@@ -90,14 +86,14 @@
 
                   <!-- Submit Button -->
                   <b-col cols="12" class="pt-1  ">
-                    <b-button variant="primary" type="submit">Submit</b-button>
+                    <b-button variant="primary" type="submit" style="font-weight: bold !important;font: size 1.2rem;">Submit</b-button>
                   </b-col>
                 </b-row>
               </b-form>
             </ValidationObserver>
-          </b-col>
-        </b-row>
-      </b-card>
+          </b-card>
+        </b-col>
+      </b-row>
     </div>
   </div>
 </template>
@@ -193,5 +189,8 @@ export default {
 <style>
 .pt-10 {
   padding-top: 10rem !important;
+}
+.contact-title {
+  color: #FF006B !important;
 }
 </style>

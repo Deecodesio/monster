@@ -4,7 +4,7 @@ export default [
     },
     {
         title: "Store Reports",
-        icon: "TrendingUpIcon",
+        // icon: "TrendingUpIcon",
         route: "restaurant_report",
         resource: "report-view",
         action: "read",
@@ -12,28 +12,28 @@ export default [
 
     {
         title: "Delivery People Reports",
-        icon: "TrendingUpIcon",
+        // icon: "TrendingUpIcon",
         route: "delivery_people_report",
         resource: "roles",
         action: "read",
     },
     {
         title: "Order Reports",
-        icon: "TrendingUpIcon",
+        // icon: "TrendingUpIcon",
         route: "order_report",
         resource: "report-view",
         action: "read",
     },
     {
         title: "Top Users Reports",
-        icon: "TrendingUpIcon",
+        // icon: "TrendingUpIcon",
         route: "top_users",
         resource: "roles",
         action: "read",
     },
     {
         title: "Wallet Reports",
-        icon: "TrendingUpIcon",
+        // icon: "TrendingUpIcon",
         route: "wallet_report",
         resource: "roles",
         action: "read",

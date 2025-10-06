@@ -1,7 +1,7 @@
 export default [
     {
       title: 'Franchis',
-      icon: 'ImageIcon',
+      // icon: 'ImageIcon',
       route: 'franchise',
       resource: 'franchise',
       action: 'read',

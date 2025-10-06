@@ -4,7 +4,7 @@ export default [
     // },
     {
       title: 'Product',
-      icon: 'PackageIcon',
+      // icon: 'PackageIcon',
       children: [
         {
           title: 'Product List',

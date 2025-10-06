@@ -26,6 +26,7 @@
 
             <div id="swiper-button-next" class="swiper-button-next"></div>
         </div>
+        
     </div>
 </template>
 

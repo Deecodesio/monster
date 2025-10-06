@@ -21,31 +21,37 @@
 
                 <!-- Search -->
                 <div class="mb-5" style="margin-top: 50px">
-                    <b-card-body class="custom-card">
-                        <b-row class="justify-content-center align-items-center" style="gap: 20px;">
+                    <div class="d-flex justify-content-center">
+                        <div style="max-width: 1200px; width: 100%;">
+                            <b-card-body class="custom-card" style="padding: 2.5rem 1.5rem;  box-shadow: none !important;">
+                                <b-row class="justify-content-center align-items-center">
+                                    <b-col cols="12" md="4" class="d-flex justify-content-center mb-3 mb-md-0">
+                                        <b-form-group class="w-100 mb-0">
+                                            <b-form-select v-model="selectedCategory" :options="categoryOptions"
+                                                class="custom-select-border uniform-control"></b-form-select>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col cols="12" md="3" class="d-flex justify-content-center mb-3 mb-md-0">
-                                <b-form-group class="w-100 mb-0">
-                                    <b-form-select v-model="selectedCategory" :options="categoryOptions"
-                                        class="custom-select-border uniform-control"></b-form-select>
-                                </b-form-group>
-                            </b-col>
+                                    <b-col cols="12" md="4" class="d-flex justify-content-center mb-3 mb-md-0">
+                                        <b-form-group class="w-100 mb-0">
+                                            <b-form-select v-model="selectedLocation" :options="locationOptions"
+                                                class="custom-select-border uniform-control"></b-form-select>
+                                        </b-form-group>
+                                    </b-col>
 
-                            <b-col cols="12" md="3" class="d-flex justify-content-center mb-3 mb-md-0">
-                                <b-form-group class="w-100 mb-0">
-                                    <b-form-select v-model="selectedLocation" :options="locationOptions"
-                                        class="custom-select-border uniform-control"></b-form-select>
-                                </b-form-group>
-                            </b-col>
-
-                            <b-col cols="12" md="2" class="d-flex justify-content-center">
-                                <b-button class="w-100 uniform-control" variant="primary" @click="searchJobs">
-                                    SEARCH JOBS
-                                </b-button>
-                            </b-col>
-
-                        </b-row>
-                    </b-card-body>
+                                    <b-col cols="12" md="4" class="d-flex justify-content-center">
+                                        <b-button class="w-100 uniform-control" variant="primary" @click="searchJobs"style="
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                font-size: 20px !important ;font-weight: bold !important;
+                                            ">
+                                            SEARCH JOBS
+                                        </b-button>
+                                    </b-col>
+                                </b-row>
+                            </b-card-body>
+                        </div>
+                    </div>
                 </div>
 
 

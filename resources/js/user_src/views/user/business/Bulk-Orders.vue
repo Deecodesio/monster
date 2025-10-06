@@ -21,8 +21,10 @@
                                 min-width: 300px;
                             ">
                             <div class="text-center my-4">
-                                <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Bulk Order
-                                    Enquiry</p>
+                                <!-- <p class="h2 fw-bold text-primary" style="font-weight: 900 !important">Bulk Order
+                                    Enquiry</p> -->
+                                        <h3 class="text-primary" style="font-weight: 900 !important;font-size: 30px;color: rgb(255, 0, 107) !important;">Bulk Order
+                                    Enquiry</h3>
                             </div>
                             <b-form @submit.prevent="submitApplication">
                                 <b-card>
@@ -173,9 +175,13 @@
                                         <b-row cols="12" class="mt-3" style="
                                                 margin-left: auto;
                                                 margin-right: auto;
-                                                font-size: 22px !important;
+                                                font-size: 22px !important ;font-weight: bold !important;
                                             ">
-                                            <b-button type="submit" variant="primary" :disabled="submitting">
+                                            <b-button type="submit" variant="primary" :disabled="submitting" style="
+                                                margin-left: auto;
+                                                margin-right: auto;
+                                                font-size: 20px !important ;font-weight: bold !important;
+                                            ">
                                                 <b-spinner small v-if="submitting" class="mr-1"></b-spinner>
                                                 {{
                                                     submitting

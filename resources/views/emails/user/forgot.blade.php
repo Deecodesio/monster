@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
-    <title>Welcome</title>
+    <title>Password Reset - Monster Foods</title>
     <style type="text/css">
 .ReadMsgBody { width: 100%; background-color: #ffffff; }
 .ExternalClass { width: 100%; background-color: #ffffff; }
@@ -54,7 +54,7 @@ table[class="table3-3"] { width: 100% !important; text-align: center !important;
                                         
 
                                             <tr>
-                                                <td data-link-style="text-decoration:none; color:#3cb2d0;" data-link-color="Content Link" data-color="Headline" data-size="Headline" mc:edit="title" align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:36px; color:#3b3b3b; font-weight: bold; letter-spacing:4px;">Welcome</td>
+                                                <td data-link-style="text-decoration:none; color:#3cb2d0;" data-link-color="Content Link" data-color="Headline" data-size="Headline" mc:edit="title" align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:28px; color:#3b3b3b; font-weight: bold;">Password Reset Request</td>
                                             </tr>
                                             <!-- end title -->
 
@@ -76,13 +76,12 @@ table[class="table3-3"] { width: 100% !important; text-align: center !important;
                                                 <td data-link-style="text-decoration:none; color:#3cb2d0;" data-link-color="Content Link" data-color="Main Text" data-size="Main Text" mc:edit="content" align="left" style="font-family: 'Open Sans', Arial, sans-serif; font-size:14px; color:#7f8c8d; line-height:30px;">
                                                     Dear {{$name}},<br/>
                                                     
-                                                    <p> Someone requested a new password for your {{APP_NAME}} account
-                                                    </p>
-                                                    <p> 
-                                                        {{-- <a target="_blank" href="/reset-password?id={{$id}}&code={{$code}}">Click here</a> to change the password --}}
-
-                                                        Use the code {{$code}} to change the password
-                                                    </p>
+                                                    <p>You requested a password reset for your Monster Foods account.</p>
+                                                    <div style="background: #f8f9fa; border: 2px solid #28a745; border-radius: 8px; padding: 20px; margin: 20px 0; text-align: center;">
+                                                        <p style="margin: 0; font-size: 18px; color: #333; font-weight: bold;">Your Verification Code:</p>
+                                                        <p style="margin: 10px 0 0 0; font-size: 32px; font-weight: bold; color: #28a745; letter-spacing: 4px; font-family: 'Courier New', monospace;">{{$code}}</p>
+                                                    </div>
+                                                    <p>Enter this code in the Monster Foods app to reset your password.</p>
                                                     {{-- <p> <a target="_blank" href="{{ url('/reset-password?id='.$id'&code='.$code) }}">Click here</a> to change the password
                                                     </p> --}}
                                                     <p>If you didn't make this request then you can safely ignore this email
@@ -131,7 +130,7 @@ table[class="table3-3"] { width: 100% !important; text-align: center !important;
                     <tr>
                         <td data-link-style="text-decoration:none; color:#3cb2d0;" data-link-color="Copyright Link" data-color="Copyright" data-size="Copyright" mc:edit="copyright" align="center" style="font-family: 'Open Sans', Arial, sans-serif; font-size:13px; color:#000; line-height:30px;">
                             © {{date('Y')}}
-                            <span style="color:#3cb2d0; font-weight: bold;">{{APP_NAME}}</span>
+                            <span style="color:#3cb2d0; font-weight: bold;">Monster Foods</span>
                             . All Rights Reserved.
                         </td>
                     </tr>

@@ -1054,9 +1054,10 @@ class Order extends Controller
 
     private function cancel($cancelledBy, $reason)
     {
-        if ($this->isAcceptedByRestaurant()) {
-            return false;
-        }
+        // Commented out restriction to allow cancellation regardless of order status
+        // if ($this->isAcceptedByRestaurant()) {
+        //     return false;
+        // }
         if ($cancelledBy == 11) {
             $this->sendNotification2Customer(trans('constants.order_cancelled'), 'Cancellation reason: ' . $reason);
         } else {

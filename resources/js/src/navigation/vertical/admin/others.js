@@ -4,7 +4,7 @@ export default [
     },
     {
         title: "Franchise",
-        icon: "ImageIcon",
+        // icon: "ImageIcon",
         route: "franchise",
         resource: "franchise",
         action: "read",
@@ -99,7 +99,7 @@ export default [
     },
     {
         title: "Addons List",
-        icon: "AlignRightIcon",
+        // icon: "AlignRightIcon",
         route: "addons_list",
         resource: "addon",
         action: "read",

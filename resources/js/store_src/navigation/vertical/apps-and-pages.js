@@ -5,14 +5,14 @@ export default [
   {
     title: 'Order Management',
     icon: 'ArchiveIcon',
-   
+    isOpen: true,
     children: [
       {
         title: 'Order Dashboard',
-        route: 'dashboard-analytics',
+        route: 'dashboard-analytics', 
         tagVariant: 'light-warning',
         resource: 'store_order-view',
-        action: 'read',
+        action: 'read', 
        
       },
       {
@@ -61,6 +61,14 @@ export default [
         
         tagVariant: 'light-warning',
         resource: 'store_order-view',
+        action: 'read',
+      },
+      {
+        title: 'POS',
+        route: 'pos',
+        
+        tagVariant: 'light-warning',
+        resource: 'addon',
         action: 'read',
       },
     

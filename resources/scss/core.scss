@@ -20,3 +20,86 @@ $b-table-sort-icon-bg-dark-descending: url("data:image/svg+xml,%3Csvg xmlns='htt
 
 // Vue Specific
 @import 'vue/index';
+
+// Global Form Styling Standards
+label,
+.col-form-label {
+  font-size: 1.3rem !important;
+  color: black !important;
+}
+
+.form-control {
+  font-size: 1.2rem !important;
+  color: black !important;
+
+  &::placeholder {
+    font-size: 1.2rem !important;
+    color: black !important;
+  }
+}
+
+.vs__dropdown-toggle {
+  font-size: 1.2rem !important;
+  color: black !important;
+}
+
+.vs__selected {
+  font-size: 1.2rem !important;
+  color: black !important;
+}
+
+.vs__search::placeholder {
+  font-size: 1.2rem !important;
+  color: black !important;
+}
+
+// Global Table Styling with Alternating Row Colors
+.table {
+  tbody {
+    tr:nth-child(even) {
+      background-color: #f8f9fa !important;
+    }
+    
+    tr:nth-child(odd) {
+      background-color: #ffffff !important;
+    }
+    
+    tr:hover {
+      background-color: #e3f2fd !important;
+    }
+  }
+}
+
+// Vue Good Table styling
+.vgt-table {
+  tbody {
+    tr:nth-child(even) {
+      background-color: #f8f9fa !important;
+    }
+    
+    tr:nth-child(odd) {
+      background-color: #ffffff !important;
+    }
+    
+    tr:hover {
+      background-color: #e3f2fd !important;
+    }
+  }
+}
+
+// Bootstrap Vue Table styling
+.b-table {
+  tbody {
+    tr:nth-child(even) {
+      background-color: #f8f9fa !important;
+    }
+    
+    tr:nth-child(odd) {
+      background-color: #ffffff !important;
+    }
+    
+    tr:hover {
+      background-color: #e3f2fd !important;
+    }
+  }
+}

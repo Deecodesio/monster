@@ -11,7 +11,8 @@
       v-bind="linkProps"
       class="d-flex align-items-center"
     >
-      <feather-icon :icon="item.icon || 'CircleIcon'" />
+      <!-- <feather-icon :icon="item.icon || 'CircleIcon'" /> -->
+      <feather-icon v-if="item.icon" :icon="item.icon" />
       <span class="menu-title text-truncate">{{ t(item.title) }}</span>
       <b-badge
         v-if="item.tag"

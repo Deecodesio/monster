@@ -7,11 +7,11 @@
             variant="btn btn-gradient-primary btnpad">
             <!-- variant="btn btn-gradient-primary btnpad" v-if="!['checkout', 'my_cart', 'delivery_address'].includes($route.name)"> -->
             <feather-icon icon="ShoppingCartIcon" class="mr-50 ico-color3" />
-            <span class="align-middle" v-if="$store.state['deliware_cart'].cartItemsCount">{{
+            <span class="align-middle" v-if="$store.state['deliware_cart'].cartItemsCount"style="font-weight: bold;">{{
                 $store.state['deliware_cart'].cartItemsCount }}
                 {{ $t("Items") }}</span>
 
-            <span class="align-middle" v-if="!$store.state['deliware_cart'].cartItemsCount">{{ $t("My Cart") }} </span>
+            <span class="align-middle" v-if="!$store.state['deliware_cart'].cartItemsCount" style="font-weight: bold;">{{ $t("My Cart") }} </span>
         </b-button>
 
         <!-- <b-sidebar id="sidebar-right" bg-variant="white" right backdrop shadow ref="sidebar"

@@ -1,7 +1,7 @@
 export default [
   {
     title: 'Store Dashboard',
-    icon: 'HomeIcon',
+    // icon: 'HomeIcon',
     tagVariant: 'light-warning',
     route: 'dashboard-ecommerce',
       resource: 'store_dashboard',
@@ -10,7 +10,7 @@ export default [
   },
   {
     title: 'POS',
-    icon: 'ShoppingCartIcon',
+    // icon: 'ShoppingCartIcon',
     tagVariant: 'light-warning',
     route: 'pos',
       resource: 'store_pos',

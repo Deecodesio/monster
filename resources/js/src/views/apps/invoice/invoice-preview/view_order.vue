@@ -147,10 +147,12 @@
           <b-table-lite
             responsive
             :items="food_details"
-            :fields="['image','Name', 'description','size','addons','quantity', 'price']"
+            :fields="['serial','Name', 'quantity', 'price']"
+  
 
           >
           <!-- <template #cell(image)="data">
+                      Original fields: ['image','Name', 'description','size','addons','quantity', 'price']
             {{data.item.image}}
             <b-card :img-src="data.item.image"></b-card>
             <b-img
@@ -194,7 +196,12 @@
               </b-card-text>
              
             </template>
-            <template #cell(image) ="data">
+            <template #cell(serial) ="data">
+                <b-card-text class="text-nowrap">
+                   {{ data.index + 1 }}
+              </b-card-text>
+              </template>
+            <!-- <template #cell(image) ="data">
                 <b-img
              :src="data.item.image"
             rounded
@@ -202,13 +209,13 @@
             id="view-img"
             alt="product photo"
           />
-              </template>
+              </template> -->
               <template #cell(price) ="data">
                 <b-card-text class="text-nowrap">
                   {{setting.value}} {{ data.item.price }}
               </b-card-text>
               </template>
-              <template #cell(addons) ="data">
+              <!-- <template #cell(addons) ="data">
                 <b-card-text class="text-nowrap">
                    {{ data.item.add_ons }}
               </b-card-text>
@@ -217,7 +224,7 @@
                 <b-card-text class="text-nowrap">
                    {{ data.item.size }}
               </b-card-text>
-              </template>
+              </template> -->
           </b-table-lite>
 
           <!-- Invoice Description: Total -->
@@ -302,7 +309,7 @@
 
                     </p>
                   </div>
-                  <div class="invoice-total-item">
+                  <!-- <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{$t('Wallet')}}(-):
                       
@@ -311,7 +318,7 @@
                       {{setting.value}}  {{ req_details.wallet_amounts }}
 
                     </p>
-                  </div>
+                  </div> -->
                   <hr class="my-50">
                   <div class="invoice-total-item">
                     <p class="invoice-total-title">
@@ -483,9 +490,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@resources/scss/base/pages/app-invoice.scss";
+* {
+  font-size: 18px !important;
+}
 </style>
 
 <style lang="scss">
+
+
 @media print {
 
   // Global Styles

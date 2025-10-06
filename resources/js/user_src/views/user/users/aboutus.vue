@@ -91,11 +91,11 @@
         </div>
       </div>
     </section> -->
- <section class="section-1">
+    <!-- <section class="section-1">
   <h1 class="text-center mb-4" style="color: black;">Annapurna Foods</h1>
 
   <div class="container">
-    <!-- TOP ROW: Text (L) + Image (R) with equal heights -->
+    <!-- TOP ROW: Text (L) + Image (R) with equal heights 
     <div class="row equalize mb-4">
       <div class="col-md-6 d-flex pr-md-4">
         <div class="text-box">
@@ -124,7 +124,7 @@
       </div>
     </div>
 
-    <!-- BOTTOM ROW: Two text blocks, equal heights -->
+    <!-- BOTTOM ROW: Two text blocks, equal heights 
     <div class="row equalize">
       <div class="col-md-6 d-flex pr-md-4 mb-4 mb-md-0">
         <div class="text-box">
@@ -153,7 +153,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 
 
@@ -238,6 +238,83 @@
         </form>
       </div>
     </section> -->
+    <section class="section-1">
+      <h1 class="text-center mb-4" style="color: black;">Annapurna Foods</h1>
+
+      <div class="container">
+        <!-- TOP ROW: Text (L) + Image (R) with equal heights -->
+        <div class="row equalize mb-4">
+          <div class="col-md-6 d-flex pr-md-4">
+            <div class="text-box">
+              <p>
+                <strong>Annapurna Foods</strong> is a start-up Poultry meat
+                and Poultry Egg online sales E-Commerce company under brand name
+                <strong>Monster Foods</strong> across <strong>India</strong>.<br><br>
+
+                Chicken meat and egg is a widely consumed source of protein in India. It is available in various forms
+                like fresh, frozen, processed, or ready-to-cook and is popular across young generations.<br><br>
+
+                Among animal proteins, poultry chicken and egg are economically cheaper and freshly available any
+                time and place in India. Commercial production of broiler chicken and egg is increasing day by day
+                according to consumption and easy availability for a large population.<br><br>
+
+                So, buyers need to be aware while buying quality, hygienic products at the right price all over India
+                without compromising quality.
+                <br></br>
+                We provide you with healthy, hygienic broiler chicken and eggs at the right price and on time.<br></br>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 d-flex">
+            <!-- <div class="image-box">
+              <b-img src="/Res_2.jpg" alt="Restaurant Interior" class="img-equal rounded shadow" />
+            </div> -->
+            <div class="text-box">
+              <p>
+                We simplify the buying process according to modern lifestyles — just order online, set the day and time,
+                and we deliver it to your place within that time.<br></br>
+
+                For nearby customers, you can order online and get notified when your order is ready, so you can pick it
+                up
+                without delay. We’ve also made it possible for apartment residents in big cities to avoid the hassle of
+                going
+                to meat shops — our mobile shop delivers to your doorstep.<br>
+                </br>
+                Annapurna Foods – <strong>Monster chicken</strong> serves chicken and eggs to conscious
+                buyers from broiler integrators and layer farms all over India. We constantly monitor our
+                farmers’ healthy and hygienic growth of birds fed with good quality raw materials.<br><br>
+                We tied up with broiler farms and broiler integrators for a consistent supply of quality birds to our
+                meat shops. Further, we also tied up with hygienic meat shops where chickens are cleaned with modern
+                machines to make fresh chicken and eggs available to consumers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTTOM ROW: Two text blocks, equal heights -->
+        <!-- <div class="row equalize">
+          <div class="col-md-6 d-flex pr-md-4 mb-4 mb-md-0">
+            <div class="text-box">
+              <p>
+                
+
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="col-md-6 d-flex">
+            <div class="text-box">
+              <p>
+
+              </p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
 
     <section class="container-fluid" style="padding-right: 0; padding-left: 0">
       <Ourshops />
@@ -633,52 +710,58 @@ export default {
     font-size: 1.2rem;
   }
 }
- .section-1 {
+
+.section-1 {
   padding: 30px 0;
   background: #f8f9fa;
-  font-size: 18px; 
-  font-weight: 500;    
-  color: black;          
+  font-size: 18px;
+  font-weight: 500;
+  color: black;
 }
 
-.section-1 p {                    
+.section-1 p {
   font-size: 18px;
   line-height: 1.8;
   color: #22292f;
-  margin: 0;                    
+  margin: 0;
 }
 
- 
+
 .equalize {
-  align-items: stretch;         
+  align-items: stretch;
 }
 
-.equalize > [class*="col-"] {
-  display: flex;                 
+.equalize>[class*="col-"] {
+  display: flex;
 }
 
 .text-box,
 .image-box {
   width: 100%;
-  height: 100%;                  
+  height: 100%;
 }
 
- 
+
 @media (min-width: 768px) {
-  .pr-md-4 { padding-right: 1.5rem !important; }
+  .pr-md-4 {
+    padding-right: 1.5rem !important;
+  }
 }
- 
+
 .img-equal {
   display: block;
   width: 100%;
-  height: 100%;                  
+  height: 100%;
   object-fit: cover;
 }
- 
+
 @media (max-width: 767.98px) {
-  .img-equal { height: auto; }
-  .pr-md-4 { padding-right: 0 !important; }
+  .img-equal {
+    height: auto;
+  }
+
+  .pr-md-4 {
+    padding-right: 0 !important;
+  }
 }
-
-
 </style>

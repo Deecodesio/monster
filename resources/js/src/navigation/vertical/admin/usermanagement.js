@@ -4,7 +4,7 @@ export default [
     },
     {
         title: "Consumer Management",
-        icon: "UserIcon",
+        // icon: "UserIcon",
         route: "user_management",
         resource: "user-view",
         action: "read",
@@ -19,7 +19,7 @@ export default [
     },
     {
         title: "Order Management",
-        icon: "ArchiveIcon",
+        // icon: "ArchiveIcon",
 
         children: [
             {
@@ -135,14 +135,14 @@ export default [
     // },
     {
         title: "Bulk Orders",
-        icon: "CopyIcon",
+        // icon: "CopyIcon",
         route: "bulk_orders",
         resource: "bulk-order",
         action: "read",
     },
     {
         title: "Payout",
-        icon: "CreditCardIcon",
+        // icon: "CreditCardIcon",
         children: [
             {
                 title: "Store Payout",

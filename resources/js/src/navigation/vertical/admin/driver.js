@@ -5,7 +5,7 @@ export default [
 
     {
       title: 'Driver Management',
-      icon: 'TruckIcon',
+      // icon: 'TruckIcon',
       children: [
         {
           title: 'Driver List',

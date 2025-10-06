@@ -2,7 +2,8 @@ export default [
 
     {
       title: 'Promocodes',
-      icon: 'GiftIcon',
+      // icon: 'GiftIcon',
+      isOpen: true,
       children: [
         {
           title: 'Promocodes List',

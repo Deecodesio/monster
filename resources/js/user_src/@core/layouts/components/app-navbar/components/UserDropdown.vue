@@ -3,7 +3,7 @@
   <div>
 
     <b-button v-if="!loggedin" v-ripple.400="'rgba(113, 102, 240, 0.15)'" @click="show_login()"
-      variant="outline-primary">
+      variant="outline-primary" style="font-weight: bold;">
       <feather-icon icon="UserIcon" class="mr-50 " />
       {{ $t("Login") }}
 
@@ -86,7 +86,7 @@
 
             </b-form-group>
             <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" type="submit" variant="primary"
-              class="mr-1 btn-block btn-lg .col-form-label-lg">
+              class="mr-1 btn-block btn-lg .col-form-label-lg" style="font-weight: bold;">
               {{ $t("Sign In") }}
 
             </b-button>
@@ -94,7 +94,7 @@
             <b-button v-ripple.400="'rgba(255, 255, 255, 0.15)'" variant="outline-primary" class="mr-1 btn-block btn-lg"
               @click="AuthProvider('google')">
               <b-img src="/glogin.png" class="mr-50" alt="Responsive image" style="float:left" />
-              {{ $t("Continue with Google") }}
+                {{ $t("Continue with Google") }}
 
             </b-button>
             <!-- <button @click="AuthProvider('google')">auth Google</button> -->

@@ -127,3 +127,72 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+#dashboard-analytics {
+  font-size: 1.5rem;
+}
+
+#dashboard-analytics h1 {
+  font-size: 2.6rem !important;
+}
+
+#dashboard-analytics h2 {
+  font-size: 2.2rem !important;
+}
+
+#dashboard-analytics h3 {
+  font-size: 2rem !important;
+}
+
+#dashboard-analytics h4 {
+  font-size: 1.8rem !important;
+}
+
+#dashboard-analytics h5 {
+  font-size: 1.6rem !important;
+}
+
+#dashboard-analytics h6 {
+  font-size: 1.5rem !important;
+}
+
+#dashboard-analytics p,
+#dashboard-analytics span,
+#dashboard-analytics div {
+  font-size: 1.5rem !important;
+}
+
+#dashboard-analytics .card-title {
+  font-size: 1.8rem !important;
+}
+
+#dashboard-analytics .card-text {
+  font-size: 1.5rem !important;
+}
+
+#dashboard-analytics .btn {
+  font-size: 1.4rem !important;
+}
+
+#dashboard-analytics .badge {
+  font-size: 1.3rem !important;
+}
+
+#dashboard-analytics .small,
+#dashboard-analytics small {
+  font-size: 1.3rem !important;
+}
+
+#dashboard-analytics .text-muted {
+  font-size: 1.4rem !important;
+}
+
+#dashboard-analytics .statistic-title {
+  font-size: 1.5rem !important;
+}
+
+#dashboard-analytics .statistic-value {
+  font-size: 2rem !important;
+}
+</style>

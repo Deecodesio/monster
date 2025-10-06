@@ -31,7 +31,10 @@ export default function useVerticalNavMenuGroup(item) {
       // * we have used `val && val && isActive.value` to only open active menu on mouseEnter and close all menu on mouseLeave
       // * If we don't use `isActive.value` with `val` it can open other groups which are not active as well
       // eslint-disable-next-line no-use-before-define
-      isOpen.value = val && isActive.value
+      if (val) {
+        isOpen.value = val && isActive.value
+      }
+      // Don't close immediately on mouse leave to prevent flickering when hovering over child items
     }
   })
 
@@ -56,7 +59,7 @@ export default function useVerticalNavMenuGroup(item) {
   // ------------------------------------------------
   // isOpen
   // ------------------------------------------------
-  const isOpen = ref(false)
+  const isOpen = ref(item.isOpen || false)
   watch(isOpen, val => {
     // if group is opened push it to the array
     if (val) openGroups.value.push(item.title)
@@ -64,7 +67,12 @@ export default function useVerticalNavMenuGroup(item) {
 
   const updateGroupOpen = val => {
     // eslint-disable-next-line no-use-before-define
-    isOpen.value = val
+    // If item.isOpen is true, don't allow closing
+    if (item.isOpen && !val) {
+      isOpen.value = true
+    } else {
+      isOpen.value = val
+    }
   }
 
   // ------------------------------------------------
@@ -78,7 +86,8 @@ export default function useVerticalNavMenuGroup(item) {
     if (val) {
       if (!isVerticalMenuCollapsed.value) isOpen.value = val
     } else {
-      isOpen.value = val
+      // Keep menu open if item.isOpen is true
+      isOpen.value = item.isOpen || val
     }
   })
 

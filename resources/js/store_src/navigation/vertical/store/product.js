@@ -6,6 +6,7 @@ export default [
     {
       title: 'Product',
       icon: 'PackageIcon',
+      isOpen: true,
       children: [
         {
           title: 'Product List',

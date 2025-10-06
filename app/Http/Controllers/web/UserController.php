@@ -4149,38 +4149,49 @@ class UserController extends BaseController
 
     public function SocialSignup(Request $request)
     {
-        // Socialite will pick response data automatic
+        // FIXED: Socialite will pick response data automatic from Google OAuth
         $user = Socialite::driver("google")->stateless()->user();
         $check_email = Users::where('email', $user->email)->first();
         $phone_req = false;
+        
+        // FIXED: Check if user already exists in database
         if ($check_email && !empty($check_email)) {
+            // FIXED: Existing user - check if phone number is required
             if ($check_email->phone == "") {
                 $phone_req = true;
             }
+            // FIXED: Return welcome message with user's name from database
             $message = "Welcome $check_email->name ";
             $status = true;
             $response_Array = json_encode(['message' => $message, 'status' => $status, 'data' => $check_email, 'phone' => $phone_req]);
             return $response_Array;
         }
 
+        // FIXED: New user - create account with Google data
         $new_user = [
-            'phone' => '',
+            'phone' => '', // FIXED: Phone will be added later if required
             'email' => $user->email ?? '',
             'authToken' => '',
             'device_type' => 'web',
-            'password' => '',
+            'password' => '', // FIXED: No password needed for Google login
             'device_token' => '',
             'facebook_id' => '',
-            'name' => $user->name,
-            'profile_image' => $user->avatar,
-            'login_type' => 1,
+            'name' => $user->name, // FIXED: Store Google user's name
+            'profile_image' => $user->avatar, // FIXED: Store Google profile image
+            'login_type' => 1, // FIXED: 1 = Google login
             'referral_code' => '',
         ];
 
+        // FIXED: Insert new user into database
         DB::table('users')->insert($new_user);
-        $user = Users::where('email', $user->email)->first();
-        $phone_req = true;
+        
+        // FIXED: Retrieve the newly created user with all fields
         $check_email = Users::where('email', $user->email)->first();
+        
+        // FIXED: New users need to add phone number
+        $phone_req = true;
+        
+        // FIXED: Return welcome message with user's name
         $message = "Welcome $check_email->name ";
         $status = true;
         $response_Array = json_encode(['message' => $message, 'status' => $status, 'data' => $check_email, 'phone' => $phone_req]);

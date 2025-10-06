@@ -39,30 +39,54 @@ Vue.config.productionTip = false
 
 import VueSocialauth from 'vue-social-auth'
 
-axios.get('/get_defaults').then(
-  (response) => {
-    console.log(response);
-    Vue.use(VueSocialauth, {
-
-      providers: {
-        google: {
-          clientId: response.data.google_client_id,
-          client_secret: response.data.google_client_secret,
-          redirectUri: response.data.google_redirect_url // Your client app URL
-        }
-
-      }
-    })
-  },
-  (error) => {
-
+// FIXED: CRITICAL - Detect if this page is loaded in OAuth popup window
+if (window.opener && window.location.search.includes('code=')) {
+  console.log('FIXED: OAuth callback detected in popup'); // DEBUG
+  const urlParams = new URLSearchParams(window.location.search)
+  const code = urlParams.get('code')
+  const state = urlParams.get('state')
+  
+  // FIXED: Send OAuth response back to parent window using '*' to avoid cross-origin issues
+  if (code && window.opener) {
+    window.opener.postMessage({ 
+      code: code, 
+      state: state,
+      scope: urlParams.get('scope')
+    }, '*') // FIXED: Use '*' instead of specific origin to handle localhost:3000 vs localhost:8000
+    
+    // FIXED: Close popup after sending message
+    setTimeout(() => {
+      window.close()
+    }, 100)
   }
-);
+} else {
+  // FIXED: Normal page load - not in popup, initialize Vue app
+  
+  // FIXED: Initialize vue-social-auth with Google OAuth settings from database
+  axios.get('/get_defaults').then(
+    (response) => {
+      console.log('FIXED: Google OAuth config loaded:', response.data); // DEBUG
+      
+      // FIXED: Configure vue-social-auth with Google credentials
+      Vue.use(VueSocialauth, {
+        providers: {
+          google: {
+            clientId: response.data.google_client_id, // From database settings
+            redirectUri: response.data.google_redirect_url // Must match Google Console
+          }
+        }
+      })
+    },
+    (error) => {
+      console.error('FIXED: Failed to load Google OAuth config:', error); // DEBUG
+    }
+  );
 
-
-new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App),
-}).$mount('#app')
+  // FIXED: Mount Vue app (only if NOT in popup)
+  new Vue({
+    router,
+    store,
+    i18n,
+    render: h => h(App),
+  }).$mount('#app')
+}

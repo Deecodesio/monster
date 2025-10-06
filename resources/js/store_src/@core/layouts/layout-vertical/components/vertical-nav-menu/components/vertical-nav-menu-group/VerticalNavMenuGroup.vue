@@ -10,9 +10,10 @@
   >
     <b-link
       class="d-flex align-items-center"
-      @click="() => updateGroupOpen(!isOpen)"
+      @click.prevent="() => {}"
     >
-      <feather-icon :icon="item.icon || 'CircleIcon'" />
+      <!-- @click="() => updateGroupOpen(!isOpen)" // Commented to prevent dropdown toggle -->
+      <!-- <feather-icon :icon="item.icon || 'CircleIcon'" /> -->
       <span class="menu-title text-truncate">{{ t(item.title) }}</span>
       <b-badge
         v-if="item.tag"

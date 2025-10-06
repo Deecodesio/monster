@@ -243,7 +243,10 @@
                     </div>
                     <div class="cart-summary-actions">
                         <b-button class="cart-checkout-btn" v-ripple.400="'#FF006B'" variant="primary"
-                            @click="checkout()" v-if="isdefault && is_deliverable">
+                            @click="checkout()" v-if="isdefault && is_deliverable" style="
+                                             
+                                                font-size: 20px !important ;font-weight: bold !important;
+                                            ">
                             {{ $t('Proceed to Checkout') }}
                         </b-button>
                         <b-button class="cart-checkout-btn" v-ripple.400="'rgba(255, 255, 255, 0.15)'"

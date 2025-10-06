@@ -4,14 +4,14 @@ export default [
     },
     {
         title: "Employee List",
-        icon: "UsersIcon",
+        // icon: "UsersIcon",
         route: "show_admins",
         resource: "roles",
         action: "read",
     },
     {
         title: "Roles",
-        icon: "UsersIcon",
+        // icon: "UsersIcon",
         route: "roles_list",
         resource: "roles",
         action: "read",
@@ -25,7 +25,7 @@ export default [
     // },
     {
         title: "Job Vacancy",
-        icon: "ImageIcon",
+        // icon: "ImageIcon",
         children: [
              {
                 title: "Job Vacancy",

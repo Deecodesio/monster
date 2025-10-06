@@ -1,7 +1,7 @@
 export default [
   {
     title: 'Dashboards',
-    icon: 'HomeIcon',
+    // icon: 'HomeIcon',
     tagVariant: 'light-warning',
     route: 'dashboard-ecommerce',
       resource: 'dashboard',

@@ -163,7 +163,68 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@resources/scss/vue/pages/dashboard-ecommerce.scss';
 @import '~@resources/scss/vue/libs/chart-apex.scss';
+
+// Standardize all font sizes across dashboard
+::v-deep h1, ::v-deep .h1 {
+  font-size: 2.4rem !important;
+}
+
+::v-deep h2, ::v-deep .h2 {
+  font-size: 2rem !important;
+}
+
+::v-deep h3, ::v-deep .h3 {
+  font-size: 1.7rem !important;
+}
+
+::v-deep h4, ::v-deep .h4 {
+  font-size: 1.5rem !important;
+}
+
+::v-deep h5, ::v-deep .h5 {
+  font-size: 1.4rem !important;
+}
+
+::v-deep h6, ::v-deep .h6 {
+  font-size: 1.3rem !important;
+}
+
+::v-deep p, ::v-deep span, ::v-deep div {
+  font-size: 1.3rem !important;
+}
+
+::v-deep .card-title {
+  font-size: 1.5rem !important;
+}
+
+::v-deep .card-text {
+  font-size: 1.3rem !important;
+}
+
+::v-deep .badge {
+  font-size: 1.2rem !important;
+}
+
+::v-deep .btn {
+  font-size: 1.3rem !important;
+}
+
+::v-deep .table {
+  font-size: 1.3rem !important;
+}
+
+::v-deep .small, ::v-deep small {
+  font-size: 1.2rem !important;
+}
+
+::v-deep .text-muted {
+  font-size: 1.3rem !important;
+}
+
+::v-deep .font-weight-bold {
+  font-size: 1.4rem !important;
+}
 </style>

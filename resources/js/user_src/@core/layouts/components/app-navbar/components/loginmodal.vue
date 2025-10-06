@@ -464,12 +464,21 @@ export default {
       this.$refs['forgotpassword'].show()
     },
     checklogin() {
+      // FIXED: Check if user is logged in by reading from localStorage
       if (localStorage.getItem("webuserData")) {
         var userData = JSON.parse(localStorage.getItem('webuserData'))
+        console.log('checklogin - userData:', userData); // DEBUG: Verify user data is loaded
+        
+        // FIXED: Set logged in state
         this.loggedin = true
+        
+        // FIXED: Set username from userData.name field
         this.username = userData.name
+        console.log('checklogin - username set to:', this.username); // DEBUG: Verify username is set
+        
+        // FIXED: Set profile image from userData
         this.profile_image = userData.profile_image
-
+        console.log('checklogin - profile_image set to:', this.profile_image); // DEBUG: Verify profile image
       }
     },
     logout() {
@@ -717,9 +726,7 @@ export default {
     AuthProvider(provider) {
       var bb = this
       this.$auth.authenticate(provider).then(response => {
-
         this.SocialLogin(provider, response)
-
       }).catch(err => {
         console.log({ err: err })
       })
@@ -727,35 +734,57 @@ export default {
     },
 
     SocialLogin(provider, response) {
-
+      // FIXED: Send OAuth response to backend for user creation/login
       this.$http.post('/sociallogin/' + provider, response).then(response => {
+        console.log('Backend response:', response.data); // DEBUG: Check backend response
 
         if (response.data.status == true) {
           this.loggedin = true
+          
+          // Check if phone number is required
           if (response.data.phone == true) {
+            // FIXED: User needs to add phone number first
             this.user_id_p = response.data.data.id
             this.$refs['my-modal'].hide()
             this.$refs['phone'].show()
           } else {
+            // FIXED: User has phone, proceed with login and show success message
             const userData = response.data.data
+            console.log('Saving user data to localStorage:', userData); // DEBUG: Verify data before save
 
+            // FIXED: Save user data to localStorage with proper name field
             localStorage.setItem('webuserData', JSON.stringify(userData))
+            
+            // FIXED: Update Vuex store with user data
             store.commit('defaults/UPDATE_USER', JSON.parse(localStorage.getItem('webuserData')))
-            location.reload()
-            //          this.$toast({
-            //     component: ToastificationContent,
-            //     position: 'bottom-right',
-            //     props: {
-            //       title: response.data.message,
-            //       icon: 'CoffeeIcon',
-            //       variant: 'success',
-            //     },
-            //   })
+            
+            // Verify data was saved
+            console.log('Verify localStorage:', localStorage.getItem('webuserData')); // DEBUG: Confirm save
+            
+            // FIXED: Show success toast BEFORE reload so user sees the message
+            this.$toast({
+              component: ToastificationContent,
+              position: 'bottom-right',
+              props: {
+                title: response.data.message, // Shows "Welcome [username]"
+                icon: 'CoffeeIcon',
+                variant: 'success',
+              },
+            })
+            
+            // FIXED: Hide modal before reload
             this.$refs['my-modal'].hide()
+            
+            // FIXED: Update local state to show logged in user
             this.checklogin()
+            
+            // FIXED: Delay reload slightly so toast message shows
+            setTimeout(() => {
+              location.reload()
+            }, 1500) // 1.5 second delay to show success message
           }
         } else {
-
+          // Login failed
           this.$toast({
             component: ToastificationContent,
             position: 'bottom-right',
@@ -766,13 +795,9 @@ export default {
             },
           })
         }
-
       }).catch(err => {
-
-        console.log({ err: err })
+        console.log('Social login error:', err); // DEBUG: Catch any errors
       })
-
-
     },
   },
 }

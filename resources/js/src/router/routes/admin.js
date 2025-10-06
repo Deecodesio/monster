@@ -635,7 +635,7 @@ export default [
     {
         path: "/admin/blog",
         name: "blog",
-        component: () => import("@/views/admin/blog/blog.vue"),
+        component: () => import("@/views/admin/Blog/blog.vue"),
         meta: {
             pageTitle: "Blog",
             breadcrumb: [
@@ -655,7 +655,7 @@ export default [
     {
         path: "/admin/add_blog",
         name: "add_blog",
-        component: () => import("@/views/admin/blog/add_blog.vue"),
+        component: () => import("@/views/admin/Blog/add_blog.vue"),
         meta: {
             pageTitle: "Add Blog",
             breadcrumb: [
@@ -669,7 +669,7 @@ export default [
     {
         path: "/admin/edit_blog/:id",
         name: "edit_blog",
-        component: () => import("@/views/admin/blog/add_blog.vue"),
+        component: () => import("@/views/admin/Blog/add_blog.vue"),
         meta: {
             pageTitle: "Edit Blog",
             breadcrumb: [
@@ -683,7 +683,7 @@ export default [
     {
         path: "/admin/add_blog_category",
         name: "add_blog_category",
-        component: () => import("@/views/admin/blog/add_blog_category.vue"),
+        component: () => import("@/views/admin/Blog/add_blog_category.vue"),
         meta: {
             pageTitle: "Add Blog Category",
             breadcrumb: [
@@ -698,7 +698,7 @@ export default [
     {
         path: "/admin/edit_blog_category",
         name: "edit_blog_category",
-        component: () => import("@/views/admin/blog/add_blog_category.vue"),
+        component: () => import("@/views/admin/Blog/add_blog_category.vue"),
         meta: {
             pageTitle: "Edit Blog Category",
             breadcrumb: [
@@ -713,7 +713,7 @@ export default [
     {
         path: "/admin/blog_category",
         name: "blog_category",
-        component: () => import("@/views/admin/blog/blog_category.vue"),
+        component: () => import("@/views/admin/Blog/blog_category.vue"),
         meta: {
             pageTitle: "Blog Category",
             breadcrumb: [

@@ -16,13 +16,15 @@ class OrderController extends BaseController
 
 	public function Orders_list(Request $request, $type, $id)
 	{
-
-		if ($type == 'new') $status = [0];
+		// Original logic: if ($type == 'new') $status = [0];
+		// Updated: Include customer-cancelled orders (status 11) in new orders, exclude admin-cancelled (status 9)
+		if ($type == 'new') $status = [0, 11];
 		if ($type == 'scheduled') $status = [0];
 		if ($type == 'processing') $status = [1, 2, -3];
 		if ($type == 'pickup') $status = [3, 4, 5];
 		if ($type == 'delivered') $status = [6, 7];
-		if ($type == 'cancelled') $status = [9, 10, 11, 12, 13, 14];
+		// Updated: Exclude customer-cancelled (status 11) from cancelled list since they appear in new orders
+		if ($type == 'cancelled') $status = [9, 10, 12, 13, 14];
 		if ($type == 'failed') $status = [-2];
 		if ($type == 'abandon') $status = [-1];
 		if ($type == 'refund') $status = [10, 12, 13, 14];
@@ -662,8 +664,6 @@ class OrderController extends BaseController
 
 	public function assign_driver_manually(Request $request)
 	{
-
-
 		$trackorderstatus = $this->trackorderstatus;
 
 		$temp_driver = $request->delivery_id;
@@ -929,14 +929,14 @@ class OrderController extends BaseController
 		// return responce()->json($trackorderstatus);
 	}
 
-	public function cancel_request_with_reason(Request $request)
+	public function cancel_request_with_reason($order_id, $reason, $created_by)
 	{
-
+		// Original method used Request object, now using route parameters
 		// $role = $request->session()->get('res_role');
 
-		$Order = Order::find($request->order_id);
+		$Order = Order::find($order_id);
 
-		$cancelFlag =  $Order->cancelByRestaurant($request->reason);
+		$cancelFlag = $Order->cancelByRestaurant($reason);
 
 		$message = "Order Cancelled Successfully";
 		$status = true;
@@ -1321,5 +1321,24 @@ class OrderController extends BaseController
 		$data = DB::table('cancellation_reason')->where('cancellation_for', 1)->get();
 
 		return response()->json($data);
+	}
+
+	public function cancel_request_with_reason($order_id, $reason, $created_by)
+	{
+		$Order = Order::find($order_id);
+
+		if (!$Order->flag) {
+			$message = "Order Not Found";
+			$status = false;
+			$response_Array = json_encode(['message' => $message, 'status' => $status]);
+			return $response_Array;
+		}
+
+		$cancelFlag = $Order->cancelByRestaurant($reason);
+
+		$message = "Order Cancelled Successfully";
+		$status = true;
+		$response_Array = json_encode(['message' => $message, 'status' => $status]);
+		return $response_Array;
 	}
 }

@@ -44,7 +44,7 @@
                                         </b-card-text>
 
                                         <button
-                                            style="background-color:#FF006B; color: white; padding:auto; border: none; border-radius: 6px;height:22px; ">
+                                            style="background-color:#FF006B; color: white; padding:auto; border: none; border-radius: 6px;height:22px;font-weight: bold;">
                                             Buy Now
                                         </button>
                                     </div>

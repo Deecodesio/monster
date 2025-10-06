@@ -471,6 +471,11 @@ class AdminController extends BaseController
 				continue;
 			}
 
+			// Additional check: Only assign to riders with valid authToken (logged in)
+			if (empty($driver->authToken) || $driver->authToken == '0') {
+				continue;
+			}
+
 			if ($driver->restaurant_id != null && $driver->restaurant_id != $request_data->restaurant_id) {
 				continue;
 			}

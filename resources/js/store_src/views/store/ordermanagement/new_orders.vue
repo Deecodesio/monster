@@ -501,7 +501,8 @@ export default {
     Assign_add() {
       var order_id = this.user_info.order_id;
       var reason = this.user_info.reson;
-      this.$http.get('/store/cancel_request_reson/' + order_id + '/' + reason + '/' + localStorage.admin_id)
+      // Fixed localStorage variable to match other parts of the code
+      this.$http.get('/store/cancel_request_reson/' + order_id + '/' + reason + '/' + localStorage.id)
         .then(response => {
 
           if (response.data.status == true) {

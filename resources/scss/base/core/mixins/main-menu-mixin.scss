@@ -32,26 +32,27 @@
 // Mixins for the sub menu arrow
 @mixin vertical-menu-has-sub-arrow($arrow-font-size) {
   &.has-sub {
-    > a:after {
-      content: '';
-      background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: $arrow-font-size;
-      height: $arrow-font-size;
-      width: $arrow-font-size;
-      display: inline-block;
-      position: absolute;
-      right: 15px; // *** Existing value is 20px ***
-      top: 14px;
-      transform: rotate(0deg);
-      transition: all 0.2s ease-out;
-    }
-    &.open:not(.menu-item-closing) {
-      > a:after {
-        transform: rotate(90deg);
-      }
-    }
+    // Commented out dropdown arrow icons
+    // > a:after {
+    //   content: '';
+    //   background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $body-color), '#', '%23'));
+    //   background-repeat: no-repeat;
+    //   background-position: center;
+    //   background-size: $arrow-font-size;
+    //   height: $arrow-font-size;
+    //   width: $arrow-font-size;
+    //   display: inline-block;
+    //   position: absolute;
+    //   right: 15px; // *** Existing value is 20px ***
+    //   top: 14px;
+    //   transform: rotate(0deg);
+    //   transition: all 0.2s ease-out;
+    // }
+    // &.open:not(.menu-item-closing) {
+    //   > a:after {
+    //     transform: rotate(90deg);
+    //   }
+    // }
   }
 }
 // Used for apps
@@ -181,15 +182,15 @@
         }
 
         &:not(.has-sub) {
-          margin: 0 15px;
+          // margin: 0 15px;
         }
         &.has-sub {
           > a {
-            margin: 0 15px;
+            // margin: 0 15px;
           }
 
           > ul > li {
-            margin: 0 15px;
+            // margin: 0 15px;
           }
         }
       }
@@ -197,7 +198,8 @@
       &.sidebar-group-active {
         > a {
           color: $main-menu-top-open-color;
-          background: $main-menu-top-open-head-bg;
+          // background: $main-menu-top-open-head-bg;
+          background-color: #ff006a1c !important;
           border-radius: 6px;
         }
       }
