@@ -9,7 +9,18 @@
 
     <div class="container pt-1">
       <b-row class="justify-content-center">
-        <b-col cols="12" md="10" lg="8">
+        <!-- Head Office Information (Dynamic from Admin) -->
+        <b-col cols="12" md="4" lg="3" class="mb-3">
+          <b-card>
+            <div v-if="rows && rows.trim().length > 0" v-html="rows" style="font-weight: 600;"></div>
+            <div v-else class="text-center text-muted">
+              <p>Address not found</p>
+            </div>
+          </b-card>
+        </b-col>
+
+        <!-- Contact Form -->
+        <b-col cols="12" md="8" lg="7">
           <b-card>
             <h2 class="pb-2 text-center contact-title">Contact Us</h2>
             <ValidationObserver ref="simpleRules">
@@ -133,7 +144,8 @@ export default {
   },
   data() {
     return {
-      rows: [],
+      rows: '',
+      //  rows: [],
       reasons: [],
       restaurant: {
         name: '',
@@ -158,9 +170,14 @@ export default {
     });
 
     this.$http.get("/fetch_contact").then(res => {
-      console.log("Fetched contact content:", res.data); 
-      this.rows = res.data?.data || [];
-       store.commit('deliware_cart/UPDATE_FOOTER', true);
+      console.log("Fetched contact content:", res.data);
+        // this.rows = res.data?.data || [];
+      if (res.data && res.data.data && res.data.data[0] && res.data.data[0].contact) {
+        this.rows = res.data.data[0].contact;
+      } else {
+        this.rows = '';
+      }
+      store.commit('deliware_cart/UPDATE_FOOTER', true);
     });
   },
   methods: {
@@ -191,6 +208,16 @@ export default {
   padding-top: 10rem !important;
 }
 .contact-title {
+  color: #FF006B !important;
+}
+.form-control {
+  height: 45px !important;
+}
+.vs__dropdown-toggle {
+  height: 45px !important;
+  min-height: 45px !important;
+}
+h1, h2, h3, h4, h5, h6 {
   color: #FF006B !important;
 }
 </style>

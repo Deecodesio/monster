@@ -16,18 +16,25 @@ class OrderController extends BaseController
 
 	public function Orders_list(Request $request, $type, $id)
 	{
+		// FIXED: Initialize $status to prevent undefined variable error
+		$status = [];
+		
 		// Original logic: if ($type == 'new') $status = [0];
 		// Updated: Include customer-cancelled orders (status 11) in new orders, exclude admin-cancelled (status 9)
 		if ($type == 'new') $status = [0, 11];
-		if ($type == 'scheduled') $status = [0];
-		if ($type == 'processing') $status = [1, 2, -3];
-		if ($type == 'pickup') $status = [3, 4, 5];
-		if ($type == 'delivered') $status = [6, 7];
+		else if ($type == 'scheduled') $status = [0];
+		else if ($type == 'processing') $status = [1, 2, -3];
+		else if ($type == 'pickup') $status = [3, 4, 5];
+		else if ($type == 'delivered') $status = [6, 7];
 		// Updated: Exclude customer-cancelled (status 11) from cancelled list since they appear in new orders
-		if ($type == 'cancelled') $status = [9, 10, 12, 13, 14];
-		if ($type == 'failed') $status = [-2];
-		if ($type == 'abandon') $status = [-1];
-		if ($type == 'refund') $status = [10, 12, 13, 14];
+		else if ($type == 'cancelled') $status = [9, 10, 12, 13, 14];
+		else if ($type == 'failed') $status = [-2];
+		else if ($type == 'abandon') $status = [-1];
+		else if ($type == 'refund') $status = [10, 12, 13, 14];
+		else {
+			// Invalid type - return empty array
+			return response()->json([]);
+		}
 		//   dd($id);
 		//   $explode_id = array_map('intval', explode(',',$id));
 		// $explode_id = json_decode($request->id, true);
@@ -929,21 +936,21 @@ class OrderController extends BaseController
 		// return responce()->json($trackorderstatus);
 	}
 
-	public function cancel_request_with_reason($order_id, $reason, $created_by)
-	{
-		// Original method used Request object, now using route parameters
-		// $role = $request->session()->get('res_role');
+	// public function cancel_request_with_reason($order_id, $reason, $created_by)
+	// {
+	// 	// Original method used Request object, now using route parameters
+	// 	// $role = $request->session()->get('res_role');
 
-		$Order = Order::find($order_id);
+	// 	$Order = Order::find($order_id);
 
-		$cancelFlag = $Order->cancelByRestaurant($reason);
+	// 	$cancelFlag = $Order->cancelByRestaurant($reason);
 
-		$message = "Order Cancelled Successfully";
-		$status = true;
-		$response_Array = json_encode(['message' => $message, 'status' => $status]);
-		return $response_Array;
-		// return redirect('/store/orders/new')->with('success', 'Order cancelled successfully');
-	}
+	// 	$message = "Order Cancelled Successfully";
+	// 	$status = true;
+	// 	$response_Array = json_encode(['message' => $message, 'status' => $status]);
+	// 	return $response_Array;
+	// 	// return redirect('/store/orders/new')->with('success', 'Order cancelled successfully');
+	// }
 
 	public function cancel_item_with_reason(Request $request)
 	{
@@ -1333,6 +1340,15 @@ class OrderController extends BaseController
 			$response_Array = json_encode(['message' => $message, 'status' => $status]);
 			return $response_Array;
 		}
+
+		// Save cancellation reason to database
+		$reason_id = is_array($reason) ? ($reason['reason_id'] ?? $reason) : $reason;
+		$cancellation_note = is_array($reason) ? ($reason['note'] ?? null) : null;
+		
+		DB::table('requests')->where('id', $order_id)->update([
+			'cancellation_reason_id' => $reason_id,
+			'cancellation_note' => $cancellation_note
+		]);
 
 		$cancelFlag = $Order->cancelByRestaurant($reason);
 

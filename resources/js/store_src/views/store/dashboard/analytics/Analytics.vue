@@ -116,14 +116,25 @@ export default {
     }
   },
   created() {
-    // /analytics/data
-    // /store/dashboard_statistics
-    this.user_info.id=   localStorage.id;
-    this.$http.post('/store/order_dashboard_statistics',this.user_info)
-      .then(response => { 
-        this.data = response.data
-         
+    // FIXED: Read store ID from store_userData object OR fallback to localStorage.id
+    const storeData = JSON.parse(localStorage.getItem('store_userData'));
+    const storeId = storeData?.id || localStorage.id;
+    
+    console.log('Dashboard loading for store ID:', storeId);
+    
+    if (storeId) {
+      this.user_info.id = storeId;
+      this.$http.post('/store/order_dashboard_statistics', this.user_info)
+        .then(response => { 
+          console.log('Dashboard data:', response.data);
+          this.data = response.data
         })
+        .catch(err => {
+          console.error('Error loading dashboard:', err);
+        });
+    } else {
+      console.error('No store ID found');
+    }
   },
   methods: {
     kFormatter,

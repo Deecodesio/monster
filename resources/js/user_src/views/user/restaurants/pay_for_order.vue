@@ -31,10 +31,10 @@
           <td>{{$t("Tax")}} </td>
           <td>{{$store.state['defaults'].currency}} {{rows.tax}}</td>
         </tr>
-        <tr id="wallet_bill">
+        <!-- <tr id="wallet_bill">
           <td>{{$t("Wallet")}}(-) </td>
           <td>{{$store.state['defaults'].currency}} {{rows.wallet_amount}}</td>
-        </tr>
+        </tr> -->
         <tr>
           <td>
             <p>{{$t("Bill Total")}} </p>

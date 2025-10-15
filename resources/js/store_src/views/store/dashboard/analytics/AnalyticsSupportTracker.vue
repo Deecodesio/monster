@@ -5,7 +5,7 @@
   >
     <!-- title and dropdown -->
     <b-card-header class="pb-0">
-      <b-card-title>{{ data[0].title }}</b-card-title>
+      <b-card-title>{{ data.title }}</b-card-title>
      
     </b-card-header>
     <!--/ title and dropdown -->
@@ -17,7 +17,7 @@
           class="d-flex flex-column flex-wrap text-center"
         >
           <h1 class="font-large-2 font-weight-bolder mt-2 mb-0">
-            {{ data[0].totalTicket }}
+            {{ data.totalTicket }}
           </h1>
           <small>{{$t('orders')}}</small>
         </b-col>
@@ -33,7 +33,7 @@
             type="radialBar"
             height="270"
             :options="supportTrackerRadialBar.chartOptions"
-            :series="data[0].supportTrackerRadialBar[0].series"
+            :series="data.supportTrackerRadialBar[0].series"
           />
         </b-col>
         <!--/ chart -->
@@ -45,19 +45,19 @@
           <b-card-text class="mb-50">
             {{$t('new')}} {{$t('orders')}}
           </b-card-text>
-          <span class="font-large-1 font-weight-bold">{{ data[0].newTicket }}</span>
+          <span class="font-large-1 font-weight-bold">{{ data.newTicket }}</span>
         </div>
         <div class="text-center">
           <b-card-text class="mb-50">
             {{$t('Processing Orders')}} 
           </b-card-text>
-          <span class="font-large-1 font-weight-bold">{{ data[0].openTicket }}</span>
+          <span class="font-large-1 font-weight-bold">{{ data.openTicket }}</span>
         </div>
         <div class="text-center">
           <b-card-text class="mb-50">
             {{$t('cancelled')}} {{$t('orders')}}
           </b-card-text>
-          <span class="font-large-1 font-weight-bold">{{ data[0].responseTime }}</span>
+          <span class="font-large-1 font-weight-bold">{{ data.responseTime }}</span>
         </div>
       </div>
     </b-card-body>

@@ -306,14 +306,14 @@
                                     price_format_final }}
                                 </td>
                             </tr>
-                            <tr id="wallet_bill" v-if="$store.state['deliware_cart'].cart_total.wallet > 0">
+                            <!-- <tr id="wallet_bill" v-if="$store.state['deliware_cart'].cart_total.wallet > 0">
                                 <td>{{ $t("Wallet") }}(-)</td>
                                 <td>{{ $store.state['defaults'].currency }} {{
                                     $store.state['deliware_cart'].cart_total.wallet |
                                     price_format_final
                                     }}
                                 </td>
-                            </tr>
+                            </tr> -->
 
                             <tr>
                                 <td colspan="2">

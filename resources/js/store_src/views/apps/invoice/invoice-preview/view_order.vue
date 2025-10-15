@@ -240,14 +240,14 @@
                       {{ setting.value }} {{ req_details.offer_discount }}
                     </p>
                   </div>
-                  <div class="invoice-total-item">
+                  <!-- <div class="invoice-total-item">
                     <p class="invoice-total-title">
                       {{ $t('Wallet') }} (-):
                     </p>
                     <p class="invoice-total-amount">
                       {{ setting.value }} {{ req_details.wallet_amounts }}
                     </p>
-                  </div>
+                  </div> -->
                   <hr class="my-50">
                   <div class="invoice-total-item">
                     <p class="invoice-total-title">
@@ -667,7 +667,7 @@ export default {
     Assign_add() {
       var order_id = this.user_info.order_id;
       var reason = this.user_info.reson;
-      this.$http.get('/store/cancel_request_reson/' + order_id + '/' + reason + '/' + localStorage.admin_id)
+      this.$http.get('/store/cancel_request_reson/' + order_id + '/' + reason + '/' + localStorage.id)
         .then(response => {
           if (response.data.status == true) {
             this.$toast({

@@ -318,7 +318,7 @@
 
                                                 </p>
                                             </div>
-                                            <div class="invoice-total-item">
+                                            <!-- <div class="invoice-total-item">
                                                 <p class="invoice-total-title">
                                                     {{ $t("Wallet") }}(-):
                                                 </p>
@@ -327,7 +327,7 @@
                                                     }}
 
                                                 </p>
-                                            </div>
+                                            </div> -->
                                             <hr class="my-50 hrcolor">
                                             <div class="invoice-total-item">
                                                 <p class="invoice-total-title">

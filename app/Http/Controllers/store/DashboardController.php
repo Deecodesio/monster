@@ -753,8 +753,9 @@ class DashboardController extends BaseController
 
   public function order_dashboard_statistics(Request $request)
   {
+    $restaurant_id = $request->id;
 
-    $total_order = DB::table('requests')->whereDate('created_at', Carbon::today())->count();
+    $total_order = DB::table('requests')->where('restaurant_id', $restaurant_id)->count();
     $total_orders[] = [
       'subtitle' => "Today Orders",
       'title' => round($total_order, 2),
@@ -762,23 +763,23 @@ class DashboardController extends BaseController
       'color' => "light-warning",
     ];
 
-    $total_com = DB::table('requests')->whereDate('created_at', Carbon::today())->where('status', 7)->count();
+    $total_com = DB::table('requests')->where('restaurant_id', $restaurant_id)->where('status', 7)->count();
     $total_comp[] = [
-      'subtitle' => "Today Completed Orders",
+      'subtitle' => "Completed Orders",
       'title' => round($total_com, 2),
       'icon' => "CheckCircleIcon",
       'color' => "light-success",
     ];
 
-    $total_can = DB::table('requests')->whereDate('created_at', Carbon::today())->whereIn('status', [10, 11, 12, 13, 14])->count();
+    $total_can = DB::table('requests')->where('restaurant_id', $restaurant_id)->whereIn('status', [10, 11, 12, 13, 14])->count();
     $total_canc[] = [
-      'subtitle' => "Today Cancelled Orders",
+      'subtitle' => "Cancelled Orders",
       'title' => round($total_can, 2),
       'icon' => "XCircleIcon",
       'color' => "light-danger",
     ];
 
-    $total_pro = DB::table('requests')->whereDate('created_at', Carbon::today())->whereIn('status', [1, 2, 3, 4, 5, 6, 7, 8, 9])->count();
+    $total_pro = DB::table('requests')->where('restaurant_id', $restaurant_id)->whereIn('status', [1, 2, 3, 4, 5, 6, 7, 8, 9])->count();
     $total_pros[] = [
       'subtitle' => "Today Processing Orders",
       'title' => round($total_pro, 2),
@@ -801,10 +802,10 @@ class DashboardController extends BaseController
     }
 
 
-    $newTicket = DB::table('requests')->whereDate('created_at', Carbon::today())->where('status', 0)->count();
-    $openTicket =  DB::table('requests')->whereDate('created_at', Carbon::today())->whereIn('status', [1, 2, 3, 4, 5, 6, 7, 8, 9])->count();
-    $responseTime = DB::table('requests')->whereDate('created_at', Carbon::today())->where('status', 7)->count();
-    $tot = DB::table('requests')->whereDate('created_at', Carbon::today())->count();
+    $newTicket = DB::table('requests')->where('restaurant_id', $restaurant_id)->where('status', 0)->count();
+    $openTicket =  DB::table('requests')->where('restaurant_id', $restaurant_id)->whereIn('status', [1, 2, 3, 4, 5, 6, 7, 8, 9])->count();
+    $responseTime = DB::table('requests')->where('restaurant_id', $restaurant_id)->where('status', 7)->count();
+    $tot = DB::table('requests')->where('restaurant_id', $restaurant_id)->count();
     $s1_series[] = [$responseTime];
 
 
@@ -886,7 +887,7 @@ class DashboardController extends BaseController
     }
 
 
-    $st[] = [
+    $st = [
       'newTicket' => $newTicket,
       'openTicket' => $openTicket,
       'responseTime' => $total_can,

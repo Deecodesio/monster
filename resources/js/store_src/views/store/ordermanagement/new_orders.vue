@@ -267,6 +267,7 @@ export default {
   },
   directives: {
     'b-modal': VBModal,
+    'b-tooltip': VBTooltip,
     Ripple,
   },
   data() {
@@ -565,27 +566,14 @@ export default {
     },
   },
   created() {
-
-    this.user_info.id = localStorage.id;
-    this.$http.post('/store/Orders_list/' + this.$route.name + '/' + this.user_info.id)
-      .then(res => {
-
-        this.rows = res.data
-        this.Loading = false;
-        if (process.env.MIX_IS_DEMO) {
-          for (let i = 0; i < this.rows.length; i++) {
-            this.rows[i].phone = "**********"
-            this.rows[i].email = "**********"
-            this.rows[i].contact = "**********"
-
-          }
-        }
-      })
-    window.setInterval(() => {
-      this.user_info.id = localStorage.id;
-      this.$http.post('/store/Orders_list/' + this.$route.name + '/' + this.user_info.id)
+    // FIXED: Read store ID properly and use 'new' as order type
+    const storeData = JSON.parse(localStorage.getItem('store_userData'));
+    const storeId = storeData?.id || localStorage.id;
+    
+    if (storeId) {
+      this.user_info.id = storeId;
+      this.$http.post('/store/Orders_list/new/' + this.user_info.id)
         .then(res => {
-
           this.rows = res.data
           this.Loading = false;
           if (process.env.MIX_IS_DEMO) {
@@ -593,10 +581,29 @@ export default {
               this.rows[i].phone = "**********"
               this.rows[i].email = "**********"
               this.rows[i].contact = "**********"
-
             }
           }
-        })
+        });
+    }
+    
+    window.setInterval(() => {
+      const storeData = JSON.parse(localStorage.getItem('store_userData'));
+      const storeId = storeData?.id || localStorage.id;
+      if (storeId) {
+        this.user_info.id = storeId;
+        this.$http.post('/store/Orders_list/new/' + this.user_info.id)
+          .then(res => {
+            this.rows = res.data
+            this.Loading = false;
+            if (process.env.MIX_IS_DEMO) {
+              for (let i = 0; i < this.rows.length; i++) {
+                this.rows[i].phone = "**********"
+                this.rows[i].email = "**********"
+                this.rows[i].contact = "**********"
+              }
+            }
+          });
+      }
     }, 10 * 1000);
     this.$http.get('/store/get_currency')
       .then(res => {

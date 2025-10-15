@@ -56,21 +56,21 @@ export default {
       snowOption: {
         theme: 'snow',
       },
-      content: `<h1 class="ql-align-center">Contact`,
+      content: `<h2 style="text-align: center; color: #000;">Contact</h2>`,
     }
   },
   directives: {
     Ripple,
   },
   created() {
+    // Always show placeholder, don't load saved content
+    this.content = '<h2 style="text-align: center; color: #000;">Contact</h2>';
+//  this.$http.get('/admin/contact')
+//       .then(res => {
 
-    this.$http.get('/admin/contact')
-      .then(res => {
-
-        this.content = res.data
-        console.log(this.content);
-      })
-
+//         this.content = res.data
+//         console.log(this.content);
+//       })
   },
 
   computed: {
