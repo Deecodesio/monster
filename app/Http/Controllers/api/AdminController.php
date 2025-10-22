@@ -631,21 +631,41 @@ class AdminController extends BaseController
 		return response()->json(['status' => true, 'request_status' => 10, 'message' => 'Success'], 200);
 	}
 
-	public function products(Request $request)
-	{
+	// public function products(Request $request)
+	// {
 
-		if (!$this->isLoggedIn($request)) {
-			return response()->json(['status' => false, 'message' => 'Invalid authentication'], 200);
-		}
+	// 	if (!$this->isLoggedIn($request)) {
+	// 		return response()->json(['status' => false, 'message' => 'Invalid authentication'], 200);
+	// 	}
 
-		$data = DB::table('food_list')->where('food_list.restaurant_id', $this->authID)
-			->leftjoin('category', 'category.id', '=', 'food_list.category_id')
-			->leftjoin('menu', 'menu.id', '=', 'food_list.menu_id')
-			->select('food_list.id as food_id', 'food_list.*', 'category.*', 'menu.*', 'food_list.status')
-			->get();
+	// 	$data = DB::table('food_list')
+	// 		->leftjoin('category', 'category.id', '=', 'food_list.category_id')
+	// 		->leftjoin('menu', 'menu.id', '=', 'food_list.menu_id')
+	// 		->select('food_list.id as food_id', 'food_list.*', 'category.*', 'menu.*', 'food_list.status')
+	// 		->get();
 
-		return response()->json(['status' => true, 'message' => 'Success', 'Products' => $data], 200);
-	}
+	// 	return response()->json(['status' => true, 'message' => 'Success', 'Products' => $data], 200);
+	// }
+    public function products(Request $request)
+    {
+    if (!$this->isLoggedIn($request)) {
+        return response()->json(['status' => false, 'message' => 'Invalid authentication'], 200);
+    }
+
+    // Fetch all products from food_list only
+    $data = DB::table('food_list')
+        ->select(
+            'food_list.id as food_id',
+            'food_list.*'
+        )
+        ->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Success',
+        'Products' => $data
+    ], 200);
+    }
 
 	public function product_enable($food_id, Request $request)
 	{
