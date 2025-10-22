@@ -646,17 +646,36 @@ class AdminController extends BaseController
 
 	// 	return response()->json(['status' => true, 'message' => 'Success', 'Products' => $data], 200);
 	// }
-    public function products(Request $request)
-    {
+   public function products(Request $request)
+{
     if (!$this->isLoggedIn($request)) {
         return response()->json(['status' => false, 'message' => 'Invalid authentication'], 200);
     }
 
-    // Fetch all products from food_list only
+    // Step 1: Get the logged-in restaurant's city_id
+    $restaurant = DB::table('restaurants')->where('id', $this->authID)->first();
+    if (!$restaurant) {
+        return response()->json(['status' => false, 'message' => 'Restaurant not found'], 200);
+    }
+
+    // Step 2: Get the state_id for that city
+    $city = DB::table('add_city')->where('id', $restaurant->city_id)->first();
+    if (!$city) {
+        return response()->json(['status' => false, 'message' => 'City not found'], 200);
+    }
+
+    $state_id = $city->state_id;
+
+    // Step 3: Get all products with state-based price
     $data = DB::table('food_list')
+        ->leftJoin('food_list_pricing', function ($join) use ($state_id) {
+            $join->on('food_list_pricing.product_id', '=', 'food_list.id')
+                 ->where('food_list_pricing.state_id', '=', $state_id);
+        })
         ->select(
             'food_list.id as food_id',
-            'food_list.*'
+            'food_list.*',
+            DB::raw('COALESCE(food_list_pricing.price, food_list.price) as price')
         )
         ->get();
 
@@ -665,7 +684,8 @@ class AdminController extends BaseController
         'message' => 'Success',
         'Products' => $data
     ], 200);
-    }
+}
+
 
 	public function product_enable($food_id, Request $request)
 	{
