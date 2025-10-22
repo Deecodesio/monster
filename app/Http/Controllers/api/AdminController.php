@@ -659,7 +659,7 @@ class AdminController extends BaseController
     }
 
     // Step 2: Get the state_id for that city
-    $city = DB::table('add_city')->where('id', $restaurant->city_id)->first();
+    $city = DB::table('add_city')->where('id', $restaurant->city)->first();
     if (!$city) {
         return response()->json(['status' => false, 'message' => 'City not found'], 200);
     }
