@@ -13,127 +13,249 @@ use File;
 
 class OrderController extends BaseController
 {
+    // public function get_address_detail(Request $request)
+    // {
+
+    //     $validator = Validator::make(
+    //         $request->all(),
+    //         array(
+    //             'request_id' => 'required'
+    //         )
+    //     );
+
+    //     if ($validator->fails()) {
+    //         $error_messages = implode(',', $validator->messages()->all());
+    //         $response_array = array('status' => false, 'error_code' => 101, 'message' => $error_messages);
+    //     } else {
+    //         $request_id = $request->request_id;
+
+    //         $request_detail = DB::table('requests')->where('id', $request_id)->first();
+
+    //         $order_id = $request_detail->order_id;
+
+    //         $ordered_time = $request_detail->ordered_time;
+
+    //         $restaurant_detail = $this->restaurants::where('id', $request_detail->restaurant_id)->first();
+
+    //         $user_detail = $this->users::where('id', $request_detail->user_id)->first();
+
+    //         $address_detail = array();
+
+    //         $request_status = $request_detail->status;
+
+    //         $business = DB::table('business_type')->where('id', $restaurant_detail->business_type)->first();
+
+
+    //         if ($business->layout_id == 3) {
+    //             $address_detail[] = array(
+    //                 'd_address' => $request_detail->delivery_address,
+    //                 's_address' => $restaurant_detail->address,
+    //                 'pickup_address' => $request_detail->pickup_address,
+    //                 'd_lat' => $request_detail->d_lat,
+    //                 'd_lng' => $request_detail->d_lng,
+    //                 'pickup_lat' => $request_detail->pickup_lat,
+    //                 'pickup_lng' => $request_detail->pickup_lng,
+    //                 's_lat' => $restaurant_detail->lat,
+    //                 's_lng' => $restaurant_detail->lng,
+    //                 'pickup_name' => $request_detail->pickup_name,
+    //                 'pickup_phone' => $request_detail->pickup_phone,
+    //                 'drop_name' => $request_detail->drop_name,
+    //                 'drop_phone' => $request_detail->drop_phone
+
+    //             );
+    //         } else {
+
+    //             $address_detail[] = array(
+    //                 'd_address' => $request_detail->delivery_address,
+    //                 's_address' => $restaurant_detail->address,
+    //                 'd_lat' => $request_detail->d_lat,
+    //                 'd_lng' => $request_detail->d_lng,
+    //                 's_lat' => $restaurant_detail->lat,
+    //                 's_lng' => $restaurant_detail->lng
+    //             );
+    //         }
+
+    //         $food_detail = array();
+    //         $bill_detail = array();
+
+    //         // $data = DB::table('request_detail')->where('request_detail.request_id', $request_id)
+    //         //     ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
+    //         //     ->select('request_detail.quantity as quantity', 'food_list.name as food', 'food_list.price as price_per_quantity', 'food_list.is_veg as is_veg')
+    //         //     ->get();
+
+    //         // foreach ($data as $d) {
+    //         //     $food_detail[] = array(
+    //         //         'name' => $d->food,
+    //         //         'quantity' => $d->quantity,
+    //         //         'price' => $d->quantity * $d->price_per_quantity,
+    //         //         'is_veg' => $d->is_veg
+    //         //     );
+    //         // }
+    //         $data = DB::table('request_detail')
+    //             ->where('request_detail.request_id', $request_id)
+    //             ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
+    //             ->leftJoin('food_list_pricing', function ($join) use ($state_id) {
+    //             $join->on('food_list_pricing.product_id', '=', 'food_list.id')
+    //             ->where('food_list_pricing.state_id', '=', $state_id);
+    //         })
+    //             ->select(
+    //             'request_detail.quantity as quantity',
+    //             'food_list.name as food',
+    //             'food_list.is_veg as is_veg',
+    //             DB::raw('COALESCE(food_list_pricing.price, food_list.price) as price_per_quantity')
+    //         )
+    //         ->get();
+
+    //         foreach ($data as $d) {
+    //             $food_detail[] = [
+    //             'name' => $d->food,
+    //             'quantity' => $d->quantity,
+    //             'price' => $d->quantity * $d->price_per_quantity,
+    //             'is_veg' => $d->is_veg,
+    //             ];
+    //         }
+
+
+    //         $bill_detail[] = array(
+    //             'item_total' => $request_detail->item_total,
+    //             'offer_discount' => $request_detail->offer_discount,
+    //             'packaging_charge' => $request_detail->restaurant_packaging_charge,
+    //             'tax' => $request_detail->tax,
+    //             'delivery_charge' => $request_detail->delivery_charge,
+    //             'bill_amount' => $request_detail->bill_amount,
+    //             'cod' => $request_detail->is_cod,
+    //             'paid' => $request_detail->is_paid
+    //         );
+
+    //         $response_array = array('status' => true, 'request_id' => $request_id, 'layout_id' => $business->layout_id, 'ordered_time' => $ordered_time, 'order_id' => $order_id, 'restaurant_detail' => $restaurant_detail, 'user_detail' => $user_detail, 'address_detail' => $address_detail, 'bill_detail' => $bill_detail, 'food_detail' => $food_detail, 'request_status' => $request_status);
+    //     }
+
+    //     $response = response()->json($response_array, 200);
+    //     return $response;
+    // }
     public function get_address_detail(Request $request)
-    {
+{
+    $validator = Validator::make(
+        $request->all(),
+        [
+            'request_id' => 'required'
+        ]
+    );
 
-        $validator = Validator::make(
-            $request->all(),
-            array(
-                'request_id' => 'required'
-            )
-        );
-
-        if ($validator->fails()) {
-            $error_messages = implode(',', $validator->messages()->all());
-            $response_array = array('status' => false, 'error_code' => 101, 'message' => $error_messages);
-        } else {
-            $request_id = $request->request_id;
-
-            $request_detail = DB::table('requests')->where('id', $request_id)->first();
-
-            $order_id = $request_detail->order_id;
-
-            $ordered_time = $request_detail->ordered_time;
-
-            $restaurant_detail = $this->restaurants::where('id', $request_detail->restaurant_id)->first();
-
-            $user_detail = $this->users::where('id', $request_detail->user_id)->first();
-
-            $address_detail = array();
-
-            $request_status = $request_detail->status;
-
-            $business = DB::table('business_type')->where('id', $restaurant_detail->business_type)->first();
-
-
-            if ($business->layout_id == 3) {
-                $address_detail[] = array(
-                    'd_address' => $request_detail->delivery_address,
-                    's_address' => $restaurant_detail->address,
-                    'pickup_address' => $request_detail->pickup_address,
-                    'd_lat' => $request_detail->d_lat,
-                    'd_lng' => $request_detail->d_lng,
-                    'pickup_lat' => $request_detail->pickup_lat,
-                    'pickup_lng' => $request_detail->pickup_lng,
-                    's_lat' => $restaurant_detail->lat,
-                    's_lng' => $restaurant_detail->lng,
-                    'pickup_name' => $request_detail->pickup_name,
-                    'pickup_phone' => $request_detail->pickup_phone,
-                    'drop_name' => $request_detail->drop_name,
-                    'drop_phone' => $request_detail->drop_phone
-
-                );
-            } else {
-
-                $address_detail[] = array(
-                    'd_address' => $request_detail->delivery_address,
-                    's_address' => $restaurant_detail->address,
-                    'd_lat' => $request_detail->d_lat,
-                    'd_lng' => $request_detail->d_lng,
-                    's_lat' => $restaurant_detail->lat,
-                    's_lng' => $restaurant_detail->lng
-                );
-            }
-
-            $food_detail = array();
-            $bill_detail = array();
-
-            // $data = DB::table('request_detail')->where('request_detail.request_id', $request_id)
-            //     ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
-            //     ->select('request_detail.quantity as quantity', 'food_list.name as food', 'food_list.price as price_per_quantity', 'food_list.is_veg as is_veg')
-            //     ->get();
-
-            // foreach ($data as $d) {
-            //     $food_detail[] = array(
-            //         'name' => $d->food,
-            //         'quantity' => $d->quantity,
-            //         'price' => $d->quantity * $d->price_per_quantity,
-            //         'is_veg' => $d->is_veg
-            //     );
-            // }
-            $data = DB::table('request_detail')
-                ->where('request_detail.request_id', $request_id)
-                ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
-                ->leftJoin('food_list_pricing', function ($join) use ($state_id) {
-                $join->on('food_list_pricing.product_id', '=', 'food_list.id')
-                ->where('food_list_pricing.state_id', '=', $state_id);
-            })
-                ->select(
-                'request_detail.quantity as quantity',
-                'food_list.name as food',
-                'food_list.is_veg as is_veg',
-                DB::raw('COALESCE(food_list_pricing.price, food_list.price) as price_per_quantity')
-            )
-            ->get();
-
-            foreach ($data as $d) {
-                $food_detail[] = [
-                'name' => $d->food,
-                'quantity' => $d->quantity,
-                'price' => $d->quantity * $d->price_per_quantity,
-                'is_veg' => $d->is_veg,
-                ];
-            }
-
-
-            $bill_detail[] = array(
-                'item_total' => $request_detail->item_total,
-                'offer_discount' => $request_detail->offer_discount,
-                'packaging_charge' => $request_detail->restaurant_packaging_charge,
-                'tax' => $request_detail->tax,
-                'delivery_charge' => $request_detail->delivery_charge,
-                'bill_amount' => $request_detail->bill_amount,
-                'cod' => $request_detail->is_cod,
-                'paid' => $request_detail->is_paid
-            );
-
-            $response_array = array('status' => true, 'request_id' => $request_id, 'layout_id' => $business->layout_id, 'ordered_time' => $ordered_time, 'order_id' => $order_id, 'restaurant_detail' => $restaurant_detail, 'user_detail' => $user_detail, 'address_detail' => $address_detail, 'bill_detail' => $bill_detail, 'food_detail' => $food_detail, 'request_status' => $request_status);
-        }
-
-        $response = response()->json($response_array, 200);
-        return $response;
+    if ($validator->fails()) {
+        $error_messages = implode(',', $validator->messages()->all());
+        return response()->json([
+            'status' => false,
+            'error_code' => 101,
+            'message' => $error_messages
+        ], 200);
     }
 
+    $request_id = $request->request_id;
+    $request_detail = DB::table('requests')->where('id', $request_id)->first();
+
+    if (!$request_detail) {
+        return response()->json(['status' => false, 'message' => 'Request not found'], 200);
+    }
+
+    $restaurant_detail = DB::table('restaurants')->where('id', $request_detail->restaurant_id)->first();
+    if (!$restaurant_detail) {
+        return response()->json(['status' => false, 'message' => 'Restaurant not found'], 200);
+    }
+
+    // ✅ Get state_id from restaurant's city
+    $city = DB::table('add_city')->where('id', $restaurant_detail->city)->first();
+    $state_id = $city ? $city->state_id : null;
+
+    $user_detail = DB::table('users')->where('id', $request_detail->user_id)->first();
+    $business = DB::table('business_type')->where('id', $restaurant_detail->business_type)->first();
+
+    $address_detail = [];
+
+    if ($business && $business->layout_id == 3) {
+        $address_detail[] = [
+            'd_address' => $request_detail->delivery_address,
+            's_address' => $restaurant_detail->address,
+            'pickup_address' => $request_detail->pickup_address,
+            'd_lat' => $request_detail->d_lat,
+            'd_lng' => $request_detail->d_lng,
+            'pickup_lat' => $request_detail->pickup_lat,
+            'pickup_lng' => $request_detail->pickup_lng,
+            's_lat' => $restaurant_detail->lat,
+            's_lng' => $restaurant_detail->lng,
+            'pickup_name' => $request_detail->pickup_name,
+            'pickup_phone' => $request_detail->pickup_phone,
+            'drop_name' => $request_detail->drop_name,
+            'drop_phone' => $request_detail->drop_phone
+        ];
+    } else {
+        $address_detail[] = [
+            'd_address' => $request_detail->delivery_address,
+            's_address' => $restaurant_detail->address,
+            'd_lat' => $request_detail->d_lat,
+            'd_lng' => $request_detail->d_lng,
+            's_lat' => $restaurant_detail->lat,
+            's_lng' => $restaurant_detail->lng
+        ];
+    }
+
+    // ✅ Fetch food items with state-based price
+    $food_detail = [];
+    $data = DB::table('request_detail')
+        ->where('request_detail.request_id', $request_id)
+        ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
+        ->leftJoin('food_list_pricing', function ($join) use ($state_id) {
+            $join->on('food_list_pricing.product_id', '=', 'food_list.id');
+            if ($state_id) {
+                $join->where('food_list_pricing.state_id', '=', $state_id);
+            }
+        })
+        ->select(
+            'request_detail.quantity as quantity',
+            'food_list.name as food',
+            'food_list.is_veg as is_veg',
+            DB::raw('COALESCE(food_list_pricing.price, food_list.price) as price_per_quantity')
+        )
+        ->get();
+
+    foreach ($data as $d) {
+        $food_detail[] = [
+            'name' => $d->food,
+            'quantity' => $d->quantity,
+            'price' => $d->quantity * $d->price_per_quantity,
+            'is_veg' => $d->is_veg
+        ];
+    }
+
+    // ✅ Bill details
+    $bill_detail = [
+        [
+            'item_total' => $request_detail->item_total,
+            'offer_discount' => $request_detail->offer_discount,
+            'packaging_charge' => $request_detail->restaurant_packaging_charge,
+            'tax' => $request_detail->tax,
+            'delivery_charge' => $request_detail->delivery_charge,
+            'bill_amount' => $request_detail->bill_amount,
+            'cod' => $request_detail->is_cod,
+            'paid' => $request_detail->is_paid
+        ]
+    ];
+
+    // ✅ Final Response
+    return response()->json([
+        'status' => true,
+        'request_id' => $request_id,
+        'layout_id' => $business ? $business->layout_id : null,
+        'ordered_time' => $request_detail->ordered_time,
+        'order_id' => $request_detail->order_id,
+        'restaurant_detail' => $restaurant_detail,
+        'user_detail' => $user_detail,
+        'address_detail' => $address_detail,
+        'bill_detail' => $bill_detail,
+        'food_detail' => $food_detail,
+        'request_status' => $request_detail->status
+    ], 200);
+}
 
     public function get_order_status(Request $request)
     {
