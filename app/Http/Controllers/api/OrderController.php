@@ -78,19 +78,43 @@ class OrderController extends BaseController
             $food_detail = array();
             $bill_detail = array();
 
-            $data = DB::table('request_detail')->where('request_detail.request_id', $request_id)
+            // $data = DB::table('request_detail')->where('request_detail.request_id', $request_id)
+            //     ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
+            //     ->select('request_detail.quantity as quantity', 'food_list.name as food', 'food_list.price as price_per_quantity', 'food_list.is_veg as is_veg')
+            //     ->get();
+
+            // foreach ($data as $d) {
+            //     $food_detail[] = array(
+            //         'name' => $d->food,
+            //         'quantity' => $d->quantity,
+            //         'price' => $d->quantity * $d->price_per_quantity,
+            //         'is_veg' => $d->is_veg
+            //     );
+            // }
+            $data = DB::table('request_detail')
+                ->where('request_detail.request_id', $request_id)
                 ->join('food_list', 'food_list.id', '=', 'request_detail.food_id')
-                ->select('request_detail.quantity as quantity', 'food_list.name as food', 'food_list.price as price_per_quantity', 'food_list.is_veg as is_veg')
-                ->get();
+                ->leftJoin('food_list_pricing', function ($join) use ($state_id) {
+                $join->on('food_list_pricing.product_id', '=', 'food_list.id')
+                ->where('food_list_pricing.state_id', '=', $state_id);
+            })
+                ->select(
+                'request_detail.quantity as quantity',
+                'food_list.name as food',
+                'food_list.is_veg as is_veg',
+                DB::raw('COALESCE(food_list_pricing.price, food_list.price) as price_per_quantity')
+            )
+            ->get();
 
             foreach ($data as $d) {
-                $food_detail[] = array(
-                    'name' => $d->food,
-                    'quantity' => $d->quantity,
-                    'price' => $d->quantity * $d->price_per_quantity,
-                    'is_veg' => $d->is_veg
-                );
+                $food_detail[] = [
+                'name' => $d->food,
+                'quantity' => $d->quantity,
+                'price' => $d->quantity * $d->price_per_quantity,
+                'is_veg' => $d->is_veg,
+                ];
             }
+
 
             $bill_detail[] = array(
                 'item_total' => $request_detail->item_total,
