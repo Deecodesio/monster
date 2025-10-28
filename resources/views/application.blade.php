@@ -15,6 +15,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="{{ asset(mix('css/core.css')) }}">
+  <link rel="stylesheet" href="{{ asset('css/admin-store-custom.css') }}">
 
 
   <!-- Font -->

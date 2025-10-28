@@ -8,13 +8,13 @@ export default [
       action: 'read',
     
   },
-  {
-    title: 'POS',
-    // icon: 'ShoppingCartIcon',
-    tagVariant: 'light-warning',
-    route: 'pos',
-      resource: 'store_pos',
-      action: 'read',
+  // {
+  //   // title: 'POS',
+  //   // icon: 'ShoppingCartIcon',
+  //   tagVariant: 'light-warning',
+  //   route: 'pos',
+  //     resource: 'store_pos',
+  //     action: 'read',
     
-  },
+  // },
 ]

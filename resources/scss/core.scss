@@ -57,7 +57,7 @@ label,
 .table {
   tbody {
     tr:nth-child(even) {
-      background-color: #ffe4e94f !important;
+      background-color:#fce4ec !important;
     }
     
     tr:nth-child(odd) {
@@ -74,7 +74,7 @@ label,
 .vgt-table {
   tbody {
     tr:nth-child(even) {
-      background-color: #ffe4e94f !important;
+      background-color: #fce4ec !important;
     }
     
     tr:nth-child(odd) {
@@ -91,7 +91,7 @@ label,
 .b-table {
   tbody {
     tr:nth-child(even) {
-      background-color: #ffe4e94f !important;
+      background-color: #fce4ec !important;
     }
     
     tr:nth-child(odd) {
@@ -100,6 +100,21 @@ label,
     
     tr:hover {
       background-color: #e3f2fd !important;
+    }
+  }
+}
+
+// Admin & Store Panel Navbar Height (Exclude User Panel)
+#app:not(.user-app) {
+  .header-navbar {
+    min-height: 6rem !important;
+    
+    .navbar-container {
+      padding: 1.2rem 1rem;
+      
+      @media (min-width: 576px) {
+        padding: 1.2rem 1.4rem;
+      }
     }
   }
 }

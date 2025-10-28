@@ -45890,7 +45890,7 @@ label,
 }
 
 [dir] .table tbody tr:nth-child(even) {
-  background-color: #ffe4e94f !important;
+  background-color: #fce4ec !important;
 }
 
 [dir] .table tbody tr:nth-child(odd) {
@@ -45902,7 +45902,7 @@ label,
 }
 
 [dir] .vgt-table tbody tr:nth-child(even) {
-  background-color: #ffe4e94f !important;
+  background-color: #fce4ec !important;
 }
 
 [dir] .vgt-table tbody tr:nth-child(odd) {
@@ -45914,7 +45914,7 @@ label,
 }
 
 [dir] .b-table tbody tr:nth-child(even) {
-  background-color: #ffe4e94f !important;
+  background-color: #fce4ec !important;
 }
 
 [dir] .b-table tbody tr:nth-child(odd) {
@@ -45923,5 +45923,19 @@ label,
 
 [dir] .b-table tbody tr:hover {
   background-color: #e3f2fd !important;
+}
+
+#app:not(.user-app) .header-navbar {
+  min-height: 6rem !important;
+}
+
+[dir] #app:not(.user-app) .header-navbar .navbar-container {
+  padding: 1.2rem 1rem;
+}
+
+@media (min-width: 576px) {
+  [dir] #app:not(.user-app) .header-navbar .navbar-container {
+    padding: 1.2rem 1.4rem;
+  }
 }
 

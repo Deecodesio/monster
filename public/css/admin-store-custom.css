@@ -1,0 +1,35 @@
+/* Admin & Store Panel Custom Styles */
+.header-navbar {
+    min-height: 90px !important;
+}
+
+.header-navbar .navbar-container {
+    padding: 20px 16px !important;
+}
+
+@media (min-width: 576px) {
+    .header-navbar .navbar-container {
+        padding: 20px 22px !important;
+    }
+}
+
+/* Adjust content padding to prevent overlap */
+.app-content {
+    padding-top: 48px !important;
+}
+
+.content-wrapper {
+    padding-top: 48px !important;
+}
+
+body.vertical-layout .content-wrapper {
+    padding-top: 48px !important;
+}
+
+.vertical-layout.navbar-floating .app-content {
+    padding-top: 48px !important;
+}
+
+.vertical-layout .content-wrapper .content-body {
+    margin-top: 0 !important;
+}

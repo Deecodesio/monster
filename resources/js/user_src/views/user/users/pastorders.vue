@@ -66,10 +66,10 @@
                                 <b-card-text class="textp">
                                     <feather-icon icon="ClockIcon" /> {{ data.ordered_on }}
                                 </b-card-text>
-   <b-card-text class="textp" v-if =" formatDateTime(data.ScheduledAt, data.ScheduledTime)">
-  <feather-icon icon="CheckCircleIcon" class="me-1 text-dark" />
-  Delivered on : {{ formatDateTime(data.ScheduledAt, data.ScheduledTime) }}
-</b-card-text>
+                                <b-card-text class="textp" v-if="formatDateTime(data.ScheduledAt, data.ScheduledTime)">
+                                    <feather-icon icon="CheckCircleIcon" class="me-1 text-dark" />
+                                    Delivered on : {{ formatDateTime(data.ScheduledAt, data.ScheduledTime) }}
+                                </b-card-text>
 
                                 <b-card-text class="textp">
                                     <feather-icon icon="DollarSignIcon" />
@@ -159,9 +159,9 @@
                                         <p class="card-text mb-25">
                                             {{ $t("Ordered On") }} : {{ req_details.ordered_time }}
                                         </p>
-                                          <p class="card-text mb-25" v-if="formattedDeliveryDateTime">
-                                                    {{ $t("Delivered On") }} : {{ formattedDeliveryDateTime }}
-                                                </p>
+                                        <p class="card-text mb-25" v-if="formattedDeliveryDateTime">
+                                            {{ $t("Delivered On") }} : {{ formattedDeliveryDateTime }}
+                                        </p>
                                     </div>
 
                                     <!-- Header: Right Content -->
@@ -187,53 +187,30 @@
                             <hr class="hrcolor">
 
                             <!-- Invoice Client & Payment Details -->
-                            <b-card-body v-if="req_details" class="invoice-padding pt-0">
-                                <b-row class="invoice-spacing">
+                           <b-card-body v-if="req_details" class="invoice-padding pt-0">
+  <b-row class="invoice-spacing d-flex justify-content-between">
+    <!-- Customer Details (Left) -->
+    <b-col cols="12" xl="6" class="text-left">
+      <h6 class="mb-2">{{ $t("Customer Details") }}:</h6>
+      <h6 class="mb-25">{{ req_details.user_name }}</h6>
+      <p class="card-text mb-25">{{ req_details.delivery_address }}</p>
+      <p class="card-text mb-25">{{ req_details.user_phone }}</p>
+      <p class="card-text mb-0">{{ req_details.user_email }}</p>
+    </b-col>
 
-                                    <!-- Col: Invoice To -->
-                                    <b-col cols="12" xl="6" class="p-0">
-                                        <h6 class="mb-2">
-                                            {{ $t("Customer Details") }}:
+    <!-- Restaurant Details (Right) -->
+    <b-col cols="12" xl="6" class="text-right">
+      <h6 class="mb-2">{{ $t("Restaurant Details") }}:</h6>
+      <h6 class="mb-25">{{ req_details.restaurant_name }}</h6>
+      <p class="card-text mb-25">{{ req_details.address }}</p>
+      <p class="card-text mb-25">
+        +{{ req_details.contact_country_calling_code }}{{ req_details.contact }}
+      </p>
+      <p class="card-text mb-0">{{ req_details.restaurants_email }}</p>
+    </b-col>
+  </b-row>
+</b-card-body>
 
-                                        </h6>
-                                        <h6 class="mb-25">
-                                            {{ req_details.user_name }}
-
-                                        </h6>
-                                        <p class="card-text mb-25">
-                                            {{ req_details.delivery_address }}
-                                        </p>
-
-                                        <p class="card-text mb-25">
-                                            {{ req_details.user_phone }}
-                                        </p>
-                                        <p class="card-text mb-0">
-                                            {{ req_details.user_email }}
-                                        </p>
-                                    </b-col>
-
-                                    <!-- Col: Payment Details -->
-                                    <!-- <b-col xl="6" cols="12" class="p-0">
-                    <h6 class="mb-2">
-                      {{ $t("Restaurant Details") }}:
-                    </h6>
-                    <h6 class="mb-25">
-                      {{ req_details.restaurant_name }}
-
-                    </h6>
-                    <p class="card-text mb-25">
-                      {{ req_details.address }}
-                    </p>
-
-                    <p class="card-text mb-25">
-                      +{{ req_details.contact_country_calling_code }}{{ req_details.contact }}
-                    </p>
-                    <p class="card-text mb-0">
-                      {{ req_details.restaurants_email }}
-                    </p>
-                  </b-col> -->
-                                </b-row>
-                            </b-card-body>
 
                             <!-- Invoice Description: Table -->
                             <!-- <b-table-lite responsive :items="food_details"
@@ -246,7 +223,7 @@
                                         {{ data.item.description }}
                                     </b-card-text>
                                 </template>
-                            </b-table-lite> -->
+</b-table-lite> -->
                             <b-table-lite responsive :items="food_details" :fields="[
                                 { key: 'Name', label: 'NAME', thClass: 'text-center', tdClass: 'text-center' },
                                 { key: 'quantity', label: 'QUANTITY', thClass: 'text-center', tdClass: 'text-center' },
@@ -282,7 +259,7 @@
                                                 </p>
                                                 <p class="invoice-total-amount">
                                                     {{ $store.state['defaults'].currency }} {{
-                                                    req_details.restaurant_packaging_charge }}
+                                                        req_details.restaurant_packaging_charge }}
 
                                                 </p>
                                             </div>
@@ -292,7 +269,7 @@
                                                 </p>
                                                 <p class="invoice-total-amount">
                                                     {{ $store.state['defaults'].currency }} {{
-                                                    req_details.delivery_charge }}
+                                                        req_details.delivery_charge }}
 
                                                 </p>
                                             </div>
@@ -320,7 +297,7 @@
                                                 </p>
                                                 <p class="invoice-total-amount">
                                                     {{ $store.state['defaults'].currency }} {{
-                                                    req_details.offer_discount }}
+                                                        req_details.offer_discount }}
 
                                                 </p>
                                             </div>
@@ -375,23 +352,13 @@
                             </b-button> -->
 
                             <!-- Button: Print -->
-<b-button
+                            <b-button class="mb-75 btn-pink" block @click="printInvoice">
+                                {{ $t("Print") }}
+                            </b-button>
 
-  class="mb-75 btn-pink"
-  block
-  @click="printInvoice"
->
-  {{ $t("Print") }}
-</b-button>
-
-<b-button
-
-  class="mb-75 btn-pink"
-  block
-  @click="goback"
->
-  {{ $t("Back") }}
-</b-button>
+                            <b-button class="mb-75 btn-pink" block @click="goback">
+                                {{ $t("Back") }}
+                            </b-button>
 
 
 
@@ -481,8 +448,8 @@ export default {
 
             return status => statusColor[status]
         },
-       // date formate in delivery date
-           formattedDeliveryDateTime() {
+        // date formate in delivery date
+        formattedDeliveryDateTime() {
             if (!this.req_details?.ScheduledAt || !this.req_details?.ScheduledTime) return '';
 
             const dateObj = new Date(this.req_details.ScheduledAt);
@@ -490,7 +457,7 @@ export default {
             const month = String(dateObj.getMonth() + 1).padStart(2, '0');
             const year = dateObj.getFullYear();
             const time = this.req_details.ScheduledTime;
-console.log(this.req_details);
+            console.log(this.req_details);
 
             return `${day}-${month}-${year} | ${time}`;
         }
@@ -673,23 +640,23 @@ console.log(this.req_details);
             this.view_order_page = false
         },
 
-  formatDateTime(dateString, timeString) {
-    if (!dateString || !timeString) return '';
+        formatDateTime(dateString, timeString) {
+            if (!dateString || !timeString) return '';
 
-    const dateObj = new Date(dateString);
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const year = dateObj.getFullYear();
+            const dateObj = new Date(dateString);
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const year = dateObj.getFullYear();
 
-    return `${day}-${month}-${year} | ${timeString}`;
+            return `${day}-${month}-${year} | ${timeString}`;
 
-}
+        }
 
     },
 }
 </script>
 
-<style  scoped lang="scss">
+<style scoped lang="scss">
 @import '~@resources/scss/vue/libs/vue-select.scss';
 @import '~@resources/scss/vue/libs/vue-flatpicker.scss';
 @import "~@resources/scss/base/pages/app-invoice.scss";
@@ -769,16 +736,13 @@ console.log(this.req_details);
 .hr {
     border-bottom: 1px solid #e6e6e6 !important;
 }
-
-
-
 </style>
 
 <style scoped>
 .btn-pink {
-  background-color: #FF006B !important;
-  color: white !important;
-  border: none !important;
+    background-color: #FF006B !important;
+    color: white !important;
+    border: none !important;
 }
 
 
@@ -786,11 +750,10 @@ console.log(this.req_details);
 .btn-pink:focus,
 .btn-pink:active,
 .btn-pink.active {
-  background-color: #FF006B !important;
-  color: white !important;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
+    background-color: #FF006B !important;
+    color: white !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 </style>
-
