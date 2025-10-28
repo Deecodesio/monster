@@ -14,7 +14,7 @@ export default [
             title: 'Dutch',
             route: 'table-good-table',
         
-          },
+          }, 
           {
             title: 'Italian',
             route: 'table-good-table',

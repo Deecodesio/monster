@@ -1,7 +1,7 @@
 export default [
-    {
-        header: "Delivery Partner",
-    },
+    // {
+    //     header: "Delivery Partner",
+    // },
     {
         title: "Delivery Management",
         icon: "TruckIcon",

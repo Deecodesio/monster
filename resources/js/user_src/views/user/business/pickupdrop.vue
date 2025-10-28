@@ -1004,15 +1004,20 @@ methods: {
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     height: 28px;
-    width: 80px;
-    float: left;
+    width: auto;
+    min-width: 80px;
+    display: inline-flex;
+    align-items: center;
   }
   
   .skin-2 .num-in span {
-    width: 40%;
-    display: block;
+    width: 28px;
     height: 28px;
-    float: left;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     position: relative;
   }
   
@@ -1022,10 +1027,6 @@ methods: {
     background-color: #62C061;
     height: 2px;
     width: 10px;
-    top: 50%;
-    left: 50%;
-    margin-top: -1px;
-    margin-left: -5px;
   }
   
   .skin-2 .num-in span.plus:after {
@@ -1033,11 +1034,13 @@ methods: {
   }
   
   .skin-2 .num-in input {
-      float: left;
-      width: 20%;
-      height: 28px;
-      border: none;
-      text-align: center;
+    flex: 1;
+    min-width: 24px;
+    height: 28px;
+    border: none;
+    text-align: center;
+    background: transparent;
+    padding: 0 4px;
   }
   .b-sidebar > .b-sidebar-header .close {
       font-size: 2rem;

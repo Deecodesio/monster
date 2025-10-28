@@ -312,30 +312,51 @@ class RestaurantController extends BaseController
         $ad = DB::table('admin')->where('email', $request->email)->first();
         $ad2 = DB::table('admin_role')->where('email', $request->email)->first();
         if ($ad) {
+            // $restaurant_details = DB::table('requests')
+            //     ->join('restaurants', 'restaurants.id', '=', 'requests.restaurant_id')
+            //     ->join('users', 'users.id', '=', 'requests.user_id')
+            //     ->join('delivery_partners', 'delivery_partners.id', '=', 'requests.delivery_boy_id')
+            //     ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
+            //     ->get();
             $restaurant_details = DB::table('requests')
                 ->join('restaurants', 'restaurants.id', '=', 'requests.restaurant_id')
                 ->join('users', 'users.id', '=', 'requests.user_id')
                 ->join('delivery_partners', 'delivery_partners.id', '=', 'requests.delivery_boy_id')
-                ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
+                ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'delivery_partners.phone as delivery_boy_phone', 'restaurants.restaurant_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
                 ->get();
         } else {
             $datas =  array_map('intval', json_decode($ad2->restaurant_id));
             if (count($datas) >= 1) {
+                // $restaurant_details = DB::table('requests')
+                //     ->whereIn('requests.restaurant_id', $datas)
+
+                //     ->join('restaurants', 'restaurants.id', '=', 'requests.restaurant_id')
+                //     ->join('users', 'users.id', '=', 'requests.user_id')
+                //     ->join('delivery_partners', 'delivery_partners.id', '=', 'requests.delivery_boy_id')
+                //     ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
+                //     ->get();
                 $restaurant_details = DB::table('requests')
                     ->whereIn('requests.restaurant_id', $datas)
 
                     ->join('restaurants', 'restaurants.id', '=', 'requests.restaurant_id')
                     ->join('users', 'users.id', '=', 'requests.user_id')
                     ->join('delivery_partners', 'delivery_partners.id', '=', 'requests.delivery_boy_id')
-                    ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
+                    ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'delivery_partners.phone as delivery_boy_phone', 'restaurants.restaurant_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
                     ->get();
             } else {
+                // $restaurant_details = DB::table('requests')
+
+                //     ->join('restaurants', 'restaurants.id', '=', 'requests.restaurant_id')
+                //     ->join('users', 'users.id', '=', 'requests.user_id')
+                //     ->join('delivery_partners', 'delivery_partners.id', '=', 'requests.delivery_boy_id')
+                //     ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
+                //     ->get();
                 $restaurant_details = DB::table('requests')
 
                     ->join('restaurants', 'restaurants.id', '=', 'requests.restaurant_id')
                     ->join('users', 'users.id', '=', 'requests.user_id')
                     ->join('delivery_partners', 'delivery_partners.id', '=', 'requests.delivery_boy_id')
-                    ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
+                    ->select('users.name as customer_name', 'users.phone as phone', 'delivery_partners.name as delivery_boy_name', 'delivery_partners.phone as delivery_boy_phone', 'restaurants.restaurant_name', 'requests.id as request_id', 'requests.status as order_status', 'users.*', 'requests.*', 'delivery_partners.*', 'restaurants.*')
                     ->get();
             }
         }

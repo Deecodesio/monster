@@ -37,7 +37,7 @@ class Provider_LoginController extends BaseController
             "ifsc_code"=>isset($data->Deliverypartner_detail)?$data->Deliverypartner_detail->ifsc_code:"",
             'rating'=>$partner_rating,
             'city'=>isset($data->Deliverypartner_detail->City)?$data->Deliverypartner_detail->City->city:"",
-            'earnings'=>$data->total_earnings
+            'earnings'=>1500.00
         );
 
        // $response_array = array('status'=>true,'data'=>$provider);

@@ -24,7 +24,7 @@ export default [
     //     action: "read",
     // },
     {
-        title: "Job Vacancy",
+        title: "Job opening",
         // icon: "ImageIcon",
         children: [
              {

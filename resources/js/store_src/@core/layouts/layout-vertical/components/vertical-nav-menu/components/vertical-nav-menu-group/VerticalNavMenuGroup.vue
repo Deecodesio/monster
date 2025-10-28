@@ -14,7 +14,7 @@
     >
       <!-- @click="() => updateGroupOpen(!isOpen)" // Commented to prevent dropdown toggle -->
       <!-- <feather-icon :icon="item.icon || 'CircleIcon'" /> -->
-      <span class="menu-title text-truncate">{{ t(item.title) }}</span>
+      <span class="menu-title text-truncate" :style="shouldApplyColor(item.title) ? { color: '#e91e63', fontWeight: 'bold', fontSize: '1.35rem', lineHeight: '100%' } : {}">{{ t(item.title) }}</span>
       <b-badge
         v-if="item.tag"
         pill
@@ -79,12 +79,18 @@ export default {
     const { t } = useI18nUtils()
     const { canViewVerticalNavMenuGroup } = useAclUtils()
 
+    const shouldApplyColor = (title) => {
+      const colorTitles = ['Order Management', 'Product', 'Promocodes']
+      return colorTitles.includes(title)
+    }
+
     return {
       resolveNavItemComponent,
       isOpen,
       isActive,
       updateGroupOpen,
       updateIsActive,
+      shouldApplyColor,
 
       // ACL
       canViewVerticalNavMenuGroup,

@@ -236,7 +236,7 @@
                             </b-card-body>
 
                             <!-- Invoice Description: Table -->
-                            <b-table-lite responsive :items="food_details"
+                            <!-- <b-table-lite responsive :items="food_details"
                                 :fields="['Name', 'description', 'quantity', 'price']">
                                 <template #cell(taskDescription)="data">
                                     <b-card-text class="font-weight-bold mb-25">
@@ -246,6 +246,12 @@
                                         {{ data.item.description }}
                                     </b-card-text>
                                 </template>
+                            </b-table-lite> -->
+                            <b-table-lite responsive :items="food_details" :fields="[
+                                { key: 'Name', label: 'NAME', thClass: 'text-center', tdClass: 'text-center' },
+                                { key: 'quantity', label: 'QUANTITY', thClass: 'text-center', tdClass: 'text-center' },
+                                { key: 'price', label: 'PRICE', thClass: 'text-center', tdClass: 'text-center' }
+                            ]">
                             </b-table-lite>
 
                             <!-- Invoice Description: Total -->

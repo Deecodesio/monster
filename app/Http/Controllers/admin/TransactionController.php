@@ -116,7 +116,9 @@ class TransactionController extends BaseController
             $rid = DB::table('restaurant_payout_history')->select('id')->orderBy('id', 'desc')->first();
             $insert = $this->restaurant_payout_history;
             $insert->restaurant_id = $request->id;
-            $insert->transaction_id = $transaction_id.' '.$rid->id;
+        // $insert->transaction_id = $transaction_id.' '.$rid->id;
+
+            $insert->transaction_id = $transaction_id.' '.($rid ? $rid->id : 1);
             $insert->payout_amount = $request->amount;
             $insert->description = $request->description;
             $insert->status = 'Success';

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="padding-left: 70px !important;">
         <b-row class="match-height pb-2">
 
             <b-col md="3" col sm="6">
@@ -16,7 +16,6 @@
                 <connect />
             </b-col>
         </b-row>
-
     </div>
 </template>
 

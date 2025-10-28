@@ -1,6 +1,6 @@
 export default [
     {
-      title: 'Job Vacancy',
+      title: 'Vacancy',
       icon: 'ImageIcon',
       route: 'job_vacancy',
       resource: 'job-vacancy',

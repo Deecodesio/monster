@@ -263,7 +263,7 @@
 
 
                                     <!-- Invoice Description: Total -->
-                                    <b-card-body class="invoice-padding pb-0">
+                                    <b-card-body class="invoice-padding pb-0" style="display: flex; justify-content: flex-end; padding-right: 0 !important;">
 
                                         <!-- <b-col cols="12" md="6" class="mt-md-0 mt-3" order="2" order-md="1">
                                                     <b-card-text class="mb-0">
@@ -755,6 +755,9 @@ export default {
 
 .invoice-total-item {
     width: 360px !important;
+}
 
+.invoice-total-wrapper {
+    max-width: 400px;
 }
 </style>

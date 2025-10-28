@@ -220,4 +220,10 @@ export default {
 h1, h2, h3, h4, h5, h6 {
   color: #FF006B !important;
 }
+.form-group > label,
+.col-form-label {
+  font-weight: bold !important;
+}
+
+
 </style>

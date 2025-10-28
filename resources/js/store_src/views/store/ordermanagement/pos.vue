@@ -2121,16 +2121,20 @@ export default {
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
     border-radius: 25px;
     height: 30px;
-    width: 80px;
+    width: 90px;
     float: left;
+    display: flex;
+    align-items: center;
 }
 
 .skin-2 .num-in span {
-    width: 40%;
-    display: block;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 30px;
-    float: left;
     position: relative;
+    flex-shrink: 0;
 }
 
 .skin-2 .num-in span:before,
@@ -2151,11 +2155,14 @@ export default {
 }
 
 .skin-2 .num-in input {
-    float: left;
-    width: 20%;
+    width: 30px;
+    max-width: 30px;
     height: 30px;
     border: none;
     text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0;
 }
 
 .pad0 {

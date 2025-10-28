@@ -30,7 +30,7 @@
                                 <b-card>
                                     <b-row>
                                         <b-col md="6">
-                                            <b-form-group label="Full Name" label-for="name" label-cols-sm="12">
+                                            <b-form-group label="Full Name" label-for="name" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="name" v-model="form.name" :state="nameState"
                                                     required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!nameState">
@@ -40,7 +40,7 @@
                                         </b-col>
 
                                         <b-col md="6">
-                                            <b-form-group label="Email" label-for="email_id" label-cols-sm="12">
+                                            <b-form-group label="Email" label-for="email_id" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="email_id" v-model="form.email_id" type="email"
                                                     :state="emailState" required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!emailState">
@@ -51,7 +51,7 @@
 
                                         <b-col md="6">
                                             <b-form-group label="Primary Phone Number" label-for="phone_1"
-                                                label-cols-sm="12">
+                                                label-cols-sm="12"  style="font-weight: bold !important;">
                                                 <b-form-input id="phone_1" v-model="form.phone_1" :state="phone1State"
                                                     required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!phone1State">
@@ -62,7 +62,7 @@
 
                                         <b-col md="6">
                                             <b-form-group label="Alternative Phone Number (Optional)"
-                                                label-for="phone_2" label-cols-sm="12">
+                                                label-for="phone_2" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="phone_2" v-model="form.phone_2"></b-form-input>
                                             </b-form-group>
                                         </b-col>
@@ -77,7 +77,7 @@
                             </b-form-group>
                         </b-col> -->
                                         <b-col md="12">
-                                            <b-form-group label="Address" label-for="address" label-cols-sm="12">
+                                            <b-form-group label="Address" label-for="address" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-textarea id="address" v-model="form.address" rows="2"
                                                     :state="addressState" required
                                                     class="compact-textarea"></b-form-textarea>
@@ -88,7 +88,7 @@
                                         </b-col>
 
                                         <b-col md="6">
-                                            <b-form-group label="State" label-for="state" label-cols-sm="12">
+                                            <b-form-group label="State" label-for="state" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="state" v-model="form.state" :state="stateState"
                                                     required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!stateState">
@@ -98,7 +98,7 @@
                                         </b-col>
 
                                         <b-col md="6">
-                                            <b-form-group label="District" label-for="district" label-cols-sm="12">
+                                            <b-form-group label="District" label-for="district" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="district" v-model="form.district"
                                                     :state="districtState" required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!districtState">
@@ -108,7 +108,7 @@
                                         </b-col>
 
                                         <b-col md="6">
-                                            <b-form-group label="Taluk" label-for="taluk" label-cols-sm="12">
+                                            <b-form-group label="Taluk" label-for="taluk" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="taluk" v-model="form.taluk" :state="talukState"
                                                     required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!talukState">
@@ -118,7 +118,7 @@
                                         </b-col>
 
                                         <b-col md="6">
-                                            <b-form-group label="Pincode" label-for="pincode" label-cols-sm="12">
+                                            <b-form-group label="Pincode" label-for="pincode" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-input id="pincode" v-model="form.pincode" :state="pincodeState"
                                                     required></b-form-input>
                                                 <b-form-invalid-feedback v-if="!pincodeState">
@@ -129,7 +129,7 @@
 
                                         <b-col md="6">
                                             <b-form-group label="Product Category" label-for="business_category_id"
-                                                label-cols-sm="12">
+                                                label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-select id="business_category_id" v-model="form.business_category_id
                                                     " :options="categoryOptions" :state="categoryState" required
                                                     class="form-control" @change="onCategoryChange">
@@ -148,7 +148,7 @@
                                         </b-col>
 
                                         <b-col md="6">
-                                            <b-form-group label="Product" label-for="product_id" label-cols-sm="12">
+                                            <b-form-group label="Product" label-for="product_id" label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-select id="product_id" v-model="form.product_id"
                                                     :options="productOptions" :state="productState" :disabled="!form.business_category_id
                                                         " required class="form-control">
@@ -165,10 +165,10 @@
                                         </b-col>
 
                                         <b-col md="12">
-                                            <b-form-group label="Additional Message (Optional)" label-for="message"
-                                                label-cols-sm="12">
+                                            <b-form-group label="Additional Message (Optional)" label-for="message" 
+                                                label-cols-sm="12" style="font-weight: bold !important;">
                                                 <b-form-textarea id="message" v-model="form.message" rows="2"
-                                                    class="compact-textarea"></b-form-textarea>
+                                                    class="compact-textarea"   style="height: 35px;"></b-form-textarea>
                                             </b-form-group>
                                         </b-col>
 
@@ -704,4 +704,5 @@ export default {
     justify-content: center;
     overflow: hidden;
 }
+
 </style>

@@ -243,8 +243,8 @@
 
       <div class="container">
         <!-- TOP ROW: Text (L) + Image (R) with equal heights -->
-        <div class="row equalize mb-4">
-          <div class="col-md-6 d-flex pr-md-4">
+        <!-- <div class="row equalize mb-4"> -->
+        <!-- <div class="col-md-6 d-flex pr-md-4">
             <div class="text-box">
               <p>
                 <strong>Annapurna Foods</strong> is a start-up Poultry meat
@@ -264,12 +264,12 @@
                 We provide you with healthy, hygienic broiler chicken and eggs at the right price and on time.<br></br>
               </p>
             </div>
-          </div>
+          </div> -->
 
-          <div class="col-md-6 d-flex">
+        <!-- <div class="col-md-6 d-flex">
             <!-- <div class="image-box">
               <b-img src="/Res_2.jpg" alt="Restaurant Interior" class="img-equal rounded shadow" />
-            </div> -->
+            </div> 
             <div class="text-box">
               <p>
                 We simplify the buying process according to modern lifestyles — just order online, set the day and time,
@@ -289,8 +289,96 @@
                 machines to make fresh chicken and eggs available to consumers.
               </p>
             </div>
+          </div> -->
+        <!-- </div> -->
+        <div class="container my-5">
+          <div class="row equalize mb-4">
+            <div class="col-12 mb-4 d-flex">
+              <div class="text-box" style="padding-left: 140px; padding-right: 140px; text-align: justify;">
+                <p>
+                  <strong>Annapurna Foods</strong> is a start-up Poultry meat and Poultry Egg online sales
+                  E-Commerce company under brand name <strong>Monster Foods</strong> across
+                  <strong>India</strong>.<br><br>
+
+                  Chicken meat and egg is a widely consumed source of protein in India. It is available in
+                  various forms like fresh, frozen, processed, or ready-to-cook and is popular across
+                  young generations.<br><br>
+
+                  Among animal proteins, poultry chicken and egg are economically cheaper and freshly
+                  available any time and place in India. Commercial production of broiler chicken and egg
+                  is increasing day by day according to consumption and easy availability for a large
+                  population.<br><br>
+
+                  So, buyers need to be aware while buying quality, hygienic products at the right price
+                  all over India without compromising quality.<br><br>
+
+                  We provide you with healthy, hygienic broiler chicken and eggs at the right price and
+                  on time.<br><br>
+                </p>
+
+                <p>
+                  We simplify the buying process according to modern lifestyles — just order online, set
+                  the day and time, and we deliver it to your place within that time.<br><br>
+
+                  For nearby customers, you can order online and get notified when your order is ready,
+                  so you can pick it up without delay. We’ve also made it possible for apartment
+                  residents in big cities to avoid the hassle of going to meat shops — our mobile shop
+                  delivers to your doorstep.<br><br>
+
+                  <strong>Annapurna Foods – Monster Chicken</strong> serves chicken and eggs to conscious
+                  buyers from broiler integrators and layer farms all over India. We constantly monitor
+                  our farmers’ healthy and hygienic growth of birds fed with good quality raw
+                  materials.<br><br>
+
+                  We tied up with broiler farms and broiler integrators for a consistent supply of quality
+                  birds to our meat shops. Further, we also tied up with hygienic meat shops where
+                  chickens are cleaned with modern machines to make fresh chicken and eggs available to
+                  consumers.
+                </p>
+              </div>
+
+            </div>
           </div>
         </div>
+        <!-- <div
+          style="max-width: 800px; margin: 0 auto; text-align: justify; font-family: Arial, sans-serif; font-size: 15px; line-height: 1.6;">
+          <p><strong>Annapurna Foods</strong> is a start-up Poultry meat and Poultry Egg online sales E Commerce company
+            under brand name <strong>Monster Foods</strong> across in <strong>India</strong>.</p>
+
+          <p>Chicken meat and Egg is a widely consumed source of protein in India. It is available in various forms like
+            fresh, frozen, processed, or ready-to-cook and is popular across young generations.</p>
+
+          <p>Among animal proteins poultry chicken and egg is economically cheaper price and freshly available any time
+            and place in India. Today commercial production poultry of broiler chicken and egg is increase day by day
+            according to consumption and availability easily for large population all the time.</p>
+
+          <p>So, it is buyer needs to aware while buying quality, hygienic and right price all over the places in India
+            at any time without compromising the quality of chicken and egg.</p>
+
+          <p><strong>Annapurna Foods - Monster chicken</strong> serve Broiler birds and egg with consciously buy from
+            broiler integrators and layer farms all over India. We constantly monitoring our farmers Healthy and
+            Hygienic growth of birds feed with good quality veg feed selected regular raw materials.</p>
+
+          <p>We tied up with Broiler farms for consistent supply of quality birds to our meat shops. Further also tied
+            up with Meat shops are hygienic and the chickens processed there are cleaned with modern machines with
+            hygienic environment to supply hygienic and fresh chicken and eggs available to consumers.</p>
+
+          <p>We to provide you with healthy, hygienic broiler chicken and eggs at the right price and on time.</p>
+
+          <p>We simplify the buying process according to modern lifestyles and just order online and set the day and
+            time and we deliver it to your place within that time.</p>
+
+          <p>Also, those who are nearby can order online and get notified when your order is ready, so you can buy it
+            without any delay when you go to the meat shop.</p>
+
+          <p>We have made it possible for apartment residents in big cities to avoid the hassle of going to the meat
+            shops and buying chicken and eggs at their homes, even if there are thousands of families in our mobile shop
+            deliver at your doorstep.</p>
+        </div> -->
+
+
+
+
 
         <!-- BOTTOM ROW: Two text blocks, equal heights -->
         <!-- <div class="row equalize">

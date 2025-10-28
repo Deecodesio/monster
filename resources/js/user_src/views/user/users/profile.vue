@@ -46,16 +46,16 @@
       </b-tab>
 
       <!-- social links -->
-      <b-tab>
+      <!-- <b-tab>
 
-        <!-- title -->
+        <!-- title 
         <template #title>
           <feather-icon icon="DollarSignIcon" size="18" class="mr-50" />
           <span class="font-weight-bold">{{ $t("Wallet") }}</span>
         </template>
 
         <wallet v-if="options.data" :social-data="options.data" />
-      </b-tab>
+      </b-tab> -->
 
       <b-tab>
 
