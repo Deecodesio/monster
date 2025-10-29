@@ -78,9 +78,16 @@ a {
 .foot {
     background: #ff006b;
 }
- .white_text {
+.white_text {
     font-size: 18px !important;
     font-weight: 600;
-    color: #ffffff;
+    color: #ffffff !important;
+}
+
+h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin-bottom: 1rem !important;
 }
 </style>

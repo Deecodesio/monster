@@ -79,4 +79,11 @@ a {
 .foot {
     background: #FF006B;
 }
+
+h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin-bottom: 1rem !important;
+}
 </style>

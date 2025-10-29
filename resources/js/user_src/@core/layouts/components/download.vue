@@ -67,6 +67,13 @@ a {
     color: #ffffff !important;
 }
 
+h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    margin-bottom: 1rem !important;
+}
+
 .down {
     width: 146px;
     height: 48px;
