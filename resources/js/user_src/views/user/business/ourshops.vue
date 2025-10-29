@@ -100,7 +100,7 @@ export default {
     border-radius: 20px;
     /* padding: 0 30px; */
     /* padding: 0 20px; */
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     color:black;
     white-space: nowrap;
