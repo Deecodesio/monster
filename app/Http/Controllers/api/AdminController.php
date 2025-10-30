@@ -918,6 +918,7 @@ class AdminController extends BaseController
 
 		$response_array = [
 			'status' => true,
+            'is_open' => $rest->is_open,
 			'1st_open' => $opening_var1,
 			'1st_close' => $closing_var1,
 			'2nd_open' => $opening_second_var1,
