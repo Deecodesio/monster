@@ -675,7 +675,6 @@ class AdminController extends BaseController
         })
         ->select(
             'food_list.id as food_id',
-            'food_list.*'
             'food_list.*',
             DB::raw('COALESCE(food_list_pricing.price, food_list.price) as price')
         )
