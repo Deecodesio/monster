@@ -685,7 +685,6 @@ class AdminController extends BaseController
         'message' => 'Success',
         'Products' => $data
     ], 200);
-    }
 }
 
 	public function product_enable($food_id, Request $request)
