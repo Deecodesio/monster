@@ -505,20 +505,7 @@ class OrderController extends BaseController
 						$driver = [];
 					}
 				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-				// $driver = DB::table('delivery_partners')->where('id', $driver_id)->first();
+				$driver = DB::table('delivery_partners')->where('id', $driver_id)->first();
 				if (!$driver || !$driver->status) {
 					continue;
 				}
