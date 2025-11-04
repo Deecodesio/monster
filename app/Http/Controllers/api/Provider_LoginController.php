@@ -38,6 +38,7 @@ class Provider_LoginController extends BaseController
             'rating'=>$partner_rating,
             'city'=>isset($data->Deliverypartner_detail->City)?$data->Deliverypartner_detail->City->city:"",
             'earnings'=>$data->total_earnings
+            'pending_payout'=>$data->pending_payout
         );
 
        // $response_array = array('status'=>true,'data'=>$provider);
